@@ -1,0 +1,47 @@
+{
+  "name": "jhipster-ignite",
+  "description": "A React Native boilerplate for JHipster apps.",
+  "license": "MIT",
+  "repository": "ruddell/ignite-jhipster",
+  "homepage": "https://github.com/ruddell/ignite-jhipster",
+  "version": "0.0.3",
+  "files": [
+    "boilerplate",
+    "commands",
+    "templates",
+    "boilerplate.js",
+    "ignite.json",
+    "options.js",
+    "plugin.js",
+    "screenExamples.js"
+  ],
+  "author": {
+    "name": "Jon Ruddell",
+    "email": "jonathan.ruddell@gmail.com",
+    "url": "https://github.com/ruddell/ignite-jhipster"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava",
+    "shipit": "np"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "__DEV__"
+    ]
+  },
+  "devDependencies": {
+    "ava": "^0.18.2",
+    "babel-eslint": "^7.1.1",
+    "np": "^2.12.0",
+    "nyc": "^10.1.2",
+    "sinon": "^1.17.7",
+    "standard": "^8.6.0"
+  },
+  "dependencies": {
+    "ramda": "^0.23.0"
+  }
+}
