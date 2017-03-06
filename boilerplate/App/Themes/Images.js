@@ -2,7 +2,6 @@
 const images = {
   logo: require('../Images/ir.png'),
   clearLogo: require('../Images/top_logo.png'),
-  launch: require('../Images/launch-icon.png'),
   logoJhipster: require('../Images/logo-jhipster.png'),
   ready: require('../Images/your-app.png'),
   ignite: require('../Images/ignite_logo.png'),

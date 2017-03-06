@@ -4,6 +4,8 @@ export default {
     padding: 20
   },
   logo: {
-    alignSelf: 'center'
+    alignSelf: 'center',
+    height: 80,
+    width: 80
   }
 }
