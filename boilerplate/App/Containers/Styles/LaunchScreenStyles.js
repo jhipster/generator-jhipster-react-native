@@ -1,8 +1,13 @@
 import { StyleSheet } from 'react-native'
-import { Metrics, ApplicationStyles } from '../../Themes/'
+import { Metrics, ApplicationStyles, Colors } from '../../Themes/'
 
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
+  container: {
+    flex: 1,
+    paddingTop: Metrics.navBarHeight,
+    backgroundColor: Colors.transparent
+  },
   logo: {
     marginTop: Metrics.doubleSection,
     height: Metrics.images.logo,
