@@ -200,7 +200,7 @@ async function install (context) {
   //   * this needs to get planned a little better.
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   try {
-    await system.spawn(`ignite add ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
     if (answers['dev-screens'] === 'Yes') {
