@@ -7,7 +7,7 @@ This module uses Infinite Red's [Ignite generator](https://github.com/infinitere
 
 Planned Features:
 
- - [ ] Home Page
+ - [x] Home Page
  - [ ] User Authentication (Login/Logout)
     - [ ] JWT
     - [ ] UAA
@@ -26,15 +26,17 @@ Planned Features:
      - [ ] Edit Page
  
  - [ ] Websocket Support
+ - [ ] Admin Pages (optional)
  - [ ] Internationalization
 
 ## Getting Started
 The requirements for running the generator include:
  - Node v7.7+
- - [ignite-cli](https://github.com/infinitered/ignite) installed
+ - [ignite-cli](https://github.com/infinitered/ignite) installed (v2+)
+    - Verify version with `ignite --version`
 
-Running the generator will create a new directory containing the project.  It installs react-native and sets up 
-directories for an Android and an iOS app.   
+Running the generator will create a new directory containing the project.  It also installs react-native and sets up 
+directories for Android and iOS apps.   
 
 #### Example
 
