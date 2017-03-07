@@ -22,7 +22,7 @@ class DrawerContent extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <Image source={Images.logo} style={styles.logoJhipster} />
+        <Image source={Images.logoJhipster} style={styles.logo} />
       </ScrollView>
     )
   }
