@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "files": [
     "boilerplate",
     "commands",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "ava",
+    "test": "ava --concurrency=1",
     "watch": "ava --watch",
     "coverage": "nyc ava",
     "shipit": "np"
