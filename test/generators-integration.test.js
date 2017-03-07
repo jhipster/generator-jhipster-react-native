@@ -6,7 +6,7 @@ const IGNITE = 'ignite'
 const TEST_IGNITE = 'cd integration_test && ignite'
 
 test.before('can setup integration project', async t => {
-    const proj_result = await execa(IGNITE, ['new', 'integration_test', '--min'])
+    const proj_result = await execa(IGNITE, ['new', 'integration_test', '--boilerplate', 'ignite-jhipster'])
     process.chdir('./integration_test')
     t.is(proj_result.code, 0)
     // Install self
