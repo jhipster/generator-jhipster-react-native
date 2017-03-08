@@ -9,7 +9,7 @@ Planned Features:
 
  - [x] Home Page
  - [ ] User Authentication (Login/Logout)
-    - [ ] JWT
+    - [x] JWT
     - [ ] UAA
     - [ ] OAuth2
     - [ ] Social
