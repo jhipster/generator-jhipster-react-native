@@ -5,6 +5,7 @@ import NavigationDrawer from './NavigationDrawer'
 
 // screens identified by the router
 import LaunchScreen from '../Containers/LaunchScreen'
+import LoginScreen from '../Containers/LoginScreen'
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -17,6 +18,7 @@ class NavigationRouter extends Component {
         <Scene key='drawer' component={NavigationDrawer} open={false}>
           <Scene key='drawerChildrenWrapper' navigationBarStyle={Styles.navBar} titleStyle={Styles.title} leftButtonIconStyle={Styles.leftButton} rightButtonTextStyle={Styles.rightButton}>
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
+            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
           </Scene>
         </Scene>
       </Router>
