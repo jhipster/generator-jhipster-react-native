@@ -1,5 +1,6 @@
 import { takeLatest } from 'redux-saga'
 import API from '../Services/Api'
+import JHIPSTER_API from '../Services/JhipsterApi'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 
@@ -8,12 +9,16 @@ import DebugConfig from '../Config/DebugConfig'
 import { StartupTypes } from '../Redux/StartupRedux'
 import { GithubTypes } from '../Redux/GithubRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
+import { RegisterTypes } from '../Redux/RegisterRedux'
+import { ForgotPasswordTypes } from '../Redux/ForgotPasswordRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
+import { register } from './RegisterSagas'
+import { forgotPasswordRequest } from './ForgotPasswordSagas'
 import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
 
@@ -22,6 +27,9 @@ import { openScreen } from './OpenScreenSagas'
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
+// exporting this so that the login redux can update the auth token header for API requests
+export const jhipsterApi = JHIPSTER_API.create()
+// todo set up fixtures for the JHipster API
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -29,8 +37,12 @@ export default function * root () {
   yield [
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(LoginTypes.LOGIN_REQUEST, login),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
+
+    // JHipster accounts
+    takeLatest(LoginTypes.LOGIN_REQUEST, login, jhipsterApi),
+    takeLatest(RegisterTypes.REGISTER_REQUEST, register, jhipsterApi),
+    takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest, jhipsterApi),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)

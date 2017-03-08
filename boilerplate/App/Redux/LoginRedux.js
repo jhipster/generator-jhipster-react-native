@@ -1,11 +1,11 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-
+import { jhipsterApi } from '../Sagas'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
-  loginSuccess: ['username'],
+  loginSuccess: ['id_token'],
   loginFailure: ['error'],
   logout: null
 })
@@ -16,7 +16,7 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  username: null,
+  id_token: null,
   error: null,
   fetching: false
 })
@@ -27,15 +27,20 @@ export const INITIAL_STATE = Immutable({
 export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully logged in
-export const success = (state, { username }) =>
-  state.merge({ fetching: false, error: null, username })
-
+export const success = (state, data) => {
+  const { id_token } = data.id_token
+  jhipsterApi.setAuthToken(id_token)
+  return state.merge({ fetching: false, error: null, id_token })
+}
 // we've had a problem logging in
 export const failure = (state, { error }) =>
   state.merge({ fetching: false, error })
 
 // we've logged out
-export const logout = (state) => INITIAL_STATE
+export const logout = state => {
+  jhipsterApi.removeAuthToken()
+  return INITIAL_STATE
+}
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -49,4 +54,4 @@ export const reducer = createReducer(INITIAL_STATE, {
 /* ------------- Selectors ------------- */
 
 // Is the current user logged in?
-export const isLoggedIn = (loginState) => loginState.username !== null
+export const isLoggedIn = (loginState) => loginState.id_token !== null
