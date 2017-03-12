@@ -1,7 +1,7 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import AppConfig from '../Config/AppConfig'
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 import { Buffer } from 'buffer'
 <%_ } _%>
 

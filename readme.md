@@ -2,17 +2,16 @@
 
 A React Native boilerplate for JHipster apps.
 
-This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) is heavily based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016),
+This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is heavily based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016),
  but with a few JHipster twists.
 
 Planned Features:
 
  - [x] Home Page
- - [ ] User Authentication (Login/Logout)
+ - [x] User Authentication (Login/Logout)
     - [x] JWT
-    - [ ] UAA
-    - [ ] OAuth2
-    - [ ] Social
+    - [x] UAA
+    - [x] OAuth2
  - [ ] User Pages
      - [ ] Register
      - [ ] Reset Password
@@ -28,6 +27,7 @@ Planned Features:
  - [ ] Websocket Support
  - [ ] Admin Pages (optional)
  - [ ] Internationalization
+ - [ ] Social Login
 
 ## Getting Started
 The requirements for running the generator include:
