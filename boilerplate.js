@@ -80,6 +80,10 @@ async function install (context) {
     .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
     .succeed()
 
+  // interactive prompts - ask for auth (if UAA, get basepath),
+  let jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
+  let pluginAnswers = await prompt.ask(options.pluginQuestions)
+
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({ name, skipJest: true })
   if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
@@ -166,16 +170,6 @@ async function install (context) {
 
   spinner.stop()
 
-  // --max, --min, interactive
-  let answers
-  if (parameters.options.max) {
-    answers = options.answers.max
-  } else if (parameters.options.min) {
-    answers = options.answers.min
-  } else {
-    answers = await prompt.ask(options.questions)
-  }
-
   spinner.text = '▸ installing ignite dependencies'
   spinner.start()
   if (context.ignite.useYarn) {
@@ -202,24 +196,26 @@ async function install (context) {
   try {
     await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
 
+    await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
+
     // now run install of Ignite Plugins
-    if (answers['dev-screens'] === 'Yes') {
+    if (pluginAnswers['dev-screens'] === 'Yes') {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, {
         stdio: 'inherit'
       })
     }
 
-    if (answers['vector-icons'] === 'react-native-vector-icons') {
+    if (pluginAnswers['vector-icons'] === 'react-native-vector-icons') {
       await system.spawn(`ignite add vector-icons ${debugFlag}`, {
         stdio: 'inherit'
       })
     }
 
-    if (answers['i18n'] === 'react-native-i18n') {
+    if (pluginAnswers['i18n'] === 'react-native-i18n') {
       await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
     }
 
-    if (answers['animatable'] === 'react-native-animatable') {
+    if (pluginAnswers['animatable'] === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, {
         stdio: 'inherit'
       })

@@ -1,7 +1,17 @@
 /**
  * The questions to ask during the install process.
  */
-const questions = [
+
+const jhipsterQuestions = [
+  {
+    name: 'auth-type',
+    message: 'Which JHipster Authentication does your server use?',
+    type: 'list',
+    choices: ['JWT', 'Oauth2', 'UAA']
+  }
+]
+
+const pluginQuestions = [
   {
     name: 'dev-screens',
     message: 'Would you like Ignite Development Screens?',
@@ -28,6 +38,7 @@ const questions = [
   }
 ]
 
+//todo handle max/min options
 /**
  * The max preset.
  */
@@ -49,6 +60,7 @@ const min = {
 }
 
 module.exports = {
-  questions,
+    jhipsterQuestions,
+    pluginQuestions,
   answers: { min, max }
 }
