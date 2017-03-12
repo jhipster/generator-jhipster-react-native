@@ -12,6 +12,7 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { RegisterTypes } from '../Redux/RegisterRedux'
 import { ForgotPasswordTypes } from '../Redux/ForgotPasswordRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
+import { AccountTypes } from '../Redux/AccountRedux'
 
 /* ------------- Sagas ------------- */
 
@@ -21,6 +22,7 @@ import { register } from './RegisterSagas'
 import { forgotPasswordRequest } from './ForgotPasswordSagas'
 import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
+import { getAccount } from './AccountSagas'
 
 /* ------------- API ------------- */
 
@@ -43,6 +45,8 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, jhipsterApi),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, jhipsterApi),
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest, jhipsterApi),
+
+    takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, jhipsterApi),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)

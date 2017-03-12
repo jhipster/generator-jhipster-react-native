@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyles'
 import { Images, Metrics } from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
+import AccountActions from '../Redux/AccountRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 class LoginScreen extends React.Component {
@@ -43,6 +44,7 @@ class LoginScreen extends React.Component {
           alert("Invalid login")
         }
       } else {
+        this.props.getAccount()
         NavigationActions.pop()
       }
     }
@@ -136,7 +138,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
+    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
+    getAccount: () => dispatch(AccountActions.accountRequest())
   }
 }
 
