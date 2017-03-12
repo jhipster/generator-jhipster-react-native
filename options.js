@@ -43,6 +43,7 @@ const pluginQuestions = [
  * The max preset.
  */
 const max = {
+  'auth-type': 'jwt',
   'dev-screens': 'Yes',
   'vector-icons': 'react-native-vector-icons',
   i18n: 'react-native-i18n',
@@ -53,6 +54,7 @@ const max = {
  * The min preset.
  */
 const min = {
+  'auth-type': 'jwt',
   'dev-screens': 'No',
   'vector-icons': 'none',
   i18n: 'none',

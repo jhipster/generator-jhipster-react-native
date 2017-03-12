@@ -80,9 +80,20 @@ async function install (context) {
     .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
     .succeed()
 
-  // interactive prompts - ask for auth (if UAA, get basepath),
-  let jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
-  let pluginAnswers = await prompt.ask(options.pluginQuestions)
+  // interactive prompts - ask for auth (if UAA, get basepath)
+  let jhipsterAnswers
+  let pluginAnswers
+  if (parameters.options.max) {
+      jhipsterAnswers = options.answers.max
+      pluginAnswers = options.answers.max
+  } else if (parameters.options.min) {
+      jhipsterAnswers = options.answers.min
+      pluginAnswers = options.answers.min
+  } else {
+      jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
+      pluginAnswers = await prompt.ask(options.pluginQuestions)
+  }
+
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({ name, skipJest: true })
@@ -137,6 +148,12 @@ async function install (context) {
     quiet: true,
     directory: `${ignite.ignitePluginPath()}/boilerplate`
   })
+
+    // cleanup ejs templates
+    spinner.text = '▸ cleaning up templates'
+    spinner.start()
+    filesystem.remove(`${process.cwd()}/App/**/*.ejs`)
+    spinner.stop()
 
   /**
    * Append to files
