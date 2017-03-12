@@ -1,8 +1,12 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
+import AppConfig from '../Config/AppConfig'
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+import { Buffer } from 'buffer'
+<%_ } _%>
 
 // our "constructor"
-const create = (baseURL = 'https://jhipster-chat.herokuapp.com/') => {
+const create = (baseURL = AppConfig.apiUrl) => {
   // ------
   // STEP 1
   // ------
@@ -43,7 +47,13 @@ const create = (baseURL = 'https://jhipster-chat.herokuapp.com/') => {
   //
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.setHeader('Authorization', '')
+  <%_ if (props.authType === 'oauth2') { _%>
+  const login = (userAuth) => api.post('oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + new Buffer(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  <%_ } else if (props.authType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
+  <%_ } else if (props.authType === 'uaa') { _%>
+  const login = (userAuth) => api.post(AppConfig.uaaBaseUrl + 'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + new Buffer(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  <%_ } _%>
   const register = (user) => api.post('api/register', user)
   const forgotPasswordRequest = (data) => api.post('api/account/reset_password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
 

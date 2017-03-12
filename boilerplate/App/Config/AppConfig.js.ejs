@@ -2,5 +2,14 @@
 
 export default {
   // font scaling override - RN default is on
-  allowTextFontScaling: true
+  allowTextFontScaling: true,
+  apiUrl: 'http://localhost:8080/'<%_ if (props.authType ==='oauth2') { _%>,
+  oauthClientId: 'jhipsterapp',
+  oauthClientSecret: 'my-secret-token-to-change-in-production'
+  <%_  } else if (props.authType ==='uaa') { _%>,
+  oauthClientId: 'web_app',
+  oauthClientSecret: '',
+  uaaBaseUrl: 'uaa/'
+  <%_  } _%>
+
 }

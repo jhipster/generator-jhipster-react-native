@@ -7,7 +7,7 @@ const jhipsterQuestions = [
     name: 'auth-type',
     message: 'Which JHipster Authentication does your server use?',
     type: 'list',
-    choices: ['JWT', 'Oauth2', 'UAA']
+    choices: ['jwt', 'oauth2', 'uaa']
   }
 ]
 

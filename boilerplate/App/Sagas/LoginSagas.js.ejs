@@ -4,11 +4,18 @@ import LoginActions from '../Redux/LoginRedux'
 // attempts to login
 export function * login (api, { username, password }) {
 
+  <%_ if (props.authType === 'oauth2') { _%>
+  const authObj = 'username=' + username + '&password=' + password + '&grant_type=password&scope=read%20write'
+  <%_} else if (props.authType === 'uaa') { _%>
+  const authObj = 'username=' + username + '&password=' + password + '&grant_type=password'
+  <%_ } else if (props.authType === 'jwt') { _%>
   const authObj = {
     username: username,
     password: password,
     rememberMe: true
   }
+  <%_ } _%>
+
   const response = yield call(api.login, authObj)
 
   // success?
