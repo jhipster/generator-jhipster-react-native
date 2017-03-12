@@ -1,6 +1,7 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
 import { jhipsterApi } from '../Sagas'
+import AccountActions from './AccountRedux'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
@@ -30,10 +31,12 @@ export const request = (state) => state.merge({ fetching: true })
 export const success = (state, data) => {
   <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
   jhipsterApi.setAuthToken(data.id_token.access_token)
+  AccountActions.accountRequest()
   return state.merge({ fetching: false, error: null, id_token: data.id_token })
   <%_ } else if (props.authType === 'jwt') { _%>
   const { id_token } = data.id_token
   jhipsterApi.setAuthToken(id_token)
+  AccountActions.accountRequest()
   return state.merge({ fetching: false, error: null, id_token })
   <%_ } _%>
 
@@ -45,6 +48,7 @@ export const failure = (state, { error }) =>
 // we've logged out
 export const logout = state => {
   jhipsterApi.removeAuthToken()
+  AccountActions.logout()
   return INITIAL_STATE
 }
 
