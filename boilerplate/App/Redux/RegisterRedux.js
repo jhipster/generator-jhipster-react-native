@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native'
 
 const { Types, Creators } = createActions({
   registerRequest: ['user'],
-  registerSuccess: ['id_token'],
+  registerSuccess: [],
   registerFailure: ['error'],
 })
 
@@ -27,7 +27,6 @@ export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully registered
 export const success = (state, data) => {
-  // const { id_token } = data
   return state.merge({ fetching: false, error: null })
 }
 // we've had a problem registering

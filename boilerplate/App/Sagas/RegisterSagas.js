@@ -7,7 +7,7 @@ export function * register (api, { user }) {
   // success?
   if (response.ok) {
     console.tron.log("Register - OK")
-    yield put(RegisterActions.registerSuccess(response.data))
+    yield put(RegisterActions.registerSuccess())
   } else {
     console.tron.log("Register - FAIL")
     yield put(RegisterActions.registerFailure(response.data))

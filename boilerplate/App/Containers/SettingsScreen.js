@@ -54,7 +54,7 @@ class SettingsScreen extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    // Did the login attempt complete?
+    // Did the update attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {

@@ -10,8 +10,8 @@ Planned Features:
  - [x] Home Page
  - [x] User Authentication (Login/Logout for JWT, UAA and Oauth2)
  - [ ] User Pages - *In Progress*
-     - [ ] User Settings
-     - [ ] Register
+     - [x] User Settings
+     - [x] Register
      - [ ] Reset Password
      - [ ] Change Password
   
