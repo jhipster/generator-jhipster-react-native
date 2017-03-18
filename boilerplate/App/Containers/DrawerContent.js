@@ -27,6 +27,22 @@ class DrawerContent extends Component {
     this.toggleDrawer()
     NavigationActions.login()
   }
+  handlePressRegister = () => {
+    this.toggleDrawer()
+    NavigationActions.register()
+  }
+  handlePressForgotPassword = () => {
+    this.toggleDrawer()
+    NavigationActions.forgotPassword()
+  }
+  handlePressSettings = () => {
+    this.toggleDrawer()
+    NavigationActions.settings()
+  }
+  handlePressChangePassword = () => {
+    this.toggleDrawer()
+    NavigationActions.changePassword()
+  }
   handlePressLogout = () => {
     this.toggleDrawer()
     this.props.logout();
@@ -38,6 +54,11 @@ class DrawerContent extends Component {
       <ScrollView style={styles.container}>
         <Image source={Images.logoJhipster} style={styles.logo} />
         {!this.props.loggedIn && (<DrawerButton text='Login' onPress={this.handlePressLogin} />)}
+        {!this.props.loggedIn && (<DrawerButton text='Register' onPress={this.handlePressRegister} />)}
+        {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
+
+        {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
+        {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
         {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}
       </ScrollView>
     )
