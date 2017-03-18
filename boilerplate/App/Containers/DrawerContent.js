@@ -57,7 +57,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch(LoginActions.logout())
+    logout: () => dispatch(LoginActions.logoutRequest())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)

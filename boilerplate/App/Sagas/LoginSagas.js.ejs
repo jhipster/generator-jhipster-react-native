@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
+import AccountActions from '../Redux/AccountRedux'
 
 // attempts to login
 export function * login (api, { username, password }) {
@@ -21,10 +22,27 @@ export function * login (api, { username, password }) {
   // success?
   if (response.ok) {
     console.tron.log("Login - OK")
+    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    yield call(api.setAuthToken, response.data.id_token.access_token)
+    <%_ } else if (props.authType === 'jwt') { _%>
+    yield call(api.setAuthToken, response.data.id_token)
+    <%_ } _%>
     yield put(LoginActions.loginSuccess(response.data))
+    yield put(AccountActions.accountRequest())
   } else {
     console.tron.log("Login - FAIL")
     yield put(LoginActions.loginFailure('WRONG'))
   }
 
+}
+
+// attempts to logout
+export function * logout (api) {
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  // todo I think oauth uses this?
+  // const response = yield call(api.logout)
+  <%_ } _%>
+  yield call(api.removeAuthToken)
+  yield put(AccountActions.logout())
+  yield put(LoginActions.logoutSuccess())
 }

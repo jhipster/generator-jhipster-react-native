@@ -17,7 +17,7 @@ import { AccountTypes } from '../Redux/AccountRedux'
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { login } from './LoginSagas'
+import { login, logout } from './LoginSagas'
 import { register } from './RegisterSagas'
 import { forgotPasswordRequest } from './ForgotPasswordSagas'
 import { getUserAvatar } from './GithubSagas'
@@ -29,9 +29,8 @@ import { getAccount } from './AccountSagas'
 // The API we use is only used from Sagas, so we create it here and pass along
 // to the sagas which need it.
 const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
-// exporting this so that the login redux can update the auth token header for API requests
-export const jhipsterApi = JHIPSTER_API.create()
 // todo set up fixtures for the JHipster API
+const jhipsterApi = JHIPSTER_API.create()
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -43,6 +42,7 @@ export default function * root () {
 
     // JHipster accounts
     takeLatest(LoginTypes.LOGIN_REQUEST, login, jhipsterApi),
+    takeLatest(LoginTypes.LOGOUT_REQUEST, logout, jhipsterApi),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, jhipsterApi),
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest, jhipsterApi),
 
