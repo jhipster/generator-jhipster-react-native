@@ -1,6 +1,8 @@
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
+
+export const selectAuthToken = (state) => state.login.id_token
 
 // attempts to login
 export function * login (api, { username, password }) {
@@ -22,11 +24,7 @@ export function * login (api, { username, password }) {
   // success?
   if (response.ok) {
     console.tron.log("Login - OK")
-    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
-    yield call(api.setAuthToken, response.data.id_token.access_token)
-    <%_ } else if (props.authType === 'jwt') { _%>
-    yield call(api.setAuthToken, response.data.id_token)
-    <%_ } _%>
+    yield call(api.setAuthToken, response.data.id_token<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
     yield put(LoginActions.loginSuccess(response.data))
     yield put(AccountActions.accountRequest())
   } else {
@@ -45,4 +43,15 @@ export function * logout (api) {
   yield call(api.removeAuthToken)
   yield put(AccountActions.logout())
   yield put(LoginActions.logoutSuccess())
+}
+
+// loads the login
+export function * loginLoad (api) {
+  const authToken = yield select(selectAuthToken)
+  // only set the token if we have it
+  if (authToken !== null) {
+    console.tron.log(authToken)
+    yield call(api.setAuthToken, authToken<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
+  }
+  yield put(LoginActions.loginLoadSuccess())
 }
