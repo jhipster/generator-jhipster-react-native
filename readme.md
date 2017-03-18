@@ -8,14 +8,11 @@ This module uses Infinite Red's [Ignite generator](https://github.com/infinitere
 Planned Features:
 
  - [x] Home Page
- - [x] User Authentication (Login/Logout)
-    - [x] JWT
-    - [x] UAA
-    - [x] OAuth2
- - [ ] User Pages
+ - [x] User Authentication (Login/Logout for JWT, UAA and Oauth2)
+ - [ ] User Pages - *In Progress*
+     - [ ] User Settings
      - [ ] Register
      - [ ] Reset Password
-     - [ ] User Settings
      - [ ] Change Password
   
  - [ ] Entity Generator
