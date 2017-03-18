@@ -58,6 +58,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const forgotPasswordRequest = (data) => api.post('api/account/reset_password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
 
   const getAccount = () => api.get(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account')
+  const updateAccount = (account) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account', account)
 
   // ------
   // STEP 3
@@ -78,7 +79,8 @@ const create = (baseURL = AppConfig.apiUrl) => {
     login,
     register,
     forgotPasswordRequest,
-    getAccount
+    getAccount,
+    updateAccount
   }
 }
 

@@ -22,7 +22,7 @@ import { register } from './RegisterSagas'
 import { forgotPasswordRequest } from './ForgotPasswordSagas'
 import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
-import { getAccount } from './AccountSagas'
+import { getAccount, updateAccount } from './AccountSagas'
 
 /* ------------- API ------------- */
 
@@ -48,6 +48,7 @@ export default function * root () {
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest, jhipsterApi),
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, jhipsterApi),
+    takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, jhipsterApi),
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)

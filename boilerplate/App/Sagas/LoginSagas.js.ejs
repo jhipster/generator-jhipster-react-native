@@ -50,7 +50,6 @@ export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
   // only set the token if we have it
   if (authToken !== null) {
-    console.tron.log(authToken)
     yield call(api.setAuthToken, authToken<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
   }
   yield put(LoginActions.loginLoadSuccess())
