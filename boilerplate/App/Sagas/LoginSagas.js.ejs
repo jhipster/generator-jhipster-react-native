@@ -25,7 +25,7 @@ export function * login (api, { username, password }) {
   if (response.ok) {
     console.tron.log("Login - OK")
     yield call(api.setAuthToken, response.data.id_token<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
-    yield put(LoginActions.loginSuccess(response.data))
+    yield put(LoginActions.loginSuccess(response.data.id_token))
     yield put(AccountActions.accountRequest())
   } else {
     console.tron.log("Login - FAIL")

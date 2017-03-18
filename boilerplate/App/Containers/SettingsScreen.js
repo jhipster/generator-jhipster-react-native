@@ -39,6 +39,7 @@ class SettingsScreen extends React.Component {
       success: false
     }
     this.submitUpdate = this.submitUpdate.bind(this)
+    this.accountChange = this.accountChange.bind(this)
   }
 
   submitUpdate () {
@@ -48,13 +49,11 @@ class SettingsScreen extends React.Component {
     // call getValue() to get the values of the form
     const value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
-      console.tron.log(value); // value here is an instance of Account
       this.props.updateAccount(value)
     }
   }
 
   componentWillReceiveProps (newProps) {
-    this.forceUpdate()
     // Did the login attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
@@ -70,6 +69,12 @@ class SettingsScreen extends React.Component {
     }
   }
 
+  accountChange (newValue) {
+    this.setState({
+      accountValue: newValue
+    })
+  }
+
   render () {
     return (
       <ScrollView style={styles.container}>
@@ -79,6 +84,7 @@ class SettingsScreen extends React.Component {
             type={this.state.accountModel}
             options={this.state.options}
             value={this.state.accountValue}
+            onChange={this.accountChange}
           />
           <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
