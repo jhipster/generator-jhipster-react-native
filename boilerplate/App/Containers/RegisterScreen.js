@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import RegisterActions from '../Redux/RegisterRedux'
@@ -7,7 +7,7 @@ import t from 'tcomb-form-native'
 // Styles
 import styles from './Styles/RegisterScreenStyle'
 
-let Form = t.form.Form;
+let Form = t.form.Form
 
 class RegisterScreen extends React.Component {
 
@@ -25,13 +25,19 @@ class RegisterScreen extends React.Component {
       options: {
         fields: {
           login: {
-            label: 'Username'
+            label: 'Username',
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('password').refs.input.focus()
           },
           password: {
-            secureTextEntry: true
+            secureTextEntry: true,
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
           },
           confirmPassword: {
-            secureTextEntry: true
+            secureTextEntry: true,
+            returnKeyType: 'done',
+            onSubmitEditing: () => this.submitUpdate()
           },
           langKey: {
             hidden: true
@@ -49,11 +55,11 @@ class RegisterScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue();
+    const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.password !== value.confirmPassword) {
-        alert("Passwords do not match")
-        return;
+        Alert.alert('Error', 'Passwords do not match', [{text: 'OK'}])
+        return
       }
       this.props.register(value)
     }
@@ -63,12 +69,12 @@ class RegisterScreen extends React.Component {
     // Did the register attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
-        alert(newProps.error)
+        Alert.alert('Error', newProps.error, [{text: 'OK'}])
       } else {
         this.setState({
           success: true
         })
-        alert("Registration Successful\nPlease check your email")
+        Alert.alert('Registration Successful', 'Please check your email', [{text: 'OK'}])
         NavigationActions.pop()
       }
     }
@@ -85,7 +91,7 @@ class RegisterScreen extends React.Component {
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
           <Form
-            ref="form"
+            ref='form'
             type={this.state.accountModel}
             options={this.state.options}
             value={this.state.accountValue}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 import AccountActions from '../Redux/AccountRedux'
@@ -7,7 +7,7 @@ import t from 'tcomb-form-native'
 // Styles
 import styles from './Styles/SettingsScreenStyle'
 
-let Form = t.form.Form;
+let Form = t.form.Form
 
 class SettingsScreen extends React.Component {
 
@@ -25,15 +25,27 @@ class SettingsScreen extends React.Component {
       accountValue: this.props.account,
       options: {
         fields: {
+          firstName: {
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('lastName').refs.input.focus()
+          },
+          lastName: {
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('email').refs.input.focus()
+          },
           login: {
             hidden: true
+          },
+          email: {
+            returnKeyType: 'done',
+            onSubmitEditing: () => this.submitUpdate()
           },
           langKey: {
             hidden: true
           },
           activated: {
             hidden: true
-          },
+          }
         }
       },
       success: false
@@ -47,7 +59,7 @@ class SettingsScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue();
+    const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       this.props.updateAccount(value)
     }
@@ -58,13 +70,13 @@ class SettingsScreen extends React.Component {
     if (!newProps.fetching) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
-          alert("Error saving settings")
+          Alert.alert('Error', 'Something went wrong while saving the settings', [{text: 'OK'}])
         }
       } else {
         this.setState({
           success: true
         })
-        alert("Settings updated")
+        Alert.alert('Success', 'Settings updated', [{text: 'OK'}])
       }
     }
   }
@@ -80,7 +92,7 @@ class SettingsScreen extends React.Component {
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
           <Form
-            ref="form"
+            ref='form'
             type={this.state.accountModel}
             options={this.state.options}
             value={this.state.accountValue}

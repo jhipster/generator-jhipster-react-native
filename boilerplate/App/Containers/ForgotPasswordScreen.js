@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import PasswordActions from '../Redux/PasswordRedux'
@@ -7,7 +7,7 @@ import t from 'tcomb-form-native'
 // Styles
 import styles from './Styles/ForgotPasswordScreenStyle'
 
-let Form = t.form.Form;
+let Form = t.form.Form
 
 class ForgotPasswordScreen extends React.Component {
 
@@ -35,7 +35,7 @@ class ForgotPasswordScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue();
+    const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       this.props.resetPassword(value.email)
     }
@@ -46,13 +46,13 @@ class ForgotPasswordScreen extends React.Component {
     if (!newProps.fetching) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
-          alert("Error resetting password")
+          Alert.alert('Error', 'Something when wrong resetting your password', [{text: 'OK'}])
         }
       } else {
         this.setState({
           success: true
         })
-        alert("Password reset email sent")
+        Alert.alert('Success', 'Password reset email sent', [{text: 'OK'}])
         NavigationActions.pop()
       }
     }
@@ -69,7 +69,7 @@ class ForgotPasswordScreen extends React.Component {
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
           <Form
-            ref="form"
+            ref='form'
             type={this.state.formModel}
             options={this.state.formOptions}
             value={this.state.formValue}

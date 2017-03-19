@@ -1,13 +1,12 @@
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
-import { Actions as NavigationActions } from 'react-native-router-flux'
 import PasswordActions from '../Redux/PasswordRedux'
 import t from 'tcomb-form-native'
 // Styles
 import styles from './Styles/ChangePasswordScreenStyle'
 
-let Form = t.form.Form;
+let Form = t.form.Form
 
 class ChangePasswordScreen extends React.Component {
 
@@ -44,11 +43,11 @@ class ChangePasswordScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue();
+    const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.password !== value.confirmPassword) {
-        alert("Passwords do not match")
-        return;
+        Alert.alert('Error', 'Passwords do not match', [{text: 'OK'}])
+        return
       }
       this.props.changePassword(value.password)
     }
@@ -58,12 +57,12 @@ class ChangePasswordScreen extends React.Component {
     // Did the changePassword attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
-        alert(newProps.error)
+        Alert.alert('Error', newProps.error, [{text: 'OK'}])
       } else {
         this.setState({
           success: true
         })
-        alert("Password changed")
+        Alert.alert('Success', 'Password changed', [{text: 'OK'}])
       }
     }
   }
@@ -79,7 +78,7 @@ class ChangePasswordScreen extends React.Component {
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
           <Form
-            ref="form"
+            ref='form'
             type={this.state.formModel}
             options={this.state.formOptions}
             value={this.state.formValue}

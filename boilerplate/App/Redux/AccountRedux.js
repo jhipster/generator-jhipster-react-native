@@ -33,11 +33,11 @@ export const updateRequest = (state) => state.merge({ updating: true })
 // we've successfully logged in
 export const success = (state, data) => {
   const { account } = data
-  return state.merge({ fetching: false, error: null, updating:false, account })
+  return state.merge({ fetching: false, error: null, updating: false, account })
 }
 
 // we've had a problem logging in
-export const failure = (state, { error }) => state.merge({ fetching: false, updating:false, error })
+export const failure = (state, { error }) => state.merge({ fetching: false, updating: false, error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 

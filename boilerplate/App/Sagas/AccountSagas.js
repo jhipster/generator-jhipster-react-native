@@ -7,13 +7,12 @@ export function * getAccount (api) {
 
   // success?
   if (response.ok) {
-    console.tron.log("Account - OK")
+    console.tron.log('Account - OK')
     yield put(AccountActions.accountSuccess(response.data))
   } else {
-    console.tron.log("Account - FAIL")
+    console.tron.log('Account - FAIL')
     yield put(AccountActions.accountFailure('WRONG'))
   }
-
 }
 
 // attempts to update account settings
@@ -23,11 +22,10 @@ export function * updateAccount (api, action) {
 
   // success?
   if (response.ok) {
-    console.tron.log("AccountUpdate - OK")
+    console.tron.log('AccountUpdate - OK')
     yield put(AccountActions.accountSuccess(account))
   } else {
-    console.tron.log("AccountUpdate - FAIL")
+    console.tron.log('AccountUpdate - FAIL')
     yield put(AccountActions.accountFailure('WRONG'))
   }
-
 }

@@ -1,12 +1,5 @@
 import React, { PropTypes } from 'react'
-import {
-  View,
-  ScrollView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Image
-} from 'react-native'
+import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import Styles from './Styles/LoginScreenStyles'
 import { Images, Metrics } from '../Themes'
@@ -40,7 +33,7 @@ class LoginScreen extends React.Component {
     if (this.isAttempting && !newProps.fetching) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
-          alert("Invalid login")
+          Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
         }
       } else {
         NavigationActions.pop()

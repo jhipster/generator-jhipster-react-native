@@ -45,9 +45,8 @@ class DrawerContent extends Component {
   }
   handlePressLogout = () => {
     this.toggleDrawer()
-    this.props.logout();
+    this.props.logout()
   }
-
 
   render () {
     return (
