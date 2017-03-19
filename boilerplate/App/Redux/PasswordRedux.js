@@ -7,9 +7,13 @@ const { Types, Creators } = createActions({
   forgotPasswordRequest: ['email'],
   forgotPasswordSuccess: ['response'],
   forgotPasswordFailure: ['error'],
+
+  changePasswordRequest: ['password'],
+  changePasswordSuccess: ['response'],
+  changePasswordFailure: ['error'],
 })
 
-export const ForgotPasswordTypes = Types
+export const PasswordTypes = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -41,6 +45,10 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FORGOT_PASSWORD_REQUEST]: request,
   [Types.FORGOT_PASSWORD_SUCCESS]: success,
   [Types.FORGOT_PASSWORD_FAILURE]: failure,
+
+  [Types.CHANGE_PASSWORD_REQUEST]: request,
+  [Types.CHANGE_PASSWORD_SUCCESS]: success,
+  [Types.CHANGE_PASSWORD_FAILURE]: failure
 })
 
 /* ------------- Selectors ------------- */

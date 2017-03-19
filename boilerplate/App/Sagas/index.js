@@ -10,7 +10,7 @@ import { StartupTypes } from '../Redux/StartupRedux'
 import { GithubTypes } from '../Redux/GithubRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { RegisterTypes } from '../Redux/RegisterRedux'
-import { ForgotPasswordTypes } from '../Redux/ForgotPasswordRedux'
+import { PasswordTypes } from '../Redux/PasswordRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { AccountTypes } from '../Redux/AccountRedux'
 
@@ -19,7 +19,7 @@ import { AccountTypes } from '../Redux/AccountRedux'
 import { startup } from './StartupSagas'
 import { login, logout, loginLoad } from './LoginSagas'
 import { register } from './RegisterSagas'
-import { forgotPasswordRequest } from './ForgotPasswordSagas'
+import { forgotPassword, changePassword } from './PasswordSagas'
 import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
 import { getAccount, updateAccount } from './AccountSagas'
@@ -45,7 +45,8 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REQUEST, login, jhipsterApi),
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout, jhipsterApi),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, jhipsterApi),
-    takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest, jhipsterApi),
+    takeLatest(PasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, jhipsterApi),
+    takeLatest(PasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, jhipsterApi),
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, jhipsterApi),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, jhipsterApi),

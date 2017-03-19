@@ -10,7 +10,7 @@ export default () => {
     account: require('./AccountRedux').reducer,
     login: require('./LoginRedux').reducer,
     register: require('./RegisterRedux').reducer,
-    forgotPassword: require('./ForgotPasswordRedux').reducer,
+    password: require('./PasswordRedux').reducer,
     search: require('./SearchRedux').reducer
   })
 

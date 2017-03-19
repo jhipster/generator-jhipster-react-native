@@ -1,19 +1,83 @@
 import React from 'react'
-import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
+import { ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
-
+import { Actions as NavigationActions } from 'react-native-router-flux'
+import PasswordActions from '../Redux/PasswordRedux'
+import t from 'tcomb-form-native'
 // Styles
 import styles from './Styles/ForgotPasswordScreenStyle'
 
+let Form = t.form.Form;
+
 class ForgotPasswordScreen extends React.Component {
+
+  constructor (props) {
+    super(props)
+    this.state = {
+      formModel: t.struct({
+        email: t.String
+      }),
+      formValue: this.props.forgotPassword,
+      formOptions: {
+        email: {
+          returnKeyType: 'done',
+          onSubmitEditing: () => this.submitForm()
+        }
+      },
+      success: false
+    }
+    this.submitForm = this.submitForm.bind(this)
+    this.formChange = this.formChange.bind(this)
+  }
+
+  submitForm () {
+    this.setState({
+      success: false
+    })
+    // call getValue() to get the values of the form
+    const value = this.refs.form.getValue();
+    if (value) { // if validation fails, value will be null
+      this.props.resetPassword(value.email)
+    }
+  }
+
+  componentWillReceiveProps (newProps) {
+    // Did the update attempt complete?
+    if (!newProps.fetching) {
+      if (newProps.error) {
+        if (newProps.error === 'WRONG') {
+          alert("Error resetting password")
+        }
+      } else {
+        this.setState({
+          success: true
+        })
+        alert("Password reset email sent")
+        NavigationActions.pop()
+      }
+    }
+  }
+
+  formChange (newValue) {
+    this.setState({
+      formValue: newValue
+    })
+  }
 
   render () {
     return (
       <ScrollView style={styles.container}>
         <KeyboardAvoidingView behavior='position'>
-          <Text>Forgot Password Screen</Text>
+          <Form
+            ref="form"
+            type={this.state.formModel}
+            options={this.state.formOptions}
+            value={this.state.formValue}
+            onChange={this.formChange}
+          />
+          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Reset</Text>
+          </TouchableHighlight>
         </KeyboardAvoidingView>
       </ScrollView>
     )
@@ -23,11 +87,14 @@ class ForgotPasswordScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    fetching: state.password.fetching,
+    error: state.password.error
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    resetPassword: (email) => dispatch(PasswordActions.forgotPasswordRequest(email))
   }
 }
 
