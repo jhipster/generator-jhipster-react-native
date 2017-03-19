@@ -30,12 +30,18 @@ In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a ua
 
 ### Generators
 
-Entity generator coming soon!  Because the boilerplate is based on Ignite, we also gain access to other generators and plugins:
- - Screen
- - Component
- - Service
- - Redux
- - Saga
+##### JHipster Entity Generator (*coming soon*)
+ - Entity - `ignite generate entity <name>`
+    - Sets up entity API, listings, detail, and edit pages
+ 
+##### Ignite Generators
+This generator adds Ignite's usual generators to the mix as well.  We have access to:
+ - Container - `ignite generate container <name>`
+ - Component - `ignite generate component <name>`
+ - Listview - `ignite generate listview <name>`
+ - Redux - `ignite generate redux <name>`
+ - Saga - `ignite generate saga <name>`
+ - Screen - `ignite generate screen <name>`
  
 Check out [Ignite's documentation](https://github.com/infinitered/ignite/tree/master/docs) for more details. 
  

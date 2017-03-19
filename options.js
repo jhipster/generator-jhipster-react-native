@@ -38,7 +38,6 @@ const pluginQuestions = [
   }
 ]
 
-//todo handle max/min options
 /**
  * The max preset.
  */
@@ -46,8 +45,8 @@ const max = {
   'auth-type': 'jwt',
   'dev-screens': 'Yes',
   'vector-icons': 'react-native-vector-icons',
-  // i18n: 'react-native-i18n',
-  animatable: 'react-native-animatable'
+  'i18n': 'none',
+  'animatable': 'react-native-animatable'
 }
 
 /**
@@ -57,8 +56,8 @@ const min = {
   'auth-type': 'jwt',
   'dev-screens': 'No',
   'vector-icons': 'none',
-  // i18n: 'none',
-  animatable: 'none'
+  'i18n': 'none',
+  'animatable': 'none'
 }
 
 module.exports = {

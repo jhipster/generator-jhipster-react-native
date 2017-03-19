@@ -23,7 +23,7 @@ const finish = async function (context) {
 
   if (parameters.options['skip-git'] !== true) {
     // initial git
-    if (ystem.which('git')) {
+    if (system.which('git')) {
       const spinner = print.spin('configuring git')
       ignite.log('git init .')
       await system.run('git init .')
@@ -138,13 +138,20 @@ async function install (context) {
     {
       template: 'App/Sagas/LoginSagas.js.ejs',
       target: 'App/Sagas/LoginSagas.js'
+    },
+    {
+      template: 'Tests/Setup.js.ejs',
+      target: 'Tests/Setup.js'
     }
   ]
   const templateProps = {
     name,
     igniteVersion: ignite.version,
     reactNativeVersion: rnInstall.version,
-    authType: jhipsterAnswers['auth-type']
+    authType: jhipsterAnswers['auth-type'],
+    vectorIcons: pluginAnswers['vector-icons'],
+    animatable: pluginAnswers['animatable'],
+    i18n: pluginAnswers['i18n'],
   }
   await ignite.copyBatch(context, templates, templateProps, {
     quiet: true,
@@ -228,8 +235,7 @@ async function install (context) {
   try {
     await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
 
-    // todo uncomment when generators are removed
-    // await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
     if (pluginAnswers['dev-screens'] === 'Yes') {
