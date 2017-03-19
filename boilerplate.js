@@ -242,9 +242,10 @@ async function install (context) {
       })
     }
 
-    if (pluginAnswers['i18n'] === 'react-native-i18n') {
-      await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
-    }
+    // todo handle i18n
+    // if (pluginAnswers['i18n'] === 'react-native-i18n') {
+    //   await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
+    // }
 
     if (pluginAnswers['animatable'] === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, {

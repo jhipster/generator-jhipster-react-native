@@ -24,12 +24,12 @@ const pluginQuestions = [
     type: 'list',
     choices: ['none', 'react-native-vector-icons']
   },
-  {
-    name: 'i18n',
-    message: 'What internationalization library will you use?',
-    type: 'list',
-    choices: ['none', 'react-native-i18n']
-  },
+  // {
+  //   name: 'i18n',
+  //   message: 'What internationalization library will you use?',
+  //   type: 'list',
+  //   choices: ['none', 'react-native-i18n']
+  // },
   {
     name: 'animatable',
     message: 'What animation library will you use?',
@@ -46,7 +46,7 @@ const max = {
   'auth-type': 'jwt',
   'dev-screens': 'Yes',
   'vector-icons': 'react-native-vector-icons',
-  i18n: 'react-native-i18n',
+  // i18n: 'react-native-i18n',
   animatable: 'react-native-animatable'
 }
 
@@ -57,7 +57,7 @@ const min = {
   'auth-type': 'jwt',
   'dev-screens': 'No',
   'vector-icons': 'none',
-  i18n: 'none',
+  // i18n: 'none',
   animatable: 'none'
 }
 
