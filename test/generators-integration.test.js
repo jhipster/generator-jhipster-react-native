@@ -1,83 +1,28 @@
 const test = require('ava')
 const execa = require('execa')
-const { contains } = require('ramda')
+const jetpack = require('fs-jetpack')
+const path = require('path')
 
 const IGNITE = 'ignite'
-const TEST_IGNITE = 'cd integration_test && ignite'
+const APP = 'IntegrationTest'
 
-test.before('can setup integration project', async t => {
-    const proj_result = await execa(IGNITE, ['new', 'integration_test', '--boilerplate', 'ignite-jhipster'])
-    process.chdir('./integration_test')
-    t.is(proj_result.code, 0)
-    // Install self
-    const result = await execa(IGNITE, ['add', '../'])
-    t.is(result.code, 0)
+test.before(async t => {
+    jetpack.remove(APP)
+    await execa(IGNITE, ['new', APP, '--min', '--skip-git', `--boilerplate=${__dirname}/../`], { env: { 'IGNITE_PLUGIN_PATH': path.resolve('../') } })
+    process.chdir(APP)
+    // for some  reason... add it again (TODO: WTF)
+    await execa(IGNITE, ['add', '../'])
 })
 
-// lint should be clean before each generation
-test.beforeEach(async t => {
-    const preLint = await execa('npm', ['run', 'lint'])
-    t.is(preLint.code, 0)
+test('generates an entity', async t => {
+    // await execa(IGNITE, ['g', 'entity', 'Foo'])
+    // t.truthy(jetpack.exists('App/Components/Test.js'))
+    // t.truthy(jetpack.exists('App/Components/Styles/TestStyle.js'))
+    const lint = await execa('npm', ['-s', 'run', 'lint'])
+    t.is(lint.stderr, '')
 })
 
-test('generate component works', async t => {
-    const result = await execa(IGNITE, ['g', 'component', 'TestComponent'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate listview of type row works', async t => {
-    const result = await execa(IGNITE, ['g', 'listview', 'TestListviewRow', '--type=Row'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate listview of type sections works', async t => {
-    const result = await execa(IGNITE, ['g', 'listview', 'TestListviewSections', '--type=With Sections'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate listview of type grid works', async t => {
-    const result = await execa(IGNITE, ['g', 'listview', 'TestListviewGrid', '--type=Grid'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate redux works', async t => {
-    const result = await execa(IGNITE, ['g', 'redux', 'TestRedux'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate container works', async t => {
-    const result = await execa(IGNITE, ['g', 'container', 'TestContainer'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate saga works', async t => {
-    const result = await execa(IGNITE, ['g', 'saga', 'TestSaga'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test('generate screen works', async t => {
-    const result = await execa(IGNITE, ['g', 'screen', 'TestScreen'])
-    t.is(result.code, 0)
-    const postLint = await execa('npm', ['run', 'lint'])
-    t.is(postLint.code, 0)
-})
-
-test.after.always('clean up all generated items', async t => {
+test.after.always('clean up all generated items', t => {
     process.chdir('../')
-    const deleteCommand = await execa('rm', ['-rf', 'integration_test'])
-    t.is(deleteCommand.code, 0)
+    jetpack.remove(APP)
 })
