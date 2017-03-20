@@ -4,6 +4,7 @@ import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import LoginActions from '../Redux/LoginRedux'
+import AccountActions from '../Redux/AccountRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 
 // Styles
@@ -22,6 +23,9 @@ class RootContainer extends Component {
     if (newProps.rehydrationComplete) {
       this.props.loadLogin()
     }
+    if (newProps.login) {
+      this.props.getAccount()
+    }
   }
 
   render () {
@@ -36,14 +40,16 @@ class RootContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    rehydrationComplete: state.appState.rehydrationComplete
+    rehydrationComplete: state.appState.rehydrationComplete,
+    login: state.login.id_token
   }
 }
 
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup()),
-  loadLogin: () => dispatch(LoginActions.loginLoad())
+  loadLogin: () => dispatch(LoginActions.loginLoad()),
+  getAccount: () => dispatch(AccountActions.accountRequest())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootContainer)

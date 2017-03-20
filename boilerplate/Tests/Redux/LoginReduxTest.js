@@ -10,7 +10,7 @@ test('attempt', (t) => {
 test('success', (t) => {
   const state = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
 
-  t.is(state.username, 'hi')
+  t.is(state.id_token, 'hi')
 })
 
 test('failure', (t) => {
@@ -21,8 +21,8 @@ test('failure', (t) => {
 })
 
 test('logout', (t) => {
-  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
-  const state = reducer(loginState, Actions.logout())
+  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
+  const state = reducer(loginState, Actions.logoutRequest())
 
   t.falsy(state.username)
 })
