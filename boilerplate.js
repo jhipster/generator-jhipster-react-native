@@ -86,16 +86,15 @@ async function install (context) {
   let jhipsterAnswers
   let pluginAnswers
   if (parameters.options.max) {
-      jhipsterAnswers = options.answers.max
-      pluginAnswers = options.answers.max
+    jhipsterAnswers = options.answers.max
+    pluginAnswers = options.answers.max
   } else if (parameters.options.min) {
-      jhipsterAnswers = options.answers.min
-      pluginAnswers = options.answers.min
+    jhipsterAnswers = options.answers.min
+    pluginAnswers = options.answers.min
   } else {
-      jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
-      pluginAnswers = await prompt.ask(options.pluginQuestions)
+    jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
+    pluginAnswers = await prompt.ask(options.pluginQuestions)
   }
-
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({ name, skipJest: true })
@@ -153,7 +152,7 @@ async function install (context) {
     authType: jhipsterAnswers['auth-type'],
     vectorIcons: pluginAnswers['vector-icons'],
     animatable: pluginAnswers['animatable'],
-    i18n: pluginAnswers['i18n'],
+    i18n: pluginAnswers['i18n']
   }
   await ignite.copyBatch(context, templates, templateProps, {
     quiet: true,

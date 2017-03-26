@@ -61,7 +61,7 @@ const min = {
 }
 
 module.exports = {
-    jhipsterQuestions,
-    pluginQuestions,
+  jhipsterQuestions,
+  pluginQuestions,
   answers: { min, max }
 }
