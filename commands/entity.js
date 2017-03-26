@@ -18,17 +18,37 @@ module.exports = async function (context) {
     // ignite-jhipster-api-method-needle
     // ignite-jhipster-api-export-needle
 
+    // const updateFoo = () => api.put('api/foos')
+    // const getFoos = () => api.get('api/foos')
+    // const getFoo = (fooId) => api.get('api/foos/' + fooId)
+    // const deleteFoo = (fooId) => api.delete('api/foos/' + fooId)
+
+    // updateFoo,
+    // getFoos,
+    // getFoo,
+    // deleteFoo,
+
     // generate a saga for the entity
 
     // generate a redux for the entity
 
     // import redux in redux/index.js
     // ignite-jhipster-redux-store-import-needle
+    // foos: require('./FooRedux').reducer,
 
     // import saga/redux in sagas/index.js
     // ignite-jhipster-saga-redux-import-needle
+    // import { FooTypes } from '../Redux/FooRedux'
+
     // ignite-jhipster-saga-method-import-needle
+    // import { getFoo, getFoos, updateFoo, deleteFoo } from './FooSagas'
+
     // ignite-jhipster-saga-redux-connect-needle
+    // takeLatest(FooTypes.FOO_REQUEST, getFoo, jhipsterApi),
+    // takeLatest(FooTypes.FOO_ALL_REQUEST, getFoos, jhipsterApi),
+    // takeLatest(FooTypes.FOO_UPDATE_REQUEST, updateFoo, jhipsterApi),
+    // takeLatest(FooTypes.FOO_DELETE_REQUEST, deleteFoo, jhipsterApi),
+
 
     // generate entity listing component
     // connect entity redux
@@ -53,24 +73,24 @@ module.exports = async function (context) {
     const props = { name }
     const jobs = [
         // component jobs
-        {
-            template: 'component.ejs',
-            target: `App/Components/${name}.js`
-        },
-        {
-            template: 'component-style.ejs',
-            target: `App/Components/Styles/${name}Style.js`
-        },
+        // {
+        //     template: 'component.ejs',
+        //     target: `App/Components/${name}.js`
+        // },
+        // {
+        //     template: 'component-style.ejs',
+        //     target: `App/Components/Styles/${name}Style.js`
+        // },
         // screen jobs
-        {
-            template: `screen.ejs`,
-            target: `App/Containers/${name}Screen.js`
-        },
-        {
-            template: `saga.ejs`,
-            target: `App/Containers/Styles/${name}ScreenStyle.js`
-        },
-
+        // {
+        //     template: `screen.ejs`,
+        //     target: `App/Containers/${name}Screen.js`
+        // },
+        // {
+        //     template: `saga.ejs`,
+        //     target: `App/Containers/Styles/${name}ScreenStyle.js`
+        // },
+        //
         // saga jobs
         {
             template: `saga.ejs`,
@@ -83,35 +103,35 @@ module.exports = async function (context) {
         },
 
         // listview jobs
-        {
-            template: `listview.ejs`,
-            target: `App/Containers/${name}.js`
-        },
-        {
-            template: `listview-style.ejs`,
-            target: `App/Containers/Styles/${name}Style.js`
-        }
+        // {
+        //     template: `listview.ejs`,
+        //     target: `App/Containers/${name}.js`
+        // },
+        // {
+        //     template: `listview-style.ejs`,
+        //     target: `App/Containers/Styles/${name}Style.js`
+        // }
     ]
 
-    if (tests) {
-        // component tests
-        if (tests === 'ava') {
-            jobs.push({
-                template: 'component-test.ejs',
-                target: `Test/Components/${name}Test.js`
-            })
-        }
-        // saga tests
-        jobs.push({
-            template: `saga-test-${tests}.ejs`,
-            target: `Tests/Saga/${name}SagaTest.js`
-        })
-        // redux tests
-        jobs.push({
-            template: `redux-test-${config.tests}.ejs`,
-            target: `Tests/Redux/${name}ReduxTest.js`
-        })
-    }
+    // if (tests) {
+    //     // component tests
+    //     if (tests === 'ava') {
+    //         jobs.push({
+    //             template: 'component-test.ejs',
+    //             target: `Test/Components/${name}Test.js`
+    //         })
+    //     }
+    //     // saga tests
+    //     jobs.push({
+    //         template: `saga-test-${tests}.ejs`,
+    //         target: `Tests/Saga/${name}SagaTest.js`
+    //     })
+    //     // redux tests
+    //     jobs.push({
+    //         template: `redux-test-${config.tests}.ejs`,
+    //         target: `Tests/Redux/${name}ReduxTest.js`
+    //     })
+    // }
 
     await ignite.copyBatch(context, jobs, props)
 
