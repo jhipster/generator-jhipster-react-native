@@ -10,6 +10,7 @@ import RegisterScreen from '../Containers/RegisterScreen'
 import SettingsScreen from '../Containers/SettingsScreen'
 import ChangePasswordScreen from '../Containers/ChangePasswordScreen'
 import ForgotPasswordScreen from '../Containers/ForgotPasswordScreen'
+// ignite-jhipster-navigation-import-needle
 
 /* **************************
 * Documentation: https://github.com/aksonov/react-native-router-flux
@@ -27,6 +28,7 @@ class NavigationRouter extends Component {
             <Scene key='settings' component={SettingsScreen} title='Settings' />
             <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' />
             <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' />
+            // ignite-jhipster-navigation-needle
           </Scene>
         </Scene>
       </Router>

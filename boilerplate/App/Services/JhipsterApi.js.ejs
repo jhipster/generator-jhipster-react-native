@@ -59,6 +59,8 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const updateAccount = (account) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account', account)
   const changePassword = (newPassword) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account/change_password', newPassword, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
 
+  // ignite-jhipster-api-method-needle
+
   // ------
   // STEP 3
   // ------
@@ -73,6 +75,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   //
   return {
     // a list of the API functions from step 2
+    // ignite-jhipster-api-export-needle
     setAuthToken,
     removeAuthToken,
     login,

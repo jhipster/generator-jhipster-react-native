@@ -14,6 +14,40 @@ module.exports = async function (context) {
         return
     }
 
+    // add methods to api
+    // ignite-jhipster-api-method-needle
+    // ignite-jhipster-api-export-needle
+
+    // generate a saga for the entity
+
+    // generate a redux for the entity
+
+    // import redux in redux/index.js
+    // ignite-jhipster-redux-store-import-needle
+
+    // import saga/redux in sagas/index.js
+    // ignite-jhipster-saga-redux-import-needle
+    // ignite-jhipster-saga-method-import-needle
+    // ignite-jhipster-saga-redux-connect-needle
+
+    // generate entity listing component
+    // connect entity redux
+
+    // generate entity listing screen
+    // connect entity redux
+
+    // generate entity detail component
+    // connect entity redux
+
+    // generate entity edit component
+    // connect entity redux
+
+    // add listing screen to navigation
+    // ignite-jhipster-navigation-import-needle
+    // ignite-jhipster-navigation-needle
+
+    // add screen for entities, link to listings page
+
     // read some configuration
     const name = pascalCase(parameters.first)
     const props = { name }

@@ -13,6 +13,7 @@ import { RegisterTypes } from '../Redux/RegisterRedux'
 import { PasswordTypes } from '../Redux/PasswordRedux'
 import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { AccountTypes } from '../Redux/AccountRedux'
+// ignite-jhipster-saga-redux-import-needle
 
 /* ------------- Sagas ------------- */
 
@@ -23,6 +24,7 @@ import { forgotPassword, changePassword } from './PasswordSagas'
 import { getUserAvatar } from './GithubSagas'
 import { openScreen } from './OpenScreenSagas'
 import { getAccount, updateAccount } from './AccountSagas'
+// ignite-jhipster-saga-method-import-needle
 
 /* ------------- API ------------- */
 
@@ -50,6 +52,8 @@ export default function * root () {
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, jhipsterApi),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, jhipsterApi),
+
+    // ignite-jhipster-saga-redux-connect-needle
 
     // some sagas receive extra parameters in addition to an action
     takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)

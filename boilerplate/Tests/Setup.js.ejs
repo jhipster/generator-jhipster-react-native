@@ -1,9 +1,9 @@
 import mockery from 'mockery'
 import m from 'module'
 <%_ if (props.i18n === 'react-native-i18n') { _%>
-// import english from '../App/I18n/languages/english.json'
+import english from '../App/I18n/languages/english.json'
+import {keys, replace, forEach} from 'ramda'
 <%_ } _%>
-// import {keys, replace, forEach} from 'ramda'
 
 // inject __DEV__ as it is not available when running through the tests
 global.__DEV__ = true
