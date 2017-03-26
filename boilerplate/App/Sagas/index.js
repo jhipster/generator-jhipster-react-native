@@ -52,7 +52,6 @@ export default function * root () {
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, jhipsterApi),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, jhipsterApi),
-
     // ignite-jhipster-saga-redux-connect-needle
 
     // some sagas receive extra parameters in addition to an action

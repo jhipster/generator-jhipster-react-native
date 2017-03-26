@@ -4,9 +4,20 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  <%= camelCase(props.name) %>Request: ['data'],
-  <%= camelCase(props.name) %>Success: ['payload'],
-  <%= camelCase(props.name) %>Failure: null
+    <%= camelCase(props.name) %>Request: ['<%= camelCase(props.name) %>Id'],
+    <%= camelCase(props.name) %>AllRequest: [],
+    <%= camelCase(props.name) %>UpdateRequest: ['<%= camelCase(props.name) %>Id'],
+    <%= camelCase(props.name) %>DeleteRequest: ['<%= camelCase(props.name) %>Id'],
+
+    <%= camelCase(props.name) %>Success: ['<%= camelCase(props.name) %>'],
+    <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.name) %>s'],
+    <%= camelCase(props.name) %>UpdateSuccess: ['<%= camelCase(props.name) %>'],
+    <%= camelCase(props.name) %>DeleteSuccess: [],
+
+    <%= camelCase(props.name) %>Failure: ['error'],
+    <%= camelCase(props.name) %>AllFailure: ['error'],
+    <%= camelCase(props.name) %>UpdateFailure: ['error'],
+    <%= camelCase(props.name) %>DeleteFailure: ['error']
 })
 
 export const <%= props.name %>Types = Types
@@ -15,32 +26,134 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  data: null,
-  fetching: null,
-  payload: null,
-  error: null
+    fetchingOne: null,
+    fetchingAll: null,
+    updating: null,
+    deleting: null,
+    <%= camelCase(props.name) %>: null,
+    <%= camelCase(props.name) %>s: null,
+    errorOne: null,
+    errorAll: null,
+    errorUpdating: null,
+    errorUDeleting: null
 })
 
 /* ------------- Reducers ------------- */
 
 // request the data from an api
-export const request = (state, { data }) =>
-  state.merge({ fetching: true, data, payload: null })
+export const request = (state) =>
+    state.merge({
+        fetchingOne: true,
+        <%= camelCase(props.name) %>: null
+    })
 
-// successful api lookup
+// request the data from an api
+export const allRequest = (state) =>
+    state.merge({
+        fetchingAll: true,
+        <%= camelCase(props.name) %>s: null
+    })
+
+// request to update from an api
+export const updateRequest = (state) =>
+    state.merge({
+        updating: true
+    })
+
+// request to delete from an api
+export const deleteRequest = (state) =>
+    state.merge({
+        deleting: true
+    })
+
+// successful api lookup for single entity
 export const success = (state, action) => {
-  const { payload } = action
-  return state.merge({ fetching: false, error: null, payload })
+    const { <%= camelCase(props.name) %> } = action
+    return state.merge({
+        fetchingOne: false,
+        errorOne: null,
+        <%= camelCase(props.name) %>
+    })
+}
+// successful api lookup for all entities
+export const allSuccess = (state, action) => {
+    const { <%= camelCase(props.name) %>s } = action
+    return state.merge({
+        fetchingAll: false,
+        errorAll: null,
+        <%= camelCase(props.name) %>s
+    })
+}
+// successful api update
+export const updateSuccess = (state, action) => {
+    const { <%= camelCase(props.name) %> } = action
+    return state.merge({
+        updating: false,
+        errorUpdating: null,
+        <%= camelCase(props.name) %>
+    })
+}
+// successful api delete
+export const deleteSuccess = (state) => {
+    return state.merge({
+        deleting: false,
+        errorDeleting: null,
+        <%= camelCase(props.name) %>: null
+    })
 }
 
-// Something went wrong somewhere.
-export const failure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+// Something went wrong fetching a single entity.
+export const failure = (state, action) => {
+    const { error } = action
+    state.merge({
+        fetchingOne: false,
+        errorOne: error,
+        <%= camelCase(props.name) %>: null
+    })
+}
+// Something went wrong fetching all entities.
+export const allFailure = (state, action) => {
+    const { error } = action
+    state.merge({
+        fetchingAll: false,
+        errorAll: error,
+        <%= camelCase(props.name) %>s: null
+    })
+}
+// Something went wrong updating.
+export const updateFailure = (state, action) => {
+    const { error } = action
+    state.merge({
+        updating: false,
+        errorUpdating: error,
+        <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>
+    })
+}
+// Something went wrong deleting.
+export const deleteFailure = (state, action) => {
+    const { error } = action
+    state.merge({
+        deleting: false,
+        errorDeleting: error,
+        <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>
+    })
+}
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= snakeCase(props.name).toUpperCase() %>_REQUEST]: request,
-  [Types.<%= snakeCase(props.name).toUpperCase() %>_SUCCESS]: success,
-  [Types.<%= snakeCase(props.name).toUpperCase() %>_FAILURE]: failure
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_REQUEST]: request,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_REQUEST]: allRequest,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
+
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_SUCCESS]: success,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_SUCCESS]: allSuccess,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
+
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_FAILURE]: failure,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_FAILURE]: allFailure,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
+    [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_FAILURE]: deleteFailure
 })

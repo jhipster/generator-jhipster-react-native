@@ -52,7 +52,7 @@ V1
  - [x] User Authentication (Login/Logout for JWT, UAA and Oauth2)
  - [x] User Pages (Register, Change/Reset Password, Settings)
  - [ ] Entity Generator - *In Progress*
-     - [ ] API 
+     - [X] API (Sagas/Redux) 
      - [ ] Listings Page
      - [ ] Detail Page
      - [ ] Edit Page
