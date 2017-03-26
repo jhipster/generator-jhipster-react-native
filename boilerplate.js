@@ -108,10 +108,12 @@ async function install (context) {
   spinner.text = '▸ copying files'
   spinner.start()
   filesystem.copy(`${__dirname}/boilerplate/App`, `${process.cwd()}/App`, {
-    overwrite: true
+    overwrite: true,
+    matching: '!*.ejs'
   })
   filesystem.copy(`${__dirname}/boilerplate/Tests`, `${process.cwd()}/Tests`, {
-    overwrite: true
+    overwrite: true,
+    matching: '!*.ejs'
   })
   spinner.stop()
 
@@ -157,12 +159,6 @@ async function install (context) {
     quiet: true,
     directory: `${ignite.ignitePluginPath()}/boilerplate`
   })
-
-    // cleanup ejs templates
-    spinner.text = '▸ cleaning up templates'
-    spinner.start()
-    filesystem.remove(`${process.cwd()}/App/**/*.ejs`)
-    spinner.stop()
 
   /**
    * Append to files

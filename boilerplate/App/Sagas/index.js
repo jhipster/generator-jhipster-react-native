@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga'
+import { takeLatest } from 'redux-saga/effects'
 import API from '../Services/Api'
 import JHIPSTER_API from '../Services/JhipsterApi'
 import FixtureAPI from '../Services/FixtureApi'
