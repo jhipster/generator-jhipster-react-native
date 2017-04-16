@@ -23,7 +23,7 @@ class RootContainer extends Component {
     if (newProps.rehydrationComplete) {
       this.props.loadLogin()
     }
-    if (newProps.login) {
+    if (newProps.login && newProps.rehydrationComplete) {
       this.props.getAccount()
     }
   }
