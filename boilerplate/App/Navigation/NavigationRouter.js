@@ -28,7 +28,7 @@ class NavigationRouter extends Component {
             <Scene key='settings' component={SettingsScreen} title='Settings' />
             <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' />
             <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' />
-            {/*ignite-jhipster-navigation-needle*/}
+            {/* ignite-jhipster-navigation-needle */}
           </Scene>
         </Scene>
       </Router>
