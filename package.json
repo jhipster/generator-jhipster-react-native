@@ -11,9 +11,7 @@
     "templates",
     "boilerplate.js",
     "ignite.json",
-    "options.js",
-    "plugin.js",
-    "screenExamples.js"
+    "options.js"
   ],
   "author": {
     "name": "Jon Ruddell",
