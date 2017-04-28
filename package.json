@@ -32,15 +32,15 @@
     ]
   },
   "devDependencies": {
-    "ava": "^0.18.2",
-    "babel-eslint": "^7.1.1",
-    "fs-jetpack": "^0.12.0",
-    "np": "^2.12.0",
-    "nyc": "^10.1.2",
-    "sinon": "^1.17.7",
-    "standard": "^8.6.0"
+    "ava": "0.19.1",
+    "babel-eslint": "7.2.3",
+    "fs-jetpack": "0.13.3",
+    "np": "2.13.3",
+    "nyc": "10.2.0",
+    "sinon": "1.17.7",
+    "standard": "8.6.0"
   },
   "dependencies": {
-    "ramda": "^0.23.0"
+    "ramda": "0.23.0"
   }
 }
