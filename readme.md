@@ -1,4 +1,5 @@
 # ignite-jhipster
+[![NPM version][npm-image]][npm-url] [![Build Status][semaphore-image]][semaphore-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
 A React Native boilerplate for JHipster apps.
 
@@ -62,3 +63,10 @@ Later Features
  - [ ] Admin Pages
  - [ ] Internationalization
  - [ ] Social Login
+
+[npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
+[npm-url]: https://npmjs.org/package/ignite-jhipster
+[semaphore-image]: https://semaphoreci.com/api/v1/ruddell/ignite-jhipster/branches/master/shields_badge.svg
+[semaphore-url]: https://semaphoreci.com/ruddell/ignite-jhipster
+[daviddm-image]: https://david-dm.org/ruddell/ignite-jhipster.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/ruddell/ignite-jhipster
