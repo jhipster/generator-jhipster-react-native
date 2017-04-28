@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 // import YourActions from '../Redux/YourRedux'
 
 // Styles
-import styles from './Styles/<%= props.name %>Style'
+import styles from './Styles/<%= props.name %>ScreenStyle'
 
-class <%= props.name %> extends React.Component {
+class <%= props.name %>Screen extends React.Component {
 
   render () {
     return (
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>Screen)
