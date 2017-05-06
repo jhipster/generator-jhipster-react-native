@@ -180,7 +180,6 @@ async function install (context) {
   // NOTE(steve): I'm re-adding this here because boilerplates now hold permanent files
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   try {
-
     // Disabled slow but reliable method here
     // await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
     // mini version of `ignite add ir-jhipster` here -- but faster
@@ -199,7 +198,6 @@ async function install (context) {
 
     ignite.setIgnitePluginPath(__dirname)
     ignite.saveIgniteConfig(newConfig)
-
 
     const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
 
@@ -237,7 +235,6 @@ async function install (context) {
     throw e
   }
 
-
   // git configuration
   if (parameters.options['skip-git'] !== true) {
     // initial git
@@ -246,7 +243,7 @@ async function install (context) {
       const spinner = print.spin('configuring git')
 
       // TODO: Make husky hooks optional
-      const huskyCmd =  '' // `&& node node_modules/husky/bin/install .`
+      const huskyCmd = '' // `&& node node_modules/husky/bin/install .`
       system.run(`git init . && git add . && git commit -m "Initial commit." ${huskyCmd}`)
 
       spinner.succeed(`configured git`)
