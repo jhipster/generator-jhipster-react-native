@@ -4,7 +4,7 @@
   "license": "MIT",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "files": [
     "boilerplate",
     "commands",
