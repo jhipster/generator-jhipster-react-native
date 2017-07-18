@@ -34,6 +34,7 @@
   "devDependencies": {
     "ava": "0.19.1",
     "babel-eslint": "7.2.3",
+    "fs-extra": "4.0.0",
     "fs-jetpack": "0.13.3",
     "np": "2.13.3",
     "nyc": "10.2.0",

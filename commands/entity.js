@@ -2,8 +2,10 @@
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, strings, print, ignite } = context
+  const { ignite, parameters, print, prompt, strings } = context
   const { pascalCase, snakeCase, camelCase, isBlank } = strings
+  const prompts = require('./entity-prompts')
+  const fs = require('fs-extra')
   // const config = ignite.loadIgniteConfig()
   // const { tests } = config
 
@@ -17,6 +19,49 @@ module.exports = async function (context) {
   // read some configuration
   const name = pascalCase(parameters.first)
   const props = { name }
+  const entityFileName = `${name}.json`
+  const localEntityFilePath = `.jhipster/${entityFileName}`
+  const igniteConfigPath = 'ignite/ignite.json'
+
+  // load the ignite config and set the default jhipster directory
+  let igniteConfig = await fs.readJson(igniteConfigPath)
+  prompts.entityPrompts[0].default = igniteConfig.jhipsterDirectory
+
+  // if the file exists, skip loading it
+  if (fs.existsSync(localEntityFilePath)) {
+    print.success(`Found the entity config locally in .jhipster`)
+  } else {
+    // prompt the user until an entity configuration file is found
+    let fullEntityFilePath
+    let jhipsterDirectory
+    while (true) {
+      let entityAnswers = await prompt.ask(prompts.entityPrompts)
+      // strip the trailing slash from the directory
+      jhipsterDirectory = `${entityAnswers.filePath}`.replace(/\/$/, ``)
+      fullEntityFilePath = `${jhipsterDirectory}/.jhipster/${entityFileName}`
+      print.info(`Looking for ${fullEntityFilePath}`)
+      if (fs.existsSync(fullEntityFilePath)) {
+        print.success(`Found entity file at ${fullEntityFilePath}`)
+        break
+      } else {
+        print.error(`Could not find entity file, please try again.`)
+      }
+    }
+
+    if (!fs.existsSync(`.jhipster`)) {
+      fs.mkdirSync(`.jhipster`)
+    }
+
+    await fs.copy(fullEntityFilePath, localEntityFilePath)
+    print.success(`Entity config saved to your app's .jhipster folder.`)
+
+    // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
+    igniteConfig.jhipsterDirectory = jhipsterDirectory
+    await fs.writeJson(igniteConfigPath, igniteConfig, { spaces: '\t' })
+  }
+
+  // load the entity config into memory
+  // let entityConfig = await fs.readJson(localEntityFilePath)
 
   const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
