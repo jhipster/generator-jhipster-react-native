@@ -3,7 +3,7 @@ import Drawer from 'react-native-drawer'
 import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
 import DrawerContent from '../Containers/DrawerContent'
 import { connect } from 'react-redux'
-import Styles from './Styles/NavigationDrawerStyles'
+import styles from './Styles/NavigationDrawerStyles'
 
 /* *******************
 * Documentation: https://github.com/root-two/react-native-drawer
@@ -21,7 +21,7 @@ class NavigationDrawer extends Component {
         onOpen={() => NavigationActions.refresh({key: state.key, open: true})}
         onClose={() => NavigationActions.refresh({key: state.key, open: false})}
         content={<DrawerContent />}
-        styles={Styles}
+        styles={styles}
         tapToClose
         openDrawerOffset={0.2}
         panCloseMask={0.2}
