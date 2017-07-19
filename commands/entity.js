@@ -9,6 +9,9 @@ module.exports = async function (context) {
   // const config = ignite.loadIgniteConfig()
   // const { tests } = config
 
+  // flags
+  const jhDirectoryFlag = parameters.options['jh-dir'] || ''
+
   // validation
   if (isBlank(parameters.first)) {
     print.info(`${context.runtime.brand} generate entity <name>\n`)
@@ -27,13 +30,23 @@ module.exports = async function (context) {
   let igniteConfig = await fs.readJson(igniteConfigPath)
   prompts.entityPrompts[0].default = igniteConfig.jhipsterDirectory
 
+  let fullEntityFilePath
+  let jhipsterDirectory
+
   // if the file exists, skip loading it
   if (fs.existsSync(localEntityFilePath)) {
     print.success(`Found the entity config locally in .jhipster`)
+  } else if (jhDirectoryFlag) {
+    if (!fs.existsSync(`${jhDirectoryFlag}/${localEntityFilePath}`)) {
+      print.error(`No entity configuration file found at ${jhDirectoryFlag}/${localEntityFilePath}`)
+      return
+    }
+    print.success(`Found the entity config at ${jhDirectoryFlag}/${localEntityFilePath}`)
+    jhipsterDirectory = jhDirectoryFlag
+    fullEntityFilePath = `${jhDirectoryFlag}/.jhipster/${localEntityFilePath}`
+
   } else {
     // prompt the user until an entity configuration file is found
-    let fullEntityFilePath
-    let jhipsterDirectory
     while (true) {
       let entityAnswers = await prompt.ask(prompts.entityPrompts)
       // strip the trailing slash from the directory
@@ -95,8 +108,8 @@ module.exports = async function (context) {
   // import redux in redux/index.js
   ignite.patchInFile(reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
-    insert: `${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`,
-    match: `${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`
+    insert: `    ${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`,
+    match: `    ${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`
   })
 
   // import saga/redux in sagas/index.js

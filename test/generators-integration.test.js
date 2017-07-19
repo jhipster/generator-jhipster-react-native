@@ -14,7 +14,9 @@ test.before(async t => {
 })
 
 test('generates an entity', async t => {
-  await execa(IGNITE, ['g', 'entity', 'Foo'], { preferLocal: false })
+  console.log('Generating entity Foo')
+  await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])
+  console.log('Generated entity Foo')
   // t.is(jetpack.exists('App/Components/Test.js'), 'file')
   // t.is(jetpack.exists('App/Components/Styles/TestStyle.js'), 'file')
   const lint = await execa('npm', ['-s', 'run', 'lint'])
