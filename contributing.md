@@ -21,10 +21,25 @@ ignite new SampleApp -b /full/path/to/your/ignite-jhipster
 
 ### Making Changes to the Generator
 
- - Any changes you make in the `boilerplate` directory will be reflected on a fresh app.
+#### Changing the Boilerplate
 
-It's recommended to create and test the changes in a generated app, then transfer the changes to the boilerplate files.  Use git to track your progress.  
-   
- - Changes to the `commands` folder can be tested by running the command `ignite generate commandName commandArguments`.
+Any changes you make in the `boilerplate` directory will be reflected on a fresh app.
+
+It's recommended to create and test the changes in a generated app, then transfer the changes to the boilerplate files.  Use `git` to help track your progress.  
+
+#### Changing the Commands
+
+"Commands" are used for generating things after the app has already been created, such as entities, components, or styles.
+
+ - Commands are un by calling `ignite generate` and the command, sample commands include:
+   - `ignite generate entity Foo`
+   - `ignite generate screen FooScreen`
+   - `ignite generate component FooComponent`
+   - `ignite generate container FooContainer`
  
-Commands are used for generating things after the app has already been created such as components or styles.
+To develop and test commands, you will need to update the code in your app's local `node_modules`. Copy the folder directly:
+ 
+ ```
+ cp /full/path/to/your/ignite-jhipster ./node_modules/
+ ```
+This will be easier in the future, once Ignite supports symlinks for commands (TODO: open issue or figure this out) 
