@@ -7,22 +7,17 @@ Fork the reporistory and clone it to your workspace.  Then add this repository a
 ```
 git remote add upstream https://github.com/ruddell/ignite-jhipster.git
 ```
-To use your local copy of `ignite-jhipster` instead of the version published on NPM, run the following command one directory up from `ignite-jhipster`.  
-
-```
-export IGNITE_PLUGIN_PATH=$(pwd) 
-```
-
-For example, if  you cloned into `/home/ruddell/ignite-jhipster`, run that command in `/home/ruddell`.  After running, any command in the same terminal will use the local `ignite-jhipster`
 
 ### Generating an App
 
-Generating an app using the `ignite-jhipster` boilerplate is the same as normal:
+Generating an app using your local `ignite-jhipster` boilerplate is similar to normal, just pass the directory as a flag like:
 
 
 ```
-ignite new SampleApp --boilerplate ignite-jhipster
+ignite new SampleApp -b /full/path/to/your/ignite-jhipster
 ```
+
+**Note:** There is [an issue with relative paths](https://github.com/infinitered/ignite-ir-boilerplate/issues/107), please use a full path 
 
 ### Making Changes to the Generator
 
@@ -30,6 +25,6 @@ ignite new SampleApp --boilerplate ignite-jhipster
 
 It's recommended to create and test the changes in a generated app, then transfer the changes to the boilerplate files.  Use git to track your progress.  
    
- - Changes to the `commands` folder can be tested by running the command `ignite generate commandName`.
+ - Changes to the `commands` folder can be tested by running the command `ignite generate commandName commandArguments`.
  
-Commands are used for generating things after the app has already been created such as components or styles.  The entity generator will eventually be a a command.
+Commands are used for generating things after the app has already been created such as components or styles.
