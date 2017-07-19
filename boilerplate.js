@@ -188,8 +188,7 @@ async function install (context) {
     const perfStart = (new Date()).getTime()
     const spinner = print.spin(`adding ${print.colors.cyan(moduleName)}`)
 
-    // note: npm is much faster than yarn here. ಠ_ಠ
-    await system.run(`npm i ${__dirname} --save-dev`)
+    await system.spawn(`ignite add ${moduleName} ${debugFlag}`, { stdio: 'inherit' })
 
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
@@ -209,15 +208,11 @@ async function install (context) {
 
     // now run install of Ignite Plugins
     if (pluginAnswers['dev-screens'] === 'Yes') {
-      await system.spawn(`ignite add dev-screens ${debugFlag}`, {
-        stdio: 'inherit'
-      })
+      await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
     if (pluginAnswers['vector-icons'] === 'react-native-vector-icons') {
-      await system.spawn(`ignite add vector-icons ${debugFlag}`, {
-        stdio: 'inherit'
-      })
+      await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
     }
 
     // todo handle i18n
@@ -226,9 +221,7 @@ async function install (context) {
     // }
 
     if (pluginAnswers['animatable'] === 'react-native-animatable') {
-      await system.spawn(`ignite add animatable ${debugFlag}`, {
-        stdio: 'inherit'
-      })
+      await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
     }
   } catch (e) {
     ignite.log(e)
