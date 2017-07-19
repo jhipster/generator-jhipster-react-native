@@ -44,7 +44,6 @@ module.exports = async function (context) {
     print.success(`Found the entity config at ${jhDirectoryFlag}/${localEntityFilePath}`)
     jhipsterDirectory = jhDirectoryFlag
     fullEntityFilePath = `${jhDirectoryFlag}/.jhipster/${localEntityFilePath}`
-
   } else {
     // prompt the user until an entity configuration file is found
     while (true) {
