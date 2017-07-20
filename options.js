@@ -60,8 +60,41 @@ const min = {
   'animatable': 'none'
 }
 
+/**
+ * The jwt preset.
+ */
+const jwt = {
+  'auth-type': 'jwt',
+  'dev-screens': 'No',
+  'vector-icons': 'none',
+  'i18n': 'none',
+  'animatable': 'none'
+}
+
+/**
+ * The uaa preset.
+ */
+const uaa = {
+  'auth-type': 'uaa',
+  'dev-screens': 'No',
+  'vector-icons': 'none',
+  'i18n': 'none',
+  'animatable': 'none'
+}
+
+/**
+ * The oauth2 preset.
+ */
+const oauth2 = {
+  'auth-type': 'oauth2',
+  'dev-screens': 'No',
+  'vector-icons': 'No',
+  'i18n': 'none',
+  'animatable': 'none'
+}
+
 module.exports = {
   jhipsterQuestions,
   pluginQuestions,
-  answers: { min, max }
+  answers: { min, max, jwt, uaa, oauth2 }
 }

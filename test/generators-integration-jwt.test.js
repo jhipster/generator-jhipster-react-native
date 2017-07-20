@@ -3,12 +3,12 @@ const execa = require('execa')
 const jetpack = require('fs-jetpack')
 
 const IGNITE = 'ignite'
-const APP = 'IntegrationTest'
+const APP = 'IntegrationTestJWT'
 
 test.before(async t => {
   jetpack.remove(APP)
-  console.log('Generating app...')
-  await execa(IGNITE, ['new', APP, '--min', '--skip-git', '--boilerplate', `${__dirname}/..`])
+  console.log('Generating JWT app...')
+  await execa(IGNITE, ['new', APP, '--jwt', '--skip-git', '--boilerplate', `${__dirname}/..`])
   process.chdir(APP)
   console.log('App generation complete!')
 })

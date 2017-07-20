@@ -48,16 +48,16 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.setHeader('Authorization', '')
   <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
-  const login = (userAuth) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + new Buffer(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  const login = (userAuth) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + new Buffer(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   <%_ } else if (props.authType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
   <%_ } _%>
-  const register = (user) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/register', user)
-  const forgotPassword = (data) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account/reset_password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
+  const register = (user) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/register', user)
+  const forgotPassword = (data) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset_password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
 
-  const getAccount = () => api.get(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account')
-  const updateAccount = (account) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account', account)
-  const changePassword = (newPassword) => api.post(<%_ if (props.authType === 'uaa') { _%>AppConfig.uaaBaseUrl + <%_ } _%>'api/account/change_password', newPassword, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
+  const getAccount = () => api.get(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account')
+  const updateAccount = (account) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account', account)
+  const changePassword = (newPassword) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/change_password', newPassword, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
   // ignite-jhipster-api-method-needle
 
   // ------

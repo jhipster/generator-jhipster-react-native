@@ -16,4 +16,4 @@ node_modules
 testgrounds
 
 integration_test
-IntegrationTest
+IntegrationTest*
