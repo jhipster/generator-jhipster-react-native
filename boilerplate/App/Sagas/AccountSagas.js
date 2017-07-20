@@ -1,11 +1,11 @@
 import { call, put } from 'redux-saga/effects'
 import AccountActions from '../Redux/AccountRedux'
+import LoginActions from '../Redux/LoginRedux'
 import { callApi } from './CallApiSaga'
 
 // attempts to account
 export function * getAccount (api) {
-  const apiCall = call(api.getAccount)
-  const response = yield call(callApi, apiCall)
+  const response = yield call(api.getAccount)
 
   // success?
   if (response.ok) {
@@ -14,6 +14,7 @@ export function * getAccount (api) {
   } else {
     console.tron.log('Account - FAIL')
     yield put(AccountActions.accountFailure('WRONG'))
+    yield put(LoginActions.logoutRequest())
   }
 }
 
