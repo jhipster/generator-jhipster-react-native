@@ -8,6 +8,7 @@ const { Types, Creators } = createActions({
   loginFailure: ['error'],
   logoutRequest: null,
   logoutSuccess: null,
+  loginRefresh: [],
   loginLoad: [],
   loginLoadSuccess: []
 })
@@ -43,6 +44,9 @@ export const logoutRequest = state => state
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE
 
+// we're attempting to refresh the auth token
+export const refreshRequest = (state) => state.merge({ fetching: true })
+
 // we're attempting to load token from startup sagas
 export const load = (state) => state.merge({ loading: true })
 
@@ -56,6 +60,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_FAILURE]: failure,
   [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGOUT_SUCCESS]: logoutSuccess,
+  [Types.LOGIN_REFRESH]: refreshRequest,
   [Types.LOGIN_LOAD]: load,
   [Types.LOGIN_LOAD_SUCCESS]: loadSuccess
 })

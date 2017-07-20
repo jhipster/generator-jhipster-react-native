@@ -45,7 +45,25 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+export function * loginRefresh (api) {
+  const authToken = yield select(selectAuthToken)
+  if (authToken !== null) {
+    const authObj = 'refresh_token=' + authToken.refresh_token + '&grant_type=refresh_token'
+    const response = yield call(api.login, authObj)
 
+    // success?
+    if (response.ok) {
+      yield call(api.setAuthToken, response.data.access_token)
+      yield put(LoginActions.loginSuccess(response.data))
+    } else {
+      yield put(LoginActions.loginFailure('WRONG'))
+    }
+  } else {
+    yield put(LoginActions.loginFailure('WRONG'))
+  }
+}
+<%_ } %>
 // loads the login
 export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
@@ -55,7 +73,7 @@ export function * loginLoad (api) {
     yield call(api.setAuthToken, authToken)
     <%_ } else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     yield call(api.setAuthToken, authToken.access_token)
-    <%_ } %>
+    <%_ } _%>
   }
   yield put(LoginActions.loginLoadSuccess())
 }
