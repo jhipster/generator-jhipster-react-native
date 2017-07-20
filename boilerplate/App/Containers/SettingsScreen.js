@@ -67,7 +67,7 @@ class SettingsScreen extends React.Component {
 
   componentWillReceiveProps (newProps) {
     // Did the update attempt complete?
-    if (!newProps.fetching) {
+    if (!newProps.updating) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
           Alert.alert('Error', 'Something went wrong while saving the settings', [{text: 'OK'}])
@@ -111,6 +111,7 @@ class SettingsScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     account: state.account.account,
+    updating: state.account.updating,
     error: state.account.error
   }
 }

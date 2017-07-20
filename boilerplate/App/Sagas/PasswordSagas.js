@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects'
 import PasswordActions from '../Redux/PasswordRedux'
+import { callApi } from './CallApiSaga'
 
 // attempts to request a password reset
 export function * forgotPassword (api, { email }) {
@@ -16,7 +17,8 @@ export function * forgotPassword (api, { email }) {
 
 // attempts to request a password change
 export function * changePassword (api, { password }) {
-  const response = yield call(api.changePassword, password)
+  const apiCall = call(api.changePassword, password)
+  const response = yield call(callApi, apiCall)
   // success?
   if (response.ok) {
     console.tron.log('ChangePasswordRequest - OK')

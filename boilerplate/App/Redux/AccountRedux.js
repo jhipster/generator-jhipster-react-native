@@ -6,6 +6,7 @@ const { Types, Creators } = createActions({
   accountRequest: [],
   accountUpdateRequest: ['account'],
   accountSuccess: ['account'],
+  accountUpdateSuccess: ['account'],
   accountFailure: ['error'],
   logout: null
 })
@@ -33,7 +34,12 @@ export const updateRequest = (state) => state.merge({ updating: true })
 // we've successfully logged in
 export const success = (state, data) => {
   const { account } = data
-  return state.merge({ fetching: false, error: null, updating: false, account })
+  return state.merge({ fetching: false, error: null, account })
+}
+// we've successfully updated the account
+export const updateSuccess = (state, data) => {
+  const { account } = data
+  return state.merge({ error: null, updating: false, account })
 }
 
 // we've had a problem logging in
@@ -45,6 +51,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACCOUNT_REQUEST]: request,
   [Types.ACCOUNT_UPDATE_REQUEST]: updateRequest,
   [Types.ACCOUNT_SUCCESS]: success,
+  [Types.ACCOUNT_UPDATE_SUCCESS]: updateSuccess,
   [Types.ACCOUNT_FAILURE]: failure
 })
 

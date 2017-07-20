@@ -24,7 +24,7 @@ export function * login (api, { username, password }) {
   if (response.ok) {
     yield call(api.setAuthToken, response.data.id_token<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
     yield put(LoginActions.loginSuccess(response.data.id_token))
-    yield put(AccountActions.accountRequest())
+    yield put({ type: 'RELOGIN_OK' })
   } else {
     yield put(LoginActions.loginFailure('WRONG'))
   }
@@ -39,6 +39,7 @@ export function * logout (api) {
   yield call(api.removeAuthToken)
   yield put(AccountActions.logout())
   yield put(LoginActions.logoutSuccess())
+  yield put({ type: 'RELOGIN_ABORT' })
 }
 
 // loads the login

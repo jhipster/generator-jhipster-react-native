@@ -47,6 +47,10 @@ class LoginScreen extends React.Component {
     // attempt a login - a saga is listening to pick it up from here.
     this.props.attemptLogin(username, password)
   }
+  handlePressCancel = () => {
+    this.props.logout()
+    NavigationActions.pop()
+  }
 
   handleChangeUsername = (text) => {
     this.setState({ username: text })
@@ -106,7 +110,7 @@ class LoginScreen extends React.Component {
                 <Text style={styles.loginText}>Sign In</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={NavigationActions.pop}>
+            <TouchableOpacity style={styles.loginButtonWrapper} onPress={this.handlePressCancel}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginText}>Cancel</Text>
               </View>
@@ -129,7 +133,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
+    attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
+    logout: () => dispatch(LoginActions.logoutRequest())
   }
 }
 
