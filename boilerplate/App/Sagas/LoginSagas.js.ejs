@@ -22,7 +22,11 @@ export function * login (api, { username, password }) {
 
   // success?
   if (response.ok) {
-    yield call(api.setAuthToken, response.data.id_token<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
+    <%_ if (props.authType === 'jwt') { _%>
+    yield call(api.setAuthToken, response.data.id_token)
+    <%_} else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    yield call(api.setAuthToken, response.data.access_token)
+    <%_ } _%>
     yield put(LoginActions.loginSuccess(response.data.id_token))
     yield put({ type: 'RELOGIN_OK' })
   } else {
@@ -47,7 +51,11 @@ export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
   // only set the token if we have it
   if (authToken !== null) {
-    yield call(api.setAuthToken, authToken<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>.access_token<%_ } %>)
+    <%_ if (props.authType === 'jwt') { _%>
+    yield call(api.setAuthToken, authToken)
+    <%_ } else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    yield call(api.setAuthToken, authToken.access_token)
+    <%_ } %>
   }
   yield put(LoginActions.loginLoadSuccess())
 }
