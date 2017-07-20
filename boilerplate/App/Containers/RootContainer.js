@@ -41,7 +41,7 @@ class RootContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     rehydrationComplete: state.appState.rehydrationComplete,
-    login: state.login.id_token
+    login: state.login.authToken
   }
 }
 

@@ -2,7 +2,7 @@ import { call, put, select } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
 
-export const selectAuthToken = (state) => state.login.id_token
+export const selectAuthToken = (state) => state.login.authToken
 
 // attempts to login
 export function * login (api, { username, password }) {
