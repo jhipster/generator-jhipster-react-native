@@ -21,7 +21,6 @@ class RootContainer extends Component {
     this.renewAuthWhenNeeded = this.renewAuthWhenNeeded.bind(this)
   }
   <%_ } _%>
-
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
@@ -58,7 +57,6 @@ class RootContainer extends Component {
     this.setState({ authTimeout: authTimeout })
   }
   <%_ } _%>
-
   render () {
     return (
       <View style={styles.applicationView}>
