@@ -38,10 +38,6 @@ export function * login (api, { username, password }) {
 
 // attempts to logout
 export function * logout (api) {
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
-  // todo I think oauth uses this?
-  // const response = yield call(api.logout)
-  <%_ } _%>
   yield call(api.removeAuthToken)
   yield put(AccountActions.logout())
   yield put(LoginActions.logoutSuccess())
