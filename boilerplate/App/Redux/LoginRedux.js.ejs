@@ -36,7 +36,7 @@ export const success = (state, data) => {
   return state.merge({ fetching: false, error: null, authToken })
 }
 // we've had a problem logging in
-export const failure = (state, { error }) => state.merge({ fetching: false, error })
+export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
 
 // we need to logout, meaning clear access tokens and account
 export const logoutRequest = state => state

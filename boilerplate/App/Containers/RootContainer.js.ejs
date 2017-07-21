@@ -30,18 +30,15 @@ class RootContainer extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.rehydrationComplete) {
+    if (newProps.rehydrationComplete && !this.props.login) {
       this.props.loadLogin()
     }
+    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     if (newProps.login && newProps.rehydrationComplete) {
-      this.props.getAccount()
-      <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
       if (newProps.login.hasOwnProperty('refresh_token') && !this.state.authTimeout) {
         this.renewAuthWhenNeeded()
       }
-      <%_ } _%>
     }
-    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     if (!newProps.login) {
       clearTimeout(this.state.authTimeout)
       this.setState({ authTimeout: null })
@@ -52,6 +49,7 @@ class RootContainer extends Component {
   <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
   renewAuthWhenNeeded () {
     clearTimeout(this.state.authTimeout)
+    // refreshes the token 10 seconds before it expires.
     let timeout = this.props.login ? this.props.login.expires_in * 1000 - 10000 : 10000
     let authTimeout = setTimeout(() => {
       this.props.refreshLogin(this.props.login.refresh_token)
