@@ -46,6 +46,7 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
+
 <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 export function * loginRefresh (api) {
   const authToken = yield select(selectAuthToken)

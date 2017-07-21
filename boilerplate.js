@@ -101,6 +101,10 @@ async function install (context) {
       target: 'App/Config/AppConfig.js'
     },
     {
+      template: 'App/Containers/RootContainer.js.ejs',
+      target: 'App/Containers/RootContainer.js'
+    },
+    {
       template: 'App/Services/JhipsterApi.js.ejs',
       target: 'App/Services/JhipsterApi.js'
     },

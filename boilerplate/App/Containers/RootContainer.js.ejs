@@ -12,6 +12,16 @@ import styles from './Styles/RootContainerStyles'
 
 class RootContainer extends Component {
 
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  constructor (props) {
+    super(props)
+    this.state = {
+      authTimeout: null
+    }
+    this.renewAuthWhenNeeded = this.renewAuthWhenNeeded.bind(this)
+  }
+  <%_ } _%>
+
   componentDidMount () {
     // if redux persist is not active fire startup action
     if (!ReduxPersist.active) {
@@ -25,8 +35,31 @@ class RootContainer extends Component {
     }
     if (newProps.login && newProps.rehydrationComplete) {
       this.props.getAccount()
+      <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+      if (newProps.login.hasOwnProperty('refresh_token') && !this.state.authTimeout) {
+        this.renewAuthWhenNeeded()
+      }
+      <%_ } _%>
     }
+    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    if (!newProps.login) {
+      clearTimeout(this.state.authTimeout)
+      this.setState({ authTimeout: null })
+    }
+    <%_ } _%>
   }
+
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  renewAuthWhenNeeded () {
+    clearTimeout(this.state.authTimeout)
+    let timeout = this.props.login ? this.props.login.expires_in * 1000 - 10000 : 10000
+    let authTimeout = setTimeout(() => {
+      this.props.refreshLogin(this.props.login.refresh_token)
+      this.renewAuthWhenNeeded()
+    }, timeout)
+    this.setState({ authTimeout: authTimeout })
+  }
+  <%_ } _%>
 
   render () {
     return (
@@ -49,6 +82,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   startup: () => dispatch(StartupActions.startup()),
   loadLogin: () => dispatch(LoginActions.loginLoad()),
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  refreshLogin: (refreshToken) => dispatch(LoginActions.loginRefresh(refreshToken)),
+  <%_ } _%>
   getAccount: () => dispatch(AccountActions.accountRequest())
 })
 
