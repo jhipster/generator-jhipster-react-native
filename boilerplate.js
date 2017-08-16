@@ -131,6 +131,10 @@ async function install (context) {
     {
       template: 'Tests/Setup.js.ejs',
       target: 'Tests/Setup.js'
+    },
+    {
+      template: 'storybook/storybook.ejs',
+      target: 'storybook/storybook.js'
     }
   ]
   const templateProps = {
