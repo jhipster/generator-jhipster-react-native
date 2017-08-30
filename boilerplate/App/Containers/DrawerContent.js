@@ -35,6 +35,10 @@ class DrawerContent extends Component {
     this.toggleDrawer()
     NavigationActions.forgotPassword()
   }
+  handlePressEntities = () => {
+    this.toggleDrawer()
+    NavigationActions.entities()
+  }
   handlePressSettings = () => {
     this.toggleDrawer()
     NavigationActions.settings()
@@ -56,6 +60,7 @@ class DrawerContent extends Component {
         {!this.props.loggedIn && (<DrawerButton text='Register' onPress={this.handlePressRegister} />)}
         {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
 
+        {this.props.loggedIn && (<DrawerButton text='Entities' onPress={this.handlePressEntities} />)}
         {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
         {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
         {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}

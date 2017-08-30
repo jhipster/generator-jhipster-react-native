@@ -78,6 +78,7 @@ module.exports = async function (context) {
   const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
   const sagaIndexFilePath = `${process.cwd()}/App/Sagas/index.js`
+  const entityScreenFilePath = `${process.cwd()}/App/Containers/EntitiesScreen.js`
 
   // REDUX AND SAGA SECTION
   const apiMethods = `
@@ -159,6 +160,17 @@ module.exports = async function (context) {
 
   // generate entity edit component
   // connect entity redux
+
+  // add entity to entities screen
+  // ignite-jhipster-entity-screen-needle
+
+  const entityScreenButton = `        <RoundedButton text="${props.name}" onPress={NavigationActions.${camelCase(props.name)}Entity}></RoundedButton>`
+
+  ignite.patchInFile(entityScreenFilePath, {
+    before: 'ignite-jhipster-entity-screen-needle',
+    insert: entityScreenButton,
+    match: entityScreenButton
+  })
 
   // add listing screen to navigation
   // ignite-jhipster-navigation-import-needle
