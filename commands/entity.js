@@ -78,6 +78,8 @@ module.exports = async function (context) {
   const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
   const sagaIndexFilePath = `${process.cwd()}/App/Sagas/index.js`
+  const entityScreenFilePath = `${process.cwd()}/App/Containers/EntitiesScreen.js`
+  const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
 
   // REDUX AND SAGA SECTION
   const apiMethods = `
@@ -149,22 +151,47 @@ module.exports = async function (context) {
   await ignite.copyBatch(context, sagaReduxJobs, props)
 
   // generate entity listing component
-  // connect entity redux
+  const entityScreenJobs = [
+    {
+      template: `listview.ejs`,
+      target: `App/Containers/${name}EntityScreen.js`
+    },
+    {
+      template: `listview-style.ejs`,
+      target: `App/Containers/Styles/${name}EntityScreenStyle.js`
+    }
+  ]
 
-  // generate entity listing screen
-  // connect entity redux
+  await ignite.copyBatch(context, entityScreenJobs, props)
+
+  // add entity to entities screen
+  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={NavigationActions.${camelCase(props.name)}Entity} />`
+  ignite.patchInFile(entityScreenFilePath, {
+    before: 'ignite-jhipster-entity-screen-needle',
+    insert: entityScreenButton,
+    match: entityScreenButton
+  })
+
+  // add listing screen to navigation
+  const navigationImport = `import ${props.name}EntityScreen from '../Containers/${props.name}EntityScreen'`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-import-needle',
+    insert: navigationImport,
+    match: navigationImport
+  })
+
+  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.name}s' />`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-needle',
+    insert: navigationScreen,
+    match: navigationScreen
+  })
 
   // generate entity detail component
   // connect entity redux
 
   // generate entity edit component
   // connect entity redux
-
-  // add listing screen to navigation
-  // ignite-jhipster-navigation-import-needle
-  // ignite-jhipster-navigation-needle
-
-  // add screen for entities, link to listings page
 
   // const jobs = [
   // component jobs
@@ -175,15 +202,6 @@ module.exports = async function (context) {
   // {
   //     template: 'component-style.ejs',
   //     target: `App/Components/Styles/${name}Style.js`
-  // },
-  // screen jobs
-  // {
-  //     template: `screen.ejs`,
-  //     target: `App/Containers/${name}Screen.js`
-  // },
-  // {
-  //     template: `saga.ejs`,
-  //     target: `App/Containers/Styles/${name}ScreenStyle.js`
   // },
   //
   // listview jobs

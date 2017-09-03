@@ -7,7 +7,6 @@ import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 
 class LoginScreen extends React.Component {
-
   static propTypes = {
     dispatch: PropTypes.func,
     fetching: PropTypes.bool,
@@ -121,7 +120,6 @@ class LoginScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

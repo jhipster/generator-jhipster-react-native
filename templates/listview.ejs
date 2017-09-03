@@ -1,14 +1,15 @@
 import React from 'react'
 import { View, Text, ListView } from 'react-native'
 import { connect } from 'react-redux'
+import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 
 // For empty lists
-// import AlertMessage from '../Components/AlertMessage'
+import AlertMessage from '../Components/AlertMessage'
 
 // Styles
-import styles from './Styles/<%= props.name %>Style'
+import styles from './Styles/<%= props.name %>EntityScreenStyle'
 
-class <%= props.name %> extends React.Component {
+class <%= props.name %>EntityScreen extends React.Component {
 
   state: {
     dataSource: Object
@@ -23,15 +24,7 @@ class <%= props.name %> extends React.Component {
     * This is an array of objects with the properties you desire
     * Usually this should come from Redux mapStateToProps
     *************************************************************/
-    const dataObjects = [
-      {title: 'First Title', description: 'First Description'},
-      {title: 'Second Title', description: 'Second Description'},
-      {title: 'Third Title', description: 'Third Description'},
-      {title: 'Fourth Title', description: 'Fourth Description'},
-      {title: 'Fifth Title', description: 'Fifth Description'},
-      {title: 'Sixth Title', description: 'Sixth Description'},
-      {title: 'Seventh Title', description: 'Seventh Description'}
-    ]
+    const dataObjects = []
 
     /* ***********************************************************
     * STEP 2
@@ -61,8 +54,8 @@ class <%= props.name %> extends React.Component {
   renderRow (rowData) {
     return (
       <View style={styles.row}>
-        <Text style={styles.boldLabel}>{rowData.title}</Text>
-        <Text style={styles.label}>{rowData.description}</Text>
+        <Text style={styles.boldLabel}>{rowData.id}</Text>
+        {/* <Text style={styles.label}>{rowData.description}</Text> */}
       </View>
     )
   }
@@ -75,15 +68,18 @@ class <%= props.name %> extends React.Component {
   * is called very often, and should remain fast!  Just replace
   * state's datasource on newProps.
   *
-  * e.g.
-    componentWillReceiveProps (newProps) {
-      if (newProps.someData) {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(newProps.someData)
-        })
-      }
-    }
   *************************************************************/
+  componentWillReceiveProps (newProps) {
+    if (newProps.<%= camelCase(props.name) %>s) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(newProps.<%= camelCase(props.name) %>s)
+      })
+    }
+  }
+
+  componentWillMount () {
+    this.props.getAll<%= props.name %>s()
+  }
 
   // Used for friendly AlertMessage
   // returns true if the dataSource is empty
@@ -91,21 +87,24 @@ class <%= props.name %> extends React.Component {
     return this.state.dataSource.getRowCount() === 0
   }
 
+  /*
   // Render a footer.
   renderFooter = () => {
     return (
       <Text> - Footer - </Text>
     )
   }
+  */
 
   render () {
     return (
       <View style={styles.container}>
+        <AlertMessage title='No <%= props.name %>s Found' show={this.noRowData() && !this.props.fetching} />
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
-          renderFooter={this.renderFooter}
+          /* renderFooter={this.renderFooter} */
           enableEmptySections
           pageSize={15}
         />
@@ -117,12 +116,15 @@ class <%= props.name %> extends React.Component {
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
+    <%= camelCase(props.name) %>s: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>s,
+    fetching: state.<%= camelCase(props.name) %>s.fetching
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    getAll<%= props.name %>s: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest())
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>EntityScreen)

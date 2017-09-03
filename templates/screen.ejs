@@ -2,12 +2,12 @@ import React from 'react'
 import { ScrollView, Text, KeyboardAvoidingView } from 'react-native'
 import { connect } from 'react-redux'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
-// import YourActions from '../Redux/YourRedux'
+import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 
 // Styles
-import styles from './Styles/<%= props.name %>ScreenStyle'
+import styles from './Styles/<%= props.name %>EntityScreenStyle'
 
-class <%= props.name %>Screen extends React.Component {
+class <%= props.name %>EntityScreen extends React.Component {
 
   render () {
     return (
@@ -23,6 +23,7 @@ class <%= props.name %>Screen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    <%= camelCase(props.name) %>s: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>s
   }
 }
 
@@ -31,4 +32,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>Screen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>EntityScreen)

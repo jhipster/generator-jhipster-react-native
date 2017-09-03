@@ -7,6 +7,7 @@ import NavigationDrawer from './NavigationDrawer'
 import LaunchScreen from '../Containers/LaunchScreen'
 import LoginScreen from '../Containers/LoginScreen'
 import RegisterScreen from '../Containers/RegisterScreen'
+import EntitiesScreen from '../Containers/EntitiesScreen'
 import SettingsScreen from '../Containers/SettingsScreen'
 import ChangePasswordScreen from '../Containers/ChangePasswordScreen'
 import ForgotPasswordScreen from '../Containers/ForgotPasswordScreen'
@@ -25,6 +26,7 @@ class NavigationRouter extends Component {
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='register' component={RegisterScreen} title='Register' />
+            <Scene key='entities' component={EntitiesScreen} title='Entities' />
             <Scene key='settings' component={SettingsScreen} title='Settings' />
             <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' />
             <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' />
