@@ -153,11 +153,11 @@ module.exports = async function (context) {
   // generate entity listing component
   const entityScreenJobs = [
     {
-      template: `screen.ejs`,
+      template: `listview.ejs`,
       target: `App/Containers/${name}EntityScreen.js`
     },
     {
-      template: `screen-style.ejs`,
+      template: `listview-style.ejs`,
       target: `App/Containers/Styles/${name}EntityScreenStyle.js`
     }
   ]
