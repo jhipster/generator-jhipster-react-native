@@ -31,7 +31,7 @@ In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a ua
 
 ### Generators
 
-##### JHipster Entity Generator (*coming soon*)
+##### JHipster Entity Generator (*In Progress*)
  - Entity - `ignite generate entity <name>`
     - Sets up entity API, listings, detail, and edit pages
  
@@ -54,7 +54,7 @@ V1
  - [x] User Pages (Register, Change/Reset Password, Settings)
  - [ ] Entity Generator - *In Progress*
      - [X] API (Sagas/Redux) 
-     - [ ] Listings Page
+     - [X] Listings Page
      - [ ] Detail Page
      - [ ] Edit Page
 
