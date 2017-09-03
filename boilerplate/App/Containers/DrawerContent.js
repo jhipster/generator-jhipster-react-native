@@ -8,7 +8,6 @@ import { connect } from 'react-redux'
 import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
 
 class DrawerContent extends Component {
-
   componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', () => {
       if (this.context.drawer.props.open) {
@@ -67,7 +66,6 @@ class DrawerContent extends Component {
       </ScrollView>
     )
   }
-
 }
 
 DrawerContent.contextTypes = {
@@ -85,5 +83,5 @@ const mapDispatchToProps = (dispatch) => {
     logout: () => dispatch(LoginActions.logoutRequest())
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)
 
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)

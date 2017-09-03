@@ -7,7 +7,6 @@ import RoundedButton from '../Components/RoundedButton' // eslint-disable-line
 import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
 
 class SettingsScreen extends React.Component {
-
   render () {
     return (
       <ScrollView style={styles.container}>
@@ -16,7 +15,6 @@ class SettingsScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

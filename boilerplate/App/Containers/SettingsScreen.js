@@ -10,7 +10,6 @@ import styles from './Styles/SettingsScreenStyle'
 let Form = t.form.Form
 
 class SettingsScreen extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -105,7 +104,6 @@ class SettingsScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

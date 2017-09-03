@@ -8,7 +8,6 @@ import { Metrics, Images } from '../Themes'
 import SearchActions from '../Redux/SearchRedux'
 
 class CustomNavBar extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {

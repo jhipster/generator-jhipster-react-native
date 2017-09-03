@@ -10,7 +10,6 @@ import styles from './Styles/ForgotPasswordScreenStyle'
 let Form = t.form.Form
 
 class ForgotPasswordScreen extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -82,7 +81,6 @@ class ForgotPasswordScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

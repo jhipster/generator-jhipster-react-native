@@ -7,7 +7,6 @@ import AlertMessage from '../Components/AlertMessage'
 import styles from './Styles/ListviewExampleStyles'
 
 class ListviewExample extends React.Component {
-
   constructor (props) {
     super(props)
     /* ***********************************************************

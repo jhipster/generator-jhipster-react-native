@@ -9,7 +9,6 @@ import AlertMessage from '../Components/AlertMessage'
 import styles from './Styles/ListviewGridExampleStyles'
 
 class ListviewGridExample extends React.Component {
-
   constructor (props) {
     super(props)
     /* ***********************************************************

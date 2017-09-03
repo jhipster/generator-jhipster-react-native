@@ -9,7 +9,6 @@ import styles from './Styles/ChangePasswordScreenStyle'
 let Form = t.form.Form
 
 class ChangePasswordScreen extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -91,7 +90,6 @@ class ChangePasswordScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {

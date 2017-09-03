@@ -10,7 +10,6 @@ import styles from './Styles/RegisterScreenStyle'
 let Form = t.form.Form
 
 class RegisterScreen extends React.Component {
-
   constructor (props) {
     super(props)
     this.state = {
@@ -104,7 +103,6 @@ class RegisterScreen extends React.Component {
       </ScrollView>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {
