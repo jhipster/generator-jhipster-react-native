@@ -1,0 +1,49 @@
+import React from 'react'
+import { ScrollView, Text } from 'react-native'
+import { connect } from 'react-redux'
+import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+
+// Styles
+import styles from './Styles/<%= props.name %>EntityDetailScreenStyle'
+
+class <%= props.name %>EntityDetailScreen extends React.Component {
+  constructor (context, props) {
+    super(context, props)
+    this.state = {
+      entityId: props.entityId,
+      <%= camelCase(props.name) %>: {}
+    }
+  }
+
+  componentWillMount () {
+    this.props.get<%= props.name %>(this.props.entityId)
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.<%= camelCase(props.name) %>) {
+      this.setState({ <%= camelCase(props.name) %>: newProps.<%= camelCase(props.name) %> })
+    }
+  }
+
+  render () {
+    return (
+      <ScrollView style={styles.container}>
+        <Text>ID: {this.state.<%= camelCase(props.name) %>.id}</Text>
+      </ScrollView>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>EntityDetailScreen)

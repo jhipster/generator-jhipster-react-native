@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, ListView } from 'react-native'
+import { View, Text, ListView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
 
 // For empty lists
 import AlertMessage from '../Components/AlertMessage'
@@ -53,10 +54,12 @@ class <%= props.name %>EntityScreen extends React.Component {
   *************************************************************/
   renderRow (rowData) {
     return (
-      <View style={styles.row}>
-        <Text style={styles.boldLabel}>{rowData.id}</Text>
-        {/* <Text style={styles.label}>{rowData.description}</Text> */}
-      </View>
+      <TouchableOpacity onPress={NavigationActions.<%= camelCase(props.name) %>EntityDetail.bind(this, { entityId: rowData.id })}>
+        <View style={styles.row}>
+          <Text style={styles.boldLabel}>{rowData.id}</Text>
+          {/* <Text style={styles.label}>{rowData.description}</Text> */}
+        </View>
+      </TouchableOpacity>
     )
   }
 

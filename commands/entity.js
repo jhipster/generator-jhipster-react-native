@@ -159,10 +159,46 @@ module.exports = async function (context) {
     {
       template: `listview-style.ejs`,
       target: `App/Containers/Styles/${name}EntityScreenStyle.js`
+    },
+    {
+      template: `entity-detail-screen-style.ejs`,
+      target: `App/Containers/Styles/${name}EntityDetailScreenStyle.js`
+    },
+    {
+      template: `entity-detail-screen.ejs`,
+      target: `App/Containers/${name}EntityDetailScreen.js`
     }
   ]
 
   await ignite.copyBatch(context, entityScreenJobs, props)
+
+  // import entity screens to navigation
+  const navigationImport = `import ${props.name}EntityScreen from '../Containers/${props.name}EntityScreen'`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-import-needle',
+    insert: navigationImport,
+    match: navigationImport
+  })
+  const navigationImportDetail = `import ${props.name}EntityDetailScreen from '../Containers/${props.name}EntityDetailScreen'`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-import-needle',
+    insert: navigationImportDetail,
+    match: navigationImportDetail
+  })
+
+  // add entity screens to navigation
+  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.name}s' />`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-needle',
+    insert: navigationScreen,
+    match: navigationScreen
+  })
+  const navigationScreenDetail = `            <Scene key='${camelCase(props.name)}EntityDetail' component={${props.name}EntityDetailScreen} title='${props.name}' />`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-needle',
+    insert: navigationScreenDetail,
+    match: navigationScreenDetail
+  })
 
   // add entity to entities screen
   const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={NavigationActions.${camelCase(props.name)}Entity} />`
@@ -170,21 +206,6 @@ module.exports = async function (context) {
     before: 'ignite-jhipster-entity-screen-needle',
     insert: entityScreenButton,
     match: entityScreenButton
-  })
-
-  // add listing screen to navigation
-  const navigationImport = `import ${props.name}EntityScreen from '../Containers/${props.name}EntityScreen'`
-  ignite.patchInFile(navigationRouterFilePath, {
-    before: 'ignite-jhipster-navigation-import-needle',
-    insert: navigationImport,
-    match: navigationImport
-  })
-
-  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.name}s' />`
-  ignite.patchInFile(navigationRouterFilePath, {
-    before: 'ignite-jhipster-navigation-needle',
-    insert: navigationScreen,
-    match: navigationScreen
   })
 
   // generate entity detail component
