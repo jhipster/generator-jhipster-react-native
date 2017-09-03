@@ -13,6 +13,12 @@ test.before(async t => {
   console.log('App generation complete!')
 })
 
+test('lints a fresh app', async t => {
+  console.log('Linting fresh app')
+  const lint = await execa('npm', ['-s', 'run', 'lint'])
+  t.is(lint.stderr, '')
+})
+
 test('generates an entity', async t => {
   console.log('Generating entity Foo')
   await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])

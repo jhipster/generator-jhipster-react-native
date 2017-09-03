@@ -165,7 +165,7 @@ module.exports = async function (context) {
   await ignite.copyBatch(context, entityScreenJobs, props)
 
   // add entity to entities screen
-  const entityScreenButton = `        <RoundedButton text="${props.name}" onPress={NavigationActions.${camelCase(props.name)}Entity}></RoundedButton>`
+  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={NavigationActions.${camelCase(props.name)}Entity} />`
   ignite.patchInFile(entityScreenFilePath, {
     before: 'ignite-jhipster-entity-screen-needle',
     insert: entityScreenButton,
