@@ -7,9 +7,11 @@ const APP = 'IntegrationTestOauth2'
 
 test.before(async t => {
   jetpack.remove(APP)
+  await execa('npm', ['link'])
   console.log('Generating OAuth2 app...')
   await execa(IGNITE, ['new', APP, '--oauth2', '--skip-git', '--boilerplate', `${__dirname}/..`])
   process.chdir(APP)
+  await execa('npm', ['link', 'ignite-jhipster'])
   console.log('App generation complete!')
 })
 

@@ -7,9 +7,11 @@ const APP = 'IntegrationTestJWT'
 
 test.before(async t => {
   jetpack.remove(APP)
+  await execa('npm', ['link'])
   console.log('Generating JWT app...')
   await execa(IGNITE, ['new', APP, '--jwt', '--skip-git', '--boilerplate', `${__dirname}/..`])
   process.chdir(APP)
+  await execa('npm', ['link', 'ignite-jhipster'])
   console.log('App generation complete!')
 })
 
