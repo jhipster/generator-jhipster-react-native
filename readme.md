@@ -52,17 +52,17 @@ V1
  - [x] Home Page
  - [x] User Authentication (Login/Logout for JWT, UAA and Oauth2)
  - [x] User Pages (Register, Change/Reset Password, Settings)
- - [ ] Entity Generator - *In Progress*
+ - [X] Entity Generator -
      - [X] API (Sagas/Redux) 
      - [X] Listings Page
-     - [ ] Detail Page
-     - [ ] Edit Page
+     - [X] Detail Page
+     - [X] Edit Page
 
 Later Features
  - [ ] Websocket Support
- - [ ] Admin Pages
- - [ ] Internationalization
  - [ ] Social Login
+ - [ ] Internationalization
+ - [ ] Admin Pages
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
