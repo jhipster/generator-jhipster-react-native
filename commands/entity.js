@@ -73,7 +73,8 @@ module.exports = async function (context) {
   }
 
   // load the entity config into memory
-  // let entityConfig = await fs.readJson(localEntityFilePath)
+  let entityConfig = await fs.readJson(localEntityFilePath)
+  props.entityConfig = entityConfig
 
   const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`

@@ -31,6 +31,9 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Text>ID: {this.state.<%= camelCase(props.name) %>.id}</Text>
+        <%_ props.entityConfig.fields.forEach(function (field) { _%>
+        <Text><%= field.fieldName %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
+        <%_ }) _%>
         <RoundedButton text='Edit' onPress={NavigationActions.<%= camelCase(props.name) %>EntityEdit.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
       </ScrollView>
     )
