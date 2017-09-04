@@ -120,7 +120,8 @@ const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
     <%= camelCase(props.name) %>s: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>s,
-    fetching: state.<%= camelCase(props.name) %>s.fetching
+    fetching: state.<%= camelCase(props.name) %>s.fetchingAll,
+    error: state.<%= camelCase(props.name) %>s.errorAll
   }
 }
 

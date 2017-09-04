@@ -18,7 +18,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       formModel: t.struct({
         id: t.Number,
         <%_ props.entityConfig.fields.forEach(function (field, index) {
-            // todo handle enums, required, constraints
+            // todo handle enums, required, constraints, relationships
           if (field.fieldType === 'Integer'
             || field.fieldType === 'Long'
             || field.fieldType === 'Float'
@@ -63,7 +63,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     }
 
     // Did the update attempt complete?
-    if (!newProps.fetching && this.state.requesting) {
+    if (!newProps.updating && this.state.requesting) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
           Alert.alert('Error', 'Something went wrong updating the entity', [{text: 'OK'}])
@@ -123,7 +123,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>
+    <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>,
+    fetching: state.<%= camelCase(props.name) %>s.fetchingOne,
+    updating: state.<%= camelCase(props.name) %>s.updating,
+    error: state.<%= camelCase(props.name) %>s.errorOne
   }
 }
 

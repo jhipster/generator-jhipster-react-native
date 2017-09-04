@@ -1,5 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 import AppStateActions from '../Redux/AppStateRedux'
+import LoginActions from '../Redux/LoginRedux'
 import GithubActions from '../Redux/GithubRedux'
 import { is } from 'ramda'
 
@@ -38,5 +39,6 @@ export function * startup (action) {
   if (!is(String, avatar)) {
     yield put(GithubActions.userRequest('GantMan'))
   }
+  yield put(LoginActions.loginLoad())
   yield put(AppStateActions.setRehydrationComplete())
 }
