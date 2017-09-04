@@ -73,7 +73,8 @@ module.exports = async function (context) {
   }
 
   // load the entity config into memory
-  // let entityConfig = await fs.readJson(localEntityFilePath)
+  let entityConfig = await fs.readJson(localEntityFilePath)
+  props.entityConfig = entityConfig
 
   const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
@@ -83,7 +84,7 @@ module.exports = async function (context) {
 
   // REDUX AND SAGA SECTION
   const apiMethods = `
-  const update${props.name} = () => api.put('api/${camelCase(props.name)}s')
+  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${camelCase(props.name)}s', ${camelCase(props.name)})
   const get${props.name}s = () => api.get('api/${camelCase(props.name)}s')
   const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${camelCase(props.name)}s/' + ${camelCase(props.name)}Id)
   const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${camelCase(props.name)}s/' + ${camelCase(props.name)}Id)`
@@ -167,6 +168,14 @@ module.exports = async function (context) {
     {
       template: `entity-detail-screen.ejs`,
       target: `App/Containers/${name}EntityDetailScreen.js`
+    },
+    {
+      template: `entity-edit-screen-style.ejs`,
+      target: `App/Containers/Styles/${name}EntityEditScreenStyle.js`
+    },
+    {
+      template: `entity-edit-screen.ejs`,
+      target: `App/Containers/${name}EntityEditScreen.js`
     }
   ]
 
@@ -185,6 +194,12 @@ module.exports = async function (context) {
     insert: navigationImportDetail,
     match: navigationImportDetail
   })
+  const navigationImportEdit = `import ${props.name}EntityEditScreen from '../Containers/${props.name}EntityEditScreen'`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-import-needle',
+    insert: navigationImportEdit,
+    match: navigationImportEdit
+  })
 
   // add entity screens to navigation
   const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.name}s' />`
@@ -198,6 +213,12 @@ module.exports = async function (context) {
     before: 'ignite-jhipster-navigation-needle',
     insert: navigationScreenDetail,
     match: navigationScreenDetail
+  })
+  const navigationScreenEdit = `            <Scene key='${camelCase(props.name)}EntityEdit' component={${props.name}EntityEditScreen} title='${props.name}' />`
+  ignite.patchInFile(navigationRouterFilePath, {
+    before: 'ignite-jhipster-navigation-needle',
+    insert: navigationScreenEdit,
+    match: navigationScreenEdit
   })
 
   // add entity to entities screen

@@ -24,7 +24,8 @@ test('lints a fresh app', async t => {
 test('generates an entity', async t => {
   console.log('Generating entity Foo')
   await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])
-  console.log('Generated entity Foo')
+  await execa(IGNITE, ['g', 'entity', 'FieldTestEntity', '--jh-dir=../test'])
+  console.log('Generated entities')
   // t.is(jetpack.exists('App/Components/Test.js'), 'file')
   // t.is(jetpack.exists('App/Components/Styles/TestStyle.js'), 'file')
   const lint = await execa('npm', ['-s', 'run', 'lint'])

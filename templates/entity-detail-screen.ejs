@@ -2,6 +2,8 @@ import React from 'react'
 import { ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+import RoundedButton from '../Components/RoundedButton'
+import { Actions as NavigationActions } from 'react-native-router-flux'
 
 // Styles
 import styles from './Styles/<%= props.name %>EntityDetailScreenStyle'
@@ -29,6 +31,10 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
     return (
       <ScrollView style={styles.container}>
         <Text>ID: {this.state.<%= camelCase(props.name) %>.id}</Text>
+        <%_ props.entityConfig.fields.forEach(function (field) { _%>
+        <Text><%= field.fieldName %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
+        <%_ }) _%>
+        <RoundedButton text='Edit' onPress={NavigationActions.<%= camelCase(props.name) %>EntityEdit.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
       </ScrollView>
     )
   }

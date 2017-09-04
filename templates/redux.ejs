@@ -6,7 +6,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   <%= camelCase(props.name) %>Request: ['<%= camelCase(props.name) %>Id'],
   <%= camelCase(props.name) %>AllRequest: [],
-  <%= camelCase(props.name) %>UpdateRequest: ['<%= camelCase(props.name) %>Id'],
+  <%= camelCase(props.name) %>UpdateRequest: ['<%= camelCase(props.name) %>'],
   <%= camelCase(props.name) %>DeleteRequest: ['<%= camelCase(props.name) %>Id'],
 
   <%= camelCase(props.name) %>Success: ['<%= camelCase(props.name) %>'],
