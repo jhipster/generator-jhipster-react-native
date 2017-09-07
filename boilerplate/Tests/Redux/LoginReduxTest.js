@@ -10,7 +10,7 @@ test('attempt', (t) => {
 test('success', (t) => {
   const state = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
 
-  t.is(state.id_token, 'hi')
+  t.is(state.authToken, 'hi')
 })
 
 test('failure', (t) => {
