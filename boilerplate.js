@@ -105,8 +105,8 @@ async function install (context) {
       target: 'App/Containers/RootContainer.js'
     },
     {
-      template: 'App/Services/JhipsterApi.js.ejs',
-      target: 'App/Services/JhipsterApi.js'
+      template: 'App/Services/Api.js.ejs',
+      target: 'App/Services/Api.js'
     },
     {
       template: 'App/Redux/LoginRedux.js.ejs',
