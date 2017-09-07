@@ -1,11 +1,8 @@
 import { put, select } from 'redux-saga/effects'
 import AppStateActions from '../Redux/AppStateRedux'
 import LoginActions from '../Redux/LoginRedux'
-import GithubActions from '../Redux/GithubRedux'
-import { is } from 'ramda'
 
-// exported to make available for tests
-export const selectAvatar = (state) => state.github.avatar
+export const selectAuthToken = (state) => state.login.authToken
 
 // process STARTUP actions
 export function * startup (action) {
@@ -16,7 +13,7 @@ export function * startup (action) {
     // logging an object for better clarity
     console.tron.log({
       message: 'pass objects for better logging',
-      someGeneratorFunction: selectAvatar
+      someGeneratorFunction: selectAuthToken
     })
 
     // fully customized!
@@ -30,15 +27,13 @@ export function * startup (action) {
         subObject,
         someInlineFunction: () => true,
         someGeneratorFunction: startup,
-        someNormalFunction: selectAvatar
+        someNormalFunction: selectAuthToken
       }
     })
   }
-  const avatar = yield select(selectAvatar)
-  // only get if we don't have it yet
-  if (!is(String, avatar)) {
-    yield put(GithubActions.userRequest('GantMan'))
+  const authToken = yield select(selectAuthToken)
+  if (authToken !== null) {
+    yield put(LoginActions.loginLoad())
   }
-  yield put(LoginActions.loginLoad())
   yield put(AppStateActions.setRehydrationComplete())
 }

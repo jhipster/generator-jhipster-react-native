@@ -1,10 +1,12 @@
 import { call, put } from 'redux-saga/effects'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+import { callApi } from './CallApiSaga'
 
 export function * get<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %>Id } = action
   // make the call to the api
-  const response = yield call(api.get<%= props.name %>, <%= camelCase(props.name) %>Id)
+  const apiCall = call(api.get<%= props.name %>, <%= camelCase(props.name) %>Id)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
@@ -16,7 +18,8 @@ export function * get<%= props.name %> (api, action) {
 
 export function * get<%= props.pluralName %> (api) {
   // make the call to the api
-  const response = yield call(api.get<%= props.pluralName %>)
+  const apiCall = call(api.get<%= props.pluralName %>)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
@@ -29,7 +32,8 @@ export function * get<%= props.pluralName %> (api) {
 export function * update<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %> } = action
   // make the call to the api
-  const response = yield call(api.update<%= props.name %>, <%= camelCase(props.name) %>)
+  const apiCall = call(api.update<%= props.name %>, <%= camelCase(props.name) %>)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
@@ -42,7 +46,8 @@ export function * update<%= props.name %> (api, action) {
 export function * delete<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %>Id } = action
   // make the call to the api
-  const response = yield call(api.delete<%= props.name %>, <%= camelCase(props.name) %>Id)
+  const apiCall = call(api.delete<%= props.name %>, <%= camelCase(props.name) %>Id)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {

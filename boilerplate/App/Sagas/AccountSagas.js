@@ -5,7 +5,8 @@ import { callApi } from './CallApiSaga'
 
 // attempts to account
 export function * getAccount (api) {
-  const response = yield call(api.getAccount)
+  const apiCall = call(api.getAccount)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
