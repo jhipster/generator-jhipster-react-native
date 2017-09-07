@@ -32,6 +32,13 @@ test('generates an entity', async t => {
   t.is(lint.stderr, '')
 })
 
+test('passes generated tests', async t => {
+  console.log('Running Tests')
+  const tests = await execa('npm', ['-s', 'run', 'test'])
+  console.log('Tests Complete')
+  t.notRegex(tests.stderr, /failed/)
+})
+
 test.after.always('clean up all generated items', t => {
   process.chdir('../')
   jetpack.remove(APP)

@@ -48,8 +48,9 @@ export default function * root () {
     takeLatest(PasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
     takeLatest(PasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
 
-    takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
-    takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api),
     // ignite-jhipster-saga-redux-connect-needle
+
+    takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
+    takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api)
   ]
 }

@@ -1,5 +1,5 @@
 // @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
-const pluralize = require('pluralize');
+const pluralize = require('pluralize')
 
 module.exports = async function (context) {
   // grab some features
@@ -23,7 +23,7 @@ module.exports = async function (context) {
   // read some configuration
   const name = pascalCase(parameters.first)
   const props = { name }
-  props.pluralName = pluralize(name);
+  props.pluralName = pluralize(name)
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`
   const igniteConfigPath = 'ignite/ignite.json'
