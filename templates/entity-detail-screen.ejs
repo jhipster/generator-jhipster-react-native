@@ -42,7 +42,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>
+    <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>
   }
 }
 

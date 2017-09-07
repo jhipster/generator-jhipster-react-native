@@ -14,9 +14,9 @@ export function * get<%= props.name %> (api, action) {
   }
 }
 
-export function * get<%= props.name %>s (api) {
+export function * get<%= props.pluralName %> (api) {
   // make the call to the api
-  const response = yield call(api.get<%= props.name %>s)
+  const response = yield call(api.get<%= props.pluralName %>)
 
   // success?
   if (response.ok) {

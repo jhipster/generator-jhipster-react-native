@@ -1,9 +1,10 @@
 // @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
+const pluralize = require('pluralize');
 
 module.exports = async function (context) {
   // grab some features
   const { ignite, parameters, print, prompt, strings } = context
-  const { pascalCase, snakeCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
+  const { kebabCase, pascalCase, snakeCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
   const prompts = require('./entity-prompts')
   const fs = require('fs-extra')
   // const config = ignite.loadIgniteConfig()
@@ -22,6 +23,7 @@ module.exports = async function (context) {
   // read some configuration
   const name = pascalCase(parameters.first)
   const props = { name }
+  props.pluralName = pluralize(name);
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`
   const igniteConfigPath = 'ignite/ignite.json'
@@ -84,14 +86,14 @@ module.exports = async function (context) {
 
   // REDUX AND SAGA SECTION
   const apiMethods = `
-  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${camelCase(props.name)}s', ${camelCase(props.name)})
-  const get${props.name}s = () => api.get('api/${camelCase(props.name)}s')
-  const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${camelCase(props.name)}s/' + ${camelCase(props.name)}Id)
-  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${camelCase(props.name)}s/' + ${camelCase(props.name)}Id)`
+  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const get${props.pluralName} = () => api.get('api/${kebabCase(props.pluralName)}')
+  const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
+  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
   const apiMethodsExport = `
     update${props.name},
-    get${props.name}s,
+    get${props.pluralName},
     get${props.name},
     delete${props.name},`
 
@@ -110,8 +112,8 @@ module.exports = async function (context) {
   // import redux in redux/index.js
   ignite.patchInFile(reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
-    insert: `    ${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`,
-    match: `    ${camelCase(props.name)}s: require('./${props.name}Redux').reducer,`
+    insert: `    ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`,
+    match: `    ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`
   })
 
   // import saga/redux in sagas/index.js
@@ -122,13 +124,13 @@ module.exports = async function (context) {
   })
   ignite.patchInFile(sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-method-import-needle',
-    insert: `import { get${props.name}, get${props.name}s, update${props.name}, delete${props.name} } from './${props.name}Sagas'`,
-    match: `import { get${props.name}, get${props.name}s, update${props.name}, delete${props.name} } from './${props.name}Sagas'`
+    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name} } from './${props.name}Sagas'`,
+    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name} } from './${props.name}Sagas'`
   })
 
   const sagaConnections = `
     takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_REQUEST, get${props.name}, jhipsterApi),
-    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_ALL_REQUEST, get${props.name}s, jhipsterApi),
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_ALL_REQUEST, get${props.pluralName}, jhipsterApi),
     takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_UPDATE_REQUEST, update${props.name}, jhipsterApi),
     takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_DELETE_REQUEST, delete${props.name}, jhipsterApi),`
 
@@ -202,7 +204,7 @@ module.exports = async function (context) {
   })
 
   // add entity screens to navigation
-  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.name}s' />`
+  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.pluralName}' />`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-needle',
     insert: navigationScreen,
