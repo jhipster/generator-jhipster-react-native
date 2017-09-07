@@ -78,7 +78,8 @@ module.exports = async function (context) {
   let entityConfig = await fs.readJson(localEntityFilePath)
   props.entityConfig = entityConfig
 
-  const jhipsterApiFilePath = `${process.cwd()}/App/Services/JhipsterApi.js`
+  const apiFilePath = `${process.cwd()}/App/Services/Api.js`
+  const fixtureApiFilePath = `${process.cwd()}/App/Services/FixtureApi.js`
   const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
   const sagaIndexFilePath = `${process.cwd()}/App/Sagas/index.js`
   const entityScreenFilePath = `${process.cwd()}/App/Containers/EntitiesScreen.js`
@@ -91,6 +92,32 @@ module.exports = async function (context) {
   const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
   const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
+  const fixtureApiMethods = `
+  update${props.name}: (${camelCase(props.name)}) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/update${props.name}.json')
+    }
+  },
+  get${props.pluralName}: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/get${props.pluralName}.json')
+    }
+  },
+  get${props.name}: (${camelCase(props.name)}Id) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/get${props.name}.json')
+    }
+  },
+  delete${props.name}: (${camelCase(props.name)}Id) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/delete${props.name}.json')
+    }
+  },`
+
   const apiMethodsExport = `
     update${props.name},
     get${props.pluralName},
@@ -98,15 +125,20 @@ module.exports = async function (context) {
     delete${props.name},`
 
   // add methods to api
-  ignite.patchInFile(jhipsterApiFilePath, {
+  ignite.patchInFile(apiFilePath, {
     before: 'ignite-jhipster-api-method-needle',
     insert: apiMethods,
     match: apiMethods
   })
-  ignite.patchInFile(jhipsterApiFilePath, {
+  ignite.patchInFile(apiFilePath, {
     before: 'ignite-jhipster-api-export-needle',
     insert: apiMethodsExport,
     match: apiMethodsExport
+  })
+  ignite.patchInFile(fixtureApiFilePath, {
+    before: 'ignite-jhipster-api-fixture-needle',
+    insert: fixtureApiMethods,
+    match: fixtureApiMethods
   })
 
   // import redux in redux/index.js
