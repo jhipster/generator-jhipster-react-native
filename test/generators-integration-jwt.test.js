@@ -37,9 +37,8 @@ describe('JWT Integration Test', () => {
 
   test('passes generated tests', async () => {
     console.log('Running Tests')
-    const tests = await execa('npm', ['-s', 'run', 'test'])
+    const tests = await execa('npm', ['-s', 'run', 'test', '--', '-u'])
     console.log('Tests Complete')
-    // todo fix this
-    // t.notRegex(tests.stderr, /failed/)
+    expect(tests.stderr).not.toMatch(/failed/)
   })
 })

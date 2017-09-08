@@ -7,15 +7,14 @@ const BOILERPLATE = `${__dirname}/..`
 
 // calling the ignite cli takes a while
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
+
 describe('Oauth2 Integration Test', () => {
   beforeAll(async () => {
-    await execa('npm', ['link'])
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating OAuth2 app...')
     await execa(IGNITE, ['new', APP, '--oauth2', '--skip-git', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
-    await execa('npm', ['link', 'ignite-jhipster'])
     console.log('App generation complete!')
   })
 
@@ -38,9 +37,8 @@ describe('Oauth2 Integration Test', () => {
 
   test('passes generated tests', async () => {
     console.log('Running Tests')
-    const tests = await execa('npm', ['-s', 'run', 'test'])
+    const tests = await execa('npm', ['-s', 'run', 'test', '--', '-u'])
     console.log('Tests Complete')
-    // todo fix this
-    // t.notRegex(tests.stderr, /failed/)
+    expect(tests.stderr).not.toMatch(/failed/)
   })
 })
