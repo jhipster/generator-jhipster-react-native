@@ -46,24 +46,6 @@ This generator adds Ignite's usual generators to the mix as well.  We have acces
  
 Check out [Ignite's documentation](https://github.com/infinitered/ignite/tree/master/docs) for more details. 
  
- 
-### Planned Features:
-V1
- - [x] Home Page
- - [x] User Authentication (Login/Logout for JWT, UAA and Oauth2)
- - [x] User Pages (Register, Change/Reset Password, Settings)
- - [X] Entity Generator -
-     - [X] API (Sagas/Redux) 
-     - [X] Listings Page
-     - [X] Detail Page
-     - [X] Edit Page
-
-Later Features
- - [ ] Websocket Support
- - [ ] Social Login
- - [ ] Internationalization
- - [ ] Admin Pages
-
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
 [semaphore-image]: https://semaphoreci.com/api/v1/ruddell/ignite-jhipster/branches/master/shields_badge.svg
