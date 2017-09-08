@@ -171,7 +171,8 @@ module.exports = async function (context) {
     match: sagaConnections
   })
 
-  const sagaReduxJobs = [
+  const entityFiles = [
+    // generate entity saga/redux
     {
       template: `saga.ejs`,
       target: `App/Sagas/${name}Sagas.js`
@@ -179,13 +180,8 @@ module.exports = async function (context) {
     {
       template: `redux.ejs`,
       target: `App/Redux/${name}Redux.js`
-    }
-  ]
-
-  await ignite.copyBatch(context, sagaReduxJobs, props)
-
-  // generate entity listing component
-  const entityScreenJobs = [
+    },
+    // generate entity listing container
     {
       template: `listview.ejs`,
       target: `App/Containers/${name}EntityScreen.js`
@@ -209,10 +205,23 @@ module.exports = async function (context) {
     {
       template: `entity-edit-screen.ejs`,
       target: `App/Containers/${name}EntityEditScreen.js`
+    },
+    // generate entity fixtures
+    {
+      template: `fixtures/entity-get.json.ejs`,
+      target: `App/Fixtures/get${props.name}.json`
+    },
+    {
+      template: `fixtures/entity-get-all.json.ejs`,
+      target: `App/Fixtures/get${props.pluralName}.json`
+    },
+    {
+      template: `fixtures/entity-update.json.ejs`,
+      target: `App/Fixtures/update${props.name}.json`
     }
   ]
 
-  await ignite.copyBatch(context, entityScreenJobs, props)
+  await ignite.copyBatch(context, entityFiles, props)
 
   // import entity screens to navigation
   const navigationImport = `import ${props.name}EntityScreen from '../Containers/${props.name}EntityScreen'`
