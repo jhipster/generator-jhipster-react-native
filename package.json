@@ -20,9 +20,9 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "ava --concurrency=1",
-    "watch": "ava --watch",
-    "coverage": "nyc ava",
+    "test": "jest",
+    "watch": "jest --runInBand --watch",
+    "coverage": "jest --runInBand --coverage",
     "shipit": "np"
   },
   "standard": {
@@ -31,15 +31,17 @@
       "__DEV__",
       "describe",
       "expect",
-      "test"
+      "test",
+      "jasmine",
+      "beforeAll",
+      "afterAll"
     ]
   },
   "devDependencies": {
-    "ava": "0.19.1",
     "babel-eslint": "7.2.3",
     "fs-jetpack": "1.0.0",
+    "jest": "21.0.2",
     "np": "2.15.0",
-    "nyc": "10.2.0",
     "sinon": "2.3.1",
     "standard": "10.0.2",
     "tempy": "0.1.0"

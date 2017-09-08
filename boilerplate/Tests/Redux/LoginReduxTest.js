@@ -1,28 +1,33 @@
-import test from 'ava'
-import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/LoginRedux'
+import Actions, { reducer, INITIAL_STATE, isLoggedIn } from '../../App/Redux/LoginRedux'
 
-test('attempt', (t) => {
+test('attempt', () => {
   const state = reducer(INITIAL_STATE, Actions.loginRequest('u', 'p'))
 
-  t.true(state.fetching)
+  expect(state.fetching).toBe(true)
 })
 
-test('success', (t) => {
+test('success', () => {
   const state = reducer(INITIAL_STATE, Actions.loginSuccess('hi'))
 
-  t.is(state.authToken, 'hi')
+  expect(state.authToken).toBe('hi')
 })
 
-test('failure', (t) => {
+test('failure', () => {
   const state = reducer(INITIAL_STATE, Actions.loginFailure(69))
 
-  t.false(state.fetching)
-  t.is(state.error, 69)
+  expect(state.fetching).toBe(false)
+  expect(state.error).toBe(69)
 })
 
-test('logout', (t) => {
+test('logout', () => {
   const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
   const state = reducer(loginState, Actions.logoutRequest())
 
-  t.falsy(state.username)
+  expect(state.username).toBe(undefined)
+})
+
+test('isLoggedIn', () => {
+  const state = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
+
+  expect(isLoggedIn(state)).toBe(true)
 })

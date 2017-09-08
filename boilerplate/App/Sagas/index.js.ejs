@@ -9,7 +9,6 @@ import { StartupTypes } from '../Redux/StartupRedux'
 import { LoginTypes } from '../Redux/LoginRedux'
 import { RegisterTypes } from '../Redux/RegisterRedux'
 import { PasswordTypes } from '../Redux/PasswordRedux'
-import { OpenScreenTypes } from '../Redux/OpenScreenRedux'
 import { AccountTypes } from '../Redux/AccountRedux'
 // ignite-jhipster-saga-redux-import-needle
 
@@ -19,7 +18,6 @@ import { startup } from './StartupSagas'
 import { login, logout, loginLoad<% if (props.authType === 'oauth2' || props.authType === 'uaa') { %>, loginRefresh<% } %> } from './LoginSagas'
 import { register } from './RegisterSagas'
 import { forgotPassword, changePassword } from './PasswordSagas'
-import { openScreen } from './OpenScreenSagas'
 import { getAccount, updateAccount } from './AccountSagas'
 // ignite-jhipster-saga-method-import-needle
 
@@ -35,7 +33,6 @@ export default function * root () {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-    takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
 
     // JHipster accounts
     takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),

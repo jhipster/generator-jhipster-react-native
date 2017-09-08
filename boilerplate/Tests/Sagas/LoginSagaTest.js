@@ -1,7 +1,5 @@
-import test from 'ava'
-
-test('placeholder test so it passes', (t) => {
-  t.deepEqual(1, 1)
+test('placeholder test so it passes', () => {
+  expect(1).toBe(1)
 })
 // import { put, call } from 'redux-saga/effects'
 // import { login } from '../../App/Sagas/LoginSagas'
