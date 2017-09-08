@@ -1,15 +1,18 @@
 const test = require('ava')
 const execa = require('execa')
 const jetpack = require('fs-jetpack')
+const tempy = require('tempy')
 
 const IGNITE = 'ignite'
 const APP = 'IntegrationTestJWT'
+const BOILERPLATE = `${__dirname}/..`
 
 test.before(async t => {
-  jetpack.remove(APP)
   await execa('npm', ['link'])
+  // creates a new temp directory
+  process.chdir(tempy.directory())
   console.log('Generating JWT app...')
-  await execa(IGNITE, ['new', APP, '--jwt', '--skip-git', '--boilerplate', `${__dirname}/..`])
+  await execa(IGNITE, ['new', APP, '--jwt', '--skip-git', '--boilerplate', BOILERPLATE])
   process.chdir(APP)
   await execa('npm', ['link', 'ignite-jhipster'])
   console.log('App generation complete!')
@@ -37,9 +40,4 @@ test('passes generated tests', async t => {
   const tests = await execa('npm', ['-s', 'run', 'test'])
   console.log('Tests Complete')
   t.notRegex(tests.stderr, /failed/)
-})
-
-test.after.always('clean up all generated items', t => {
-  process.chdir('../')
-  jetpack.remove(APP)
 })
