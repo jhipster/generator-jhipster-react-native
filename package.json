@@ -35,11 +35,12 @@
   "devDependencies": {
     "ava": "0.19.1",
     "babel-eslint": "7.2.3",
-    "fs-jetpack": "0.13.3",
-    "np": "2.13.3",
+    "fs-jetpack": "1.0.0",
+    "np": "2.15.0",
     "nyc": "10.2.0",
-    "sinon": "1.17.7",
-    "standard": "8.6.0"
+    "sinon": "2.3.1",
+    "standard": "10.0.2",
+    "tempy": "0.1.0"
   },
   "dependencies": {
     "fs-extra": "4.0.0",
