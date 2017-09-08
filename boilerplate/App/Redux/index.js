@@ -7,7 +7,6 @@ export default () => {
   const rootReducer = combineReducers({
     appState: require('./AppStateRedux').reducer,
     // ignite-jhipster-redux-store-import-needle
-    github: require('./GithubRedux').reducer,
     account: require('./AccountRedux').reducer,
     login: require('./LoginRedux').reducer,
     register: require('./RegisterRedux').reducer,

@@ -73,15 +73,15 @@ class <%= props.name %>EntityScreen extends React.Component {
   *
   *************************************************************/
   componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %>s) {
+    if (newProps.<%= camelCase(props.pluralName) %>) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(newProps.<%= camelCase(props.name) %>s)
+        dataSource: this.state.dataSource.cloneWithRows(newProps.<%= camelCase(props.pluralName) %>)
       })
     }
   }
 
   componentWillMount () {
-    this.props.getAll<%= props.name %>s()
+    this.props.getAll<%= props.pluralName %>()
   }
 
   // Used for friendly AlertMessage
@@ -102,7 +102,7 @@ class <%= props.name %>EntityScreen extends React.Component {
   render () {
     return (
       <View style={styles.container}>
-        <AlertMessage title='No <%= props.name %>s Found' show={this.noRowData() && !this.props.fetching} />
+        <AlertMessage title='No <%= props.pluralName %> Found' show={this.noRowData() && !this.props.fetching} />
         <ListView
           contentContainerStyle={styles.listContent}
           dataSource={this.state.dataSource}
@@ -119,15 +119,15 @@ class <%= props.name %>EntityScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
-    <%= camelCase(props.name) %>s: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>s,
-    fetching: state.<%= camelCase(props.name) %>s.fetchingAll,
-    error: state.<%= camelCase(props.name) %>s.errorAll
+    <%= camelCase(props.pluralName) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.pluralName) %>,
+    fetching: state.<%= camelCase(props.pluralName) %>.fetchingAll,
+    error: state.<%= camelCase(props.pluralName) %>.errorAll
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getAll<%= props.name %>s: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest())
+    getAll<%= props.pluralName %>: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest())
   }
 }
 

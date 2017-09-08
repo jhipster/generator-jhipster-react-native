@@ -1,24 +1,40 @@
 export default {
   // Functions return fixtures
-  getRoot: () => {
+
+  // entity fixtures
+  // ignite-jhipster-api-fixture-needle
+
+  // auth fixtures
+  login: () => {
     return {
       ok: true,
-      data: require('../Fixtures/root.json')
+      data: require('../Fixtures/login.json')
     }
   },
-  getRate: () => {
+  register: () => {
     return {
-      ok: true,
-      data: require('../Fixtures/rateLimit.json')
+      ok: true
     }
   },
-  getUser: (username) => {
-    // This fixture only supports gantman or else returns skellock
-    const gantmanData = require('../Fixtures/gantman.json')
-    const skellockData = require('../Fixtures/skellock.json')
+  forgotPassword: () => {
+    return {
+      ok: true
+    }
+  },
+  getAccount: () => {
     return {
       ok: true,
-      data: username.toLowerCase() === 'gantman' ? gantmanData : skellockData
+      data: require('../Fixtures/getAccount.json')
+    }
+  },
+  updateAccount: () => {
+    return {
+      ok: true
+    }
+  },
+  changePassword: () => {
+    return {
+      ok: true
     }
   }
 }

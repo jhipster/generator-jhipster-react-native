@@ -10,7 +10,7 @@ const { Types, Creators } = createActions({
   <%= camelCase(props.name) %>DeleteRequest: ['<%= camelCase(props.name) %>Id'],
 
   <%= camelCase(props.name) %>Success: ['<%= camelCase(props.name) %>'],
-  <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.name) %>s'],
+  <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.pluralName) %>'],
   <%= camelCase(props.name) %>UpdateSuccess: ['<%= camelCase(props.name) %>'],
   <%= camelCase(props.name) %>DeleteSuccess: [],
 
@@ -31,7 +31,7 @@ export const INITIAL_STATE = Immutable({
   updating: null,
   deleting: null,
   <%= camelCase(props.name) %>: null,
-  <%= camelCase(props.name) %>s: null,
+  <%= camelCase(props.pluralName) %>: null,
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
@@ -51,7 +51,7 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    <%= camelCase(props.name) %>s: null
+    <%= camelCase(props.pluralName) %>: null
   })
 
 // request to update from an api
@@ -77,11 +77,11 @@ export const success = (state, action) => {
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { <%= camelCase(props.name) %>s } = action
+  const { <%= camelCase(props.pluralName) %> } = action
   return state.merge({
     fetchingAll: false,
     errorAll: null,
-    <%= camelCase(props.name) %>s
+    <%= camelCase(props.pluralName) %>
   })
 }
 // successful api update
@@ -117,7 +117,7 @@ export const allFailure = (state, action) => {
   state.merge({
     fetchingAll: false,
     errorAll: error,
-    <%= camelCase(props.name) %>s: null
+    <%= camelCase(props.pluralName) %>: null
   })
 }
 // Something went wrong updating.

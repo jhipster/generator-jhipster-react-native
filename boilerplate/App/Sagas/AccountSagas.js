@@ -5,7 +5,8 @@ import { callApi } from './CallApiSaga'
 
 // attempts to account
 export function * getAccount (api) {
-  const response = yield call(api.getAccount)
+  const apiCall = call(api.getAccount)
+  const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
@@ -27,7 +28,7 @@ export function * updateAccount (api, action) {
   // success?
   if (response.ok) {
     console.tron.log('AccountUpdate - OK')
-    yield put(AccountActions.accountUpdateSuccess(account))
+    yield put(AccountActions.accountUpdateSuccess())
   } else {
     console.tron.log('AccountUpdate - FAIL')
     yield put(AccountActions.accountFailure('WRONG'))

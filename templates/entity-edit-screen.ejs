@@ -123,10 +123,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>s.<%= camelCase(props.name) %>,
-    fetching: state.<%= camelCase(props.name) %>s.fetchingOne,
-    updating: state.<%= camelCase(props.name) %>s.updating,
-    error: state.<%= camelCase(props.name) %>s.errorOne
+    <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
+    fetching: state.<%= camelCase(props.pluralName) %>.fetchingOne,
+    updating: state.<%= camelCase(props.pluralName) %>.updating,
+    error: state.<%= camelCase(props.pluralName) %>.errorOne
   }
 }
 

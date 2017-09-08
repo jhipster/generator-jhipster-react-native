@@ -105,8 +105,8 @@ async function install (context) {
       target: 'App/Containers/RootContainer.js'
     },
     {
-      template: 'App/Services/JhipsterApi.js.ejs',
-      target: 'App/Services/JhipsterApi.js'
+      template: 'App/Services/Api.js.ejs',
+      target: 'App/Services/Api.js'
     },
     {
       template: 'App/Redux/LoginRedux.js.ejs',
@@ -115,6 +115,10 @@ async function install (context) {
     {
       template: 'App/Sagas/LoginSagas.js.ejs',
       target: 'App/Sagas/LoginSagas.js'
+    },
+    {
+      template: 'App/Fixtures/login.json.ejs',
+      target: 'App/Fixtures/login.json'
     },
     {
       template: 'App/Sagas/index.js.ejs',
