@@ -113,8 +113,7 @@ module.exports = async function (context) {
   },
   delete${props.name}: (${camelCase(props.name)}Id) => {
     return {
-      ok: true,
-      data: require('../Fixtures/delete${props.name}.json')
+      ok: true
     }
   },`
 

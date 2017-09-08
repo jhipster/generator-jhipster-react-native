@@ -22,7 +22,7 @@ export function * changePassword (api, { password }) {
   // success?
   if (response.ok) {
     console.tron.log('ChangePasswordRequest - OK')
-    yield put(PasswordActions.changePasswordSuccess(response.data))
+    yield put(PasswordActions.changePasswordSuccess())
   } else {
     console.tron.log('ChangePassword - FAIL')
     yield put(PasswordActions.changePasswordFailure('WRONG'))

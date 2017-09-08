@@ -28,7 +28,7 @@ export function * updateAccount (api, action) {
   // success?
   if (response.ok) {
     console.tron.log('AccountUpdate - OK')
-    yield put(AccountActions.accountUpdateSuccess(account))
+    yield put(AccountActions.accountUpdateSuccess())
   } else {
     console.tron.log('AccountUpdate - FAIL')
     yield put(AccountActions.accountFailure('WRONG'))

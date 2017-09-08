@@ -6,7 +6,7 @@ const { Types, Creators } = createActions({
   accountRequest: [],
   accountUpdateRequest: ['account'],
   accountSuccess: ['account'],
-  accountUpdateSuccess: ['account'],
+  accountUpdateSuccess: [],
   accountFailure: ['error'],
   logout: null
 })
@@ -37,10 +37,7 @@ export const success = (state, data) => {
   return state.merge({ fetching: false, error: null, account })
 }
 // we've successfully updated the account
-export const updateSuccess = (state, data) => {
-  const { account } = data
-  return state.merge({ error: null, updating: false, account })
-}
+export const updateSuccess = (state) => state.merge({ error: null, updating: false })
 
 // we've had a problem logging in
 export const failure = (state, { error }) => state.merge({ fetching: false, updating: false, error })
