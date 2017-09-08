@@ -244,6 +244,10 @@ async function install (context) {
     if (pluginAnswers['animatable'] === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
     }
+
+    if (parameters.options.lint !== 'false') {
+      await system.spawn(`ignite add standard ${debugFlag}`, { stdio: 'inherit' })
+    }
   } catch (e) {
     ignite.log(e)
     throw e
