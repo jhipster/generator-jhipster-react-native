@@ -5,7 +5,7 @@ module.exports = async function (context) {
   // grab some features
   const { ignite, parameters, print, prompt, strings } = context
   const { kebabCase, pascalCase, snakeCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
-  const prompts = require('./entity-prompts')
+  const prompts = require('./entity/prompts')
   const fs = require('fs-extra')
   // const config = ignite.loadIgniteConfig()
   // const { tests } = config
