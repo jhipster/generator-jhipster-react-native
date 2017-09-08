@@ -1,6 +1,5 @@
 const test = require('ava')
 const execa = require('execa')
-const jetpack = require('fs-jetpack')
 const tempy = require('tempy')
 
 const IGNITE = 'ignite'

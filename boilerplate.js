@@ -211,7 +211,7 @@ async function install (context) {
     const spinner = print.spin(`adding ${print.colors.cyan(moduleName)}`)
 
     const boilerplate = parameters.options.b || parameters.options.boilerplate || moduleName
-    await system.spawn(`ignite add ${moduleName} ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${boilerplate} ${debugFlag}`, { stdio: 'inherit' })
 
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')

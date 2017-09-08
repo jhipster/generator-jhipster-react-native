@@ -1,4 +1,4 @@
-import { takeLatest } from 'redux-saga/effects'
+import { takeLatest, all } from 'redux-saga/effects'
 import API from '../Services/Api'
 import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
@@ -32,7 +32,7 @@ const api = DebugConfig.useFixtures ? FixtureAPI : API.create()
 /* ------------- Connect Types To Sagas ------------- */
 
 export default function * root () {
-  yield [
+  yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(OpenScreenTypes.OPEN_SCREEN, openScreen),
@@ -51,5 +51,5 @@ export default function * root () {
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api)
-  ]
+  ])
 }

@@ -29,7 +29,9 @@
     "parser": "babel-eslint",
     "globals": [
       "__DEV__",
-      "describe"
+      "describe",
+      "expect",
+      "test"
     ]
   },
   "devDependencies": {
