@@ -1,8 +1,7 @@
-//import { StartupTypes } from '../Redux/StartupRedux'
+// import { StartupTypes } from '../Redux/StartupRedux'
 import Config from '../Config/DebugConfig'
 import Immutable from 'seamless-immutable'
 import Reactotron from 'reactotron-react-native'
-import apisaucePlugin from 'reactotron-apisauce'
 import { reactotronRedux as reduxPlugin } from 'reactotron-redux'
 import sagaPlugin from 'reactotron-redux-saga'
 

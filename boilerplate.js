@@ -249,6 +249,10 @@ async function install (context) {
 
     if (parameters.options.lint !== 'false') {
       await system.spawn(`ignite add standard ${debugFlag}`, { stdio: 'inherit' })
+      // ignore the ignite folder
+      let pkg = filesystem.read(`package.json`, 'json')
+      pkg.standard['ignore'] = [ 'ignite/**' ]
+      filesystem.write(`package.json`, pkg)
     }
   } catch (e) {
     ignite.log(e)
