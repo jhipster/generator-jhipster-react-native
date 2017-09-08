@@ -96,6 +96,7 @@ async function install (context) {
     { template: 'README.md', target: 'README.md' },
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
     { template: '.editorconfig', target: '.editorconfig' },
+    { template: '.babelrc', target: '.babelrc' },
     {
       template: 'App/Config/AppConfig.js.ejs',
       target: 'App/Config/AppConfig.js'
