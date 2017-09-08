@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Text, TouchableOpacity } from 'react-native'
 import styles from './Styles/DrawerButtonStyles'
 import ExamplesRegistry from '../Services/ExamplesRegistry'
@@ -11,7 +12,7 @@ ExamplesRegistry.addComponentExample('Drawer Button', () =>
   />
 )
 
-class DrawerButton extends Component {
+class DrawerButton extends React.Component {
   static propTypes = {
     text: PropTypes.string,
     onPress: PropTypes.func
