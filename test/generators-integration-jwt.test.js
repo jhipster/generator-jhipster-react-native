@@ -9,7 +9,7 @@ const BOILERPLATE = `${__dirname}/..`
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
 
 describe('JWT Integration Test', () => {
-  beforeAll(async() => {
+  beforeAll(async () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating JWT app...')
@@ -18,13 +18,13 @@ describe('JWT Integration Test', () => {
     console.log('App generation complete!')
   })
 
-  test('lints a fresh app', async() => {
+  test('lints a fresh app', async () => {
     console.log('Linting fresh app')
     const lint = await execa('npm', ['-s', 'run', 'lint'])
     expect(lint.stderr).toBe('')
   })
 
-  test('generates an entity', async() => {
+  test('generates an entity', async () => {
     console.log('Generating entity Foo')
     await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])
     await execa(IGNITE, ['g', 'entity', 'FieldTestEntity', '--jh-dir=../test'])
@@ -35,7 +35,7 @@ describe('JWT Integration Test', () => {
     expect(lint.stderr).toBe('')
   })
 
-  test('passes generated tests', async() => {
+  test('passes generated tests', async () => {
     console.log('Running Tests')
     const tests = await execa('npm', ['-s', 'run', 'test'])
     console.log('Tests Complete')

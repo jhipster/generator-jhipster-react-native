@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "standard",
-    "test": "jest",
+    "test": "jest --runInBand",
     "watch": "jest --runInBand --watch",
     "coverage": "jest --runInBand --coverage",
     "shipit": "np"
