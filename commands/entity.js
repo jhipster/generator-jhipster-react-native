@@ -175,36 +175,36 @@ module.exports = async function (context) {
     // generate entity saga/redux
     {
       template: `saga.ejs`,
-      target: `App/Sagas/${name}Sagas.js`
+      target: `App/Sagas/${props.name}Sagas.js`
     },
     {
       template: `redux.ejs`,
-      target: `App/Redux/${name}Redux.js`
+      target: `App/Redux/${props.name}Redux.js`
     },
     // generate entity listing container
     {
       template: `listview.ejs`,
-      target: `App/Containers/${name}EntityScreen.js`
+      target: `App/Containers/${props.name}EntityScreen.js`
     },
     {
       template: `listview-style.ejs`,
-      target: `App/Containers/Styles/${name}EntityScreenStyle.js`
+      target: `App/Containers/Styles/${props.name}EntityScreenStyle.js`
     },
     {
       template: `entity-detail-screen-style.ejs`,
-      target: `App/Containers/Styles/${name}EntityDetailScreenStyle.js`
+      target: `App/Containers/Styles/${props.name}EntityDetailScreenStyle.js`
     },
     {
       template: `entity-detail-screen.ejs`,
-      target: `App/Containers/${name}EntityDetailScreen.js`
+      target: `App/Containers/${props.name}EntityDetailScreen.js`
     },
     {
       template: `entity-edit-screen-style.ejs`,
-      target: `App/Containers/Styles/${name}EntityEditScreenStyle.js`
+      target: `App/Containers/Styles/${props.name}EntityEditScreenStyle.js`
     },
     {
       template: `entity-edit-screen.ejs`,
-      target: `App/Containers/${name}EntityEditScreen.js`
+      target: `App/Containers/${props.name}EntityEditScreen.js`
     },
     // generate entity fixtures
     {
@@ -218,6 +218,15 @@ module.exports = async function (context) {
     {
       template: `fixtures/entity-update.json.ejs`,
       target: `App/Fixtures/update${props.name}.json`
+    },
+    // generate entity tests
+    {
+      template: `saga-test.ejs`,
+      target: `Tests/Sagas/${props.name}SagaTest.js`
+    },
+    {
+      template: `redux-test.ejs`,
+      target: `Tests/Redux/${props.name}ReduxTest.js`
     }
   ]
 
@@ -270,54 +279,4 @@ module.exports = async function (context) {
     insert: entityScreenButton,
     match: entityScreenButton
   })
-
-  // generate entity detail component
-  // connect entity redux
-
-  // generate entity edit component
-  // connect entity redux
-
-  // const jobs = [
-  // component jobs
-  // {
-  //     template: 'component.ejs',
-  //     target: `App/Components/${name}.js`
-  // },
-  // {
-  //     template: 'component-style.ejs',
-  //     target: `App/Components/Styles/${name}Style.js`
-  // },
-  //
-  // listview jobs
-  // {
-  //     template: `listview.ejs`,
-  //     target: `App/Containers/${name}.js`
-  // },
-  // {
-  //     template: `listview-style.ejs`,
-  //     target: `App/Containers/Styles/${name}Style.js`
-  // }
-  // ]
-
-  // if (tests) {
-  //     // component tests
-  //     if (tests === 'ava') {
-  //         jobs.push({
-  //             template: 'component-test.ejs',
-  //             target: `Test/Components/${name}Test.js`
-  //         })
-  //     }
-  //     // saga tests
-  //     jobs.push({
-  //         template: `saga-test-${tests}.ejs`,
-  //         target: `Tests/Saga/${name}SagaTest.js`
-  //     })
-  //     // redux tests
-  //     jobs.push({
-  //         template: `redux-test-${config.tests}.ejs`,
-  //         target: `Tests/Redux/${name}ReduxTest.js`
-  //     })
-  // }
-
-  // await ignite.copyBatch(context, jobs, props)
 }

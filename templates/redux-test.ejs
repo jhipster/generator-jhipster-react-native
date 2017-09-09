@@ -1,0 +1,89 @@
+import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/<%= props.name %>Redux'
+
+test('attempt retrieving a single <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Request({id: 1}))
+
+  expect(state.fetchingOne).toBe(true)
+  expect(state.<%= camelCase(props.name) %>).toBe(null)
+})
+
+test('attempt retrieving a list of <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllRequest({id: 1}))
+
+  expect(state.fetchingAll).toBe(true)
+  expect(state.<%= camelCase(props.pluralName) %>).toBe(null)
+})
+
+test('attempt updating a <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>UpdateRequest({id: 1}))
+
+  expect(state.updating).toBe(true)
+})
+
+test('attempt to deleting a <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>DeleteRequest({id: 1}))
+
+  expect(state.deleting).toBe(true)
+})
+
+test('success retrieving a <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Success({id: 1}))
+
+  expect(state.fetchingOne).toBe(false)
+  expect(state.errorOne).toBe(null)
+  expect(state.<%= camelCase(props.name) %>).toEqual({id: 1})
+})
+
+test('success retrieving a list of <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllSuccess([{id: 1}, {id: 2}]))
+
+  expect(state.fetchingAll).toBe(false)
+  expect(state.errorAll).toBe(null)
+  expect(state.<%= camelCase(props.pluralName) %>).toEqual([{id: 1}, {id: 2}])
+})
+
+test('success updating a <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>UpdateSuccess({id: 1}))
+
+  expect(state.updating).toBe(false)
+  expect(state.errorUpdating).toBe(null)
+  expect(state.<%= camelCase(props.name) %>).toEqual({id: 1})
+})
+
+test('success deleting a <%= camelCase(props.name) %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>DeleteSuccess())
+  expect(state.deleting).toBe(false)
+  expect(state.errorDeleting).toBe(null)
+  expect(state.<%= camelCase(props.name) %>).toEqual(null)
+})
+
+// todo fix these
+// test('failure retrieving a <%= camelCase(props.name) %>', () => {
+//   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>Failure())
+
+//   expect(state.fetchingOne).toBe(false)
+//   expect(state.errorOne).toBe(true)
+//   expect(state.<%= camelCase(props.name) %>).toEqual(null)
+// })
+
+// test('failure retrieving a list of <%= camelCase(props.name) %>', () => {
+//   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllFailure())
+
+//   expect(state.fetchingAll).toBe(false)
+//   expect(state.errorAll).toBe(true)
+//   expect(state.<%= camelCase(props.pluralName) %>).toEqual(null)
+// })
+
+// test('failure updating a <%= camelCase(props.name) %>', () => {
+//   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>UpdateFailure())
+
+//   expect(state.updating).toBe(false)
+//   expect(state.errorUpdating).toBe(true)
+// })
+
+// test('failure deleting a <%= camelCase(props.name) %>', () => {
+//   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>DeleteFailure())
+
+//   expect(state.deleting).toBe(false)
+//   expect(state.errorDeleting).toBe(true)
+// })

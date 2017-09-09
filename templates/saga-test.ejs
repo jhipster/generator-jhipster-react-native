@@ -1,0 +1,78 @@
+import FixtureAPI from '../../App/Services/FixtureApi'
+import { put } from 'redux-saga/effects'
+import { get<%= props.name %>, get<%= props.pluralName %>, update<%= props.name %>, delete<%= props.name %> } from '../../App/Sagas/<%= props.name %>Sagas'
+import <%= props.name %>Actions from '../../App/Redux/<%= props.name %>Redux'
+
+const stepper = (fn) => (mock) => fn.next(mock).value
+
+test('get success path', () => {
+  const response = FixtureAPI.get<%= props.name %>(1)
+  const step = stepper(get<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Successful return and data!
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success({id: 1})))
+})
+
+test('get failure path', () => {
+  const response = {ok: false}
+  const step = stepper(get<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Failed response.
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure()))
+})
+
+test('getAll success path', () => {
+  const response = FixtureAPI.get<%= props.pluralName %>()
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Successful return and data!
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess([{id: 1}, {id: 2}])))
+})
+
+test('getAll failure path', () => {
+  const response = {ok: false}
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Failed response.
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllFailure()))
+})
+
+test('update success path', () => {
+  const response = FixtureAPI.update<%= props.name %>({id: 1})
+  const step = stepper(update<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Successful return and data!
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateSuccess({id: 1})))
+})
+
+test('update failure path', () => {
+  const response = {ok: false}
+  const step = stepper(update<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Failed response.
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateFailure()))
+})
+
+test('delete success path', () => {
+  const response = FixtureAPI.delete<%= props.name %>({id: 1})
+  const step = stepper(delete<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Successful return and data!
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteSuccess({id: 1})))
+})
+
+test('delete failure path', () => {
+  const response = {ok: false}
+  const step = stepper(delete<%= props.name %>(FixtureAPI, {id: 1}))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Failed response.
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteFailure()))
+})
