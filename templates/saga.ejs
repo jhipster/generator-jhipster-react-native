@@ -43,6 +43,20 @@ export function * update<%= props.name %> (api, action) {
   }
 }
 
+<%_ if (props.searchEngine) { _%>
+export function * search<%= props.pluralName %> (api) {
+  // make the call to the api
+  const apiCall = call(api.search<%= props.pluralName %>)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchSuccess(response.data))
+  } else {
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchFailure(response.data))
+  }
+}
+<%_ } _%>
 export function * delete<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %>Id } = action
   // make the call to the api

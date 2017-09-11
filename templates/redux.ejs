@@ -7,16 +7,25 @@ const { Types, Creators } = createActions({
   <%= camelCase(props.name) %>Request: ['<%= camelCase(props.name) %>Id'],
   <%= camelCase(props.name) %>AllRequest: [],
   <%= camelCase(props.name) %>UpdateRequest: ['<%= camelCase(props.name) %>'],
+  <%_ if (props.searchEngine) { _%>
+  <%= camelCase(props.name) %>SearchRequest: ['query'],
+  <%_ } _%>
   <%= camelCase(props.name) %>DeleteRequest: ['<%= camelCase(props.name) %>Id'],
 
   <%= camelCase(props.name) %>Success: ['<%= camelCase(props.name) %>'],
   <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.pluralName) %>'],
   <%= camelCase(props.name) %>UpdateSuccess: ['<%= camelCase(props.name) %>'],
+  <%_ if (props.searchEngine) { _%>
+  <%= camelCase(props.name) %>SearchSuccess: ['<%= camelCase(props.pluralName) %>'],
+  <%_ } _%>
   <%= camelCase(props.name) %>DeleteSuccess: [],
 
   <%= camelCase(props.name) %>Failure: ['error'],
   <%= camelCase(props.name) %>AllFailure: ['error'],
   <%= camelCase(props.name) %>UpdateFailure: ['error'],
+  <%_ if (props.searchEngine) { _%>
+  <%= camelCase(props.name) %>SearchFailure: ['error'],
+  <%_ } _%>
   <%= camelCase(props.name) %>DeleteFailure: ['error']
 })
 
@@ -29,12 +38,18 @@ export const INITIAL_STATE = Immutable({
   fetchingOne: null,
   fetchingAll: null,
   updating: null,
+  <%_ if (props.searchEngine) { _%>
+  searching: null,
+  <%_ } _%>
   deleting: null,
   <%= camelCase(props.name) %>: null,
   <%= camelCase(props.pluralName) %>: null,
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
+  <%_ if (props.searchEngine) { _%>
+  errorSearching: null,
+  <%_ } _%>
   errorDeleting: null
 })
 
@@ -59,6 +74,14 @@ export const updateRequest = (state) =>
   state.merge({
     updating: true
   })
+
+<%_ if (props.searchEngine) { _%>
+// request to search from an api
+export const searchRequest = (state) =>
+  state.merge({
+    searching: true
+  })
+<%_ } _%>
 
 // request to delete from an api
 export const deleteRequest = (state) =>
@@ -93,6 +116,17 @@ export const updateSuccess = (state, action) => {
     <%= camelCase(props.name) %>
   })
 }
+<%_ if (props.searchEngine) { _%>
+// successful api search
+export const searchSuccess = (state, action) => {
+  const { <%= camelCase(props.pluralName) %> } = action
+  return state.merge({
+    fetchingSearching: false,
+    errorSearching: null,
+    <%= camelCase(props.pluralName) %>
+  })
+}
+<%_ } _%>
 // successful api delete
 export const deleteSuccess = (state) => {
   return state.merge({
@@ -138,6 +172,17 @@ export const deleteFailure = (state, action) => {
     <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>
   })
 }
+<%_ if (props.searchEngine) { _%>
+// Something went wrong searching the entities.
+export const searchFailure = (state, action) => {
+  const { error } = action
+  state.merge({
+    searching: false,
+    errorSearching: error,
+    <%= camelCase(props.pluralName) %>: null
+  })
+}
+<%_ } _%>
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -145,15 +190,24 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= snakeCase(props.name).toUpperCase() %>_REQUEST]: request,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_REQUEST]: allRequest,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
+  <%_ if (props.searchEngine) { _%>
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
+  <%_ } _%>
   [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
 
   [Types.<%= snakeCase(props.name).toUpperCase() %>_SUCCESS]: success,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_SUCCESS]: allSuccess,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
+  <%_ if (props.searchEngine) { _%>
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
+  <%_ } _%>
   [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
 
   [Types.<%= snakeCase(props.name).toUpperCase() %>_FAILURE]: failure,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_ALL_FAILURE]: allFailure,
   [Types.<%= snakeCase(props.name).toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
+  <%_ if (props.searchEngine) { _%>
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
+  <%_ } _%>
   [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_FAILURE]: deleteFailure
 })

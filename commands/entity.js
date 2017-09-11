@@ -90,13 +90,13 @@ module.exports = async function (context) {
   const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
 
   // REDUX AND SAGA SECTION
-  const apiMethods = `
-  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const get${props.pluralName} = () => api.get('api/${kebabCase(props.pluralName)}')
+  let apiMethods = `
   const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
+  const get${props.pluralName} = () => api.get('api/${kebabCase(props.pluralName)}')
+  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
   const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
-  const fixtureApiMethods = `
+  let fixtureApiMethods = `
   update${props.name}: (${camelCase(props.name)}) => {
     return {
       ok: true,
@@ -121,11 +121,36 @@ module.exports = async function (context) {
     }
   },`
 
-  const apiMethodsExport = `
+  let apiMethodsExport = `
     update${props.name},
     get${props.pluralName},
     get${props.name},
     delete${props.name},`
+
+  let sagaConnections = `
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_REQUEST, get${props.name}, api),
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_ALL_REQUEST, get${props.pluralName}, api),
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_UPDATE_REQUEST, update${props.name}, api),
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_DELETE_REQUEST, delete${props.name}, api),`
+
+  // add searchEngine methods
+  if (props.searchEngine) {
+    apiMethods += `
+  const search${props.pluralName} = (query) => api.get('api/_search/${kebabCase(props.pluralName)}/' + query)`
+
+    fixtureApiMethods += `
+  search${props.pluralName}: (query) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/search${props.pluralName}.json')
+    }
+  },`
+
+    apiMethodsExport += `
+    search${props.pluralName},`
+    sagaConnections += `
+    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_SEARCH_REQUEST, search${props.pluralName}, api),`
+  }
 
   // add methods to api
   ignite.patchInFile(apiFilePath, {
@@ -159,15 +184,9 @@ module.exports = async function (context) {
   })
   ignite.patchInFile(sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-method-import-needle',
-    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name} } from './${props.name}Sagas'`,
-    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name} } from './${props.name}Sagas'`
+    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from './${props.name}Sagas'`,
+    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from './${props.name}Sagas'`
   })
-
-  const sagaConnections = `
-    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_REQUEST, get${props.name}, api),
-    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_ALL_REQUEST, get${props.pluralName}, api),
-    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_UPDATE_REQUEST, update${props.name}, api),
-    takeLatest(${props.name}Types.${snakeCase(props.name).toUpperCase()}_DELETE_REQUEST, delete${props.name}, api),`
 
   ignite.patchInFile(sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-connect-needle',
@@ -233,6 +252,13 @@ module.exports = async function (context) {
       target: `Tests/Redux/${props.name}ReduxTest.js`
     }
   ]
+
+  if (props.searchEngine) {
+    entityFiles.push({
+      template: `fixtures/entity-get-all.json.ejs`,
+      target: `App/Fixtures/search${props.pluralName}.json`
+    })
+  }
 
   await ignite.copyBatch(context, entityFiles, props)
 
