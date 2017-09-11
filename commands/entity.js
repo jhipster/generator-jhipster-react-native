@@ -20,17 +20,21 @@ module.exports = async function (context) {
     return
   }
 
-  // read some configuration
-  const name = pascalCase(parameters.first)
-  const props = { name }
-  props.pluralName = pluralize(name)
-  const entityFileName = `${name}.json`
-  const localEntityFilePath = `.jhipster/${entityFileName}`
-  const igniteConfigPath = 'ignite/ignite.json'
-
   // load the ignite config and set the default jhipster directory
+  const igniteConfigPath = 'ignite/ignite.json'
   let igniteConfig = await fs.readJson(igniteConfigPath)
   prompts.entityPrompts[0].default = igniteConfig.jhipsterDirectory
+  const searchEngine = igniteConfig.searchEngine
+
+  // read some configuration
+  const name = pascalCase(parameters.first)
+  const props = {
+    name,
+    searchEngine,
+    pluralName: pluralize(name)
+  }
+  const entityFileName = `${name}.json`
+  const localEntityFilePath = `.jhipster/${entityFileName}`
 
   let fullEntityFilePath
   let jhipsterDirectory
