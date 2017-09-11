@@ -52,7 +52,7 @@ const max = {
   'dev-screens': true,
   'vector-icons': 'react-native-vector-icons',
   'i18n': 'none',
-  'searchEngine': false,
+  'searchEngine': true,
   'animatable': 'react-native-animatable'
 }
 

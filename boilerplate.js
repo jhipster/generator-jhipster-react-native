@@ -135,6 +135,7 @@ async function install (context) {
     igniteVersion: ignite.version,
     reactNativeVersion: rnInstall.version,
     authType: jhipsterAnswers['auth-type'],
+    searchEngine: jhipsterAnswers['searchEngine'],
     vectorIcons: pluginAnswers['vector-icons'],
     animatable: pluginAnswers['animatable'],
     i18n: pluginAnswers['i18n']
