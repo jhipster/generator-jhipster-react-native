@@ -121,7 +121,7 @@ export const updateSuccess = (state, action) => {
 export const searchSuccess = (state, action) => {
   const { <%= camelCase(props.pluralName) %> } = action
   return state.merge({
-    fetchingSearching: false,
+    searching: false,
     errorSearching: null,
     <%= camelCase(props.pluralName) %>
   })
