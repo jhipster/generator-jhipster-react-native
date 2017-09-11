@@ -1,6 +1,6 @@
 import FixtureAPI from '../../App/Services/FixtureApi'
 import { put } from 'redux-saga/effects'
-import { get<%= props.name %>, get<%= props.pluralName %>, update<%= props.name %>, delete<%= props.name %> } from '../../App/Sagas/<%= props.name %>Sagas'
+import { get<%= props.name %>, get<%= props.pluralName %>, update<%= props.name %>, delete<%= props.name %><%= props.searchEngine ? `, search${props.pluralName}` : '' %> } from '../../App/Sagas/<%= props.name %>Sagas'
 import <%= props.name %>Actions from '../../App/Redux/<%= props.name %>Redux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
@@ -58,6 +58,26 @@ test('update failure path', () => {
   // Step 2: Failed response.
   expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateFailure()))
 })
+
+<%_ if (props.searchEngine) { _%>
+test('search success path', () => {
+  const response = FixtureAPI.search<%= props.pluralName %>()
+  const step = stepper(search<%= props.pluralName %>(FixtureAPI, '*'))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Successful return and data!
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchSuccess([{id: 1}, {id: 2}])))
+})
+
+test('search failure path', () => {
+  const response = {ok: false}
+  const step = stepper(search<%= props.pluralName %>(FixtureAPI, '*'))
+  // Step 1: Hit the api
+  step()
+  // Step 2: Failed response.
+  expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchFailure()))
+})
+<%_ } _%>
 
 test('delete success path', () => {
   const response = FixtureAPI.delete<%= props.name %>({id: 1})

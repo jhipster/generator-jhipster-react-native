@@ -24,12 +24,6 @@ const pluginQuestions = [
     message: 'Would you like Ignite Development Screens?',
     type: 'confirm'
   },
-  {
-    name: 'vector-icons',
-    message: 'What vector icon library will you use?',
-    type: 'radio',
-    choices: ['none', 'react-native-vector-icons']
-  },
   // {
   //   name: 'i18n',
   //   message: 'What internationalization library will you use?',
@@ -50,9 +44,8 @@ const pluginQuestions = [
 const max = {
   'auth-type': 'jwt',
   'dev-screens': true,
-  'vector-icons': 'react-native-vector-icons',
   'i18n': 'none',
-  'searchEngine': false,
+  'searchEngine': true,
   'animatable': 'react-native-animatable'
 }
 
@@ -62,7 +55,6 @@ const max = {
 const min = {
   'auth-type': 'jwt',
   'dev-screens': false,
-  'vector-icons': 'none',
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -74,7 +66,6 @@ const min = {
 const jwt = {
   'auth-type': 'jwt',
   'dev-screens': false,
-  'vector-icons': 'none',
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -86,7 +77,6 @@ const jwt = {
 const uaa = {
   'auth-type': 'uaa',
   'dev-screens': false,
-  'vector-icons': 'none',
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -98,7 +88,6 @@ const uaa = {
 const oauth2 = {
   'auth-type': 'oauth2',
   'dev-screens': false,
-  'vector-icons': 'none',
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'

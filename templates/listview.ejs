@@ -3,6 +3,9 @@ import { View, Text, ListView, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
+<%_ if (props.searchEngine) { _%>
+import SearchBar from '../Components/SearchBar'
+<%_ } _%>
 
 // For empty lists
 import AlertMessage from '../Components/AlertMessage'
@@ -39,6 +42,9 @@ class <%= props.name %>EntityScreen extends React.Component {
 
     // Datasource is always in state
     this.state = {
+      <%_ if (props.searchEngine) { _%>
+      searchTerm: '',
+      <%_ } _%>
       dataSource: ds.cloneWithRows(dataObjects)
     }
   }
@@ -98,9 +104,27 @@ class <%= props.name %>EntityScreen extends React.Component {
   }
   */
 
+  <%_ if (props.searchEngine) { _%>
+  cancelSearch = () => {
+    this.setState({
+      searchTerm: ''
+    })
+    this.props.getAll<%= props.pluralName %>()
+  }
+
+  performSearch = (query) => {
+    this.setState({
+      searchTerm: query
+    })
+    this.props.performSearch(query)
+  }
+  <%_ } _%>
   render () {
     return (
       <View style={styles.container}>
+        <%_ if (props.searchEngine) { _%>
+        <SearchBar onSearch={this.performSearch} searchTerm={this.state.searchTerm} onCancel={this.cancelSearch} />
+        <%_ } _%>
         <AlertMessage title='No <%= props.pluralName %> Found' show={this.noRowData() && !this.props.fetching} />
         <ListView
           contentContainerStyle={styles.listContent}
@@ -126,6 +150,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    <%_ if (props.searchEngine) { _%>
+    performSearch: (query) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchRequest(query)),
+    <%_ } _%>
     getAll<%= props.pluralName %>: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest())
   }
 }
