@@ -230,7 +230,7 @@ async function install (context) {
     await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
-    if (pluginAnswers['dev-screens'] === 'Yes') {
+    if (pluginAnswers['dev-screens']) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 

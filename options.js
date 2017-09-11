@@ -6,8 +6,15 @@ const jhipsterQuestions = [
   {
     name: 'auth-type',
     message: 'Which JHipster Authentication does your server use?',
-    type: 'list',
-    choices: ['jwt', 'oauth2', 'uaa']
+    type: 'radio',
+    choices: ['jwt', 'oauth2', 'uaa'],
+    default: 'jwt'
+  },
+  {
+    name: 'searchEngine',
+    message: 'Does your JHipster Application use ElasticSearch?',
+    type: 'confirm',
+    default: false
   }
 ]
 
@@ -15,13 +22,12 @@ const pluginQuestions = [
   {
     name: 'dev-screens',
     message: 'Would you like Ignite Development Screens?',
-    type: 'list',
-    choices: ['No', 'Yes']
+    type: 'confirm'
   },
   {
     name: 'vector-icons',
     message: 'What vector icon library will you use?',
-    type: 'list',
+    type: 'radio',
     choices: ['none', 'react-native-vector-icons']
   },
   // {
@@ -33,7 +39,7 @@ const pluginQuestions = [
   {
     name: 'animatable',
     message: 'What animation library will you use?',
-    type: 'list',
+    type: 'radio',
     choices: ['none', 'react-native-animatable']
   }
 ]
@@ -43,9 +49,10 @@ const pluginQuestions = [
  */
 const max = {
   'auth-type': 'jwt',
-  'dev-screens': 'Yes',
+  'dev-screens': true,
   'vector-icons': 'react-native-vector-icons',
   'i18n': 'none',
+  'searchEngine': false,
   'animatable': 'react-native-animatable'
 }
 
@@ -54,9 +61,10 @@ const max = {
  */
 const min = {
   'auth-type': 'jwt',
-  'dev-screens': 'No',
+  'dev-screens': false,
   'vector-icons': 'none',
   'i18n': 'none',
+  'searchEngine': false,
   'animatable': 'none'
 }
 
@@ -65,9 +73,10 @@ const min = {
  */
 const jwt = {
   'auth-type': 'jwt',
-  'dev-screens': 'No',
+  'dev-screens': false,
   'vector-icons': 'none',
   'i18n': 'none',
+  'searchEngine': false,
   'animatable': 'none'
 }
 
@@ -76,9 +85,10 @@ const jwt = {
  */
 const uaa = {
   'auth-type': 'uaa',
-  'dev-screens': 'No',
+  'dev-screens': false,
   'vector-icons': 'none',
   'i18n': 'none',
+  'searchEngine': false,
   'animatable': 'none'
 }
 
@@ -87,9 +97,10 @@ const uaa = {
  */
 const oauth2 = {
   'auth-type': 'oauth2',
-  'dev-screens': 'No',
-  'vector-icons': 'No',
+  'dev-screens': false,
+  'vector-icons': 'none',
   'i18n': 'none',
+  'searchEngine': false,
   'animatable': 'none'
 }
 
