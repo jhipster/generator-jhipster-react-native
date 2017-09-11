@@ -62,7 +62,7 @@ test('update failure path', () => {
 <%_ if (props.searchEngine) { _%>
 test('search success path', () => {
   const response = FixtureAPI.search<%= props.pluralName %>()
-  const step = stepper(search<%= props.pluralName %>(FixtureAPI))
+  const step = stepper(search<%= props.pluralName %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -71,7 +71,7 @@ test('search success path', () => {
 
 test('search failure path', () => {
   const response = {ok: false}
-  const step = stepper(search<%= props.pluralName %>(FixtureAPI))
+  const step = stepper(search<%= props.pluralName %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.

@@ -44,9 +44,10 @@ export function * update<%= props.name %> (api, action) {
 }
 
 <%_ if (props.searchEngine) { _%>
-export function * search<%= props.pluralName %> (api) {
+export function * search<%= props.pluralName %> (api, action) {
+  const { query } = action
   // make the call to the api
-  const apiCall = call(api.search<%= props.pluralName %>)
+  const apiCall = call(api.search<%= props.pluralName %>, query)
   const response = yield call(callApi, apiCall)
 
   // success?

@@ -136,7 +136,7 @@ module.exports = async function (context) {
   // add searchEngine methods
   if (props.searchEngine) {
     apiMethods += `
-  const search${props.pluralName} = (query) => api.get('api/_search/${kebabCase(props.pluralName)}/' + query)`
+  const search${props.pluralName} = (query) => api.get('api/_search/${kebabCase(props.pluralName)}', { query: query })`
 
     fixtureApiMethods += `
   search${props.pluralName}: (query) => {

@@ -25,7 +25,7 @@ export default class SearchBar extends React.Component {
           placeholderTextColor={Colors.snow}
           underlineColorAndroid='transparent'
           style={styles.searchInput}
-          value={this.props.searchTerm}
+          value={searchTerm}
           onChangeText={onSearch}
           autoCapitalize='none'
           onSubmitEditing={onSubmitEditing}
