@@ -136,7 +136,6 @@ async function install (context) {
     reactNativeVersion: rnInstall.version,
     authType: jhipsterAnswers['auth-type'],
     searchEngine: jhipsterAnswers['searchEngine'],
-    vectorIcons: pluginAnswers['vector-icons'],
     animatable: pluginAnswers['animatable'],
     i18n: pluginAnswers['i18n']
   }
@@ -235,9 +234,7 @@ async function install (context) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
-    if (pluginAnswers['vector-icons'] === 'react-native-vector-icons') {
-      await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
-    }
+    await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
 
     // todo handle i18n
     // if (pluginAnswers['i18n'] === 'react-native-i18n') {
