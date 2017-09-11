@@ -8,6 +8,7 @@
   "files": [
     "boilerplate",
     "commands",
+    "lib",
     "templates",
     "boilerplate.js",
     "ignite.json",
