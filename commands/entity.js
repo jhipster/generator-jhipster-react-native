@@ -92,7 +92,7 @@ module.exports = async function (context) {
   // REDUX AND SAGA SECTION
   let apiMethods = `
   const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
-  const get${props.pluralName} = () => api.get('api/${kebabCase(props.pluralName)}')
+  const get${props.pluralName} = (options) => api.get('api/${kebabCase(props.pluralName)}', options)
   const update${props.name} = (${camelCase(props.name)}) => api.put('api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
   const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
@@ -206,11 +206,11 @@ module.exports = async function (context) {
     },
     // generate entity listing container
     {
-      template: `listview.ejs`,
+      template: `entity-flatlist.ejs`,
       target: `App/Containers/${props.name}EntityScreen.js`
     },
     {
-      template: `listview-style.ejs`,
+      template: `entity-flatlist-style.ejs`,
       target: `App/Containers/Styles/${props.name}EntityScreenStyle.js`
     },
     {
