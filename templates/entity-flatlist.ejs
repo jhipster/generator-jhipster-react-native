@@ -1,0 +1,191 @@
+import React from 'react'
+import { FlatList, Text, TouchableOpacity, View } from 'react-native'
+import { connect } from 'react-redux'
+import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
+<%_ if (props.searchEngine) { _%>
+import SearchBar from '../Components/SearchBar'
+<%_ } _%>
+
+// For empty lists
+import AlertMessage from '../Components/AlertMessage'
+
+// More info here: https://facebook.github.io/react-native/docs/flatlist.html
+
+// Styles
+import styles from './Styles/<%= props.name %>EntityScreenStyle'
+
+class <%= props.name %>EntityScreen extends React.PureComponent {
+  /* ***********************************************************
+  * STEP 1
+  * This is an array of objects with the properties you desire
+  * Usually this should come from Redux mapStateToProps
+  *************************************************************/
+  state = {
+    page: 0,
+    sort: 'id,asc',
+    size: 20,
+    done: false,
+    <%_ if (props.searchEngine) { _%>
+    searchTerm: '',
+    <%_ } _%>
+    dataObjects: []
+  }
+
+  /* ***********************************************************
+  * STEP 2
+  * `renderRow` function. How each cell/row should be rendered
+  * It's our best practice to place a single component here:
+  *
+  * e.g.
+    return <MyCustomCell title={item.title} description={item.description} />
+  *************************************************************/
+  renderRow ({item}) {
+    return (
+      <TouchableOpacity onPress={NavigationActions.<%= camelCase(props.name) %>EntityDetail.bind(this, { entityId: item.id })}>
+        <View style={styles.row}>
+          <Text style={styles.boldLabel}>{item.id}</Text>
+          {/* <Text style={styles.label}>{item.description}</Text> */}
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  /* ***********************************************************
+  * STEP 3
+  * Consider the configurations we've set below.  Customize them
+  * to your liking!  Each with some friendly advice.
+  *************************************************************/
+  // Render a header?
+    <%_ if (props.searchEngine) { _%>
+  renderHeader = () =>
+    <SearchBar onSearch={this.performSearch} searchTerm={this.state.searchTerm} onCancel={this.cancelSearch} />
+    <%_ } else { _%>
+  // renderHeader = () =>
+  //   <Text style={[styles.label, styles.sectionHeader]}> - Header - </Text>
+    <%_ } _%>
+
+  // Render a footer?
+  // renderFooter = () =>
+  //  <Text style={[styles.label, styles.sectionHeader]}> - Footer - </Text>
+
+  // Show this when data is empty
+  renderEmpty = () =>
+    <AlertMessage title='No <%= props.pluralName %> Found' show={!this.props.fetching} />
+
+  // renderSeparator = () =>
+  //  <Text style={styles.label}> - ~~~~~ - </Text>
+
+  // The default function if no Key is provided is index
+  // an identifiable key is important if you plan on
+  // item reordering.  Otherwise index is fine
+  keyExtractor = (item, index) => index
+
+  // How many items should be kept im memory as we scroll?
+  oneScreensWorth = 20
+
+  // extraData is for anything that is not indicated in data
+  // for instance, if you kept "favorites" in `this.state.favs`
+  // pass that in, so changes in favorites will cause a re-render
+  // and your renderItem will have access to change depending on state
+  // e.g. `extraData`={this.state.favs}
+
+  // Optimize your list if the height of each item can be calculated
+  // by supplying a constant height, there is no need to measure each
+  // item after it renders.  This can save significant time for lists
+  // of a size 100+
+  // e.g. itemLayout={(data, index) => (
+  //   {length: ITEM_HEIGHT, offset: ITEM_HEIGHT * index, index}
+  // )}
+
+  <%_ if (props.searchEngine) { _%>
+  cancelSearch = () => {
+    this.setState({
+      searchTerm: ''
+    })
+    this.fetch<%= props.pluralName %>()
+  }
+
+  performSearch = (query) => {
+    if (query === '') {
+      this.cancelSearch()
+      return
+    }
+    this.setState({
+      searchTerm: query
+    })
+    this.props.performSearch(query)
+  }
+  <%_ } _%>
+
+  fetch<%= props.pluralName %> = () => {
+    this.props.getAll<%= props.pluralName %>({ page: this.state.page, sort: this.state.sort, size: this.state.size })
+  }
+
+  handleLoadMore = () => {
+    if (this.state.done || this.props.fetching) {
+      return
+    }
+    this.setState({
+      page: this.state.page + 1
+    })
+    this.fetch<%= props.pluralName %>()
+  }
+
+  componentWillReceiveProps (newProps) {
+    if (newProps.<%= camelCase(props.pluralName) %>) {
+      this.setState({
+        done: newProps.<%= camelCase(props.pluralName) %>.length < this.state.size,
+        dataObjects: [...this.state.dataObjects, ...newProps.<%= camelCase(props.pluralName) %>]
+      })
+    }
+  }
+
+  componentWillMount () {
+    this.fetch<%= props.pluralName %>()
+  }
+
+  render () {
+    return (
+      <View style={styles.container}>
+        <FlatList
+          contentContainerStyle={styles.listContent}
+          data={this.state.dataObjects}
+          renderItem={this.renderRow}
+          keyExtractor={this.keyExtractor}
+          initialNumToRender={this.oneScreensWorth}
+          onEndReached={this.handleLoadMore}
+          onEndThreshold={100}
+          <%_ if (props.searchEngine) { _%>
+          ListHeaderComponent={this.renderHeader}
+          <%_ } else { _%>
+          /* ListHeaderComponent={this.renderHeader} */
+          <%_ } _%>
+          /* ListFooterComponent={this.renderFooter} */
+          ListEmptyComponent={this.renderEmpty}
+          ItemSeparatorComponent={this.renderSeparator}
+        />
+      </View>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    // ...redux state to props here
+    <%= camelCase(props.pluralName) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.pluralName) %>,
+    fetching: state.<%= camelCase(props.pluralName) %>.fetchingAll,
+    error: state.<%= camelCase(props.pluralName) %>.errorAll
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    <%_ if (props.searchEngine) { _%>
+    performSearch: (query) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchRequest(query)),
+    <%_ } _%>
+    getAll<%= props.pluralName %>: (options) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest(options))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= props.name %>EntityScreen)
