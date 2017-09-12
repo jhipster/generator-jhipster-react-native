@@ -60,6 +60,9 @@ async function install (context) {
   } else if (parameters.options.oauth2) {
     jhipsterAnswers = options.answers.oauth2
     pluginAnswers = options.answers.oauth2
+  } else if (parameters.options.searchEngine) {
+    jhipsterAnswers = options.answers.searchEngine
+    pluginAnswers = options.answers.searchEngine
   } else {
     jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
     pluginAnswers = await prompt.ask(options.pluginQuestions)

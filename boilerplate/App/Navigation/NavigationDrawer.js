@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Drawer from 'react-native-drawer'
 import { DefaultRenderer, Actions as NavigationActions } from 'react-native-router-flux'
 import DrawerContent from '../Containers/DrawerContent'
@@ -9,7 +10,7 @@ import styles from './Styles/NavigationDrawerStyles'
 * Documentation: https://github.com/root-two/react-native-drawer
 ********************/
 
-class NavigationDrawer extends Component {
+class NavigationDrawer extends React.Component {
   render () {
     const state = this.props.navigationState
     const children = state.children

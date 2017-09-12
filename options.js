@@ -72,6 +72,17 @@ const jwt = {
 }
 
 /**
+ * The jwt preset.
+ */
+const searchEngine = {
+  'auth-type': 'jwt',
+  'dev-screens': false,
+  'i18n': 'none',
+  'searchEngine': true,
+  'animatable': 'none'
+}
+
+/**
  * The uaa preset.
  */
 const uaa = {
@@ -96,5 +107,5 @@ const oauth2 = {
 module.exports = {
   jhipsterQuestions,
   pluginQuestions,
-  answers: { min, max, jwt, uaa, oauth2 }
+  answers: { min, max, jwt, uaa, oauth2, searchEngine }
 }

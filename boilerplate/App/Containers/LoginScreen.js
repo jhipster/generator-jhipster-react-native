@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import styles from './Styles/LoginScreenStyles'
