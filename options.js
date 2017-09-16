@@ -4,7 +4,7 @@
 
 const jhipsterQuestions = [
   {
-    name: 'auth-type',
+    name: 'authType',
     message: 'Which JHipster Authentication does your server use?',
     type: 'radio',
     choices: ['jwt', 'oauth2', 'uaa'],
@@ -20,7 +20,7 @@ const jhipsterQuestions = [
 
 const pluginQuestions = [
   {
-    name: 'dev-screens',
+    name: 'devScreens',
     message: 'Would you like Ignite Development Screens?',
     type: 'confirm'
   },
@@ -42,8 +42,8 @@ const pluginQuestions = [
  * The max preset.
  */
 const max = {
-  'auth-type': 'jwt',
-  'dev-screens': true,
+  'authType': 'jwt',
+  'devScreens': true,
   'i18n': 'none',
   'searchEngine': true,
   'animatable': 'react-native-animatable'
@@ -53,8 +53,8 @@ const max = {
  * The min preset.
  */
 const min = {
-  'auth-type': 'jwt',
-  'dev-screens': false,
+  'authType': 'jwt',
+  'devScreens': false,
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -64,8 +64,8 @@ const min = {
  * The jwt preset.
  */
 const jwt = {
-  'auth-type': 'jwt',
-  'dev-screens': false,
+  'authType': 'jwt',
+  'devScreens': false,
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -75,8 +75,8 @@ const jwt = {
  * The jwt preset.
  */
 const searchEngine = {
-  'auth-type': 'jwt',
-  'dev-screens': false,
+  'authType': 'jwt',
+  'devScreens': false,
   'i18n': 'none',
   'searchEngine': true,
   'animatable': 'none'
@@ -86,8 +86,8 @@ const searchEngine = {
  * The uaa preset.
  */
 const uaa = {
-  'auth-type': 'uaa',
-  'dev-screens': false,
+  'authType': 'uaa',
+  'devScreens': false,
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'
@@ -97,8 +97,8 @@ const uaa = {
  * The oauth2 preset.
  */
 const oauth2 = {
-  'auth-type': 'oauth2',
-  'dev-screens': false,
+  'authType': 'oauth2',
+  'devScreens': false,
   'i18n': 'none',
   'searchEngine': false,
   'animatable': 'none'

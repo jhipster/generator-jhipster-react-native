@@ -146,7 +146,7 @@ async function install (context) {
     name,
     igniteVersion: ignite.version,
     reactNativeVersion: rnInstall.version,
-    authType: jhipsterAnswers['auth-type'],
+    authType: jhipsterAnswers['authType'],
     searchEngine: jhipsterAnswers['searchEngine'],
     animatable: pluginAnswers['animatable'],
     i18n: pluginAnswers['i18n']
@@ -244,7 +244,7 @@ async function install (context) {
     await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
-    if (pluginAnswers['dev-screens']) {
+    if (pluginAnswers['devScreens']) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
