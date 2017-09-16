@@ -20,7 +20,6 @@ export default class SearchBar extends React.Component {
         <Icon name='search' size={Metrics.icons.tiny} style={styles.searchIcon} />
         <TextInput
           ref='searchText'
-          autoFocus
           placeholder='Search'
           placeholderTextColor={Colors.snow}
           underlineColorAndroid='transparent'

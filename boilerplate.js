@@ -78,7 +78,7 @@ async function install (context) {
   // remove the __tests__ directory that come with React Native
   filesystem.remove('__tests__')
 
-  // copy our App & Tests directories
+  // copy our App, Tests, and storybook directories
   spinner.text = '▸ copying files'
   spinner.start()
   filesystem.copy(`${__dirname}/boilerplate/App`, `${process.cwd()}/App`, {
@@ -86,6 +86,10 @@ async function install (context) {
     matching: '!*.ejs'
   })
   filesystem.copy(`${__dirname}/boilerplate/Tests`, `${process.cwd()}/Tests`, {
+    overwrite: true,
+    matching: '!*.ejs'
+  })
+  filesystem.copy(`${__dirname}/boilerplate/storybook`, `${process.cwd()}/storybook`, {
     overwrite: true,
     matching: '!*.ejs'
   })
@@ -100,6 +104,7 @@ async function install (context) {
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
     { template: '.editorconfig', target: '.editorconfig' },
     { template: '.babelrc', target: '.babelrc' },
+    { template: '.env.example', target: '.env.example' },
     {
       template: 'App/Config/AppConfig.js.ejs',
       target: 'App/Config/AppConfig.js'
@@ -157,7 +162,6 @@ async function install (context) {
   // https://github.com/facebook/react-native/issues/12724
   filesystem.appendAsync('.gitattributes', '*.bat text eol=crlf')
   filesystem.append('.gitignore', '\n# Misc\n#')
-  filesystem.append('.gitignore', '\n.env.example\n')
   filesystem.append('.gitignore', '.env\n')
 
   /**
