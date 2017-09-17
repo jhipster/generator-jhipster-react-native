@@ -1,11 +1,11 @@
-# ignite-jhipster
+# Ignite JHipster
 [![NPM version][npm-image]][npm-url] [![Build Status][semaphore-image]][semaphore-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-A React Native boilerplate for JHipster apps.
+[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
 
-This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is heavily based off of
- [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016), but with a few JHipster twists.
+A React Native boilerplate for [JHipster](jhipster.tech) apps, complete with authentication, an entity generator, and more.
 
+This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
 
 ## Getting Started
 #### Requirements
@@ -16,37 +16,26 @@ This module uses Infinite Red's [Ignite generator](https://github.com/infinitere
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
 
-#### Example
-
+To generate an app, run the following command:
 ```js
 ignite new SampleApp --boilerplate ignite-jhipster
 ```
 
-Answer the prompts (choose your JHipster auth type and any plugins you want) and wait for the project to finish generation.  
+Answer the prompts (choose your JHipster auth type, search engine, and any plugins you want) and wait for the project to finish generation.  
+
 The generator will create a new directory containing the project.  It also sets up the Android and iOS app directories.
-
-#### Advanced Usage
-
-You can pass flags for each of the options.
-
-| Flag                | Possible Values                | Action                                         |
-| ------------------- | ------------------------------ | ---------------------------------------------- |
-| `--auth-type`       | jwt, oauth2, uaa               | The JHipster app's auth type                   |
-| `--search-engine`   | true, false                    | Whether the JHipster app uses a search engine  |
-| `--dev-screens`     | true, false                    | Whether to install the Ignite DevScreens       |
-| `--animatable`      | false, react-native-animatable | Which animatable library to use                |
-| `--skip-git`        |                                | Skips git init                                 |
-| `--skip-lint`       |                                | Skips standard initialization (linting)        |
 
 #### Configuration
 
-In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a uaaBasePath other than `uaa`, change that as well.
+In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a uaaBasePath other than `uaa`, you should also change that variable.
 
 ### Generators
 
-##### JHipster Entity Generator (*In Progress*)
+##### JHipster Entity Generator
  - Entity - `ignite generate entity <name>`
-    - Sets up entity API, listings, detail, and edit pages
+    - Prompts for the path to the entity's config (`.jhipster` folder in your app)
+    - Generates all files needed for fetching and displaying the entity.
+    - Includes the API endpoints, redux/saga config, and the user interface
  
 ##### Ignite Generators
 This generator adds Ignite's usual generators to the mix as well.  We have access to:
@@ -57,6 +46,15 @@ This generator adds Ignite's usual generators to the mix as well.  We have acces
  - Saga - `ignite generate saga <name>`
  - Screen - `ignite generate screen <name>`
  
+### Plugins
+
+Ignite also enables the generated project to add custom plugins.  The benefit of using a plugin is that it installs and links 
+third party libraries automatically when adding to a project, you just need to run one command.  You can add a plugin with 
+`ignite add plugin-name`.  
+
+Examples of plugins include vector-icons, maps, i18n, firebase, and more.  You can find the [full list
+of plugins](https://github.com/infinitered/ignite/blob/master/PLUGINS.md) in the main Ignite repository
+
 Check out [Ignite's documentation](https://github.com/infinitered/ignite/tree/master/docs) for more details. 
  
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
