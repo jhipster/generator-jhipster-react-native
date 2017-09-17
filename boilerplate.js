@@ -54,7 +54,6 @@ async function install (context) {
   // very hacky but correctly handles both strings and booleans and converts to boolean
   params.searchEngine = JSON.parse(params.searchEngine)
   params.devScreens = JSON.parse(params.devScreens)
-  params.animatable = JSON.parse(params.animatable)
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({

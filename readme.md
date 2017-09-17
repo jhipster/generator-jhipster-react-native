@@ -25,6 +25,19 @@ ignite new SampleApp --boilerplate ignite-jhipster
 Answer the prompts (choose your JHipster auth type and any plugins you want) and wait for the project to finish generation.  
 The generator will create a new directory containing the project.  It also sets up the Android and iOS app directories.
 
+#### Advanced Usage
+
+You can pass flags for each of the options.
+
+| Flag                | Possible Values                | Action                                         |
+| ------------------- | ------------------------------ | ---------------------------------------------- |
+| `--auth-type`       | jwt, oauth2, uaa               | The JHipster app's auth type                   |
+| `--search-engine`   | true, false                    | Whether the JHipster app uses a search engine  |
+| `--dev-screens`     | true, false                    | Whether to install the Ignite DevScreens       |
+| `--animatable`      | false, react-native-animatable | Which animatable library to use                |
+| `--skip-git`        |                                | Skips git init                                 |
+| `--skip-lint`       |                                | Skips standard initialization (linting)        |
+
 #### Configuration
 
 In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a uaaBasePath other than `uaa`, change that as well.
