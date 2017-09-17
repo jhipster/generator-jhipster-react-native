@@ -3,7 +3,7 @@
 
 [![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
 
-A React Native boilerplate for [JHipster](jhipster.tech) apps, complete with authentication, an entity generator, and more.
+A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, and more.
 
 This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
 
