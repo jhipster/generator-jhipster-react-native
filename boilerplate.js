@@ -42,12 +42,26 @@ async function install (context) {
     .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
     .succeed()
 
-  let params = {}
-  // auth flag
-  params.authType = parameters.options['auth-type'] || await prompt.ask(options.questions.authType)
-  params.searchEngine = parameters.options['search-engine'] || await prompt.ask(options.questions.searchEngine)
-  params.devScreens = parameters.options['dev-screens'] || await prompt.ask(options.questions.devScreens)
-  params.animatable = parameters.options['animatable'] || await prompt.ask(options.questions.animatable)
+  let params = {
+    authType: parameters.options['auth-type'],
+    searchEngine: parameters.options['search-engine'],
+    devScreens: parameters.options['dev-screens'],
+    animatable: parameters.options['animatable']
+  }
+
+  if (params.authType === undefined) {
+    params.authType = (await prompt.ask(options.questions.authType)).authType
+  }
+  if (params.searchEngine === undefined) {
+    params.searchEngine = (await prompt.ask(options.questions.searchEngine)).searchEngine
+  }
+  if (params.devScreens === undefined) {
+    params.devScreens = (await prompt.ask(options.questions.devScreens)).devScreens
+  }
+  if (params.animatable === undefined) {
+    params.animatable = (await prompt.ask(options.questions.animatable)).animatable
+  }
+
   params.skipGit = parameters.options['skip-git']
   params.skipLint = parameters.options['skip-lint']
 
