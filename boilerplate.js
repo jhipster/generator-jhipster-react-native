@@ -42,31 +42,19 @@ async function install (context) {
     .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
     .succeed()
 
-  // interactive prompts - ask for auth (if UAA, get basepath)
-  let jhipsterAnswers
-  let pluginAnswers
-  if (parameters.options.max) {
-    jhipsterAnswers = options.answers.max
-    pluginAnswers = options.answers.max
-  } else if (parameters.options.min) {
-    jhipsterAnswers = options.answers.min
-    pluginAnswers = options.answers.min
-  } else if (parameters.options.jwt) {
-    jhipsterAnswers = options.answers.jwt
-    pluginAnswers = options.answers.jwt
-  } else if (parameters.options.uaa) {
-    jhipsterAnswers = options.answers.uaa
-    pluginAnswers = options.answers.uaa
-  } else if (parameters.options.oauth2) {
-    jhipsterAnswers = options.answers.oauth2
-    pluginAnswers = options.answers.oauth2
-  } else if (parameters.options.searchEngine) {
-    jhipsterAnswers = options.answers.searchEngine
-    pluginAnswers = options.answers.searchEngine
-  } else {
-    jhipsterAnswers = await prompt.ask(options.jhipsterQuestions)
-    pluginAnswers = await prompt.ask(options.pluginQuestions)
-  }
+  let params = {}
+  // auth flag
+  params.authType = parameters.options['auth-type'] || await prompt.ask(options.questions.authType)
+  params.searchEngine = parameters.options['search-engine'] || await prompt.ask(options.questions.searchEngine)
+  params.devScreens = parameters.options['dev-screens'] || await prompt.ask(options.questions.devScreens)
+  params.animatable = parameters.options['animatable'] || await prompt.ask(options.questions.animatable)
+  params.skipGit = parameters.options['skip-git']
+  params.skipLint = parameters.options['skip-lint']
+
+  // very hacky but correctly handles both strings and booleans and converts to boolean
+  params.searchEngine = JSON.parse(params.searchEngine)
+  params.devScreens = JSON.parse(params.devScreens)
+  params.animatable = JSON.parse(params.animatable)
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
@@ -146,10 +134,10 @@ async function install (context) {
     name,
     igniteVersion: ignite.version,
     reactNativeVersion: rnInstall.version,
-    authType: jhipsterAnswers['authType'],
-    searchEngine: jhipsterAnswers['searchEngine'],
-    animatable: pluginAnswers['animatable'],
-    i18n: pluginAnswers['i18n']
+    authType: params.authType,
+    searchEngine: params.searchEngine,
+    animatable: params.animatable
+    // i18n: params.i18n
   }
   await ignite.copyBatch(context, templates, templateProps, {
     quiet: true,
@@ -218,7 +206,7 @@ async function install (context) {
   try {
     // Disabled slow but reliable method here
     // await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
-    // mini version of `ignite add ir-jhipster` here -- but faster
+    // mini version of `ignite add ignite-jhipster` here -- but faster
     const moduleName = 'ignite-jhipster'
 
     const perfStart = (new Date()).getTime()
@@ -244,22 +232,22 @@ async function install (context) {
     await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
-    if (pluginAnswers['devScreens']) {
+    if (params.devScreens) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
     await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
 
     // todo handle i18n
-    // if (pluginAnswers['i18n'] === 'react-native-i18n') {
+    // if (params.i18n === 'react-native-i18n') {
     //   await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
     // }
 
-    if (pluginAnswers['animatable'] === 'react-native-animatable') {
+    if (params.animatable === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
     }
 
-    if (parameters.options.lint !== 'false') {
+    if (!params.skipLint) {
       await system.spawn(`ignite add standard ${debugFlag}`, { stdio: 'inherit' })
       // ignore the ignite folder
       let pkg = filesystem.read(`package.json`, 'json')
@@ -273,7 +261,7 @@ async function install (context) {
 
   // git configuration
   const gitExists = await filesystem.exists('./.git')
-  if (!gitExists && !parameters.options['skip-git'] && system.which('git')) {
+  if (!gitExists && !params.skipGit && system.which('git')) {
     // initial git
     const spinner = print.spin('configuring git')
 
