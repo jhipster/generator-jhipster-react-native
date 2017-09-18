@@ -25,7 +25,7 @@ test('get failure path', () => {
 
 test('getAll success path', () => {
   const response = FixtureAPI.get<%= props.pluralName %>()
-  const step = stepper(get<%= props.pluralName %>(FixtureAPI))
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI, {page: 0, sort: 'id,asc', size: 20}))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -34,7 +34,7 @@ test('getAll success path', () => {
 
 test('getAll failure path', () => {
   const response = {ok: false}
-  const step = stepper(get<%= props.pluralName %>(FixtureAPI))
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI, {page: 0, sort: 'id,asc', size: 20}))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
