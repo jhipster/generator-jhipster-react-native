@@ -82,11 +82,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           requesting: false,
           formValue: {}
         })
-        if (this.props.entityId) {
-          Alert.alert('Success', 'Entity updated successfully', [{text: 'OK'}])
-        } else {
-          Alert.alert('Success', 'Entity created successfully', [{text: 'OK'}])
-        }
+        Alert.alert('Success', 'Entity saved successfully', [{text: 'OK'}])
         this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
         NavigationActions.pop()
       }
