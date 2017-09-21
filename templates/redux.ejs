@@ -139,7 +139,7 @@ export const deleteSuccess = (state) => {
 // Something went wrong fetching a single entity.
 export const failure = (state, action) => {
   const { error } = action
-  state.merge({
+  return state.merge({
     fetchingOne: false,
     errorOne: error,
     <%= camelCase(props.name) %>: null
@@ -148,7 +148,7 @@ export const failure = (state, action) => {
 // Something went wrong fetching all entities.
 export const allFailure = (state, action) => {
   const { error } = action
-  state.merge({
+  return state.merge({
     fetchingAll: false,
     errorAll: error,
     <%= camelCase(props.pluralName) %>: null
@@ -157,7 +157,7 @@ export const allFailure = (state, action) => {
 // Something went wrong updating.
 export const updateFailure = (state, action) => {
   const { error } = action
-  state.merge({
+  return state.merge({
     updating: false,
     errorUpdating: error,
     <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>
@@ -166,7 +166,7 @@ export const updateFailure = (state, action) => {
 // Something went wrong deleting.
 export const deleteFailure = (state, action) => {
   const { error } = action
-  state.merge({
+  return state.merge({
     deleting: false,
     errorDeleting: error,
     <%= camelCase(props.name) %>: state.<%= camelCase(props.name) %>
@@ -176,7 +176,7 @@ export const deleteFailure = (state, action) => {
 // Something went wrong searching the entities.
 export const searchFailure = (state, action) => {
   const { error } = action
-  state.merge({
+  return state.merge({
     searching: false,
     errorSearching: error,
     <%= camelCase(props.pluralName) %>: null
