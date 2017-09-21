@@ -39,11 +39,23 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       }),
       formValue: this.props.<%= camelCase(props.name) %>,
       formOptions: {
-        // todo make this better
-        // fieldName: {
-        //   returnKeyType: 'done',
-        //   onSubmitEditing: () => this.submitForm()
-        // }
+        fields: {
+          <%_ props.entityConfig.fields.forEach(function (field, index) {
+              if (index !== props.entityConfig.fields.length - 1) {
+                let nextFieldName = props.entityConfig.fields[index + 1].fieldName
+            _%>
+          <%= field.fieldName %>: {
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus()
+          },
+          <%_ } else { _%>
+          <%= field.fieldName %>: {
+            returnKeyType: 'done',
+            onSubmitEditing: () => this.submitForm()
+          }
+          <%_ } _%>
+          <%_ }) _%>
+        }
       },
       success: false,
       <%= camelCase(props.name) %>: {}
@@ -110,7 +122,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='position'>
+        <KeyboardAvoidingView behavior='height'>
           <Form
             ref='form'
             type={this.state.formModel}
