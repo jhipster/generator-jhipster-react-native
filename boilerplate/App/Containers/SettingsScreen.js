@@ -1,6 +1,7 @@
 import React from 'react'
-import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 import AccountActions from '../Redux/AccountRedux'
 import t from 'tcomb-form-native'
@@ -88,8 +89,8 @@ class SettingsScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='position'>
+      <KeyboardAwareScrollView>
+        <ScrollView style={styles.container}>
           <Form
             ref='form'
             type={this.state.accountModel}
@@ -100,8 +101,8 @@ class SettingsScreen extends React.Component {
           <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }

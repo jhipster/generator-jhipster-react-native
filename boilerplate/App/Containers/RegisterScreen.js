@@ -1,6 +1,7 @@
 import React from 'react'
-import { Alert, ScrollView, Text, KeyboardAvoidingView, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import RegisterActions from '../Redux/RegisterRedux'
 import t from 'tcomb-form-native'
@@ -87,8 +88,8 @@ class RegisterScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='position'>
+      <KeyboardAwareScrollView>
+        <ScrollView style={styles.container}>
           <Form
             ref='form'
             type={this.state.accountModel}
@@ -99,8 +100,8 @@ class RegisterScreen extends React.Component {
           <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }

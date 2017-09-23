@@ -1,8 +1,9 @@
 import React from 'react'
-import { Alert, KeyboardAvoidingView, ScrollView, Text, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import t from 'tcomb-form-native'
 
@@ -121,8 +122,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
 
   render () {
     return (
-      <ScrollView style={styles.container}>
-        <KeyboardAvoidingView behavior='height'>
+      <KeyboardAwareScrollView>
+        <ScrollView style={styles.container}>
           <Form
             ref='form'
             type={this.state.formModel}
@@ -133,8 +134,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAwareScrollView>
     )
   }
 }
