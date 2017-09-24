@@ -81,6 +81,7 @@ module.exports = async function (context) {
   // load the entity config into memory
   let entityConfig = await fs.readJson(localEntityFilePath)
   props.entityConfig = entityConfig
+  props.microservicePrefix = entityConfig.microserviceName ? (entityConfig.microserviceName + '/') : ''
 
   const apiFilePath = `${process.cwd()}/App/Services/Api.js`
   const fixtureApiFilePath = `${process.cwd()}/App/Services/FixtureApi.js`
@@ -91,10 +92,10 @@ module.exports = async function (context) {
 
   // REDUX AND SAGA SECTION
   let apiMethods = `
-  const get${props.name} = (${camelCase(props.name)}Id) => api.get('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
-  const get${props.pluralName} = (options) => api.get('api/${kebabCase(props.pluralName)}', options)
-  const update${props.name} = (${camelCase(props.name)}) => api.put('api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
+  const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
+  const get${props.pluralName} = (options) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}', options)
+  const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microserviceName}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
   let fixtureApiMethods = `
   update${props.name}: (${camelCase(props.name)}) => {
@@ -136,7 +137,7 @@ module.exports = async function (context) {
   // add searchEngine methods
   if (props.searchEngine) {
     apiMethods += `
-  const search${props.pluralName} = (query) => api.get('api/_search/${kebabCase(props.pluralName)}', { query: query })`
+  const search${props.pluralName} = (query) => api.get('${props.microserviceName}api/_search/${kebabCase(props.pluralName)}', { query: query })`
 
     fixtureApiMethods += `
   search${props.pluralName}: (query) => {
