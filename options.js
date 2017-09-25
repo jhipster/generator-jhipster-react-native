@@ -7,7 +7,7 @@ const questions = {
     name: 'authType',
     message: 'Which JHipster Authentication does your server use?',
     type: 'radio',
-    choices: ['jwt', 'oauth2', 'uaa'],
+    choices: ['jwt', 'oauth2', 'uaa', 'session'],
     default: 'jwt'
   },
   searchEngine: {

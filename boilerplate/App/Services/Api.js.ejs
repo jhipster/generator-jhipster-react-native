@@ -4,6 +4,9 @@ import AppConfig from '../Config/AppConfig'
 <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 import { Buffer } from 'buffer'
 <%_ } _%>
+<%_ if (props.authType === 'session') { _%>
+import CookieManager from 'react-native-cookies'
+<%_ } _%>
 
 // our "constructor"
 const create = (baseURL = AppConfig.apiUrl) => {
@@ -23,6 +26,15 @@ const create = (baseURL = AppConfig.apiUrl) => {
     // 10 second timeout...
     timeout: 10000
   })
+  <%_ if (props.authType === 'session') { _%>
+  api.addAsyncRequestTransform(request => async (request) => {
+    const cookies = await CookieManager.get(baseURL)
+    if (cookies['XSRF-TOKEN']) {
+      request.headers['X-XSRF-TOKEN'] = cookies['XSRF-TOKEN']
+    }
+    return request
+  })
+  <%_ } _%>
 
   // ------
   // STEP 2
@@ -38,10 +50,15 @@ const create = (baseURL = AppConfig.apiUrl) => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
+  <%_ if (props.authType !== 'session') { _%>
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.setHeader('Authorization', '')
+  <%_ } _%>
   <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
   const login = (userAuth) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + Buffer.alloc(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  <%_ } else if (props.authType === 'session') { _%>
+  const login = (userAuth) => api.post('api/authentication', userAuth, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  const logout = () => api.post('api/logout')
   <%_ } else if (props.authType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
   <%_ } _%>
@@ -68,8 +85,12 @@ const create = (baseURL = AppConfig.apiUrl) => {
   return {
     // a list of the API functions from step 2
     // ignite-jhipster-api-export-needle
+    <%_ if (props.authType === 'session') { _%>
+    logout,
+    <%_ } else { _%>
     setAuthToken,
     removeAuthToken,
+    <%_ } _%>
     login,
     register,
     forgotPassword,

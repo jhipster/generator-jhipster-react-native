@@ -1,13 +1,16 @@
-import { call, put, select } from 'redux-saga/effects'
+import { call, put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
 
+<%_ if (props.authType !== 'session') { _%>
 export const selectAuthToken = (state) => state.login.authToken
-
+<%_ } _%>
 // attempts to login
 export function * login (api, { username, password }) {
   <%_ if (props.authType === 'oauth2') { _%>
   const authObj = 'username=' + username + '&password=' + password + '&grant_type=password&scope=read%20write'
+  <%_} else if (props.authType === 'session') { _%>
+  const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
   <%_} else if (props.authType === 'uaa') { _%>
   const authObj = 'username=' + username + '&password=' + password + '&grant_type=password'
   <%_ } else if (props.authType === 'jwt') { _%>
@@ -25,6 +28,8 @@ export function * login (api, { username, password }) {
     <%_ if (props.authType === 'jwt') { _%>
     yield call(api.setAuthToken, response.data.id_token)
     yield put(LoginActions.loginSuccess(response.data.id_token))
+    <%_} else if (props.authType === 'session') { _%>
+    yield put(LoginActions.loginSuccess(response.data))
     <%_} else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     yield call(api.setAuthToken, response.data.access_token)
     yield put(LoginActions.loginSuccess(response.data))
@@ -38,12 +43,15 @@ export function * login (api, { username, password }) {
 
 // attempts to logout
 export function * logout (api) {
+  <%_ if (props.authType === 'session') { _%>
+  yield call(api.logout)
+  <%_ } else { _%>
   yield call(api.removeAuthToken)
-  yield put(AccountActions.logout())
+  <%_ } _%>
+  yield put(AccountActions.accountRequest())
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
-
 <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 export function * loginRefresh (api) {
   const authToken = yield select(selectAuthToken)
@@ -63,6 +71,7 @@ export function * loginRefresh (api) {
   }
 }
 <%_ } _%>
+<%_ if (props.authType !== 'session') { _%>
 // loads the login
 export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
@@ -76,3 +85,4 @@ export function * loginLoad (api) {
   }
   yield put(LoginActions.loginLoadSuccess())
 }
+<%_ } _%>

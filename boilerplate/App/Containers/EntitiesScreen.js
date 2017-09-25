@@ -6,7 +6,7 @@ import styles from './Styles/EntitiesScreenStyle'
 import RoundedButton from '../Components/RoundedButton' // eslint-disable-line
 import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
 
-class SettingsScreen extends React.Component {
+class EntitiesScreen extends React.Component {
   render () {
     return (
       <ScrollView style={styles.container}>
@@ -29,4 +29,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EntitiesScreen)

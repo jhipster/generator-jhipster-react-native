@@ -6,7 +6,8 @@ import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
-import LoginActions, { isLoggedIn } from '../Redux/LoginRedux'
+import LoginActions from '../Redux/LoginRedux'
+import { isLoggedIn } from '../Redux/AccountRedux'
 
 class DrawerContent extends Component {
   componentDidMount () {
@@ -75,7 +76,7 @@ DrawerContent.contextTypes = {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: isLoggedIn(state.login)
+    loggedIn: isLoggedIn(state.account)
   }
 }
 

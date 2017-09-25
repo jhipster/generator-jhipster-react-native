@@ -72,11 +72,12 @@ class SettingsScreen extends React.Component {
         if (newProps.error === 'WRONG') {
           Alert.alert('Error', 'Something went wrong while saving the settings', [{text: 'OK'}])
         }
-      } else {
+      } else if (!this.state.success) {
         this.setState({
           success: true
         })
         Alert.alert('Success', 'Settings updated', [{text: 'OK'}])
+        this.props.getAccount()
       }
     }
   }
@@ -117,7 +118,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateAccount: (account) => dispatch(AccountActions.accountUpdateRequest(account))
+    updateAccount: (account) => dispatch(AccountActions.accountUpdateRequest(account)),
+    getAccount: () => dispatch(AccountActions.accountRequest())
   }
 }
 

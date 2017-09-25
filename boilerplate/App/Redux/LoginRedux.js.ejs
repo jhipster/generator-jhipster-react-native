@@ -35,9 +35,16 @@ export const success = (state, data) => {
   const { authToken } = data
   return state.merge({ fetching: false, error: null, authToken })
 }
+
 // we've had a problem logging in
 export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
 
+<%_ if (props.authType !== 'session') { _%>
+// we're attempting to load token from startup sagas
+export const load = (state) => state.merge({ loading: true })
+
+export const loadSuccess = (state) => state.merge({ loading: false })
+<%_ } _%>
 // we need to logout, meaning clear access tokens and account
 export const logoutRequest = state => state
 
@@ -47,25 +54,20 @@ export const logoutSuccess = state => INITIAL_STATE
 // we're attempting to refresh the auth token
 export const refreshRequest = (state) => state.merge({ fetching: true })
 
-// we're attempting to load token from startup sagas
-export const load = (state) => state.merge({ loading: true })
-
-export const loadSuccess = (state) => state.merge({ loading: false })
-
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
+  <%_ if (props.authType !== 'session') { _%>
+  [Types.LOGIN_LOAD]: load,
+  [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
+  <%_ } _%>
   [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGOUT_SUCCESS]: logoutSuccess,
-  [Types.LOGIN_REFRESH]: refreshRequest,
-  [Types.LOGIN_LOAD]: load,
-  [Types.LOGIN_LOAD_SUCCESS]: loadSuccess
+  [Types.LOGIN_REFRESH]: refreshRequest
+
 })
 
 /* ------------- Selectors ------------- */
-
-// Is the current user logged in?
-export const isLoggedIn = (loginState) => loginState.authToken !== null

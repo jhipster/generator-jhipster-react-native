@@ -1,0 +1,18 @@
+import { put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
+import { startup<% if (props.authType !== 'session') { %>, selectAuthToken<% } %> } from '../../App/Sagas/StartupSagas'
+<%_ if (props.authType !== 'session') { _%>
+import LoginActions from '../../App/Redux/LoginRedux'
+<%_ } _%>
+import AccountActions from '../../App/Redux/AccountRedux'
+
+const stepper = (fn) => (mock) => fn.next(mock).value
+
+test('watches for the right action', () => {
+  const step = stepper(startup())
+  <%_ if (props.authType !== 'session') { _%>
+  LoginActions.loginSuccess({ authToken: 'hi' })
+  expect(step()).toEqual(select(selectAuthToken))
+  expect(step()).toEqual(put(LoginActions.loginLoad()))
+  <%_ } _%>
+  expect(step()).toEqual(put(AccountActions.accountRequest()))
+})

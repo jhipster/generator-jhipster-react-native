@@ -15,7 +15,7 @@ import { AccountTypes } from '../Redux/AccountRedux'
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { login, logout, loginLoad<% if (props.authType === 'oauth2' || props.authType === 'uaa') { %>, loginRefresh<% } %> } from './LoginSagas'
+import { login, logout<% if (props.authType !== 'session') { %>, loginLoad<% } %><% if (props.authType === 'oauth2' || props.authType === 'uaa') { %>, loginRefresh<% } %> } from './LoginSagas'
 import { register } from './RegisterSagas'
 import { forgotPassword, changePassword } from './PasswordSagas'
 import { getAccount, updateAccount } from './AccountSagas'
@@ -35,7 +35,9 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
 
     // JHipster accounts
+    <%_ if (props.authType !== 'session') { _%>
     takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),
+    <%_ } _%>
     <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     takeLatest(LoginTypes.LOGIN_REFRESH, loginRefresh, api),
     <%_ } _%>

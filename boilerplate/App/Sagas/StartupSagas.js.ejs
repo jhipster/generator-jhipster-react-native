@@ -1,6 +1,9 @@
-import { put, select } from 'redux-saga/effects'
+import { put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
 import AppStateActions from '../Redux/AppStateRedux'
+<%_ if (props.authType !== 'session') { _%>
 import LoginActions from '../Redux/LoginRedux'
+<%_ } _%>
+import AccountActions from '../Redux/AccountRedux'
 
 export const selectAuthToken = (state) => state.login.authToken
 
@@ -31,9 +34,13 @@ export function * startup (action) {
       }
     })
   }
+
+  <%_ if (props.authType !== 'session') { _%>
   const authToken = yield select(selectAuthToken)
   if (authToken !== null) {
     yield put(LoginActions.loginLoad())
   }
+  <%_ } _%>
+  yield put(AccountActions.accountRequest())
   yield put(AppStateActions.setRehydrationComplete())
 }

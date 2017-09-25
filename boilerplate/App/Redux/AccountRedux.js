@@ -7,8 +7,7 @@ const { Types, Creators } = createActions({
   accountUpdateRequest: ['account'],
   accountSuccess: ['account'],
   accountUpdateSuccess: [],
-  accountFailure: ['error'],
-  logout: null
+  accountFailure: ['error']
 })
 
 export const AccountTypes = Types
@@ -40,7 +39,7 @@ export const success = (state, data) => {
 export const updateSuccess = (state) => state.merge({ error: null, updating: false })
 
 // we've had a problem logging in
-export const failure = (state, { error }) => state.merge({ fetching: false, updating: false, error })
+export const failure = (state, { error }) => state.merge({ fetching: false, updating: false, account: null, error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 
@@ -53,3 +52,5 @@ export const reducer = createReducer(INITIAL_STATE, {
 })
 
 /* ------------- Selectors ------------- */
+// Is the current user logged in?
+export const isLoggedIn = (state) => state.account !== null

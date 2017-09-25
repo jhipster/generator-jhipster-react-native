@@ -135,6 +135,14 @@ async function install (context) {
       target: 'App/Sagas/index.js'
     },
     {
+      template: 'App/Sagas/StartupSagas.js.ejs',
+      target: 'App/Sagas/StartupSagas.js'
+    },
+    {
+      template: 'Tests/Sagas/StartupSagaTest.js.ejs',
+      target: 'Tests/Sagas/StartupSagaTest.js'
+    },
+    {
       template: 'Tests/Setup.js.ejs',
       target: 'Tests/Setup.js'
     },
@@ -251,6 +259,11 @@ async function install (context) {
 
     await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
 
+    // todo make a plugin?
+    // await system.spawn(`ignite add cookies ${debugFlag}`, { stdio: 'inherit' })
+    if (params.authType === 'session') {
+      await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
+    }
     // todo handle i18n
     // if (params.i18n === 'react-native-i18n') {
     //   await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })

@@ -2,8 +2,9 @@
 {
   "id_token" : "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTUwNDkxMTk5Mn0.4EkvUMLgqr6dp-YZr-t-IvB9n7-lcz3PQyt7UcSfsH4T1ES_KUvdUXf6P8oWy3dpn5_c9iIn11g-eUUj4VS65A"
 }
-<%_ } _%>
-<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+<%_ } else if (props.authType === 'session') { _%>
+{}
+<%_ } else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 {
   "access_token" : "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1MDQ4NzI0MTcsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJqdGkiOiI1ZDkwNjdlOS0yY2JlLTRiNmMtOTMxZC1hZWMyY2E5MmVjZDYiLCJjbGllbnRfaWQiOiJ3ZWJfYXBwIiwic2NvcGUiOlsib3BlbmlkIl19.cQ5GehN2drXtuPLwiUbwxrieuD5pOR1mL7ShzCFr2bzW1I8OYYiKIPKK6yLhicjhp7kHRpnnouyS4jTozAMSsIz9aPizMN3bKi2kc9N1h0ONtJVeEr7bYHxOqGImw17li8IxD5qXP4Ib4IMzbuXxOHjNw-8Ndx5UebmXBAuMOmcTDUCEEvTxjz_34Cyb7ruqD-L0CsEmZGTm6drbHV38YXYzij8lfxF3v4Y8_4k6x9UJMph9-bt-Jd8V2wQSZJms3jniWReFwOSm-QoiD3aq5tJGLGoSdVstDJfyuobBa8JKVY2LYdKx2i-c2eUGxfN6y7HZ0l02s3ryNarCT7MDbA",
   "token_type" : "bearer",
