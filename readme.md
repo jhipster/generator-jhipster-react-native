@@ -7,6 +7,8 @@ A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, comple
 
 This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
 
+For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).
+
 ## Getting Started
 #### Requirements
  - Node v7.6+
