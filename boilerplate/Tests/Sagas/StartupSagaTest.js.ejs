@@ -4,6 +4,7 @@ import { startup<% if (props.authType !== 'session') { %>, selectAuthToken<% } %
 import LoginActions from '../../App/Redux/LoginRedux'
 <%_ } _%>
 import AccountActions from '../../App/Redux/AccountRedux'
+import AppStateActions from '../../App/Redux/AppStateRedux'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
@@ -15,4 +16,5 @@ test('watches for the right action', () => {
   expect(step()).toEqual(put(LoginActions.loginLoad()))
   <%_ } _%>
   expect(step()).toEqual(put(AccountActions.accountRequest()))
+  expect(step()).toEqual(put(AppStateActions.setRehydrationComplete()))
 })

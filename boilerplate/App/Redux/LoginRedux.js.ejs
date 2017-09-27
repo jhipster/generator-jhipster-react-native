@@ -8,8 +8,12 @@ const { Types, Creators } = createActions({
   loginFailure: ['error'],
   logoutRequest: null,
   logoutSuccess: null,
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
   loginRefresh: [],
+  <%_ } _%>
+  <%_ if (props.authType !== 'session') { _%>
   loginLoad: [],
+  <%_ } _%>
   loginLoadSuccess: []
 })
 
@@ -51,9 +55,10 @@ export const logoutRequest = state => state
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE
 
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
 // we're attempting to refresh the auth token
 export const refreshRequest = (state) => state.merge({ fetching: true })
-
+<%_ } _%>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -64,9 +69,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_LOAD]: load,
   [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
   <%_ } _%>
+  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  [Types.LOGIN_REFRESH]: refreshRequest,
+  <%_ } _%>
   [Types.LOGOUT_REQUEST]: logoutRequest,
-  [Types.LOGOUT_SUCCESS]: logoutSuccess,
-  [Types.LOGIN_REFRESH]: refreshRequest
+  [Types.LOGOUT_SUCCESS]: logoutSuccess
 
 })
 

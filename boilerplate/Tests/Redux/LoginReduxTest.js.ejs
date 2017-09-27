@@ -1,6 +1,6 @@
 import Actions, { reducer, INITIAL_STATE } from '../../App/Redux/LoginRedux'
 
-test('attempt', () => {
+test('request', () => {
   const state = reducer(INITIAL_STATE, Actions.loginRequest('u', 'p'))
 
   expect(state.fetching).toBe(true)
@@ -19,9 +19,23 @@ test('failure', () => {
   expect(state.error).toBe(69)
 })
 
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+test('refresh request', () => {
+  const state = reducer(INITIAL_STATE, Actions.loginRefresh())
+
+  expect(state.fetching).toBe(true)
+})
+<%_ } _%>
 test('logout', () => {
   const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
   const state = reducer(loginState, Actions.logoutRequest())
 
   expect(state.username).toBe(undefined)
+})
+
+test('logout success', () => {
+  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
+  const state = reducer(loginState, Actions.logoutSuccess())
+
+  expect(state).toBe(INITIAL_STATE)
 })

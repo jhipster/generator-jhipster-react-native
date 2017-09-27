@@ -123,6 +123,10 @@ async function install (context) {
       target: 'App/Redux/LoginRedux.js'
     },
     {
+      template: 'Tests/Redux/LoginReduxTest.js.ejs',
+      target: 'Tests/Redux/LoginReduxTest.js'
+    },
+    {
       template: 'App/Sagas/LoginSagas.js.ejs',
       target: 'App/Sagas/LoginSagas.js'
     },
