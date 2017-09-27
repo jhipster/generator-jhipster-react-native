@@ -55,7 +55,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const removeAuthToken = () => api.setHeader('Authorization', '')
   <%_ } _%>
   <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
-  const login = (userAuth) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + Buffer.alloc(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  const login = (userAuth) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + Buffer.from(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   <%_ } else if (props.authType === 'session') { _%>
   const login = (userAuth) => api.post('api/authentication', userAuth, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   const logout = () => api.post('api/logout')
