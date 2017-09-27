@@ -81,7 +81,7 @@ module.exports = async function (context) {
   // load the entity config into memory
   let entityConfig = await fs.readJson(localEntityFilePath)
   props.entityConfig = entityConfig
-  props.microservicePrefix = entityConfig.microserviceName ? (entityConfig.microserviceName + '/') : ''
+  props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
 
   const apiFilePath = `${process.cwd()}/App/Services/Api.js`
   const fixtureApiFilePath = `${process.cwd()}/App/Services/FixtureApi.js`
