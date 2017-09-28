@@ -174,6 +174,7 @@ async function install (context) {
    */
   // https://github.com/facebook/react-native/issues/12724
   filesystem.appendAsync('.gitattributes', '*.bat text eol=crlf')
+  filesystem.append('.gitignore', 'coverage/')
   filesystem.append('.gitignore', '\n# Misc\n#')
   filesystem.append('.gitignore', '.env\n')
 

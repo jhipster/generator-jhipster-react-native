@@ -14,6 +14,11 @@ test('RoundedButton component with children renders correctly', () => {
   expect(tree).toMatchSnapshot()
 })
 
+test('RoundedButton component with no content prop renders correctly', () => {
+  const tree = renderer.create(<RoundedButton onPress={() => {}}></RoundedButton>).toJSON()
+  expect(tree).toMatchSnapshot()
+})
+
 test('onPress', () => {
   let i = 0 // i guess i could have used sinon here too... less is more i guess
   const onPress = () => i++

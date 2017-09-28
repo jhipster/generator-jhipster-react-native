@@ -14,7 +14,6 @@ export default class SearchBar extends React.Component {
 
   render () {
     const { onSearch, onCancel, searchTerm } = this.props
-    const onSubmitEditing = () => onSearch(searchTerm)
     return (
       <View style={styles.container}>
         <Icon name='search' size={Metrics.icons.tiny} style={styles.searchIcon} />
@@ -27,7 +26,7 @@ export default class SearchBar extends React.Component {
           value={searchTerm}
           onChangeText={onSearch}
           autoCapitalize='none'
-          onSubmitEditing={onSubmitEditing}
+          onSubmitEditing={onSearch.bind(this, searchTerm)}
           returnKeyType={'search'}
           autoCorrect={false}
           selectionColor={Colors.snow}
