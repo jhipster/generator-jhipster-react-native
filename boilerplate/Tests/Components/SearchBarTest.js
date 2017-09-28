@@ -5,13 +5,13 @@ import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
 
 test('SearchBar component renders correctly', () => {
-  const tree = renderer.create(<SearchBar onSearch={jest.fn()} onCancel={jest.fn()} />).toJSON()
+  const tree = renderer.create(<SearchBar onSearch={() => {}} onCancel={() => {}} />).toJSON()
   expect(tree).toMatchSnapshot()
 })
 
 test('onSearch', () => {
-  const onSearch = jest.fn()
-  const onCancel = jest.fn()
+  const onSearch = () => {}
+  const onCancel = () => {}
   const searchTerm = ''
   const onSubmitEditing = onSearch.bind(searchTerm)
   const wrapperPress = shallow(<SearchBar onSearch={onSearch} onCancel={onCancel} searchTerm={searchTerm} />)

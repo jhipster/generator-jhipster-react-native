@@ -15,7 +15,7 @@ test('RoundedButton component with children renders correctly', () => {
 })
 
 test('RoundedButton component with no content prop renders correctly', () => {
-  const tree = renderer.create(<RoundedButton onPress={() => {}}></RoundedButton>).toJSON()
+  const tree = renderer.create(<RoundedButton onPress={() => {}} />).toJSON()
   expect(tree).toMatchSnapshot()
 })
 
