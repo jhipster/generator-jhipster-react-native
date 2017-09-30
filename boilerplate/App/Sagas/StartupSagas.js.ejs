@@ -1,11 +1,9 @@
-import { put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 import AppStateActions from '../Redux/AppStateRedux'
 <%_ if (props.authType !== 'session') { _%>
 import LoginActions from '../Redux/LoginRedux'
 <%_ } _%>
 import AccountActions from '../Redux/AccountRedux'
-
-export const selectAuthToken = (state) => state.login.authToken
 
 // process STARTUP actions
 export function * startup (action) {
@@ -15,8 +13,7 @@ export function * startup (action) {
 
     // logging an object for better clarity
     console.tron.log({
-      message: 'pass objects for better logging',
-      someGeneratorFunction: selectAuthToken
+      message: 'pass objects for better logging'
     })
 
     // fully customized!
@@ -28,18 +25,13 @@ export function * startup (action) {
       value: {
         '💃': 'Welcome to the future!',
         subObject,
-        someInlineFunction: () => true,
-        someGeneratorFunction: startup,
-        someNormalFunction: selectAuthToken
+        someGeneratorFunction: startup
       }
     })
   }
 
   <%_ if (props.authType !== 'session') { _%>
-  const authToken = yield select(selectAuthToken)
-  if (authToken !== null) {
-    yield put(LoginActions.loginLoad())
-  }
+  yield put(LoginActions.loginLoad())
   <%_ } _%>
   yield put(AccountActions.accountRequest())
   yield put(AppStateActions.setRehydrationComplete())

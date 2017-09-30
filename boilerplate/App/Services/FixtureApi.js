@@ -5,15 +5,30 @@ export default {
   // ignite-jhipster-api-fixture-needle
 
   // auth fixtures
-  login: () => {
-    return {
-      ok: true,
-      data: require('../Fixtures/login.json')
+  login: (authObj) => {
+    if (authObj.username === 'user' && authObj.password === 'user') {
+      return {
+        ok: true,
+        data: require('../Fixtures/login.json')
+      }
+    } else {
+      return {
+        ok: false,
+        status: 400,
+        data: 'Invalid credentials'
+      }
     }
   },
-  register: () => {
-    return {
-      ok: true
+  register: ({user}) => {
+    if (user === 'user') {
+      return {
+        ok: true
+      }
+    } else if (user === 'user-bad') {
+      return {
+        ok: false,
+        data: 'Invalid email'
+      }
     }
   },
   forgotPassword: () => {
@@ -24,6 +39,7 @@ export default {
   getAccount: () => {
     return {
       ok: true,
+      status: 200,
       data: require('../Fixtures/getAccount.json')
     }
   },
@@ -36,5 +52,11 @@ export default {
     return {
       ok: true
     }
+  },
+  setAuthToken: () => {
+
+  },
+  removeAuthToken: () => {
+
   }
 }

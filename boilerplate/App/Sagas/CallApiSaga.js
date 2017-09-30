@@ -18,8 +18,8 @@ export function * callApi (apiCall) {
     return response
   }
 
-  const responseTakeTwo = yield apiCall
-  return responseTakeTwo
+  // this re-calls the api with the new authorization
+  return yield apiCall
 }
 
 function isBadToken (resp) {

@@ -74,7 +74,6 @@ export const updateRequest = (state) =>
   state.merge({
     updating: true
   })
-
 <%_ if (props.searchEngine) { _%>
 // request to search from an api
 export const searchRequest = (state) =>
@@ -82,7 +81,6 @@ export const searchRequest = (state) =>
     searching: true
   })
 <%_ } _%>
-
 // request to delete from an api
 export const deleteRequest = (state) =>
   state.merge({

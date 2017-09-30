@@ -118,7 +118,6 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
     this.props.performSearch(query)
   }
   <%_ } _%>
-
   fetch<%= props.pluralName %> = () => {
     this.props.getAll<%= props.pluralName %>({ page: this.state.page, sort: this.state.sort, size: this.state.size })
   }

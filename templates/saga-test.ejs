@@ -78,7 +78,6 @@ test('search failure path', () => {
   expect(step(response)).toEqual(put(<%= props.name %>Actions.<%= camelCase(props.name) %>SearchFailure()))
 })
 <%_ } _%>
-
 test('delete success path', () => {
   const response = FixtureAPI.delete<%= props.name %>({id: 1})
   const step = stepper(delete<%= props.name %>(FixtureAPI, {id: 1}))

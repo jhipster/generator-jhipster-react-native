@@ -1,36 +1,68 @@
-test('placeholder test so it passes', () => {
-  expect(1).toBe(1)
+import FixtureAPI from '../../App/Services/FixtureApi'
+import { call, put, select } from 'redux-saga/effects'
+import { login, logout, loginLoad, selectAuthToken } from '../../App/Sagas/LoginSagas'
+import LoginActions from '../../App/Redux/LoginRedux'
+import AccountActions from '../../App/Redux/AccountRedux'
+
+const stepper = (fn) => (mock) => fn.next(mock).value
+
+test('login success path', () => {
+  const authObj = {username: 'user', password: 'user', rememberMe: true}
+  const response = FixtureAPI.login(authObj)
+  const step = stepper(login(FixtureAPI, authObj))
+
+  expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
+  // Set the auth token on the API
+  expect(step(response)).toEqual(call(FixtureAPI.setAuthToken, response.data.id_token))
+  // Store the auth token in redux
+  expect(step()).toEqual(put(LoginActions.loginSuccess(response.data.id_token)))
+  // Request the account details
+  expect(step(response)).toEqual(put(AccountActions.accountRequest()))
+  // Close the relogin popup if needed
+  expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
 })
-// import { put, call } from 'redux-saga/effects'
-// import { login } from '../../App/Sagas/LoginSagas'
-// import FixtureAPI from '../../App/Services/FixtureApi'
-// import LoginActions from '../../App/Redux/LoginRedux'
-//
-// const stepper = (fn) => (mock) => fn.next(mock).value
-//
-// test('calls api', (t) => {
-//   const mock = { username: 'user', rememberMe: true, password: 'user' }
-//   const step = stepper(login(FixtureAPI, mock))
-//
-//   t.deepEqual(step(), call(FixtureAPI.login, mock))
-// })
-//
-// test('success', (t) => {
-//   const mock = { username: 'user', rememberMe: true, password: 'user' }
-//   const response = FixtureAPI.login(mock)
-//   const step = stepper(login(FixtureAPI, mock))
-//   // first step API
-//   t.deepEqual(step(response), put(LoginActions.loginSuccess({id_token: 'test'})))
-// })
-//
-// test('failure', (t) => {
-//   const mock = { username: '', password: '' }
-//   const response = FixtureAPI.login(mock)
-//   const step = stepper(login(FixtureAPI, mock))
-//   // first step API
-//   step()
-//   // Second step error return
-//   const stepResponse = step(response)
-//
-//   t.deepEqual(stepResponse, put(LoginActions.loginFailure('WRONG')))
-// })
+
+test('login failure path', () => {
+  const authObj = {username: 'user', password: 'not-the-password', rememberMe: true}
+  const response = FixtureAPI.login(authObj)
+  const step = stepper(login(FixtureAPI, authObj))
+
+  // Attempt to login and fail
+  expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
+  // Send the error
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+})
+
+test('login load path with no token', () => {
+  const step = stepper(loginLoad(FixtureAPI))
+  // Attempt to select the token
+  expect(step()).toEqual(select(selectAuthToken))
+  // No token was found so call success
+  expect(step()).toEqual(put(LoginActions.loginLoadSuccess()))
+})
+
+test('login load path with a token', () => {
+  const step = stepper(loginLoad(FixtureAPI))
+  // Select the token from redux and set it
+  expect(step({authToken: 'hi'})).toEqual(select(selectAuthToken))
+  expect(step({authToken: 'hi'})).toEqual(call(FixtureAPI.setAuthToken, {authToken: 'hi'}))
+  // The token has been set so call success
+  expect(step()).toEqual(put(LoginActions.loginLoadSuccess()))
+})
+
+test('logout success path', () => {
+  // const response = FixtureAPI.logout()
+  const step = stepper(logout(FixtureAPI))
+  // Remove the API token
+  expect(step()).toEqual(call(FixtureAPI.removeAuthToken))
+  // Reset the account and logout
+  expect(step()).toEqual(put(AccountActions.accountRequest()))
+  expect(step()).toEqual(put(LoginActions.logoutSuccess()))
+  expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
+})
+
+test('selects the auth token', () => {
+  const state = {login: {authToken: 'hi'}}
+  // Retrieve the API token
+  expect(selectAuthToken(state)).toEqual('hi')
+})

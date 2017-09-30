@@ -27,7 +27,7 @@ export const request = (state) => state.merge({ fetching: true })
 export const success = (state) => state.merge({ fetching: false, error: null })
 
 // we've had a problem registering
-export const failure = (state, { error }) => state.merge({ fetching: false, user: null, error })
+export const failure = (state, { error }) => state.merge({ fetching: false, error })
 
 /* ------------- Hookup Reducers To Types ------------- */
 

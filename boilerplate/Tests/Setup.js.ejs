@@ -1,12 +1,12 @@
 // Mock your external modules here if needed
-<%_ if (props.authType === 'session') { _%>
 jest
+<%_ if (props.authType === 'session') { _%>
 .mock('react-native-cookies', () => {
   return { get: jest.fn((url) => { return [] }) }
 })
-<%_ } else { _%>
-// jest
-// .mock('react-native-device-info', () => {
-//   return { isTablet: jest.fn(() => { return false }) }
-// })
 <%_ } _%>
+.mock('react-native-router-flux', () => {
+  return { Actions: { login: jest.fn(() => { return false }) } }
+})
+
+console.tron = { log: () => {}, display: () => {} }
