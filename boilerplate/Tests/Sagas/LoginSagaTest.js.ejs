@@ -32,7 +32,7 @@ test('login failure path', () => {
   // Send the error
   expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
 })
-
+<%_ if (props.authType !== 'session') { _%>
 test('login load path with no token', () => {
   const step = stepper(loginLoad(FixtureAPI))
   // Attempt to select the token
@@ -49,7 +49,7 @@ test('login load path with a token', () => {
   // The token has been set so call success
   expect(step()).toEqual(put(LoginActions.loginLoadSuccess()))
 })
-
+<%_ } _%>
 test('logout success path', () => {
   // const response = FixtureAPI.logout()
   const step = stepper(logout(FixtureAPI))
@@ -60,9 +60,10 @@ test('logout success path', () => {
   expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
-
+<%_ if (props.authType !== 'session') { _%>
 test('selects the auth token', () => {
   const state = {login: {authToken: 'hi'}}
   // Retrieve the API token
   expect(selectAuthToken(state)).toEqual('hi')
 })
+<%_ } _%>

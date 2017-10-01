@@ -5,6 +5,14 @@ export default {
   // ignite-jhipster-api-fixture-needle
 
   // auth fixtures
+  <%_ if (props.authType !== 'session') { _%>
+  setAuthToken: () => {
+
+  },
+  removeAuthToken: () => {
+
+  },
+  <%_ } _%>
   login: (authObj) => {
     if (authObj.username === 'user' && authObj.password === 'user') {
       return {
@@ -59,11 +67,5 @@ export default {
     return {
       ok: true
     }
-  },
-  setAuthToken: () => {
-
-  },
-  removeAuthToken: () => {
-
   }
 }

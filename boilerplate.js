@@ -131,6 +131,14 @@ async function install (context) {
       target: 'App/Sagas/LoginSagas.js'
     },
     {
+      template: 'Tests/Sagas/LoginSagaTest.js.ejs',
+      target: 'Tests/Sagas/LoginSagaTest.js'
+    },
+    {
+      template: 'App/Services/FixtureApi.js.ejs',
+      target: 'App/Services/FixtureApi.js'
+    },
+    {
       template: 'App/Fixtures/login.json.ejs',
       target: 'App/Fixtures/login.json'
     },
