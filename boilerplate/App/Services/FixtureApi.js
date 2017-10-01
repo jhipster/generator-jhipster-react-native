@@ -31,9 +31,16 @@ export default {
       }
     }
   },
-  forgotPassword: () => {
-    return {
-      ok: true
+  forgotPassword: ({email}) => {
+    if (email === 'valid@gmail.com') {
+      return {
+        ok: true
+      }
+    } else {
+      return {
+        ok: false,
+        data: 'Invalid email'
+      }
     }
   },
   getAccount: () => {
