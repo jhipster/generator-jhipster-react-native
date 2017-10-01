@@ -63,9 +63,16 @@ export default {
       ok: true
     }
   },
-  changePassword: () => {
-    return {
-      ok: true
+  changePassword: ({password}) => {
+    if (password === 'not-valid-password') {
+      return {
+        ok: true
+      }
+    } else {
+      return {
+        ok: false,
+        data: 'Password error'
+      }
     }
   }
 }
