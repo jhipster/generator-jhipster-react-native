@@ -1,6 +1,6 @@
 import FixtureAPI from '../../App/Services/FixtureApi'
 import { call, put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
-import { login, logout<% if (props.authType !== 'session') { %>, loginLoad, selectAuthToken<% } %> } from '../../App/Sagas/LoginSagas'
+import { login, logout<% if (props.authType !== 'session') { %>, loginLoad, selectAuthToken<% } %><% if (props.authType === 'uaa' || props.authType === 'oauth2') { %>, loginRefresh<% } %> } from '../../App/Sagas/LoginSagas'
 import LoginActions from '../../App/Redux/LoginRedux'
 import AccountActions from '../../App/Redux/AccountRedux'
 
@@ -95,12 +95,11 @@ test('login load path with a token', () => {
 })
 <%_ } _%>
 test('logout success path', () => {
-  // const response = FixtureAPI.logout()
   const step = stepper(logout(FixtureAPI))
-  // expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   <%_ if (props.authType === 'session') { _%>
+  const response = FixtureAPI.logout()
   // Remove the API token
-  expect(step()).toEqual(call(FixtureAPI.logout))
+  expect(step(response)).toEqual(call(FixtureAPI.logout))
   <%_ } else { _%>
   expect(step()).toEqual(call(FixtureAPI.removeAuthToken))
   FixtureAPI.removeAuthToken()
@@ -110,6 +109,35 @@ test('logout success path', () => {
   expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
+<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+test('login refresh path with success', () => {
+  const step = stepper(loginRefresh(FixtureAPI))
+  // Select the token from redux and set it
+  expect(step()).toEqual(select(selectAuthToken))
+  // console.log(step(accessToken))
+  const response = FixtureAPI.login('refresh_token=valid-refresh-token&grant_type=refresh_token')
+  expect(step(response.data)).toEqual(call(FixtureAPI.login, 'refresh_token=' + response.data.refresh_token + '&grant_type=refresh_token'))
+  expect(step(response)).toEqual(call(FixtureAPI.setAuthToken, response.data.access_token))
+  expect(step()).toEqual(put(LoginActions.loginSuccess(response.data)))
+})
+
+test('login refresh path with invalid refresh token', () => {
+  const step = stepper(loginRefresh(FixtureAPI))
+  // Select the token from redux and set it
+  expect(step()).toEqual(select(selectAuthToken))
+  // console.log(step(accessToken))
+  const response = FixtureAPI.login('refresh_token=invalid-refresh-token&grant_type=refresh_token')
+  expect(step(response.data)).toEqual(call(FixtureAPI.login, 'refresh_token=' + response.data.refresh_token + '&grant_type=refresh_token'))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+})
+
+test('login refresh path with failure from no token', () => {
+  const step = stepper(loginRefresh(FixtureAPI))
+  // Select the token from redux and set it
+  expect(step()).toEqual(select(selectAuthToken))
+  expect(step()).toEqual(put(LoginActions.loginFailure('WRONG')))
+})
+<%_ } _%>
 <%_ if (props.authType !== 'session') { _%>
 test('selects the auth token', () => {
   const state = {login: {authToken: 'hi'}}
