@@ -13,8 +13,23 @@ export default {
 
   },
   <%_ } _%>
+  <%_ if (props.authType === 'session') { _%>
+  logout: () => {
+    return {
+      ok: true
+    }
+  },
+  <%_ } _%>
   login: (authObj) => {
+    <%_ if (props.authType === 'oauth2') { _%>
+    if (authObj === 'username=user&password=user&grant_type=password&scope=read%20write') {
+    <%_} else if (props.authType === 'session') { _%>
+    if (authObj === 'j_username=user&j_password=user&remember-me=true') {
+    <%_} else if (props.authType === 'uaa') { _%>
+    if (authObj === 'username=user&password=user&grant_type=password') {
+    <%_ } else if (props.authType === 'jwt') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
+    <%_ } _%>
       return {
         ok: true,
         data: require('../Fixtures/login.json')
@@ -32,7 +47,7 @@ export default {
       return {
         ok: true
       }
-    } else if (user === 'user-bad') {
+    } else {
       return {
         ok: false,
         data: 'Invalid email'
@@ -64,7 +79,7 @@ export default {
     }
   },
   changePassword: ({password}) => {
-    if (password === 'not-valid-password') {
+    if (password === 'valid-password') {
       return {
         ok: true
       }
