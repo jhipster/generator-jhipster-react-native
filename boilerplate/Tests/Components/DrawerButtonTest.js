@@ -14,7 +14,7 @@ test('onPress', () => {
   const onPress = () => i++
   const wrapperPress = shallow(<DrawerButton onPress={onPress} text='hi' />)
 
-  expect(wrapperPress.prop('onPress')).toBe(onPress) // uses the right handler
+  expect(wrapperPress.prop('onPress')).toBe(onPress) // the component's onPress uses the right handler
   expect(i).toBe(0)
   wrapperPress.simulate('press')
   expect(i).toBe(1)

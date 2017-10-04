@@ -7,6 +7,6 @@ test('All fixtures map to actual API', () => {
   const apiKeys = R.keys(API.create())
   const intersection = R.intersection(fixtureKeys, apiKeys).sort()
 
-  // There is no difference between the intersection and all fixtures
+  // There is no difference between the intersection and all fixtures, meaning all fixtures match an API
   expect(R.equals(fixtureKeys, intersection)).toBe(true)
 })
