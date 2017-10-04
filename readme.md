@@ -7,7 +7,7 @@ A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, comple
 
 This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
 
-For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).
+For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).  The tutorial is also available in a [blog format](https://jruddell.com/blog/ignite-jhipster).
 
 ## Getting Started
 #### Requirements
@@ -17,6 +17,7 @@ For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
+ - Not required, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
 To generate an app, run the following command:
 ```js
@@ -29,7 +30,9 @@ The generator will create a new directory containing the project.  It also sets 
 
 #### Configuration
 
-In `AppConfig.js`, set your JHipster app's API url.  If you use UAA and use a uaaBasePath other than `uaa`, you should also change that variable.
+ - In `AppConfig.js`, set your JHipster app's API url
+ - If you use the UAA auth type and use a uaaBasePath other than `uaa`, configure that variable
+ - If you use the Oauth2 auth type and JHipster <=v4.90, set the client ID and client secret from your JHipster app's application.yml
 
 ### Generators
 
@@ -58,6 +61,19 @@ Examples of plugins include vector-icons, maps, i18n, firebase, and more.  You c
 of plugins](https://github.com/infinitered/ignite/blob/master/PLUGINS.md) in the main Ignite repository
 
 Check out [Ignite's documentation](https://github.com/infinitered/ignite/tree/master/docs) for more details. 
+ 
+### JHipster Version Compatibility
+JHipster is rapidly changing, so you may need to use a specific version of Ignite JHipster when initially generating 
+your project.  Currently, the only restrictions are based on authentication type.
+
+##### UAA Auth Type:
+ - JHipster Versions v4.90 and above, use v1.1.0 (coming soon) 
+ - JHipster Versions v4.82 and below, use v1.0.0
+##### Oauth2 Auth Type:
+ - JHipster Versions v4.91 and above is currently unsupporte
+ - JHipster Versions v4.90 and below, use v1.0.0
+  
+ 
  
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster

@@ -37,9 +37,11 @@ It's recommended to create and test the changes in a generated app, then transfe
    - `ignite generate component FooComponent`
    - `ignite generate container FooContainer`
  
-To develop and test commands, you will need to update the code in your app's local `node_modules`. Copy the folder directly:
+To develop and test commands, you will need to link the code in your app's local `node_modules`.
  
+ ```bash
+ # in your ignite-jhipster folder
+ npm link
+ # in your generated app folder
+ npm link ignite-jhipster
  ```
- cp /full/path/to/your/ignite-jhipster ./node_modules/
- ```
-This will be easier in the future, once Ignite supports symlinks for commands (TODO: open issue or figure this out) 
