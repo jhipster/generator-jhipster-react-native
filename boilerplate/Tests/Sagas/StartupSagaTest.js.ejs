@@ -1,6 +1,6 @@
 import { put } from 'redux-saga/effects'
 import { startup } from '../../App/Sagas/StartupSagas'
-<%_ if (props.authType !== 'session') { _%>
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 import LoginActions from '../../App/Redux/LoginRedux'
 <%_ } _%>
 import AccountActions from '../../App/Redux/AccountRedux'
@@ -10,7 +10,7 @@ const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('calls the right actions on startup', () => {
   const step = stepper(startup())
-  <%_ if (props.authType !== 'session') { _%>
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   expect(step()).toEqual(put(LoginActions.loginLoad()))
   <%_ } _%>
   expect(step()).toEqual(put(AccountActions.accountRequest()))
@@ -20,7 +20,7 @@ test('calls the right actions on startup', () => {
 test('calls the right actions when console.tron is null', () => {
   console.tron = null
   const step = stepper(startup())
-  <%_ if (props.authType !== 'session') { _%>
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   expect(step()).toEqual(put(LoginActions.loginLoad()))
   <%_ } _%>
   expect(step()).toEqual(put(AccountActions.accountRequest()))

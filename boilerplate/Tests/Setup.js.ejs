@@ -1,6 +1,6 @@
 // Mock your external modules here if needed
 jest
-<%_ if (props.authType === 'session') { _%>
+<%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
 .mock('react-native-cookies', () => {
   return { get: jest.fn((url) => { return [] }) }
 })

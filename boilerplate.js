@@ -274,7 +274,7 @@ async function install (context) {
 
     // todo make a plugin?
     // await system.spawn(`ignite add cookies ${debugFlag}`, { stdio: 'inherit' })
-    if (params.authType === 'session') {
+    if (params.authType === 'session' || params.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
     }
     // todo handle i18n

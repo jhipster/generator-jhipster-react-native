@@ -8,10 +8,10 @@ const { Types, Creators } = createActions({
   loginFailure: ['error'],
   logoutRequest: null,
   logoutSuccess: null,
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  <%_ if (props.authType === 'oauth2') { _%>
   loginRefresh: [],
   <%_ } _%>
-  <%_ if (props.authType !== 'session') { _%>
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   loginLoad: [],
   <%_ } _%>
   loginLoadSuccess: []
@@ -43,7 +43,7 @@ export const success = (state, data) => {
 // we've had a problem logging in
 export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
 
-<%_ if (props.authType !== 'session') { _%>
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 // we're attempting to load token from startup sagas
 export const load = (state) => state.merge({ loading: true })
 
@@ -55,7 +55,7 @@ export const logoutRequest = state => state
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE
 
-<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+<%_ if (props.authType === 'oauth2') { _%>
 // we're attempting to refresh the auth token
 export const refreshRequest = (state) => state.merge({ fetching: true })
 <%_ } _%>
@@ -65,11 +65,11 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
-  <%_ if (props.authType !== 'session') { _%>
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   [Types.LOGIN_LOAD]: load,
   [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
   <%_ } _%>
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  <%_ if (props.authType === 'oauth2') { _%>
   [Types.LOGIN_REFRESH]: refreshRequest,
   <%_ } _%>
   [Types.LOGOUT_REQUEST]: logoutRequest,

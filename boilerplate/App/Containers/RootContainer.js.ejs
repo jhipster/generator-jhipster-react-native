@@ -3,7 +3,7 @@ import { View, StatusBar } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
-<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+<%_ if (props.authType === 'oauth2') { _%>
 import LoginActions from '../Redux/LoginRedux'
 <%_ } _%>
 import ReduxPersist from '../Config/ReduxPersist'
@@ -12,7 +12,7 @@ import ReduxPersist from '../Config/ReduxPersist'
 import styles from './Styles/RootContainerStyles'
 
 class RootContainer extends Component {
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  <%_ if (props.authType === 'oauth2') { _%>
   constructor (props) {
     super(props)
     this.state = {
@@ -28,8 +28,8 @@ class RootContainer extends Component {
     }
   }
 
+  <%_ if (props.authType === 'oauth2') { _%>
   componentWillReceiveProps (newProps) {
-    <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
     if (newProps.login && newProps.rehydrationComplete) {
       if (newProps.login.hasOwnProperty('refresh_token') && !this.state.authTimeout) {
         this.renewAuthWhenNeeded()
@@ -39,10 +39,8 @@ class RootContainer extends Component {
       clearTimeout(this.state.authTimeout)
       this.setState({ authTimeout: null })
     }
-    <%_ } _%>
   }
 
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
   renewAuthWhenNeeded () {
     clearTimeout(this.state.authTimeout)
     // refreshes the token 10 seconds before it expires.
@@ -73,7 +71,7 @@ const mapStateToProps = (state) => {
 
 // wraps dispatch to create nicer functions to call within our component
 const mapDispatchToProps = (dispatch) => ({
-  <%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+  <%_ if (props.authType === 'oauth2') { _%>
   refreshLogin: (refreshToken) => dispatch(LoginActions.loginRefresh(refreshToken)),
   <%_ } _%>
   startup: () => dispatch(StartupActions.startup())

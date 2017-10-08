@@ -18,7 +18,7 @@ test('failure', () => {
   expect(state.fetching).toBe(false)
   expect(state.error).toBe(69)
 })
-<%_ if (props.authType !== 'session') { _%>
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 test('load login request', () => {
   const state = reducer(INITIAL_STATE, Actions.loginLoad())
   expect(state.loading).toBe(true)
@@ -29,7 +29,7 @@ test('load login success', () => {
   expect(state.loading).toBe(false)
 })
 <%_ } _%>
-<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+<%_ if (props.authType === 'oauth2') { _%>
 test('refresh request', () => {
   const state = reducer(INITIAL_STATE, Actions.loginRefresh())
 

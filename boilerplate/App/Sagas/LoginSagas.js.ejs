@@ -1,8 +1,8 @@
-import { call, put<% if (props.authType !== 'session') { %>, select<% } %> } from 'redux-saga/effects'
+import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
 
-<%_ if (props.authType !== 'session') { _%>
+<%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
 export const selectAuthToken = (state) => state.login.authToken
 <%_ } _%>
 // attempts to login
@@ -11,9 +11,7 @@ export function * login (api, { username, password }) {
   const authObj = 'username=' + username + '&password=' + password + '&grant_type=password&scope=read%20write'
   <%_} else if (props.authType === 'session') { _%>
   const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
-  <%_} else if (props.authType === 'uaa') { _%>
-  const authObj = 'username=' + username + '&password=' + password + '&grant_type=password'
-  <%_ } else if (props.authType === 'jwt') { _%>
+  <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
     username: username,
     password: password,
@@ -30,8 +28,10 @@ export function * login (api, { username, password }) {
     yield put(LoginActions.loginSuccess(response.data.id_token))
     <%_} else if (props.authType === 'session') { _%>
     yield put(LoginActions.loginSuccess(response.data))
-    <%_} else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    <%_} else if (props.authType === 'oauth2') { _%>
     yield call(api.setAuthToken, response.data.access_token)
+    yield put(LoginActions.loginSuccess(response.data))
+    <%_} else if (props.authType === 'uaa') { _%>
     yield put(LoginActions.loginSuccess(response.data))
     <%_ } _%>
     yield put(AccountActions.accountRequest())
@@ -43,7 +43,7 @@ export function * login (api, { username, password }) {
 
 // attempts to logout
 export function * logout (api) {
-  <%_ if (props.authType === 'session') { _%>
+  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
   yield call(api.logout)
   <%_ } else { _%>
   yield call(api.removeAuthToken)
@@ -52,7 +52,7 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
-<%_ if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+<%_ if (props.authType === 'oauth2') { _%>
 export function * loginRefresh (api) {
   const authToken = yield select(selectAuthToken)
   if (authToken) {
@@ -71,7 +71,7 @@ export function * loginRefresh (api) {
   }
 }
 <%_ } _%>
-<%_ if (props.authType !== 'session') { _%>
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 // loads the login
 export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
@@ -79,7 +79,7 @@ export function * loginLoad (api) {
   if (authToken) {
     <%_ if (props.authType === 'jwt') { _%>
     yield call(api.setAuthToken, authToken)
-    <%_ } else if (props.authType === 'oauth2' || props.authType === 'uaa') { _%>
+    <%_ } else if (props.authType === 'oauth2') { _%>
     yield call(api.setAuthToken, authToken.access_token)
     <%_ } _%>
   }
