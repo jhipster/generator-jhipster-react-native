@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { ScrollView, Image, BackAndroid } from 'react-native'
+import { ScrollView, Image, BackHandler } from 'react-native'
 import styles from './Styles/DrawerContentStyles'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
@@ -11,45 +11,37 @@ import { isLoggedIn } from '../Redux/AccountRedux'
 
 class DrawerContent extends Component {
   componentDidMount () {
-    BackAndroid.addEventListener('hardwareBackPress', () => {
-      if (this.context.drawer.props.open) {
-        this.toggleDrawer()
-        return true
-      }
-      return false
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      NavigationActions.drawerClose()
     })
   }
 
-  toggleDrawer () {
-    this.context.drawer.toggle()
-  }
-
   handlePressLogin = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.login()
   }
   handlePressRegister = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.register()
   }
   handlePressForgotPassword = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.forgotPassword()
   }
   handlePressEntities = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.entities()
   }
   handlePressSettings = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.settings()
   }
   handlePressChangePassword = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     NavigationActions.changePassword()
   }
   handlePressLogout = () => {
-    this.toggleDrawer()
+    NavigationActions.drawerClose()
     this.props.logout()
   }
 

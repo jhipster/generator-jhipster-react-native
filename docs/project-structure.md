@@ -52,7 +52,6 @@ We recommend using this folder for modules that can be extracted into their own 
 Your primary and other navigation components reside here.
 
 * `NavigationRouter.js` - contains your navigation scenes
-* `NavigationDrawer.js` - contains the drawer component that opens from the left
 * `CustomNavBar.js` - contains a sample custom navbar
 * `Styles` - styling for the navigation
 

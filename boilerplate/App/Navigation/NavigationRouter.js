@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Scene, Router } from 'react-native-router-flux'
+import { Drawer, Scene, Router, Stack } from 'react-native-router-flux'
 import styles from './Styles/NavigationContainerStyles'
-import NavigationDrawer from './NavigationDrawer'
+import DrawerContent from '../Containers/DrawerContent'
 
 // screens identified by the router
 import LaunchScreen from '../Containers/LaunchScreen'
@@ -21,18 +21,18 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <Scene key='drawer' component={NavigationDrawer} open={false}>
-          <Scene key='drawerChildrenWrapper' navigationBarStyle={styles.navBar} titleStyle={styles.title} leftButtonIconStyle={styles.leftButton} rightButtonTextStyle={styles.rightButton}>
+        <Drawer headerTintColor={"white"} contentComponent={DrawerContent} navigationBarStyle={styles.navBar} titleStyle={styles.title} >
+          <Stack key="root">
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='register' component={RegisterScreen} title='Register' />
-            <Scene key='entities' component={EntitiesScreen} title='Entities' />
-            <Scene key='settings' component={SettingsScreen} title='Settings' />
-            <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' />
-            <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' />
+            <Scene key='register' component={RegisterScreen} title='Register' back />
+            <Scene key='entities' component={EntitiesScreen} title='Entities' back />
+            <Scene key='settings' component={SettingsScreen} title='Settings' back />
+            <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' back />
+            <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' back />
             {/* ignite-jhipster-navigation-needle */}
-          </Scene>
-        </Scene>
+          </Stack>
+        </Drawer>
       </Router>
     )
   }

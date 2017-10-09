@@ -28,9 +28,8 @@ class LoginScreen extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    this.forceUpdate()
     // Did the login attempt complete?
-    if (this.isAttempting && !newProps.fetching) {
+    if (this.isAttempting) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
           Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
