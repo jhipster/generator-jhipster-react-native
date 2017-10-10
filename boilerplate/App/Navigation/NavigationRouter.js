@@ -21,8 +21,8 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <Drawer headerTintColor={"white"} contentComponent={DrawerContent} navigationBarStyle={styles.navBar} titleStyle={styles.title} >
-          <Stack key="root">
+        <Drawer headerTintColor={'white'} contentComponent={DrawerContent} navigationBarStyle={styles.navBar} titleStyle={styles.title} >
+          <Stack key='root'>
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
             <Scene key='register' component={RegisterScreen} title='Register' back />
