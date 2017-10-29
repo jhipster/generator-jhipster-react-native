@@ -1,6 +1,11 @@
 {
   "name": "ignite-jhipster",
   "description": "A React Native boilerplate for JHipster apps.",
+  "keywords": [
+    "ignite-boilerplate",
+    "react-native",
+    "jhipster-module"
+  ],
   "license": "MIT",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
