@@ -53,4 +53,6 @@ export const reducer = createReducer(INITIAL_STATE, {
 
 /* ------------- Selectors ------------- */
 // Is the current user logged in?
-export const isLoggedIn = (state) => state.account !== null
+export const isLoggedIn = accountState => accountState.account !== null
+
+export const getLogin = accountState => accountState.account !== null ? accountState.account.login : 'anonymousUser'
