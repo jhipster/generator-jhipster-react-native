@@ -304,7 +304,8 @@ async function install (context) {
     // initial git
     const spinner = print.spin('configuring git')
 
-    // TODO: Make husky hooks optional
+    // TODO: Add git hooks flag.  Disabled by default for now
+    // "husky": "0.14.3",
     const huskyCmd = '' // `&& node node_modules/husky/bin/install .`
     system.run(`git init . && git add . && git commit -m "Initial commit." ${huskyCmd}`)
 
