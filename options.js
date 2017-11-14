@@ -16,6 +16,12 @@ const questions = {
     type: 'confirm',
     default: false
   },
+  websockets: {
+    name: 'websockets',
+    message: 'Does your JHipster Application use Websockets?',
+    type: 'confirm',
+    default: false
+  },
   devScreens: {
     name: 'devScreens',
     message: 'Would you like Ignite Development Screens?',

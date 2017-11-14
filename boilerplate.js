@@ -45,6 +45,7 @@ async function install (context) {
   let params = {
     authType: parameters.options['auth-type'],
     searchEngine: parameters.options['search-engine'],
+    websockets: parameters.options['websockets'],
     devScreens: parameters.options['dev-screens'],
     animatable: parameters.options['animatable']
   }
@@ -54,6 +55,9 @@ async function install (context) {
   }
   if (params.searchEngine === undefined) {
     params.searchEngine = (await prompt.ask(options.questions.searchEngine)).searchEngine
+  }
+  if (params.websockets === undefined) {
+    params.websockets = (await prompt.ask(options.questions.websockets)).websockets
   }
   if (params.devScreens === undefined) {
     params.devScreens = (await prompt.ask(options.questions.devScreens)).devScreens
@@ -67,6 +71,7 @@ async function install (context) {
 
   // very hacky but correctly handles both strings and booleans and converts to boolean
   params.searchEngine = JSON.parse(params.searchEngine)
+  params.websockets = JSON.parse(params.websockets)
   params.devScreens = JSON.parse(params.devScreens)
 
   // attempt to install React Native or die trying
@@ -161,6 +166,10 @@ async function install (context) {
     {
       template: 'storybook/storybook.ejs',
       target: 'storybook/storybook.js'
+    },
+    {
+      template: 'App/Redux/CreateStore.js.ejs',
+      target: 'App/Redux/CreateStore.js'
     }
   ]
   const templateProps = {
@@ -169,6 +178,7 @@ async function install (context) {
     reactNativeVersion: rnInstall.version,
     authType: params.authType,
     searchEngine: params.searchEngine,
+    websockets: params.websockets,
     animatable: params.animatable
     // i18n: params.i18n
   }
@@ -186,6 +196,29 @@ async function install (context) {
   filesystem.append('.gitignore', '\n# Misc\n#')
   filesystem.append('.gitignore', '.env\n')
 
+  /**
+   * If using websockets, set it up
+   */
+  if (params.websockets) {
+    spinner.text = '▸ setting up websocket code'
+    spinner.start()
+    // import ChatRedux in redux/index.js
+    ignite.patchInFile('App/Redux/index.js', {
+      before: 'ignite-jhipster-redux-store-import-needle',
+      insert: `  chat: require('./ChatRedux').reducer,`,
+      match: `  chat: require('./ChatRedux').reducer,`
+    })
+    // install websocket dependencies
+    await ignite.addModule('stompjs', { version: '2.3.3' })
+    // this is a github module for a react-native specific fix that hasn't been released yet
+    await ignite.addModule('sockjs-client', { version: 'https://github.com/sockjs/sockjs-client#4d18fd56a6c4fb476c3e1931543a6cb9daaa6eba' })
+    await ignite.addModule('net', { version: '1.0.2' })
+    spinner.stop()
+  } else {
+    filesystem.remove('App/Services/WebsocketService.js')
+    filesystem.remove('App/Sagas/WebsocketSagas.js')
+    filesystem.remove('App/Redux/ChatRedux.js')
+  }
   /**
    * Merge the package.json from our template into the one provided from react-native init.
    */
