@@ -173,8 +173,8 @@ module.exports = async function (context) {
   // import redux in redux/index.js
   ignite.patchInFile(reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
-    insert: `    ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`,
-    match: `    ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`
+    insert: `  ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`,
+    match: `  ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`
   })
 
   // import saga/redux in sagas/index.js
