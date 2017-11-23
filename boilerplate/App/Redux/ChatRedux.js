@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   chatReset: [],
-  chatWebsocketSuccess: ['message']
+  chatSuccess: ['chat']
 })
 
 export const ChatTypes = Types
@@ -20,9 +20,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // request to add a single chat to list
-export const websocketSuccess = (state, { message }) => {
-  const chat = [].concat(state.chat)
-  chat.push(message)
+export const chatSuccess = (state, { chat }) => {
   return state.merge({ chat })
 }
 
@@ -33,6 +31,6 @@ export const reset = state => {
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.CHAT_WEBSOCKET_SUCCESS]: websocketSuccess,
+  [Types.CHAT_SUCCESS]: chatSuccess,
   [Types.CHAT_RESET]: reset
 })

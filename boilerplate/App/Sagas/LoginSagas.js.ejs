@@ -1,6 +1,9 @@
 import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
+<%_ if (props.websockets) { _%>
+import { setToken } from '../Services/WebsocketService'
+<%_ } _%>
 
 <%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
 export const selectAuthToken = (state) => state.login.authToken
@@ -35,6 +38,9 @@ export function * login (api, { username, password }) {
     yield put(LoginActions.loginSuccess(response.data))
     <%_ } _%>
     yield put(AccountActions.accountRequest())
+    <%_ if (props.websockets) { _%>
+    setToken(response.data.id_token)
+    <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
   } else {
     yield put(LoginActions.loginFailure('WRONG'))
@@ -77,10 +83,9 @@ export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
   // only set the token if we have it
   if (authToken) {
-    <%_ if (props.authType === 'jwt') { _%>
-    yield call(api.setAuthToken, authToken)
-    <%_ } else if (props.authType === 'oauth2') { _%>
-    yield call(api.setAuthToken, authToken.access_token)
+    yield call(api.setAuthToken, authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
+    <%_ if (props.websockets) { _%>
+    setToken(authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
     <%_ } _%>
   }
   yield put(LoginActions.loginLoadSuccess())

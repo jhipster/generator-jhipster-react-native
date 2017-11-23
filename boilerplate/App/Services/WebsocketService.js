@@ -65,7 +65,7 @@ function connect () {
   if (!alreadyConnectedOnce) {
     console.tron.log('Connecting....')
     if (connectedPromise === null) connection = createConnection()
-    var url = AppConfig.apiUrl + 'websocket'
+    var url = AppConfig.apiUrl + 'websocket/chat'
     if (accessToken) {
       token = accessToken
       url += '?access_token=' + accessToken
@@ -138,10 +138,13 @@ function onMessage (subscription, fullMessage) {
 function getToken () {
   return token
 }
+
 function setToken (token) {
   accessToken = token
-  disconnect()
-  connect()
+  if (connected) {
+    disconnect()
+    connect()
+  }
 }
 
 function getSubscriptions () {

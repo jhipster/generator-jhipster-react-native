@@ -32,7 +32,8 @@ async function install (context) {
     print,
     system,
     prompt,
-    template
+    template,
+    patching
   } = context
 
   const perfStart = (new Date()).getTime()
@@ -118,6 +119,10 @@ async function install (context) {
     {
       template: 'App/Containers/RootContainer.js.ejs',
       target: 'App/Containers/RootContainer.js'
+    },
+    {
+      template: 'App/Containers/DrawerContent.js.ejs',
+      target: 'App/Containers/DrawerContent.js'
     },
     {
       template: 'App/Services/Api.js.ejs',
@@ -208,6 +213,24 @@ async function install (context) {
       insert: `  chat: require('./ChatRedux').reducer,`,
       match: `  chat: require('./ChatRedux').reducer,`
     })
+
+    // wire ChatScreen in NavigationRouter
+    const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
+    const navigationImportEdit = `import ChatScreen from '../Containers/ChatScreen'`
+    ignite.patchInFile(navigationRouterFilePath, {
+      before: 'ignite-jhipster-navigation-import-needle',
+      insert: navigationImportEdit,
+      match: navigationImportEdit
+    })
+
+    // add chat screen to navigation
+    const navigationScreen = `            <Scene key='chat' component={ChatScreen} title='Chat' back />`
+    ignite.patchInFile(navigationRouterFilePath, {
+      before: 'ignite-jhipster-navigation-needle',
+      insert: navigationScreen,
+      match: navigationScreen
+    })
+
     // install websocket dependencies
     await ignite.addModule('stompjs', { version: '2.3.3' })
     // this is a github module for a react-native specific fix that hasn't been released yet
@@ -215,9 +238,13 @@ async function install (context) {
     await ignite.addModule('net', { version: '1.0.2' })
     spinner.stop()
   } else {
+    filesystem.remove('App/Containers/Style/ChatScreenStyle.js')
+    filesystem.remove('App/Containers/ChatScreen.js')
     filesystem.remove('App/Services/WebsocketService.js')
     filesystem.remove('App/Sagas/WebsocketSagas.js')
     filesystem.remove('App/Redux/ChatRedux.js')
+    filesystem.remove('App/Containers/ChatScreen.js')
+    filesystem.remove('App/Containers/Styles/ChatScreenStyle.js')
   }
   /**
    * Merge the package.json from our template into the one provided from react-native init.
@@ -296,7 +323,7 @@ async function install (context) {
     spinner.start()
     spinner.succeed()
 
-    await system.spawn(`ignite add ignite-ir-boilerplate-2016 ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ignite-ir-boilerplate ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
     if (params.devScreens) {
