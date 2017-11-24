@@ -13,7 +13,7 @@ describe('JWT Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--websockets=false', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })
@@ -48,7 +48,7 @@ describe('OAuth2 Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=oauth2', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=oauth2', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--websockets=false', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })
@@ -83,7 +83,7 @@ describe('UAA Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=uaa', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=uaa', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--websockets=false', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })
@@ -118,7 +118,7 @@ describe('Session Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=session', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=session', '--search-engine=false', '--dev-screens=false', '--animatable=false', '--skip-git', '--websockets=false', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })
@@ -153,7 +153,7 @@ describe('ElasticSearch Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=true', '--dev-screens=false', '--animatable=false', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=true', '--dev-screens=false', '--animatable=false', '--skip-git', '--websockets=false', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })
@@ -188,7 +188,7 @@ describe('Max Options Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
-    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=true', '--dev-screens=true', '--animatable=true', '--skip-git', '--boilerplate', BOILERPLATE])
+    await execa(IGNITE, ['new', APP, '--auth-type=jwt', '--search-engine=true', '--dev-screens=true', '--animatable=true', '--skip-git', '--websockets', '--boilerplate', BOILERPLATE])
     process.chdir(APP)
     console.log('App generation complete!')
   })

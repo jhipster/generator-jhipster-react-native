@@ -379,6 +379,8 @@ async function install (context) {
   print.info('')
   print.info('🍽 Time to get cooking!')
   print.info('')
+  print.info('To enable the websockets example, see docs/websockets.md')
+  print.info('')
   print.info('To run in iOS:')
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  react-native run-ios'))
