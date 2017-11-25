@@ -6,9 +6,8 @@ during generation).
 
 In your JHipster backend:
 
-- pom.xml    
-  
-  
+- pom.xml
+```
     # specific version and repository due to spring-social-facebook bug
     <repositories>
         <repository>
@@ -24,7 +23,7 @@ In your JHipster backend:
         <artifactId>spring-social-facebook</artifactId>
         <version>3.0.0.M1</version>
     </dependency>
-
+```
 - Replace your `web.rest.SocialController` with [this gist](https://gist.github.com/ruddell/4d003c7d8035268d34b8e842a338c979)
   - The main difference is the addition of a method for creating a social connection from a token.
   
@@ -36,8 +35,7 @@ In your React Native application:
   linking so your app receives the responses, and other required manual changes.
     
 - Configure your social client IDs and secrets in SocialConfig.js
-
-
+```
     // you can also store these in your Info.plist (iOS) for more security
     this.manager.configure({
       twitter: {
@@ -53,7 +51,7 @@ In your React Native application:
         client_id: '227777777779-hddmrjhipsterfanhere5tt.apps.googleusercontent.com'
       }
     })
-    
+```
 ### Differences from the Webapp
 
 The user authenticates with the social network, then sends the token to your JHipster backend.  From
