@@ -32,8 +32,7 @@ async function install (context) {
     print,
     system,
     prompt,
-    template,
-    patching
+    template
   } = context
 
   const perfStart = (new Date()).getTime()
@@ -200,6 +199,7 @@ async function install (context) {
   filesystem.append('.gitignore', 'coverage/')
   filesystem.append('.gitignore', '\n# Misc\n#')
   filesystem.append('.gitignore', '.env\n')
+  filesystem.append('.gitignore', 'ios/Index/DataStore\n')
 
   /**
    * If using websockets, set it up
@@ -238,13 +238,14 @@ async function install (context) {
     await ignite.addModule('net', { version: '1.0.2' })
     spinner.stop()
   } else {
-    filesystem.remove('App/Containers/Style/ChatScreenStyle.js')
-    filesystem.remove('App/Containers/ChatScreen.js')
-    filesystem.remove('App/Services/WebsocketService.js')
-    filesystem.remove('App/Sagas/WebsocketSagas.js')
-    filesystem.remove('App/Redux/ChatRedux.js')
     filesystem.remove('App/Containers/ChatScreen.js')
     filesystem.remove('App/Containers/Styles/ChatScreenStyle.js')
+    filesystem.remove('App/Services/WebsocketService.js')
+    filesystem.remove('Tests/Services/WebsocketServiceTest.js')
+    filesystem.remove('App/Sagas/WebsocketSagas.js')
+    filesystem.remove('Tests/Sagas/WebsocketSagaTest.js')
+    filesystem.remove('App/Redux/ChatRedux.js')
+    filesystem.remove('Tests/Redux/ChatReduxTest.js')
   }
   /**
    * Merge the package.json from our template into the one provided from react-native init.

@@ -32,8 +32,6 @@ function onConnect () {
     Object.keys(subscriptions).forEach(function (key) {
       if (key === 'chat') {
         subscribeToChat()
-      } else {
-        console.tron.log('Unrecognized Key')
       }
     })
   }
@@ -41,8 +39,7 @@ function onConnect () {
 }
 
 function onError (error) {
-  console.tron.error('Error connecting to websockets')
-  console.tron.error(error)
+  console.tron.error(`Error connecting to websockets ${error}`)
   let time = generateInterval(attempts)
   alreadyConnectedOnce = false
   connected = false
@@ -63,7 +60,6 @@ function createConnection () {
 function connect () {
   // connection
   if (!alreadyConnectedOnce) {
-    console.tron.log('Connecting....')
     if (connectedPromise === null) connection = createConnection()
     var url = AppConfig.apiUrl + 'websocket/chat'
     if (accessToken) {
@@ -112,11 +108,8 @@ function unsubscribeChat () {
 
 // methods for sending
 function sendChat (ev) {
-  console.tron.log('Sending chat!')
-  console.tron.log(ev)
   if (stompClient !== null && stompClient.connected) {
     var p = '/topic/chat'
-    console.tron.log(p)
     stompClient.send(p, {}, JSON.stringify(ev))
   }
 }
@@ -177,7 +170,7 @@ function generateInterval (k) {
   return Math.random() * maxInterval
 }
 
-export {
+export default {
   onConnect,
   onError,
   subscribeToChat,
@@ -190,7 +183,9 @@ export {
   getToken,
   setToken,
   getWsSessionId,
-  getConnectedPromise
+  getConnectedPromise,
+  initWebsocket,
+  websocketSagas
 }
 
 // connects to the websocket and sends events
@@ -204,7 +199,7 @@ function initWebsocket () {
   })
 }
 
-export default function * websocketSagas () {
+function * websocketSagas () {
   const channel = yield call(initWebsocket)
   while (true) {
     const action = yield take(channel)

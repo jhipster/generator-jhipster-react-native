@@ -2,7 +2,7 @@ import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt'
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
 <%_ if (props.websockets) { _%>
-import { setToken } from '../Services/WebsocketService'
+import WebsocketService from '../Services/WebsocketService'
 <%_ } _%>
 
 <%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
@@ -39,7 +39,7 @@ export function * login (api, { username, password }) {
     <%_ } _%>
     yield put(AccountActions.accountRequest())
     <%_ if (props.websockets) { _%>
-    setToken(response.data.id_token)
+    WebsocketService.setToken(response.data.id_token)
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
   } else {
@@ -85,7 +85,7 @@ export function * loginLoad (api) {
   if (authToken) {
     yield call(api.setAuthToken, authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
     <%_ if (props.websockets) { _%>
-    setToken(authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
+    WebsocketService.setToken(authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
     <%_ } _%>
   }
   yield put(LoginActions.loginLoadSuccess())

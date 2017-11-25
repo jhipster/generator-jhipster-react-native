@@ -18,7 +18,7 @@ const questions = {
   },
   websockets: {
     name: 'websockets',
-    message: 'Does your JHipster Application use Websockets?',
+    message: '[BETA] Does your JHipster Application use Websockets?',
     type: 'confirm',
     default: false
   },

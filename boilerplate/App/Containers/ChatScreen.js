@@ -3,7 +3,7 @@ import { View, Text, FlatList, TextInput } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { connect } from 'react-redux'
 import { Colors } from '../Themes'
-import { sendChat, connect as connectWebsockets, subscribeToChat, disconnect } from '../Services/WebsocketService'
+import WebsocketService from '../Services/WebsocketService'
 import { getLogin } from '../Redux/AccountRedux'
 import ChatActions from '../Redux/ChatRedux'
 
@@ -31,12 +31,12 @@ class ChatScreen extends React.PureComponent {
   }
 
   componentWillMount () {
-    connectWebsockets()
-    subscribeToChat()
+    WebsocketService.connect()
+    WebsocketService.subscribeToChat()
   }
 
   componentWillUnmount () {
-    disconnect()
+    WebsocketService.disconnect()
   }
 
   componentWillReceiveProps (newProps) {
@@ -55,7 +55,7 @@ class ChatScreen extends React.PureComponent {
 
   sendMessage = () => {
     if (this.state.message.length > 0) {
-      sendChat({ user: this.props.username, message: this.state.message })
+      WebsocketService.sendChat({ user: this.props.username, message: this.state.message })
       this.setState({ message: '' })
     }
   }
