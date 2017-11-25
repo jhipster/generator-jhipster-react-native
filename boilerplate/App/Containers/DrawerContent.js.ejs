@@ -40,6 +40,12 @@ class DrawerContent extends Component {
     NavigationActions.drawerClose()
     NavigationActions.changePassword()
   }
+  <%_ if (props.websockets) { _%>
+  handlePressChat = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.chat()
+  }
+  <%_ } _%>
   handlePressLogout = () => {
     NavigationActions.drawerClose()
     this.props.logout()
@@ -54,6 +60,9 @@ class DrawerContent extends Component {
         {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
 
         {this.props.loggedIn && (<DrawerButton text='Entities' onPress={this.handlePressEntities} />)}
+        <%_ if (props.websockets) { _%>
+        {this.props.loggedIn && (<DrawerButton text='Chat' onPress={this.handlePressChat} />)}
+        <%_ } _%>
         {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
         {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
         {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}
