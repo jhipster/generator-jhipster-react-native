@@ -38,6 +38,11 @@ const questions = {
     message: 'What animation library will you use?',
     type: 'radio',
     choices: ['none', 'react-native-animatable']
+  },
+  insight: {
+    name: 'insight',
+    message: 'May IgniteJHipster anonymously report usage statistics to improve the tool over time?',
+    type: 'confirm'
   }
 }
 

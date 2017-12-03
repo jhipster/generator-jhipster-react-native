@@ -1,6 +1,7 @@
 const options = require('./options')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 const { getReactNativeVersion } = require('./lib/react-native-version')
+const Insight = require('./lib/insight')
 
 /**
  * Is Android installed?
@@ -47,7 +48,8 @@ async function install (context) {
     searchEngine: parameters.options['search-engine'],
     websockets: parameters.options['websockets'],
     devScreens: parameters.options['dev-screens'],
-    animatable: parameters.options['animatable']
+    animatable: parameters.options['animatable'],
+    disableInsight: parameters.options['disable-insight']
   }
 
   if (params.authType === undefined) {
@@ -65,6 +67,9 @@ async function install (context) {
   if (params.animatable === undefined) {
     params.animatable = (await prompt.ask(options.questions.animatable)).animatable
   }
+  if (params.disableInsight === undefined && Insight.insight.optOut === undefined) {
+    Insight.insight.optOut = !((await prompt.ask(options.questions.insight)).insight)
+  }
 
   params.skipGit = parameters.options['skip-git']
   params.skipLint = parameters.options['skip-lint']
@@ -73,6 +78,7 @@ async function install (context) {
   params.searchEngine = JSON.parse(params.searchEngine)
   params.websockets = JSON.parse(params.websockets)
   params.devScreens = JSON.parse(params.devScreens)
+  params.disableInsight = JSON.parse(params.devScreens)
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
@@ -183,7 +189,8 @@ async function install (context) {
     authType: params.authType,
     searchEngine: params.searchEngine,
     websockets: params.websockets,
-    animatable: params.animatable
+    animatable: params.animatable,
+    devScreens: params.devScreens
     // i18n: params.i18n
   }
   await ignite.copyBatch(context, templates, templateProps, {
@@ -375,6 +382,8 @@ async function install (context) {
 
   const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${print.colors.yellow(name)} in ${perfDuration}s`)
+
+  Insight.trackAppOptions(context, templateProps)
 
   // Wrap it up with our success message.
   print.info('')

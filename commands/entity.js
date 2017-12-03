@@ -1,5 +1,6 @@
 // @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
 const pluralize = require('pluralize')
+const Insight = require('../lib/insight')
 
 module.exports = async function (context) {
   // grab some features
@@ -310,4 +311,7 @@ module.exports = async function (context) {
     insert: entityScreenButton,
     match: entityScreenButton
   })
+
+  Insight.trackEntityOptions(context)
+  print.success(`Entity successfully generated!`)
 }
