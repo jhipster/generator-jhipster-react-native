@@ -5,6 +5,7 @@ const REDUX_PERSIST = {
   active: true,
   reducerVersion: '1.0',
   storeConfig: {
+    key: 'primary',
     storage: AsyncStorage,
     blacklist: ['appState', 'search'], // reducer keys that you do NOT want stored to persistence here
     // whitelist: [], Optionally, just specify the keys you DO want stored to
