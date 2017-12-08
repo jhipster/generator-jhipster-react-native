@@ -10,9 +10,10 @@ In your JHipster backend:
 ```
     # specific version and repository due to spring-social-facebook bug
     <repositories>
-        <repository>
-            <id>alfresco-public</id>
-            <url>https://artifacts.alfresco.com/nexus/content/groups/public</url>
+        <repository> 
+            <id>repository.spring.milestone</id> 
+            <name>Spring Milestone Repository</name> 
+            <url>http://repo.spring.io/milestone</url> 
         </repository>
     </repositories>
         
