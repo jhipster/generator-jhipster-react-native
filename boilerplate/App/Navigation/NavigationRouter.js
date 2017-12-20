@@ -21,7 +21,12 @@ class NavigationRouter extends Component {
   render () {
     return (
       <Router>
-        <Drawer headerTintColor={'white'} contentComponent={DrawerContent} navigationBarStyle={styles.navBar} titleStyle={styles.title} >
+        <Drawer headerTintColor={'white'} contentComponent={DrawerContent} navigationBarStyle={styles.navBar} titleStyle={styles.title}
+          // these lines are a workaround for a react-navigation issue, remove after upgrading >4.0.0-beta.24
+          drawerOpenRoute='DrawerOpen'
+          drawerCloseRoute='DrawerClose'
+          drawerToggleRoute='DrawerToggle'
+        >
           <Stack key='root'>
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
             <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
