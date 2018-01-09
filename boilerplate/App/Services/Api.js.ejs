@@ -63,7 +63,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const login = (userAuth) => api.post('api/authenticate', userAuth)
   <%_ } else if (props.authType === 'uaa') { _%>
   const login = (userAuth) => api.post('auth/login', userAuth)
-  const logout = () => api.post('api/logout')
+  const logout = () => api.post('auth/logout')
   <%_ } _%>
   const register = (user) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/register', user)
   const forgotPassword = (data) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset-password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})

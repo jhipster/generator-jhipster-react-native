@@ -16,6 +16,7 @@
     "lib",
     "templates",
     "boilerplate.js",
+    "plugin.js",
     "ignite.json",
     "options.js"
   ],
