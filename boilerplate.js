@@ -47,6 +47,7 @@ async function install (context) {
     authType: parameters.options['auth-type'],
     searchEngine: parameters.options['search-engine'],
     websockets: parameters.options['websockets'],
+    socialLogin: parameters.options['social-login'],
     devScreens: parameters.options['dev-screens'],
     animatable: parameters.options['animatable'],
     disableInsight: parameters.options['disable-insight']
@@ -60,6 +61,9 @@ async function install (context) {
   }
   if (params.websockets === undefined) {
     params.websockets = (await prompt.ask(options.questions.websockets)).websockets
+  }
+  if (params.socialLogin === undefined) {
+    params.socialLogin = (await prompt.ask(options.questions.socialLogin)).socialLogin
   }
   if (params.devScreens === undefined) {
     params.devScreens = (await prompt.ask(options.questions.devScreens)).devScreens
@@ -77,6 +81,7 @@ async function install (context) {
   // very hacky but correctly handles both strings and booleans and converts to boolean
   params.searchEngine = JSON.parse(params.searchEngine)
   params.websockets = JSON.parse(params.websockets)
+  params.socialLogin = JSON.parse(params.socialLogin)
   params.devScreens = JSON.parse(params.devScreens)
   params.disableInsight = JSON.parse(params.devScreens)
 
@@ -128,6 +133,10 @@ async function install (context) {
     {
       template: 'App/Containers/DrawerContent.js.ejs',
       target: 'App/Containers/DrawerContent.js'
+    },
+    {
+      template: 'App/Containers/LoginScreen.js.ejs',
+      target: 'App/Containers/LoginScreen.js'
     },
     {
       template: 'App/Services/Api.js.ejs',
@@ -189,6 +198,7 @@ async function install (context) {
     authType: params.authType,
     searchEngine: params.searchEngine,
     websockets: params.websockets,
+    socialLogin: params.socialLogin,
     animatable: params.animatable,
     devScreens: params.devScreens
     // i18n: params.i18n
@@ -208,6 +218,12 @@ async function install (context) {
   filesystem.append('.gitignore', '.env\n')
   filesystem.append('.gitignore', 'ios/Index/DataStore\n')
 
+  /**
+   * If using social login, set it up
+   */
+  if (params.socialLogin) {
+    await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
+  }
   /**
    * If using websockets, set it up
    */
@@ -389,8 +405,14 @@ async function install (context) {
   print.info('')
   print.info('🍽 Time to get cooking!')
   print.info('')
-  print.info('To enable the websockets example, see docs/websockets.md')
-  print.info('')
+  if (params.websockets) {
+    print.info('To enable the websockets example, see docs/websockets.md')
+    print.info('')
+  }
+  if (params.socialLogin) {
+    print.info('To configure Social Login, see docs/social-login.md')
+    print.info('')
+  }
   print.info('To run in iOS:')
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  react-native run-ios'))

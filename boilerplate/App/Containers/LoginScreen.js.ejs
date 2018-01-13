@@ -6,6 +6,11 @@ import styles from './Styles/LoginScreenStyles'
 import { Images, Metrics } from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+<%_ if (props.socialLogin) { _%>
+import RoundedButton from '../Components/RoundedButton'
+import * as simpleAuthProviders from 'react-native-simple-auth'
+import AppConfig from '../Config/AppConfig'
+<%_ } _%>
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -54,6 +59,20 @@ class LoginScreen extends React.Component {
   handleChangePassword = (text) => {
     this.setState({ password: text })
   }
+  <%_ if (props.socialLogin) { _%>
+  socialLogin = (provider) => {
+    simpleAuthProviders[provider](AppConfig.social[provider])
+      .then((info) => {
+        console.tron.log(info)
+        // info.user - user details from the provider
+        // info.credentials - tokens from the provider
+      }).catch((error) => {
+        console.tron.log(error)
+        // error.code
+        // error.description
+      })
+  }
+  <%_ } _%>
 
   render () {
     const { username, password } = this.state
@@ -111,6 +130,13 @@ class LoginScreen extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
+          <%_ if (props.socialLogin) { _%>
+          <View style={[styles.loginRow]}>
+            <RoundedButton onPress={this.socialLogin.bind(this, 'facebook')} text='Facebook' />
+            <RoundedButton onPress={this.socialLogin.bind(this, 'google')} text='Google' />
+            <RoundedButton onPress={this.socialLogin.bind(this, 'twitter')} text='Twitter' />
+          </View>
+          <%_ } _%>
         </View>
 
       </ScrollView>

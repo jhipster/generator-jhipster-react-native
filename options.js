@@ -10,6 +10,12 @@ const questions = {
     choices: ['jwt', 'oauth2', 'uaa', 'session'],
     default: 'jwt'
   },
+  socialLogin: {
+    name: 'socialLogin',
+    message: `Does your app use JHipster's social login?`,
+    type: 'confirm',
+    default: false
+  },
   searchEngine: {
     name: 'searchEngine',
     message: 'Does your JHipster Application use ElasticSearch?',

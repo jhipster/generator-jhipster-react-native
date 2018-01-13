@@ -2,13 +2,31 @@
 
 export default {
   // font scaling override - RN default is on
-  allowTextFontScaling: true,
-  apiUrl: 'http://localhost:8080/'<%_ if (props.authType ==='oauth2') { _%>,
+  apiUrl: 'http://localhost:8080/',
+  <%_ if (props.authType ==='oauth2') { _%>
   oauthClientId: 'jhipsterapp',
-  oauthClientSecret: 'my-secret-token-to-change-in-production'
-  <%_  } else if (props.authType ==='uaa') { _%>,
+  oauthClientSecret: 'my-secret-token-to-change-in-production',
+  <%_ } else if (props.authType ==='uaa') { _%>,
   // this is your UAA's base name, lower-cased and followed by a /
-  uaaBaseUrl: 'uaa/'
-  <%_  } _%>
-
+  uaaBaseUrl: 'uaa/',
+  <%_ } _%>
+  <%_ if (props.socialLogin) { _%>
+  // these are sample values and will not work by default
+  social: {
+    google: {
+      appId: '227777777779-hddmrjhipsterfanhere5tt.apps.googleusercontent.com',
+      callback: 'com.googleusercontent.apps.227777777779-hddmrjhipsterfanhere5tt:/oauth2redirect'
+    },
+    facebook: {
+      appId: '1104619382567621',
+      callback: 'fb1104619382567621://authorize'
+    },
+    twitter: {
+      appId: '2v2sd1ldN2CsxdSdfRyFJB9Ek',
+      appSecret: 'dIffNnLRsi1BQ9ahYdJHIPSTER0tN67JGzEDSR1lwyh76tW9o0GTssv0',
+      callback: 'ignitesocial://authorize'
+    }
+  },
+  <%_ } _%>
+  allowTextFontScaling: true
 }
