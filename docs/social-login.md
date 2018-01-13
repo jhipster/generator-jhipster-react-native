@@ -4,13 +4,38 @@ There are several steps needed to enable social login in an Ignite JHipster proj
 this guide expects your JHipster backend to already be configured with the Social Login option (chosen 
 during generation).
 
-- Replace your `web.rest.SocialController` with [this gist](https://gist.github.com/ruddell/4d003c7d8035268d34b8e842a338c979)
-  - The main difference is the addition of a method for creating a social connection from a token.
-  
+In your JHipster backend:
+
+- pom.xml
+```
+    # specific version and repository due to spring-social-facebook bug
+    <repositories>
+        <repository> 
+            <id>repository.spring.milestone</id> 
+            <name>Spring Milestone Repository</name> 
+            <url>http://repo.spring.io/milestone</url> 
+        </repository>
+    </repositories>
+        
+     ...
+     
+    <dependency>
+        <groupId>org.springframework.social</groupId>
+        <artifactId>spring-social-facebook</artifactId>
+        <version>3.0.0.M1</version>
+    </dependency>
+```
+- Replace your `web.rest.SocialController` with [this gist](https://gist.github.com/ruddell/7e08d937337a245301ae9806c1be7d9e)
+  - Add call to new SocialService method
+- Replace your `service.SocialService` with [this gist](https://gist.github.com/ruddell/380f5c4de45a0069e746b1e22f2a963d)
+  - Add method for logging in via auth token
+- Replace your `SocialServiceIntTest` with [this gist](https://gist.github.com/ruddell/4c92e33edddc76d756488c27c4dba567)
+  - Import new dependencies
+   
 In your React Native application:
 
 - Configure Linking where necessary according to the ([React Native docs](https://facebook.github.io/react-native/docs/linking.html))
-- [Configure react-native-simple-auth](https://github.com/adamjmcgrath/react-native-simple-auth#providers-setup)
+- Configure [react-native-simple-auth](https://github.com/adamjmcgrath/react-native-simple-auth#providers-setup)
   - This guide describes how to obtain the correct keys for each social network and how to set up 
   linking so your app receives the redirection from the browser.  
 - Configure your social client IDs and secrets in App/Config/AppConfig.js
