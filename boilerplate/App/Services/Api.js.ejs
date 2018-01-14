@@ -54,6 +54,9 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.setHeader('Authorization', '')
   <%_ } _%>
+  <%_ if (props.socialLogin) { _%>
+  const socialLogin = (userAuth) => api.post(`social/token?token=${userAuth.token}&secret=${userAuth.secret}&provider=${userAuth.provider}`)
+  <%_ } _%>
   <%_ if (props.authType === 'oauth2') { _%>
   const login = (userAuth) => api.post('oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + Buffer.from(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   <%_ } else if (props.authType === 'session') { _%>
@@ -93,6 +96,9 @@ const create = (baseURL = AppConfig.apiUrl) => {
     <%_ } else { _%>
     setAuthToken,
     removeAuthToken,
+    <%_ } _%>
+    <%_ if (props.socialLogin) { _%>
+    socialLogin,
     <%_ } _%>
     login,
     register,

@@ -15,7 +15,7 @@ import { AccountTypes } from '../Redux/AccountRedux'
 /* ------------- Sagas ------------- */
 
 import { startup } from './StartupSagas'
-import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, loginLoad<% } %><% if (props.authType === 'oauth2') { %>, loginRefresh<% } %> } from './LoginSagas'
+import { login, logout<% if (props.socialLogin) { %>, socialLogin<% } %><% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, loginLoad<% } %><% if (props.authType === 'oauth2') { %>, loginRefresh<% } %> } from './LoginSagas'
 import { register } from './RegisterSagas'
 import { forgotPassword, changePassword } from './PasswordSagas'
 import { getAccount, updateAccount } from './AccountSagas'
@@ -42,6 +42,9 @@ export default function * root () {
     takeLatest(LoginTypes.LOGIN_REFRESH, loginRefresh, api),
     <%_ } _%>
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
+    <%_ if (props.socialLogin) { _%>
+    takeLatest(LoginTypes.SOCIAL_LOGIN_REQUEST, socialLogin, api),
+    <%_ } _%>
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout, api),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
     takeLatest(PasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),

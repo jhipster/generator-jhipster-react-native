@@ -63,7 +63,15 @@ class LoginScreen extends React.Component {
   socialLogin = (provider) => {
     simpleAuthProviders[provider](AppConfig.social[provider])
       .then((info) => {
-        console.tron.log(info)
+        switch (provider) {
+          case 'twitter':
+            this.props.attemptSocialLogin(info.credentials.oauth_token, info.credentials.oauth_token_secret, provider)
+            break
+          default:
+            // google, facebook, and other OAuth2 providers
+            this.props.attemptSocialLogin(info.credentials.access_token, '', provider)
+            break
+        }
         // info.user - user details from the provider
         // info.credentials - tokens from the provider
       }).catch((error) => {
@@ -155,6 +163,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
+    <%_ if (props.socialLogin) { _%>
+    attemptSocialLogin: (token, secret, provider) => dispatch(LoginActions.socialLoginRequest(token, secret, provider)),
+    <%_ } _%>
     logout: () => dispatch(LoginActions.logoutRequest())
   }
 }
