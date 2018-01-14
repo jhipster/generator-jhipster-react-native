@@ -12,7 +12,7 @@ const questions = {
   },
   socialLogin: {
     name: 'socialLogin',
-    message: `Does your app use JHipster's social login?`,
+    message: `[BETA] Does your app use JHipster's social login?`,
     type: 'confirm',
     default: false
   },
