@@ -6,6 +6,9 @@ import styles from './Styles/LoginScreenStyles'
 import { Images, Metrics } from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+<%_ if (props.socialLogin) { _%>
+import SocialLoginContainer from '../Containers/SocialLoginContainer'
+<%_ } _%>
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -111,6 +114,9 @@ class LoginScreen extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
+          <%_ if (props.socialLogin) { _%>
+          <SocialLoginContainer />
+          <%_ } _%>
         </View>
 
       </ScrollView>

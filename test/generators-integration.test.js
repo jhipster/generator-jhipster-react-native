@@ -21,6 +21,7 @@ describe('JWT Integration Test', () => {
       '--animatable=false',
       '--skip-git',
       '--websockets=false',
+      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -66,6 +67,7 @@ describe('OAuth2 Integration Test', () => {
       '--animatable=false',
       '--skip-git',
       '--websockets=false',
+      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -111,6 +113,7 @@ describe('UAA Integration Test', () => {
       '--animatable=false',
       '--skip-git',
       '--websockets=false',
+      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -156,6 +159,7 @@ describe('Session Integration Test', () => {
       '--animatable=false',
       '--skip-git',
       '--websockets=false',
+      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -201,6 +205,7 @@ describe('ElasticSearch Integration Test', () => {
       '--animatable=false',
       '--skip-git',
       '--websockets=false',
+      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -246,6 +251,7 @@ describe('Max Options Integration Test', () => {
       '--animatable=true',
       '--skip-git',
       '--websockets',
+      '--social-login=true',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
