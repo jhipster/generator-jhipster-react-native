@@ -7,9 +7,7 @@ import { Images, Metrics } from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 <%_ if (props.socialLogin) { _%>
-import RoundedButton from '../Components/RoundedButton'
-import * as simpleAuthProviders from 'react-native-simple-auth'
-import AppConfig from '../Config/AppConfig'
+import SocialLoginContainer from '../Containers/SocialLoginContainer'
 <%_ } _%>
 
 class LoginScreen extends React.Component {
@@ -59,28 +57,6 @@ class LoginScreen extends React.Component {
   handleChangePassword = (text) => {
     this.setState({ password: text })
   }
-  <%_ if (props.socialLogin) { _%>
-  socialLogin = (provider) => {
-    simpleAuthProviders[provider](AppConfig.social[provider])
-      .then((info) => {
-        switch (provider) {
-          case 'twitter':
-            this.props.attemptSocialLogin(info.credentials.oauth_token, info.credentials.oauth_token_secret, provider)
-            break
-          default:
-            // google, facebook, and other OAuth2 providers
-            this.props.attemptSocialLogin(info.credentials.access_token, '', provider)
-            break
-        }
-        // info.user - user details from the provider
-        // info.credentials - tokens from the provider
-      }).catch((error) => {
-        console.tron.log(error)
-        // error.code
-        // error.description
-      })
-  }
-  <%_ } _%>
 
   render () {
     const { username, password } = this.state
@@ -139,11 +115,7 @@ class LoginScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <%_ if (props.socialLogin) { _%>
-          <View style={[styles.loginRow]}>
-            <RoundedButton onPress={this.socialLogin.bind(this, 'facebook')} text='Facebook' />
-            <RoundedButton onPress={this.socialLogin.bind(this, 'google')} text='Google' />
-            <RoundedButton onPress={this.socialLogin.bind(this, 'twitter')} text='Twitter' />
-          </View>
+          <SocialLoginContainer />
           <%_ } _%>
         </View>
 
@@ -163,9 +135,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
-    <%_ if (props.socialLogin) { _%>
-    attemptSocialLogin: (token, secret, provider) => dispatch(LoginActions.socialLoginRequest(token, secret, provider)),
-    <%_ } _%>
     logout: () => dispatch(LoginActions.logoutRequest())
   }
 }

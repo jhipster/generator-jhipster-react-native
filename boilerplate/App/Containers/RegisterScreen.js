@@ -3,6 +3,7 @@ import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+import SocialLoginContainer from '../Containers/SocialLoginContainer'
 import RegisterActions from '../Redux/RegisterRedux'
 import t from 'tcomb-form-native'
 // Styles
@@ -98,9 +99,10 @@ class RegisterScreen extends React.Component {
             onChange={this.accountChange}
           />
           <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableHighlight>
         </ScrollView>
+        <SocialLoginContainer />
       </KeyboardAwareScrollView>
     )
   }

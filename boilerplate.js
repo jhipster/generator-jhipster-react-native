@@ -223,6 +223,9 @@ async function install (context) {
    */
   if (params.socialLogin) {
     await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
+  } else {
+    filesystem.remove('App/Containers/SocialLoginContainer.js')
+    filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
   }
   /**
    * If using websockets, set it up
