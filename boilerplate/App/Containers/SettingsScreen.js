@@ -15,10 +15,10 @@ class SettingsScreen extends React.Component {
     super(props)
     this.state = {
       accountModel: t.struct({
-        firstName: t.String,
-        lastName: t.String,
+        firstName: t.maybe(t.String),
+        lastName: t.maybe(t.String),
         login: t.String,
-        email: t.String,
+        email: t.maybe(t.String),
         langKey: t.String,
         activated: t.Boolean
       }),

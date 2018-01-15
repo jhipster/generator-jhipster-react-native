@@ -17,9 +17,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     super(props)
     this.state = {
       formModel: t.struct({
-        <%_ props.entityConfig.fields.forEach(function (field, index) {
-          const formField = props.getEntityFormField(field, index, props.entityConfig.fields.length) _%>
-        <%= formField %>
+        <%_ props.entityConfig.fields.forEach(function (field, index) { _%>
+        <%= props.getEntityFormField(field, index, props.entityConfig.fields.length) %>
         <%_ }) _%>
       }),
       formValue: this.props.<%= camelCase(props.name) %>,

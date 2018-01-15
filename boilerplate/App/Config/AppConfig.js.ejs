@@ -1,7 +1,6 @@
 // Simple React Native specific changes
 
 export default {
-  // font scaling override - RN default is on
   apiUrl: 'http://localhost:8080/',
   <%_ if (props.authType ==='oauth2') { _%>
   oauthClientId: 'jhipsterapp',
@@ -28,5 +27,6 @@ export default {
     }
   },
   <%_ } _%>
+  // font scaling override - RN default is on
   allowTextFontScaling: true
 }
