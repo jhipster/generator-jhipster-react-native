@@ -1,6 +1,7 @@
 // @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
 const pluralize = require('pluralize')
 const Insight = require('../lib/insight')
+const { getEntityFormField } = require('../lib/generator-base')
 
 module.exports = async function (context) {
   // grab some features
@@ -32,6 +33,7 @@ module.exports = async function (context) {
   const props = {
     name,
     searchEngine,
+    getEntityFormField,
     pluralName: pluralize(name)
   }
   const entityFileName = `${name}.json`

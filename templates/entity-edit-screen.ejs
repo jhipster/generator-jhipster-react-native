@@ -18,24 +18,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     this.state = {
       formModel: t.struct({
         <%_ props.entityConfig.fields.forEach(function (field, index) {
-            // todo handle enums, required, constraints, relationships
-          if (field.fieldType === 'Integer'
-            || field.fieldType === 'Long'
-            || field.fieldType === 'Float'
-            || field.fieldType === 'Decimal'
-            || field.fieldType === 'Double'
-            || field.fieldType === 'BigDecimal') {
-        _%>
-        <%= field.fieldName %>: t.maybe(t.Number)<% if (index !== props.entityConfig.fields.length -1) { %>,<% } %>
-        <%_ } else if (field.fieldType === 'LocalDate'
-        || field.fieldType === 'Instant'
-        || field.fieldType === 'ZonedDateTime') { _%>
-        <%= field.fieldName %>: t.maybe(t.Date)<% if (index !== props.entityConfig.fields.length -1) { %>,<% } %>
-        <%_ } else if (field.fieldType === 'Boolean') { _%>
-        <%= field.fieldName %>: t.maybe(t.Boolean)<% if (index !== props.entityConfig.fields.length -1) { %>,<% } %>
-        <%_ } else { _%>
-        <%= field.fieldName %>: t.maybe(t.String)<% if (index !== props.entityConfig.fields.length -1) { %>,<% } %>
-        <%_ } _%>
+          const formField = props.getEntityFormField(field, index, props.entityConfig.fields.length) _%>
+        <%= formField %>
         <%_ }) _%>
       }),
       formValue: this.props.<%= camelCase(props.name) %>,
