@@ -287,19 +287,19 @@ module.exports = async function (context) {
   })
 
   // add entity screens to navigation
-  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.pluralName}' back />`
+  const navigationScreen = `            <Scene key='${camelCase(props.name)}Entity' component={${props.name}EntityScreen} title='${props.pluralName}' back drawerLockMode='locked-closed' />`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-needle',
     insert: navigationScreen,
     match: navigationScreen
   })
-  const navigationScreenDetail = `            <Scene key='${camelCase(props.name)}EntityDetail' component={${props.name}EntityDetailScreen} title='${props.name}' back />`
+  const navigationScreenDetail = `            <Scene key='${camelCase(props.name)}EntityDetail' component={${props.name}EntityDetailScreen} title='${props.name}' back drawerLockMode='locked-closed' />`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-needle',
     insert: navigationScreenDetail,
     match: navigationScreenDetail
   })
-  const navigationScreenEdit = `            <Scene key='${camelCase(props.name)}EntityEdit' component={${props.name}EntityEditScreen} title='${props.name}' back />`
+  const navigationScreenEdit = `            <Scene key='${camelCase(props.name)}EntityEdit' component={${props.name}EntityEditScreen} title='${props.name}' back drawerLockMode='locked-closed' />`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-needle',
     insert: navigationScreenEdit,

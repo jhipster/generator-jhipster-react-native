@@ -29,12 +29,12 @@ class NavigationRouter extends Component {
         >
           <Stack key='root'>
             <Scene initial key='launchScreen' component={LaunchScreen} title='Welcome' />
-            <Scene key='login' component={LoginScreen} title='Login' hideNavBar />
-            <Scene key='register' component={RegisterScreen} title='Register' back />
-            <Scene key='entities' component={EntitiesScreen} title='Entities' back />
-            <Scene key='settings' component={SettingsScreen} title='Settings' back />
-            <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' back />
-            <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' back />
+            <Scene key='login' component={LoginScreen} title='Login' hideNavBar drawerLockMode='locked-closed' />
+            <Scene key='register' component={RegisterScreen} title='Register' back drawerLockMode='locked-closed' />
+            <Scene key='entities' component={EntitiesScreen} title='Entities' back drawerLockMode='locked-closed' />
+            <Scene key='settings' component={SettingsScreen} title='Settings' back drawerLockMode='locked-closed' />
+            <Scene key='changePassword' component={ChangePasswordScreen} title='Change Password' back drawerLockMode='locked-closed' />
+            <Scene key='forgotPassword' component={ForgotPasswordScreen} title='Forgot Password' back drawerLockMode='locked-closed' />
             {/* ignite-jhipster-navigation-needle */}
           </Stack>
         </Drawer>
