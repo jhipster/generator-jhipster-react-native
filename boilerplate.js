@@ -139,6 +139,10 @@ async function install (context) {
       target: 'App/Containers/LoginScreen.js'
     },
     {
+      template: 'App/Containers/RegisterScreen.js.ejs',
+      target: 'App/Containers/RegisterScreen.js'
+    },
+    {
       template: 'App/Services/Api.js.ejs',
       target: 'App/Services/Api.js'
     },

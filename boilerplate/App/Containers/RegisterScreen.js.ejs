@@ -3,7 +3,9 @@ import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+<%_ if (props.socialLogin) { _%>
 import SocialLoginContainer from '../Containers/SocialLoginContainer'
+<%_ } _%>
 import RegisterActions from '../Redux/RegisterRedux'
 import t from 'tcomb-form-native'
 // Styles
@@ -102,7 +104,9 @@ class RegisterScreen extends React.Component {
             <Text style={styles.buttonText}>Register</Text>
           </TouchableHighlight>
         </ScrollView>
+        <%_ if (props.socialLogin) { _%>
         <SocialLoginContainer />
+        <%_ } _%>
       </KeyboardAwareScrollView>
     )
   }
