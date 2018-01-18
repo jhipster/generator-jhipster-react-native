@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
+import { AppState, StatusBar, View } from 'react-native'
 import NavigationRouter from '../Navigation/NavigationRouter'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
+import AccountActions from '../Redux/AccountRedux'
 <%_ if (props.authType === 'oauth2') { _%>
 import LoginActions from '../Redux/LoginRedux'
 <%_ } _%>
@@ -16,9 +17,14 @@ class RootContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      authTimeout: null
+      authTimeout: null,
+      appState: 'active'
     }
     this.renewAuthWhenNeeded = this.renewAuthWhenNeeded.bind(this)
+  }
+  <%_ } else { _%>
+  state = {
+    appState: 'active'
   }
   <%_ } _%>
   componentDidMount () {
@@ -26,6 +32,19 @@ class RootContainer extends Component {
     if (!ReduxPersist.active) {
       this.props.startup()
     }
+    AppState.addEventListener('change', this.handleAppStateChange)
+  }
+
+  componentWillUnmount () {
+    AppState.removeEventListener('change', this.handleAppStateChange)
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    // app is resuming from the background
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.props.getAccount()
+    }
+    this.setState({appState: nextAppState})
   }
 
   <%_ if (props.authType === 'oauth2') { _%>
@@ -74,6 +93,7 @@ const mapDispatchToProps = (dispatch) => ({
   <%_ if (props.authType === 'oauth2') { _%>
   refreshLogin: (refreshToken) => dispatch(LoginActions.loginRefresh(refreshToken)),
   <%_ } _%>
+  getAccount: () => dispatch(AccountActions.accountRequest()),
   startup: () => dispatch(StartupActions.startup())
 })
 
