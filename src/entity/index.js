@@ -1,4 +1,3 @@
-// @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
 const fs = require('fs-extra')
 const Insight = require('../lib/insight')
 const generateFiles = require('./files')
@@ -75,6 +74,6 @@ module.exports = async function (context) {
 
   await generateFiles(this, context)
 
-  Insight.trackEntityOptions(context)
+  Insight.trackGenerator(context, 'entity')
   print.success(`Entity successfully generated!`)
 }

@@ -1,1 +1,1 @@
-module.exports = require('./src/boilerplate/index')
+module.exports = require('./src/boilerplate')

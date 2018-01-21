@@ -47,10 +47,10 @@ const trackAppOptions = (context = {}, props) => {
   }
 }
 
-const trackEntityOptions = (context = {}) => {
+const trackGenerator = (context = {}, generatorName) => {
   const noInsight = context.parameters.options['disable-insight']
   if (!noInsight) {
-    insight.trackEvent({category: 'generator', action: 'entity'})
+    insight.trackEvent({category: 'generator', action: generatorName})
   }
 }
 // i18n: params.i18n
@@ -58,5 +58,5 @@ module.exports = {
   insight,
   askForOptOut,
   trackAppOptions,
-  trackEntityOptions
+  trackGenerator
 }
