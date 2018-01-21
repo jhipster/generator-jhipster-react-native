@@ -11,15 +11,15 @@ module.exports = async function (generator, igniteContext) {
   // copy our App, Tests, and storybook directories
   spinner.text = '▸ copying files'
   spinner.start()
-  filesystem.copy(`${ignite.ignitePluginPath()}/boilerplate/App`, `${process.cwd()}/App`, {
+  filesystem.copy(`${__dirname}/../../boilerplate/App`, `${process.cwd()}/App`, {
     overwrite: true,
     matching: '!*.ejs'
   })
-  filesystem.copy(`${ignite.ignitePluginPath()}/boilerplate/Tests`, `${process.cwd()}/Tests`, {
+  filesystem.copy(`${__dirname}/../../boilerplate/Tests`, `${process.cwd()}/Tests`, {
     overwrite: true,
     matching: '!*.ejs'
   })
-  filesystem.copy(`${ignite.ignitePluginPath()}/boilerplate/storybook`, `${process.cwd()}/storybook`, {
+  filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
     overwrite: true,
     matching: '!*.ejs'
   })
@@ -110,7 +110,7 @@ module.exports = async function (generator, igniteContext) {
 
   await ignite.copyBatch(igniteContext, templates, templateProps, {
     quiet: true,
-    directory: `${ignite.ignitePluginPath()}/boilerplate`
+    directory: `${__dirname}/../../boilerplate`
   })
 
   /**
