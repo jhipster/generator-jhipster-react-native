@@ -66,7 +66,7 @@ module.exports = async function (context) {
 
     // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
     this.igniteConfig.jhipsterDirectory = jhipsterDirectory
-    await fs.writeJson(igniteConfigPath, this.igniteConfig, { spaces: '\t' })
+    await fs.writeJson('ignite/ignite.json', this.igniteConfig, { spaces: '\t' })
   }
 
   await generateFiles(this, context)
