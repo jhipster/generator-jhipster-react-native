@@ -1,4 +1,3 @@
-const fs = require('fs-extra')
 const Insight = require('../lib/insight')
 const generateFiles = require('../boilerplate/files')
 const { getReactNativeVersion } = require('../lib/react-native-version')
@@ -6,8 +5,7 @@ const name = require('../../package.json').name
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, ignite, print, prompt, strings } = context
-  const { pascalCase, isBlank } = strings
+  const { ignite, print } = context
 
   // load the ignite config and set the default jhipster directory
   this.igniteConfig = ignite.loadIgniteConfig()
@@ -25,6 +23,6 @@ module.exports = async function (context) {
   this.templateProps = templateProps
   await generateFiles(this, context)
 
-  // Insight.trackGenerator(context, 'upgrade')
+  Insight.trackGenerator(context, 'upgrade')
   print.success(`Application successfully upgraded!`)
 }
