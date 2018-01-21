@@ -9,7 +9,7 @@ during generation).
 - Set a custom repository and version for spring-social-facebook due to a bug in API versions v2.8+  
   - In your pom.xml:
 ```
-    # specific version and repository due to spring-social-facebook bug
+    <!-- specific version and repository due to spring-social-facebook bug -->
     <repositories>
         <repository> 
             <id>repository.spring.milestone</id> 
