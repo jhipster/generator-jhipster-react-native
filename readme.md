@@ -7,7 +7,7 @@ A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, comple
 
 This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
 
-For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).  The tutorial is also available in a [blog format](https://jruddell.com/blog/ignite-jhipster).
+For a quick tour, check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en), the [YouTube Demo](https://youtu.be/o46CwsJlL-I) or the [blog post](https://jruddell.com/blog/ignite-jhipster).
 
 ## Docs
  - [App Config Variables](docs/config-variables.md)
