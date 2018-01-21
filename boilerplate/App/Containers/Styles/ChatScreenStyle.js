@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import { ApplicationStyles, Metrics, Colors } from '../../Themes'
 
 export default StyleSheet.create({
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   list: {
-    height: Metrics.screenHeight - Metrics.navBarHeight - 50
+    height: Metrics.screenHeight - ((Platform.OS === 'ios') ? 110 : 130)
   },
   listContent: {
     left: 0,

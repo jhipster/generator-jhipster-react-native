@@ -5,7 +5,6 @@ export default StyleSheet.create({
   ...ApplicationStyles.screen,
   container: {
     flex: 1,
-    paddingTop: Metrics.navBarHeight,
     paddingBottom: Metrics.baseMargin,
     backgroundColor: Colors.transparent
   },
