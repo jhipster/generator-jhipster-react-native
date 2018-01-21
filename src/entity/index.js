@@ -5,10 +5,8 @@ const prompts = require('./prompts')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, print, prompt, strings } = context
+  const { ignite, parameters, print, prompt, strings } = context
   const { pascalCase, isBlank } = strings
-  // const config = ignite.loadIgniteConfig()
-  // const { tests } = config
 
   // flags
   const jhDirectoryFlag = parameters.options['jh-dir'] || ''
@@ -21,8 +19,7 @@ module.exports = async function (context) {
   }
 
   // load the ignite config and set the default jhipster directory
-  const igniteConfigPath = 'ignite/ignite.json'
-  this.igniteConfig = await fs.readJson(igniteConfigPath)
+  this.igniteConfig = ignite.loadIgniteConfig()
   this.name = pascalCase(parameters.first)
   prompts.entityPrompts[0].default = this.igniteConfig.jhipsterDirectory
 

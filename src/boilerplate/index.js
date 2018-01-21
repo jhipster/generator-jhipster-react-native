@@ -179,8 +179,6 @@ async function install (context) {
 
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
-    // const pluginModule = require(`${__dirname}/plugin.js`)
-    // await pluginModule.add(context)
 
     ignite.setIgnitePluginPath(__dirname)
     ignite.saveIgniteConfig(newConfig)
