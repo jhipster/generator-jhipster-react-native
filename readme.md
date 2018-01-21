@@ -16,6 +16,7 @@ For a quick tour, check out the [YouTube Demo](https://youtu.be/o46CwsJlL-I).  T
  - [Social Login](docs/social-login.md)
  - [Websockets](docs/websockets.md)
  - [JHipster Version Compatibility](docs/jhipster-version-compatability.md)
+ - [Upgrading Your IgniteJHipster App](docs/upgrading.md)
  - [Advanced Usage](docs/advanced-usage.md)
 
 ## Getting Started
