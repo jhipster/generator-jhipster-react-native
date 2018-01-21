@@ -1,7 +1,7 @@
-const options = require('./options')
+const options = require('./src/boilerplate/prompts')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
-const { getReactNativeVersion } = require('./lib/react-native-version')
-const Insight = require('./lib/insight')
+const { getReactNativeVersion } = require('./src/react-native-version')
+const Insight = require('./src/insight')
 
 /**
  * Is Android installed?

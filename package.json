@@ -13,7 +13,7 @@
   "files": [
     "boilerplate",
     "commands",
-    "lib",
+    "src",
     "templates",
     "boilerplate.js",
     "plugin.js",

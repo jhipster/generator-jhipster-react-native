@@ -4,7 +4,7 @@
 module.exports = async function (generator, igniteContext) {
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
-  const { getEntityFormField } = require('../../lib/generator-base')
+  const { getEntityFormField } = require('../generator-base')
   const { ignite, strings } = igniteContext
   const { kebabCase, pascalCase, snakeCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
