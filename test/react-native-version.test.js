@@ -1,4 +1,4 @@
-const boilerplate = require('../src/react-native-version')
+const boilerplate = require('../src/lib/react-native-version')
 
 // grab a few things from the boilerplate module
 const get = boilerplate.getReactNativeVersion

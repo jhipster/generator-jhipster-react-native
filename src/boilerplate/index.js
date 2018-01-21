@@ -1,7 +1,7 @@
 const options = require('./prompts')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
-const { getReactNativeVersion } = require('../react-native-version')
-const Insight = require('../insight')
+const { getReactNativeVersion } = require('../lib/react-native-version')
+const Insight = require('../lib/insight')
 const generateFiles = require('./files')
 
 /**

@@ -1,6 +1,6 @@
 // @cliDescription  Generates an entity component, redux, saga, api, listings, styles, and optional tests.
 const fs = require('fs-extra')
-const Insight = require('../insight')
+const Insight = require('../lib/insight')
 const generateFiles = require('./files')
 const prompts = require('./prompts')
 

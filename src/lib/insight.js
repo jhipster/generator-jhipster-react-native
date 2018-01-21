@@ -1,5 +1,5 @@
 const Insight = require('insight')
-const pkg = require('../package.json')
+const pkg = require('../../package.json')
 
 const insight = new Insight({
   // Google Analytics tracking code
