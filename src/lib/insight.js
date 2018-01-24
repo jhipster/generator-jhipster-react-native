@@ -44,6 +44,7 @@ const trackAppOptions = (context = {}, props) => {
     insight.track('app/websockets', props.websockets)
     insight.track('app/devScreens', props.devScreens)
     insight.track('app/animatable', props.animatable)
+    insight.track('app/socialLogin', props.socialLogin)
   }
 }
 
