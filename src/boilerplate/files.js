@@ -1,10 +1,7 @@
 /**
  * The files portion of the entity generator
  */
-module.exports = async function (generator, igniteContext) {
-  const templateProps = generator.templateProps
-  const params = generator.params
-
+module.exports = async function (igniteContext, props) {
   const { filesystem, ignite, print } = igniteContext
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
 
@@ -108,7 +105,7 @@ module.exports = async function (generator, igniteContext) {
     }
   ]
 
-  await ignite.copyBatch(igniteContext, templates, templateProps, {
+  await ignite.copyBatch(igniteContext, templates, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`
   })
@@ -126,7 +123,7 @@ module.exports = async function (generator, igniteContext) {
   /**
    * If using social login, set it up
    */
-  if (params.socialLogin) {
+  if (props.socialLogin) {
     await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
   } else {
     filesystem.remove('App/Containers/SocialLoginContainer.js')
@@ -135,7 +132,7 @@ module.exports = async function (generator, igniteContext) {
   /**
    * If using websockets, set it up
    */
-  if (params.websockets) {
+  if (props.websockets) {
     spinner.text = '▸ setting up websocket code'
     spinner.start()
     // import ChatRedux in redux/index.js

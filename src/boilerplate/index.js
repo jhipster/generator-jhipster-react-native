@@ -1,8 +1,9 @@
-const options = require('./prompts')
+const prompts = require('./prompts')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 const { getReactNativeVersion } = require('../lib/react-native-version')
 const Insight = require('../lib/insight')
 const generateFiles = require('./files')
+const fs = require('fs-extra')
 
 /**
  * Is Android installed?
@@ -44,47 +45,62 @@ async function install (context) {
     .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
     .succeed()
 
-  let params = {
-    authType: parameters.options['auth-type'],
-    searchEngine: parameters.options['search-engine'],
-    websockets: parameters.options['websockets'],
-    socialLogin: parameters.options['social-login'],
+  let props = {
+    jhipsterDirectory: parameters.options['jh-dir'] || '',
     devScreens: parameters.options['dev-screens'],
     animatable: parameters.options['animatable'],
     disableInsight: parameters.options['disable-insight']
   }
+  let jhipsterDirectory
+  let jhipsterConfigPath
+  const localJhipsterConfigPath = `.jhipster/.yo-rc.json`
 
-  if (params.authType === undefined) {
-    params.authType = (await prompt.ask(options.questions.authType)).authType
-  }
-  if (params.searchEngine === undefined) {
-    params.searchEngine = (await prompt.ask(options.questions.searchEngine)).searchEngine
-  }
-  if (params.websockets === undefined) {
-    params.websockets = (await prompt.ask(options.questions.websockets)).websockets
-  }
-  if (params.socialLogin === undefined) {
-    params.socialLogin = (await prompt.ask(options.questions.socialLogin)).socialLogin
-  }
-  if (params.devScreens === undefined) {
-    params.devScreens = (await prompt.ask(options.questions.devScreens)).devScreens
-  }
-  if (params.animatable === undefined) {
-    params.animatable = (await prompt.ask(options.questions.animatable)).animatable
-  }
-  if (params.disableInsight === undefined && Insight.insight.optOut === undefined) {
-    Insight.insight.optOut = !((await prompt.ask(options.questions.insight)).insight)
+  if (props.jhipsterDirectory) {
+    if (!fs.existsSync(`../${props.jhipsterDirectory}/.yo-rc.json`)) {
+      print.error(`No JHipster configuration file found at ${props.jhipsterDirectory}/.yo-rc.json`)
+      return
+    }
+    print.success(`Found the entity config at ${props.jhipsterDirectory}/.yo-rc.json`)
+    jhipsterDirectory = props.jhipsterDirectory
+    jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
+  } else {
+    // prompt the user until an JHipster configuration file is found
+    while (true) {
+      let jhipsterPathAnswer = await prompt.ask(prompts.jhipsterPath)
+      // strip the trailing slash from the directory
+      jhipsterDirectory = `${jhipsterPathAnswer.filePath}`.replace(/\/$/, ``)
+      jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
+      print.info(`Looking for ${jhipsterConfigPath}`)
+      if (fs.existsSync(`../${jhipsterConfigPath}`)) {
+        print.success(`Found JHipster config file at ${jhipsterConfigPath}`)
+        break
+      } else {
+        print.error(`Could not find JHipster config file, please try again.`)
+      }
+    }
   }
 
-  params.skipGit = parameters.options['skip-git']
-  params.skipLint = parameters.options['skip-lint']
+  fs.mkdirSync(`.jhipster`)
+  await fs.copy(`../${jhipsterConfigPath}`, localJhipsterConfigPath)
+  print.success(`JHipster config saved to your app's .jhipster folder.`)
+  let jhipsterConfig = await fs.readJson(localJhipsterConfigPath)
+
+  if (props.devScreens === undefined) {
+    props.devScreens = (await prompt.ask(prompts.devScreens)).devScreens
+  }
+  if (props.animatable === undefined) {
+    props.animatable = (await prompt.ask(prompts.animatable)).animatable
+  }
+  if (props.disableInsight === undefined && Insight.insight.optOut === undefined) {
+    Insight.insight.optOut = !((await prompt.ask(prompts.insight)).insight)
+  }
+
+  props.skipGit = parameters.options['skip-git']
+  props.skipLint = parameters.options['skip-lint']
 
   // very hacky but correctly handles both strings and booleans and converts to boolean
-  params.searchEngine = JSON.parse(params.searchEngine)
-  params.websockets = JSON.parse(params.websockets)
-  params.socialLogin = JSON.parse(params.socialLogin)
-  params.devScreens = JSON.parse(params.devScreens)
-  params.disableInsight = JSON.parse(params.devScreens)
+  props.devScreens = JSON.parse(props.devScreens)
+  props.disableInsight = JSON.parse(props.devScreens)
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
@@ -97,22 +113,16 @@ async function install (context) {
   filesystem.remove('__tests__')
   filesystem.remove('App.js')
 
-  const templateProps = {
-    name,
-    igniteVersion: ignite.version,
-    reactNativeVersion: rnInstall.version,
-    authType: params.authType,
-    searchEngine: params.searchEngine,
-    websockets: params.websockets,
-    socialLogin: params.socialLogin,
-    animatable: params.animatable,
-    devScreens: params.devScreens
-    // i18n: params.i18n
-  }
+  props.name = name
+  props.igniteVersion = ignite.version
+  props.reactNativeVersion = rnInstall.version
+  props.jhipsterDirectory = `../${props.jhipsterDirectory}`
+  props.authType = jhipsterConfig['generator-jhipster'].authenticationType
+  props.searchEngine = jhipsterConfig['generator-jhipster'].searchEngine
+  props.websockets = jhipsterConfig['generator-jhipster'].websocket
+  props.socialLogin = jhipsterConfig['generator-jhipster'].enableSocialSignIn
 
-  this.params = params
-  this.templateProps = templateProps
-  await generateFiles(this, context)
+  await generateFiles(context, props)
 
   /**
    * Merge the package.json from our template into the one provided from react-native init.
@@ -122,7 +132,7 @@ async function install (context) {
     const rawJson = await template.generate({
       directory: `${ignite.ignitePluginPath()}/boilerplate`,
       template: 'package.json.ejs',
-      props: templateProps
+      props: props
     })
     const newPackageJson = JSON.parse(rawJson)
 
@@ -179,7 +189,6 @@ async function install (context) {
 
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
-
     ignite.setIgnitePluginPath(__dirname)
     ignite.saveIgniteConfig(newConfig)
 
@@ -192,7 +201,7 @@ async function install (context) {
     await system.spawn(`ignite add ignite-ir-boilerplate ${debugFlag}`, { stdio: 'inherit' })
 
     // now run install of Ignite Plugins
-    if (params.devScreens) {
+    if (props.devScreens) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
@@ -200,19 +209,19 @@ async function install (context) {
 
     // todo make a plugin?
     // await system.spawn(`ignite add cookies ${debugFlag}`, { stdio: 'inherit' })
-    if (params.authType === 'session' || params.authType === 'uaa') {
+    if (props.authType === 'session' || props.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
     }
     // todo handle i18n
-    // if (params.i18n === 'react-native-i18n') {
+    // if (props.i18n === 'react-native-i18n') {
     //   await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
     // }
 
-    if (params.animatable === 'react-native-animatable') {
+    if (props.animatable === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
     }
 
-    if (!params.skipLint) {
+    if (!props.skipLint) {
       await system.spawn(`ignite add standard ${debugFlag}`, { stdio: 'inherit' })
       // ignore the ignite folder
       let pkg = filesystem.read(`package.json`, 'json')
@@ -226,7 +235,7 @@ async function install (context) {
 
   // git configuration
   const gitExists = await filesystem.exists('./.git')
-  if (!gitExists && !params.skipGit && system.which('git')) {
+  if (!gitExists && !props.skipGit && system.which('git')) {
     // initial git
     const spinner = print.spin('configuring git')
 
@@ -241,17 +250,17 @@ async function install (context) {
   const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${print.colors.yellow(name)} in ${perfDuration}s`)
 
-  Insight.trackAppOptions(context, templateProps)
+  Insight.trackAppOptions(context, props)
 
   // Wrap it up with our success message.
   print.info('')
   print.info('🍽 Time to get cooking!')
   print.info('')
-  if (params.websockets) {
+  if (props.websockets) {
     print.info('To enable the websockets example, see docs/websockets.md')
     print.info('')
   }
-  if (params.socialLogin) {
+  if (props.socialLogin) {
     print.info('To configure Social Login, see docs/social-login.md')
     print.info('')
   }
