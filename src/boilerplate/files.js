@@ -1,22 +1,39 @@
+const fs = require('fs-extra')
+
 /**
  * The files portion of the entity generator
  */
-module.exports = async function (igniteContext, props) {
-  const { filesystem, ignite, print } = igniteContext
+module.exports = async function (context, props, jhipsterConfig) {
+  const { filesystem, ignite, print, strings } = context
+  const { camelCase, upperFirst } = strings
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
+
+  if (props.authType === 'uaa') {
+    props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
+  }
+
+  // used for JHipster templates
+  props.packageName = jhipsterConfig['generator-jhipster'].packageName
+  props.packageFolder = jhipsterConfig['generator-jhipster'].packageFolder
+  props.baseName = jhipsterConfig['generator-jhipster'].baseName
+  props.databaseType = jhipsterConfig['generator-jhipster'].databaseType
+  props.angularAppName = camelCase(props.baseName) + (props.baseName.endsWith('App') ? '' : 'App')
+  const main = upperFirst(props.angularAppName)
+  const acceptableForJava = new RegExp('^[A-Z][a-zA-Z0-9_]*$')
+  props.mainClass = acceptableForJava.test(main) ? main : 'Application'
 
   // copy our App, Tests, and storybook directories
   spinner.text = '▸ copying files'
   spinner.start()
-  filesystem.copy(`${__dirname}/../../boilerplate/App`, `${process.cwd()}/App`, {
+  await filesystem.copy(`${__dirname}/../../boilerplate/App`, `${process.cwd()}/App`, {
     overwrite: true,
     matching: '!*.ejs'
   })
-  filesystem.copy(`${__dirname}/../../boilerplate/Tests`, `${process.cwd()}/Tests`, {
+  await filesystem.copy(`${__dirname}/../../boilerplate/Tests`, `${process.cwd()}/Tests`, {
     overwrite: true,
     matching: '!*.ejs'
   })
-  filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
+  await filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
     overwrite: true,
     matching: '!*.ejs'
   })
@@ -105,29 +122,18 @@ module.exports = async function (igniteContext, props) {
     }
   ]
 
-  await ignite.copyBatch(igniteContext, templates, props, {
+  await ignite.copyBatch(context, templates, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`
   })
 
   /**
-   * Append to files
-   */
-  // https://github.com/facebook/react-native/issues/12724
-  filesystem.appendAsync('.gitattributes', '*.bat text eol=crlf')
-  filesystem.append('.gitignore', 'coverage/')
-  filesystem.append('.gitignore', '\n# Misc\n#')
-  filesystem.append('.gitignore', '.env\n')
-  filesystem.append('.gitignore', 'ios/Index/DataStore\n')
-
-  /**
    * If using social login, set it up
    */
   if (props.socialLogin) {
-    await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
   } else {
-    filesystem.remove('App/Containers/SocialLoginContainer.js')
-    filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
+    await filesystem.remove('App/Containers/SocialLoginContainer.js')
+    await filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
   }
   /**
    * If using websockets, set it up
@@ -136,7 +142,7 @@ module.exports = async function (igniteContext, props) {
     spinner.text = '▸ setting up websocket code'
     spinner.start()
     // import ChatRedux in redux/index.js
-    ignite.patchInFile('App/Redux/index.js', {
+    await ignite.patchInFile('App/Redux/index.js', {
       before: 'ignite-jhipster-redux-store-import-needle',
       insert: `  chat: require('./ChatRedux').reducer,`,
       match: `  chat: require('./ChatRedux').reducer,`
@@ -145,7 +151,7 @@ module.exports = async function (igniteContext, props) {
     // wire ChatScreen in NavigationRouter
     const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
     const navigationImportEdit = `import ChatScreen from '../Containers/ChatScreen'`
-    ignite.patchInFile(navigationRouterFilePath, {
+    await ignite.patchInFile(navigationRouterFilePath, {
       before: 'ignite-jhipster-navigation-import-needle',
       insert: navigationImportEdit,
       match: navigationImportEdit
@@ -153,26 +159,21 @@ module.exports = async function (igniteContext, props) {
 
     // add chat screen to navigation
     const navigationScreen = `            <Scene key='chat' component={ChatScreen} title='Chat' back />`
-    ignite.patchInFile(navigationRouterFilePath, {
+    await ignite.patchInFile(navigationRouterFilePath, {
       before: 'ignite-jhipster-navigation-needle',
       insert: navigationScreen,
       match: navigationScreen
     })
 
-    // install websocket dependencies
-    await ignite.addModule('stompjs', { version: '2.3.3' })
-    // this is a github module for a react-native specific fix that hasn't been released yet
-    await ignite.addModule('sockjs-client', { version: 'https://github.com/sockjs/sockjs-client#4d18fd56a6c4fb476c3e1931543a6cb9daaa6eba' })
-    await ignite.addModule('net', { version: '1.0.2' })
     spinner.stop()
   } else {
-    filesystem.remove('App/Containers/ChatScreen.js')
-    filesystem.remove('App/Containers/Styles/ChatScreenStyle.js')
-    filesystem.remove('App/Services/WebsocketService.js')
-    filesystem.remove('Tests/Services/WebsocketServiceTest.js')
-    filesystem.remove('App/Sagas/WebsocketSagas.js')
-    filesystem.remove('Tests/Sagas/WebsocketSagaTest.js')
-    filesystem.remove('App/Redux/ChatRedux.js')
-    filesystem.remove('Tests/Redux/ChatReduxTest.js')
+    await filesystem.remove('App/Containers/ChatScreen.js')
+    await filesystem.remove('App/Containers/Styles/ChatScreenStyle.js')
+    await filesystem.remove('App/Services/WebsocketService.js')
+    await filesystem.remove('Tests/Services/WebsocketServiceTest.js')
+    await filesystem.remove('App/Sagas/WebsocketSagas.js')
+    await filesystem.remove('Tests/Sagas/WebsocketSagaTest.js')
+    await filesystem.remove('App/Redux/ChatRedux.js')
+    await filesystem.remove('Tests/Redux/ChatReduxTest.js')
   }
 }

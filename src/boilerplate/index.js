@@ -121,11 +121,8 @@ async function install (context) {
   props.searchEngine = !!jhipsterConfig['generator-jhipster'].searchEngine
   props.websockets = !!jhipsterConfig['generator-jhipster'].websocket
   props.socialLogin = jhipsterConfig['generator-jhipster'].enableSocialSignIn
-  if (props.authType === 'uaa') {
-    props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
-  }
 
-  await generateFiles(context, props)
+  await generateFiles(context, props, jhipsterConfig)
 
   /**
    * Merge the package.json from our template into the one provided from react-native init.
@@ -175,6 +172,16 @@ async function install (context) {
   // pass long the debug flag if we're running in that mode
   const debugFlag = parameters.options.debug ? '--debug' : ''
 
+  /**
+   * Append to files
+   */
+  // https://github.com/facebook/react-native/issues/12724
+  filesystem.appendAsync('.gitattributes', '*.bat text eol=crlf')
+  filesystem.append('.gitignore', 'coverage/')
+  filesystem.append('.gitignore', '\n# Misc\n#')
+  filesystem.append('.gitignore', '.env\n')
+  filesystem.append('.gitignore', 'ios/Index/DataStore\n')
+
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   // NOTE(steve): I'm re-adding this here because boilerplates now hold permanent files
   // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -215,10 +222,19 @@ async function install (context) {
     if (props.authType === 'session' || props.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
     }
-    // todo handle i18n
-    // if (props.i18n === 'react-native-i18n') {
-    //   await system.spawn(`ignite add i18n ${debugFlag}`, { stdio: 'inherit' })
-    // }
+
+    if (props.websockets) {
+      // install websocket dependencies
+      await ignite.addModule('stompjs', { version: '2.3.3' })
+      // this is a github module for a react-native specific fix that hasn't been released yet
+      await ignite.addModule('sockjs-client', { version: 'https://github.com/sockjs/sockjs-client#4d18fd56a6c4fb476c3e1931543a6cb9daaa6eba' })
+      await ignite.addModule('net', { version: '1.0.2' })
+    }
+
+    if (props.socialLogin) {
+      // install social login dependencies
+      await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
+    }
 
     if (props.animatable === 'react-native-animatable') {
       await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
