@@ -128,9 +128,31 @@ module.exports = async function (context, props, jhipsterConfig) {
   })
 
   /**
+   * If using OIDC (OAuth2), copy the AuthInfoResource into the JHipster project
+   */
+  if (props.authType === 'oauth2') {
+    await ignite.copyBatch(context, [{ template: 'AuthInfoResource.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` }], props, {
+      quiet: true,
+      directory: `${__dirname}/../../templates/jhipster/oauth2`
+    })
+  }
+
+  /**
    * If using social login, set it up
    */
   if (props.socialLogin) {
+    const socialLoginFiles = [
+      { template: 'SocialController.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/SocialController.java` },
+      { template: 'SocialService.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/service/SocialService.java` },
+      { template: 'SocialServiceIntTest.java.ejs', target: `${props.jhipsterDirectory}/src/main/test/${props.packageFolder}/service/SocialServiceIntTest.java` }
+    ]
+    // copy the WebsocketConfiguration.java to the jhipsterDirectory
+    if (fs.existsSync(props.jhipsterDirectory)) {
+      await ignite.copyBatch(context, socialLoginFiles, props, {
+        quiet: true,
+        directory: `${__dirname}/../../templates/jhipster/social-login`
+      })
+    }
   } else {
     await filesystem.remove('App/Containers/SocialLoginContainer.js')
     await filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
@@ -165,6 +187,13 @@ module.exports = async function (context, props, jhipsterConfig) {
       match: navigationScreen
     })
 
+    // copy the WebsocketConfiguration.java to the jhipsterDirectory
+    if (fs.existsSync(props.jhipsterDirectory)) {
+      await ignite.copyBatch(context, [{ template: 'WebsocketConfiguration.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java` }], props, {
+        quiet: true,
+        directory: `${__dirname}/../../templates/jhipster/websockets`
+      })
+    }
     spinner.stop()
   } else {
     await filesystem.remove('App/Containers/ChatScreen.js')

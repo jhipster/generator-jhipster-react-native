@@ -26,12 +26,14 @@ during generation).
         <version>3.0.0.M1</version>
     </dependency>
 ```
-- Replace your `web.rest.SocialController` depending on your auth: [JWT](https://gist.github.com/ruddell/7e08d937337a245301ae9806c1be7d9e) or [Session](https://gist.github.com/ruddell/b8fa6e203e5baab577780da02cb04381)
-  - Add call to new SocialService method
-- Replace your `service.SocialService` depending on your auth: [JWT](https://gist.github.com/ruddell/380f5c4de45a0069e746b1e22f2a963d) or [Session](https://gist.github.com/ruddell/fba150a0acc8d7ab5aed287b2f883d91)
-  - Add method for registering/authenticating via social auth token
-- Replace your `SocialServiceIntTest` depending on your auth: [JWT](https://gist.github.com/ruddell/4c92e33edddc76d756488c27c4dba567) or [Session](https://gist.github.com/ruddell/2f04af2ba6a8ea9af94da751e69f9ee8)
-  - Import new SocialService dependencies
+
+Ignite JHipster updated several of JHipster's social login files.  See the changes in your JHipster app.
+- `web.rest.SocialController`
+  - Adds call to new SocialService method
+- `service.SocialService` 
+  - Adds method for registering/authenticating via social auth token
+- `SocialServiceIntTest`
+  - Imports new SocialService dependencies
    
 ### In your React Native application
 
@@ -66,4 +68,4 @@ For iOS, your Xcode URL Types should look like:
 ### Differences from the JHipster Angular Frontend
 
 The user authenticates directly with the social network, then sends their access token to your JHipster backend.  From
-there, a SocialConnection is created and saved in the database, enabling authentication across all devices.
+there, a SocialConnection is created and saved in the database, enabling authentication to the same account across all devices.
