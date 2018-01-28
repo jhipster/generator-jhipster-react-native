@@ -121,6 +121,9 @@ async function install (context) {
   props.searchEngine = !!jhipsterConfig['generator-jhipster'].searchEngine
   props.websockets = !!jhipsterConfig['generator-jhipster'].websocket
   props.socialLogin = jhipsterConfig['generator-jhipster'].enableSocialSignIn
+  if (props.authType === 'uaa') {
+    props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
+  }
 
   await generateFiles(context, props)
 

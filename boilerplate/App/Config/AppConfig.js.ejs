@@ -7,7 +7,7 @@ export default {
   oauthClientSecret: 'my-secret-token-to-change-in-production',
   <%_ } else if (props.authType ==='uaa') { _%>
   // this is your UAA's base name, lower-cased and followed by a /
-  uaaBaseUrl: 'uaa/',
+  uaaBaseUrl: '<%= props.uaaBaseUrl %>/',
   <%_ } _%>
   <%_ if (props.socialLogin) { _%>
   // these are sample values and will not work by default
