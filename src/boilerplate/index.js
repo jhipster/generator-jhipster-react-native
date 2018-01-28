@@ -51,16 +51,17 @@ async function install (context) {
     animatable: parameters.options['animatable'],
     disableInsight: parameters.options['disable-insight']
   }
+  let jhipsterConfig
   let jhipsterDirectory
   let jhipsterConfigPath
-  const localJhipsterConfigPath = `.jhipster/.yo-rc.json`
 
   if (props.jhipsterDirectory) {
     if (!fs.existsSync(`../${props.jhipsterDirectory}/.yo-rc.json`)) {
       print.error(`No JHipster configuration file found at ${props.jhipsterDirectory}/.yo-rc.json`)
       return
     }
-    print.success(`Found the entity config at ${props.jhipsterDirectory}/.yo-rc.json`)
+    print.success(`Found the JHipster config at ${props.jhipsterDirectory}/.yo-rc.json`)
+    jhipsterConfig = await fs.readJson(`../${props.jhipsterDirectory}/.yo-rc.json`)
     jhipsterDirectory = props.jhipsterDirectory
     jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
   } else {
@@ -73,17 +74,13 @@ async function install (context) {
       print.info(`Looking for ${jhipsterConfigPath}`)
       if (fs.existsSync(`../${jhipsterConfigPath}`)) {
         print.success(`Found JHipster config file at ${jhipsterConfigPath}`)
+        jhipsterConfig = await fs.readJson(`../${jhipsterConfigPath}`)
         break
       } else {
         print.error(`Could not find JHipster config file, please try again.`)
       }
     }
   }
-
-  fs.mkdirSync(`.jhipster`)
-  await fs.copy(`../${jhipsterConfigPath}`, localJhipsterConfigPath)
-  print.success(`JHipster config saved to your app's .jhipster folder.`)
-  let jhipsterConfig = await fs.readJson(localJhipsterConfigPath)
 
   if (props.devScreens === undefined) {
     props.devScreens = (await prompt.ask(prompts.devScreens)).devScreens
@@ -201,6 +198,10 @@ async function install (context) {
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
     ignite.setIgnitePluginPath(__dirname)
     ignite.saveIgniteConfig(newConfig)
+
+    fs.mkdirSync(`.jhipster`)
+    fs.writeJsonSync('.jhipster/yo-rc.json', jhipsterConfig, { spaces: '\t' })
+    print.success(`JHipster config saved to your app's .jhipster folder.`)
 
     const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
 

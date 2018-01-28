@@ -20,7 +20,7 @@ module.exports = async function (context) {
     socialLogin: this.igniteConfig.socialLogin
   }
 
-  const jhipsterConfig = await fs.readJson('.jhipster/.yo-rc.json')
+  const jhipsterConfig = await fs.readJson('.jhipster/yo-rc.json')
   await generateFiles(context, props, jhipsterConfig)
 
   Insight.trackGenerator(context, 'upgrade')
