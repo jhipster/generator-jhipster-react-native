@@ -4,9 +4,12 @@ const fs = require('fs-extra')
  * The files portion of the entity generator
  */
 module.exports = async function (context, props, jhipsterConfig) {
-  const { filesystem, ignite, print, strings } = context
+  const { filesystem, ignite, print, strings, parameters } = context
   const { camelCase, upperFirst } = strings
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
+
+  // this is needed because the "upgrade "command is run from within an app, while the "new" command is run from one level deeper
+  const jhipsterPathPrefix = parameters.rawCommand.startsWith('upgrade') ? '' : '../'
 
   if (props.authType === 'uaa') {
     props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
@@ -131,10 +134,18 @@ module.exports = async function (context, props, jhipsterConfig) {
    * If using OIDC (OAuth2), copy the AuthInfoResource into the JHipster project
    */
   if (props.authType === 'oauth2') {
-    await ignite.copyBatch(context, [{ template: 'AuthInfoResource.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` }], props, {
+    const oauth2Files = [
+      { template: 'AuthInfoResource.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` },
+      jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
+        ? { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
+        : { template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` }
+    ]
+    await ignite.copyBatch(context, oauth2Files, props, {
       quiet: true,
       directory: `${__dirname}/../../templates/jhipster/oauth2`
     })
+    const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
+    await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
   }
 
   /**
@@ -142,12 +153,12 @@ module.exports = async function (context, props, jhipsterConfig) {
    */
   if (props.socialLogin) {
     const socialLoginFiles = [
-      { template: 'SocialController.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/SocialController.java` },
-      { template: 'SocialService.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/service/SocialService.java` },
-      { template: 'SocialServiceIntTest.java.ejs', target: `${props.jhipsterDirectory}/src/main/test/${props.packageFolder}/service/SocialServiceIntTest.java` }
+      { template: 'SocialController.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/SocialController.java` },
+      { template: 'SocialService.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/service/SocialService.java` },
+      { template: 'SocialServiceIntTest.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/test/${props.packageFolder}/service/SocialServiceIntTest.java` }
     ]
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(props.jhipsterDirectory)) {
+    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
       await ignite.copyBatch(context, socialLoginFiles, props, {
         quiet: true,
         directory: `${__dirname}/../../templates/jhipster/social-login`
@@ -188,11 +199,8 @@ module.exports = async function (context, props, jhipsterConfig) {
     })
 
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(props.jhipsterDirectory)) {
-      await ignite.copyBatch(context, [{ template: 'WebsocketConfiguration.java.ejs', target: `${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java` }], props, {
-        quiet: true,
-        directory: `${__dirname}/../../templates/jhipster/websockets`
-      })
+    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
+      await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`, { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' })
     }
     spinner.stop()
   } else {
