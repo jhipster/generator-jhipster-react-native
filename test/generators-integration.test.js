@@ -4,6 +4,7 @@ const tempy = require('tempy')
 const IGNITE = 'ignite'
 const APP = 'IntegrationTest'
 const BOILERPLATE = `${__dirname}/..`
+const testFolder = `${process.cwd()}/test`
 
 // calling the ignite cli takes a while
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
@@ -13,15 +14,17 @@ describe('JWT Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/jwt-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=jwt',
-      '--search-engine=false',
+      '--jh-dir=backend',
       '--dev-screens=false',
       '--animatable=false',
       '--skip-git',
-      '--websockets=false',
-      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -59,15 +62,17 @@ describe('OAuth2 Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/oauth2-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=oauth2',
-      '--search-engine=false',
+      '--jh-dir=backend',
       '--dev-screens=false',
       '--animatable=false',
       '--skip-git',
-      '--websockets=false',
-      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -105,15 +110,17 @@ describe('UAA Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/uaa-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=uaa',
-      '--search-engine=false',
+      '--jh-dir=backend',
       '--dev-screens=false',
       '--animatable=false',
       '--skip-git',
-      '--websockets=false',
-      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -151,15 +158,17 @@ describe('Session Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/session-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=session',
-      '--search-engine=false',
+      '--jh-dir=backend',
       '--dev-screens=false',
       '--animatable=false',
       '--skip-git',
-      '--websockets=false',
-      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -197,15 +206,17 @@ describe('ElasticSearch Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/es-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=jwt',
-      '--search-engine=true',
+      '--jh-dir=backend',
       '--dev-screens=false',
       '--animatable=false',
       '--skip-git',
-      '--websockets=false',
-      '--social-login=false',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])
@@ -243,15 +254,17 @@ describe('Max Options Integration Test', () => {
     // creates a new temp directory
     process.chdir(tempy.directory())
     console.log('Generating app...')
+
+    // create a dummy jhipster backend
+    await execa('mkdir', ['backend'])
+    await execa('cp', [`${testFolder}/.jhipster/max-yo-rc.json`, 'backend/.yo-rc.json'])
+
     await execa(IGNITE, [
       'new', APP,
-      '--auth-type=jwt',
-      '--search-engine=true',
+      '--jh-dir=backend',
       '--dev-screens=true',
       '--animatable=true',
       '--skip-git',
-      '--websockets',
-      '--social-login=true',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
     ])

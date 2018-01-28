@@ -118,8 +118,8 @@ async function install (context) {
   props.reactNativeVersion = rnInstall.version
   props.jhipsterDirectory = `../${props.jhipsterDirectory}`
   props.authType = jhipsterConfig['generator-jhipster'].authenticationType
-  props.searchEngine = jhipsterConfig['generator-jhipster'].searchEngine
-  props.websockets = jhipsterConfig['generator-jhipster'].websocket
+  props.searchEngine = !!jhipsterConfig['generator-jhipster'].searchEngine
+  props.websockets = !!jhipsterConfig['generator-jhipster'].websocket
   props.socialLogin = jhipsterConfig['generator-jhipster'].enableSocialSignIn
 
   await generateFiles(context, props)
