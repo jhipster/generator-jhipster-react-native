@@ -138,23 +138,25 @@ module.exports = async function (context, props, jhipsterConfig) {
    * If using OIDC (OAuth2), copy the AuthInfoResource into the JHipster project
    */
   if (props.authType === 'oauth2') {
-    const oauth2Files = [
-      { template: 'AuthInfoResource.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` },
-      jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
-        ? { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
-        : { template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` }
-    ]
-    await ignite.copyBatch(context, oauth2Files, props, {
-      quiet: true,
-      directory: `${__dirname}/../../templates/jhipster/oauth2`
-    })
-    const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
-    await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
+      const oauth2Files = [
+        { template: 'AuthInfoResource.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` },
+        jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
+          ? { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
+          : { template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` }
+      ]
+      await ignite.copyBatch(context, oauth2Files, props, {
+        quiet: true,
+        directory: `${__dirname}/../../templates/jhipster/oauth2`
+      })
+      const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
+      await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+    }
   } else {
     // remove OAuth2 files if not enabled
     await filesystem.remove('App/Lib/GenerateNonce.js')
-    await filesystem.remove('App/Transforms/GenerateNonce.js')
-    await filesystem.remove('App/Fixtures/getOauthInfo.js')
+    await filesystem.remove('App/Transforms/ParseOauthResponse.js')
+    await filesystem.remove('App/Fixtures/getOauthInfo.json')
   }
 
   /**

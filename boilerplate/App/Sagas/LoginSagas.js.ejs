@@ -63,7 +63,7 @@ export function * login (api) {
   }
 }
 
-<%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
+<%_ } else { _%>
 export function * login (api, { username, password }) {
   <%_ if (props.authType === 'session') { _%>
   const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
