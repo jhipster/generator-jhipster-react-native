@@ -150,7 +150,9 @@ module.exports = async function (context, props, jhipsterConfig) {
         directory: `${__dirname}/../../templates/jhipster/oauth2`
       })
       const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
-      await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+      if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
+        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+      }
     }
   } else {
     // remove OAuth2 files if not enabled
@@ -210,7 +212,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     })
 
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
+    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`)) {
       await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`, { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' })
     }
     spinner.stop()
