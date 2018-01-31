@@ -17,6 +17,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     super(props)
     this.state = {
       formModel: t.struct({
+        id: t.maybe(t.Number),
         <%_ props.entityConfig.fields.forEach(function (field, index) { _%>
         <%= props.getEntityFormField(field, index, props.entityConfig.fields.length) %>
         <%_ }) _%>
@@ -24,6 +25,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       formValue: this.props.<%= camelCase(props.name) %>,
       formOptions: {
         fields: {
+          id: {
+            hidden: true
+          },
           <%_ props.entityConfig.fields.forEach(function (field, index) {
               if (index !== props.entityConfig.fields.length - 1) {
                 let nextFieldName = props.entityConfig.fields[index + 1].fieldName
