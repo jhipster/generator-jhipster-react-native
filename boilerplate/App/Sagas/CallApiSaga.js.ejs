@@ -1,17 +1,26 @@
 import { put, take } from 'redux-saga/effects'
+<%_ if (props.authType === 'oauth2') { _%>
+import LoginActions from '../Redux/LoginRedux'
+<%_ } else { _%>
 import { Actions as NavigationActions } from 'react-native-router-flux'
+<%_ } _%>
 
 // this saga is used for showing the LoginScreen when a 401 error is received
 // if login is successful, it will reattempt the request
 // if login fails, it will return the error
 export function * callApi (apiCall) {
   const response = yield apiCall
-  if (!isBadToken(response)) {
+  if (!isUnauthorized(response)) {
     return response
   }
   // this triggers your UI to show a login form
   yield put({ type: 'RELOGIN' })
+
+  <%_ if (props.authType === 'oauth2') { _%>
+  LoginActions.loginRequest()
+  <%_ } else { _%>
   NavigationActions.login()
+  <%_ } _%>
   const action = yield take(['RELOGIN_OK', 'RELOGIN_ABORT'])
 
   if (action.type === 'RELOGIN_ABORT') {
@@ -22,6 +31,6 @@ export function * callApi (apiCall) {
   return yield apiCall
 }
 
-function isBadToken (resp) {
+function isUnauthorized (resp) {
   return resp.status === 401
 }

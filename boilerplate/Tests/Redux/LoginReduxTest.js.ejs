@@ -29,13 +29,6 @@ test('load login success', () => {
   expect(state.loading).toBe(false)
 })
 <%_ } _%>
-<%_ if (props.authType === 'oauth2') { _%>
-test('refresh request', () => {
-  const state = reducer(INITIAL_STATE, Actions.loginRefresh())
-
-  expect(state.fetching).toBe(true)
-})
-<%_ } _%>
 test('logout', () => {
   const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
   const state = reducer(loginState, Actions.logoutRequest())

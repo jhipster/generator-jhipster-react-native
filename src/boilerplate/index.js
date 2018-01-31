@@ -284,6 +284,10 @@ async function install (context) {
     print.info('To configure Social Login, see docs/social-login.md')
     print.info('')
   }
+  if (props.authType === 'oauth2') {
+    print.info('To configure OAuth2 OIDC Login, see docs/oauth2-oidc.md')
+    print.info('')
+  }
   print.info('To run in iOS:')
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  react-native run-ios'))

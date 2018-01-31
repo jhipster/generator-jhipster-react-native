@@ -1,18 +1,71 @@
-import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
+import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %><% if (props.authType === 'oauth2') { %>, take<% } %> } from 'redux-saga/effects'
+<%_ if (props.authType === 'oauth2') { _%>
+import { Linking } from 'react-native'
+import { eventChannel } from 'redux-saga'
+<%_ } _%>
 import LoginActions from '../Redux/LoginRedux'
 import AccountActions from '../Redux/AccountRedux'
 <%_ if (props.websockets) { _%>
 import WebsocketService from '../Services/WebsocketService'
+<%_ } _%>
+<%_ if (props.authType === 'oauth2') { _%>
+import AppConfig from '../Config/AppConfig'
+import { generateNonce } from '../Lib/GenerateNonce'
+import { parseOauthResponse } from '../Transforms/ParseOauthResponse'
 <%_ } _%>
 
 <%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
 export const selectAuthToken = (state) => state.login.authToken
 <%_ } _%>
 // attempts to login
+<%_ if (props.authType === 'oauth2') { _%>
+export function * login (api) {
+  // get the oauth issuer information from the backend
+  const authInfo = yield call(api.getOauthInfo)
+  if (authInfo.ok) {
+    const {issuer, clientId, scope} = authInfo.data
+
+    const nonce = generateNonce()
+    const url = [
+      `${issuer}/protocol/openid-connect/auth`,
+      `?response_type=id_token%20token`,
+      `&client_id=${clientId}`,
+      `&scope=${encodeURIComponent(scope)}`,
+      `&redirect_uri=${encodeURIComponent(`${AppConfig.appUrlScheme}://authorize`)}`,
+      `&nonce=${nonce}`,
+      `&state=${nonce}`
+    ].join('')
+    Linking.openURL(url)
+
+    console.tron.log('Waiting for response from Oauth2 Issuer')
+    // the proper way to add a callback in a saga
+    const chan = eventChannel(emit => {
+      Linking.addEventListener('url', (e) => emit({url: e.url}))
+      return () => {}
+    })
+    const oauthResponse = yield take(chan)
+    chan.close()
+    Linking.removeEventListener('url')
+    // parse the parameters from the redirect URI
+    const { oauthState, accessToken } = parseOauthResponse(oauthResponse)
+
+    if (oauthState === nonce) {
+      yield call(api.setAuthToken, accessToken)
+      yield put(LoginActions.loginSuccess(accessToken))
+      yield put(AccountActions.accountRequest())
+      yield put({ type: 'RELOGIN_OK' })
+    } else {
+      console.tron.log('State variable does not match, login failed')
+      yield put(LoginActions.loginFailure('WRONG'))
+    }
+  } else {
+    yield put(LoginActions.loginFailure('WRONG'))
+  }
+}
+
+<%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
 export function * login (api, { username, password }) {
-  <%_ if (props.authType === 'oauth2') { _%>
-  const authObj = 'username=' + username + '&password=' + password + '&grant_type=password&scope=read%20write'
-  <%_} else if (props.authType === 'session') { _%>
+  <%_ if (props.authType === 'session') { _%>
   const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
@@ -31,9 +84,6 @@ export function * login (api, { username, password }) {
     yield put(LoginActions.loginSuccess(response.data.id_token))
     <%_} else if (props.authType === 'session') { _%>
     yield put(LoginActions.loginSuccess(response.data))
-    <%_} else if (props.authType === 'oauth2') { _%>
-    yield call(api.setAuthToken, response.data.access_token)
-    yield put(LoginActions.loginSuccess(response.data))
     <%_} else if (props.authType === 'uaa') { _%>
     yield put(LoginActions.loginSuccess(response.data))
     <%_ } _%>
@@ -46,7 +96,8 @@ export function * login (api, { username, password }) {
     yield put(LoginActions.loginFailure('WRONG'))
   }
 }
-
+<%_ } _%>
+<%_ if (props.socialLogin) { _%>
 // attempts to social login
 export function * socialLogin (api, authObj) {
   const response = yield call(api.socialLogin, authObj)
@@ -68,7 +119,7 @@ export function * socialLogin (api, authObj) {
     yield put(LoginActions.loginFailure('WRONG'))
   }
 }
-
+<%_ } _%>
 // attempts to logout
 export function * logout (api) {
   <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
@@ -80,34 +131,15 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
-<%_ if (props.authType === 'oauth2') { _%>
-export function * loginRefresh (api) {
-  const authToken = yield select(selectAuthToken)
-  if (authToken) {
-    const authObj = 'refresh_token=' + authToken.refresh_token + '&grant_type=refresh_token'
-    const response = yield call(api.login, authObj)
-
-    // success?
-    if (response.ok) {
-      yield call(api.setAuthToken, response.data.access_token)
-      yield put(LoginActions.loginSuccess(response.data))
-    } else {
-      yield put(LoginActions.loginFailure('WRONG'))
-    }
-  } else {
-    yield put(LoginActions.loginFailure('WRONG'))
-  }
-}
-<%_ } _%>
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 // loads the login
 export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
   // only set the token if we have it
   if (authToken) {
-    yield call(api.setAuthToken, authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
+    yield call(api.setAuthToken, authToken)
     <%_ if (props.websockets) { _%>
-    WebsocketService.setToken(authToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>)
+    WebsocketService.setToken(authToken)
     <%_ } _%>
   }
   yield put(LoginActions.loginLoadSuccess())

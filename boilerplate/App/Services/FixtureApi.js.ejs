@@ -20,10 +20,9 @@ export default {
     }
   },
   <%_ } _%>
+  <%_ if (props.authType !== 'oauth2') { _%>
   login: (authObj) => {
-    <%_ if (props.authType === 'oauth2') { _%>
-    if (authObj === 'username=user&password=user&grant_type=password&scope=read%20write') {
-    <%_} else if (props.authType === 'session') { _%>
+    <%_ if (props.authType === 'session') { _%>
     if (authObj === 'j_username=user&j_password=user&remember-me=true') {
     <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
@@ -32,13 +31,6 @@ export default {
         ok: true,
         data: require('../Fixtures/login.json')
       }
-    <%_ if (props.authType === 'oauth2') { _%>
-    } else if (authObj === 'refresh_token=valid-refresh-token&grant_type=refresh_token') {
-      return {
-        ok: true,
-        data: require('../Fixtures/login.json')
-      }
-    <%_ } _%>
     } else {
       return {
         ok: false,
@@ -47,6 +39,14 @@ export default {
       }
     }
   },
+  <%_ } else { _%>
+  getOauthInfo: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/getOauthInfo.json')
+    }
+  },
+  <%_ } _%>
   register: ({user}) => {
     if (user === 'user') {
       return {

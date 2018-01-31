@@ -11,9 +11,6 @@ const { Types, Creators } = createActions({
   <%_ if (props.socialLogin) { _%>
   socialLoginRequest: ['token', 'secret', 'provider'],
   <%_ } _%>
-  <%_ if (props.authType === 'oauth2') { _%>
-  loginRefresh: [],
-  <%_ } _%>
   <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   loginLoad: [],
   <%_ } _%>
@@ -62,10 +59,6 @@ export const logoutRequest = state => state
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE
 
-<%_ if (props.authType === 'oauth2') { _%>
-// we're attempting to refresh the auth token
-export const refreshRequest = (state) => state.merge({ fetching: true })
-<%_ } _%>
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -78,9 +71,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   [Types.LOGIN_LOAD]: load,
   [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
-  <%_ } _%>
-  <%_ if (props.authType === 'oauth2') { _%>
-  [Types.LOGIN_REFRESH]: refreshRequest,
   <%_ } _%>
   [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGOUT_SUCCESS]: logoutSuccess

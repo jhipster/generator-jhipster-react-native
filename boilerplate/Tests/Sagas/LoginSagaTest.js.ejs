@@ -1,15 +1,34 @@
 import FixtureAPI from '../../App/Services/FixtureApi'
 import { call, put<% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, select<% } %> } from 'redux-saga/effects'
-import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, loginLoad, selectAuthToken<% } %><% if (props.authType === 'oauth2') { %>, loginRefresh<% } %> } from '../../App/Sagas/LoginSagas'
+import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, loginLoad, selectAuthToken<% } %> } from '../../App/Sagas/LoginSagas'
 import LoginActions from '../../App/Redux/LoginRedux'
 import AccountActions from '../../App/Redux/AccountRedux'
+<%_ if (props.authType === 'oauth2') { _%>
+jest.mock('../../App/Lib/GenerateNonce', () => ({
+  generateNonce: jest.fn(() => 'test-nonce')
+}))
+<%_ } _%>
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('login success path', () => {
   <%_ if (props.authType === 'oauth2') { _%>
-  const authObj = 'username=user&password=user&grant_type=password&scope=read%20write'
-  <%_} else if (props.authType === 'session') { _%>
+  const response = FixtureAPI.getOauthInfo()
+  const step = stepper(login(FixtureAPI, { 'issuer': 'http://localhost:9080/auth/realms/jhipster', 'clientId': 'web_app', 'scope': 'openid profile email' }))
+  const sampleOauthResponse = {
+    'url': 'oidcapp://authorize#state=test-nonce&id_token=test-id-token&access_token=test-access-token&token_type=bearer&session_state=6d5b0148-979a-4ff9-b56d-77af3111f72a&expires_in=900&not-before-policy=0'
+  }
+  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
+  // await the response from the oauth2 issuer
+  step(response)
+  expect(step(sampleOauthResponse)).toEqual(call(FixtureAPI.setAuthToken, 'test-access-token'))
+  expect(step()).toEqual(put(LoginActions.loginSuccess('test-access-token')))
+  // Request the account details
+  expect(step(response)).toEqual(put(AccountActions.accountRequest()))
+  // Close the relogin popup if needed
+  expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
+  <%_} else { _%>
+  <%_ if (props.authType === 'session') { _%>
   const authObj = 'j_username=user&j_password=user&remember-me=true'
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
@@ -27,7 +46,7 @@ test('login success path', () => {
 
   <%_ if (props.authType === 'jwt') { _%>
   expect(step(response)).toEqual(call(FixtureAPI.login, {username: 'user', password: 'user', rememberMe: true}))
-  <%_} else if (props.authType === 'oauth2' || props.authType === 'uaa' || props.authType === 'session') { _%>
+  <%_} else if (props.authType === 'uaa' || props.authType === 'session') { _%>
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   <%_ } _%>
   <%_ if (props.authType === 'jwt') { _%>
@@ -38,22 +57,39 @@ test('login success path', () => {
   <%_} else if (props.authType === 'session' || props.authType === 'uaa') { _%>
   // Call success with the response
   expect(step(response)).toEqual(put(LoginActions.loginSuccess(response.data)))
-  <%_} else if (props.authType === 'oauth2') { _%>
-  // Set the auth token on the API
-  expect(step(response)).toEqual(call(FixtureAPI.setAuthToken, response.data.access_token))
-  // Store the auth token in redux
-  expect(step(response)).toEqual(put(LoginActions.loginSuccess(response.data)))
   <%_ } _%>
   // Request the account details
   expect(step(response)).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
+  <%_ } _%>
 })
+<%_ if (props.authType === 'oauth2') { _%>
+test('login failure from bad nonce path', () => {
+  const response = FixtureAPI.getOauthInfo()
+  const step = stepper(login(FixtureAPI, { 'issuer': 'http://localhost:9080/auth/realms/jhipster', 'clientId': 'web_app', 'scope': 'openid profile email' }))
 
+  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
+  const sampleOauthResponse = {
+    'url': 'oidcapp://authorize#state=test-wrong-nonce&id_token=test-id-token&access_token=test-access-token&token_type=bearer&session_state=6d5b0148-979a-4ff9-b56d-77af3111f72a&expires_in=900&not-before-policy=0'
+  }
+  // await the response from the oauth2 issuer
+  step(response)
+  expect(step(sampleOauthResponse)).toEqual(put(LoginActions.loginFailure('WRONG')))
+})
+<%_ } _%>
 test('login failure path', () => {
   <%_ if (props.authType === 'oauth2') { _%>
-  const authObj = 'username=user&password=user2&grant_type=password&scope=read%20write'
-  <%_} else if (props.authType === 'session') { _%>
+  const response = FixtureAPI.getOauthInfo()
+  const step = stepper(login(FixtureAPI))
+
+  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
+
+  // set response.ok to false as if the oauth issuer is down
+  response.ok = false
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+  <%_} else { _%>
+  <%_ if (props.authType === 'session') { _%>
   const authObj = 'j_username=user&j_password=user2&remember-me=true'
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
@@ -69,6 +105,7 @@ test('login failure path', () => {
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   // Send the error
   expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+  <%_ } _%>
 })
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 test('login load path with no token', () => {
@@ -78,14 +115,13 @@ test('login load path with no token', () => {
   // No token was found so call success
   expect(step()).toEqual(put(LoginActions.loginLoadSuccess()))
 })
-
 test('login load path with a token', () => {
-  const accessToken = { access_token: 'hi' }
+  const accessToken = 'sample-access-token'
   const step = stepper(loginLoad(FixtureAPI))
   // Select the token from redux and set it
   expect(step(accessToken)).toEqual(select(selectAuthToken))
-  expect(step(accessToken)).toEqual(call(FixtureAPI.setAuthToken, accessToken<% if (props.authType === 'oauth2') { %>.access_token<% } %>))
-  FixtureAPI.setAuthToken({authToken: 'hi'})
+  expect(step(accessToken)).toEqual(call(FixtureAPI.setAuthToken, accessToken))
+  FixtureAPI.setAuthToken(accessToken)
   // The token has been set so call success
   expect(step()).toEqual(put(LoginActions.loginLoadSuccess()))
 })
@@ -105,35 +141,6 @@ test('logout success path', () => {
   expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
-<%_ if (props.authType === 'oauth2') { _%>
-test('login refresh path with success', () => {
-  const step = stepper(loginRefresh(FixtureAPI))
-  // Select the token from redux and set it
-  expect(step()).toEqual(select(selectAuthToken))
-  // console.log(step(accessToken))
-  const response = FixtureAPI.login('refresh_token=valid-refresh-token&grant_type=refresh_token')
-  expect(step(response.data)).toEqual(call(FixtureAPI.login, 'refresh_token=' + response.data.refresh_token + '&grant_type=refresh_token'))
-  expect(step(response)).toEqual(call(FixtureAPI.setAuthToken, response.data.access_token))
-  expect(step()).toEqual(put(LoginActions.loginSuccess(response.data)))
-})
-
-test('login refresh path with invalid refresh token', () => {
-  const step = stepper(loginRefresh(FixtureAPI))
-  // Select the token from redux and set it
-  expect(step()).toEqual(select(selectAuthToken))
-  // console.log(step(accessToken))
-  const response = FixtureAPI.login('refresh_token=invalid-refresh-token&grant_type=refresh_token')
-  expect(step(response.data)).toEqual(call(FixtureAPI.login, 'refresh_token=' + response.data.refresh_token + '&grant_type=refresh_token'))
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
-})
-
-test('login refresh path with failure from no token', () => {
-  const step = stepper(loginRefresh(FixtureAPI))
-  // Select the token from redux and set it
-  expect(step()).toEqual(select(selectAuthToken))
-  expect(step()).toEqual(put(LoginActions.loginFailure('WRONG')))
-})
-<%_ } _%>
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 test('selects the auth token', () => {
   const state = {login: {authToken: 'hi'}}

@@ -18,8 +18,13 @@ class DrawerContent extends Component {
 
   handlePressLogin = () => {
     NavigationActions.drawerClose()
+    <%_ if (props.authType === 'oauth2') { _%>
+    this.props.login()
+    <%_ } else { _%>
     NavigationActions.login()
+    <%_ } _%>
   }
+  <%_ if (props.authType !== 'oauth2') { _%>
   handlePressRegister = () => {
     NavigationActions.drawerClose()
     NavigationActions.register()
@@ -28,10 +33,6 @@ class DrawerContent extends Component {
     NavigationActions.drawerClose()
     NavigationActions.forgotPassword()
   }
-  handlePressEntities = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.entities()
-  }
   handlePressSettings = () => {
     NavigationActions.drawerClose()
     NavigationActions.settings()
@@ -39,6 +40,11 @@ class DrawerContent extends Component {
   handlePressChangePassword = () => {
     NavigationActions.drawerClose()
     NavigationActions.changePassword()
+  }
+  <%_ } _%>
+  handlePressEntities = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.entities()
   }
   <%_ if (props.websockets) { _%>
   handlePressChat = () => {
@@ -56,15 +62,19 @@ class DrawerContent extends Component {
       <ScrollView style={styles.container}>
         <Image source={Images.logoJhipster} style={styles.logo} />
         {!this.props.loggedIn && (<DrawerButton text='Login' onPress={this.handlePressLogin} />)}
+        <%_ if (props.authType !== 'oauth2') { _%>
         {!this.props.loggedIn && (<DrawerButton text='Register' onPress={this.handlePressRegister} />)}
         {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
+        <%_ } _%>
 
         {this.props.loggedIn && (<DrawerButton text='Entities' onPress={this.handlePressEntities} />)}
         <%_ if (props.websockets) { _%>
         {this.props.loggedIn && (<DrawerButton text='Chat' onPress={this.handlePressChat} />)}
         <%_ } _%>
+        <%_ if (props.authType !== 'oauth2') { _%>
         {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
         {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
+        <%_ } _%>
         {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}
       </ScrollView>
     )
@@ -83,6 +93,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    <%_ if (props.authType === 'oauth2') { _%>
+    login: () => dispatch(LoginActions.loginRequest()),
+    <%_ } _%>
     logout: () => dispatch(LoginActions.logoutRequest())
   }
 }

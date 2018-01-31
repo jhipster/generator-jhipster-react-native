@@ -2,10 +2,8 @@
 
 export default {
   apiUrl: 'http://localhost:8080/',
-  <%_ if (props.authType ==='oauth2') { _%>
-  oauthClientId: 'jhipsterapp',
-  oauthClientSecret: 'my-secret-token-to-change-in-production',
-  <%_ } else if (props.authType ==='uaa') { _%>
+  appUrlScheme: '<%= props.name.toLowerCase() %>',
+  <%_ if (props.authType ==='uaa') { _%>
   // this is your UAA's base name, lower-cased and followed by a /
   uaaBaseUrl: '<%= props.uaaBaseUrl %>/',
   <%_ } _%>

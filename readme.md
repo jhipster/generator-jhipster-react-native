@@ -13,6 +13,7 @@ For a quick tour, check out the [Sample Application for Android](https://play.go
  - [App Config Variables](docs/config-variables.md)
  - [Generators and Plugins](docs/generators-and-plugins.md)
  - [Project Structure](docs/project-structure.md)
+ - [OAuth2 OIDC Login](docs/oauth2-oidc.md)
  - [Social Login](docs/social-login.md)
  - [Websockets](docs/websockets.md)
  - [JHipster Version Compatibility](docs/jhipster-version-compatability.md)

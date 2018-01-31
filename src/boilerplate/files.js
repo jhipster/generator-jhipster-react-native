@@ -104,6 +104,10 @@ module.exports = async function (context, props, jhipsterConfig) {
       target: 'App/Sagas/index.js'
     },
     {
+      template: 'App/Sagas/CallApiSaga.js.ejs',
+      target: 'App/Sagas/CallApiSaga.js'
+    },
+    {
       template: 'App/Sagas/StartupSagas.js.ejs',
       target: 'App/Sagas/StartupSagas.js'
     },
@@ -146,6 +150,11 @@ module.exports = async function (context, props, jhipsterConfig) {
     })
     const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
     await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+  } else {
+    // remove OAuth2 files if not enabled
+    await filesystem.remove('App/Lib/GenerateNonce.js')
+    await filesystem.remove('App/Transforms/GenerateNonce.js')
+    await filesystem.remove('App/Fixtures/getOauthInfo.js')
   }
 
   /**

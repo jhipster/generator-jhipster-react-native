@@ -1,9 +1,6 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 import AppConfig from '../Config/AppConfig'
-<%_ if (props.authType === 'oauth2') { _%>
-import { Buffer } from 'buffer'
-<%_ } _%>
 <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
 import CookieManager from 'react-native-cookies'
 <%_ } _%>
@@ -58,7 +55,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const socialLogin = (userAuth) => api.post(`social/token?token=${userAuth.token}&secret=${userAuth.secret}&provider=${userAuth.provider}`)
   <%_ } _%>
   <%_ if (props.authType === 'oauth2') { _%>
-  const login = (userAuth) => api.post('oauth/token', userAuth, {headers: {'Authorization': 'Basic ' + Buffer.from(AppConfig.oauthClientId + ':' + AppConfig.oauthClientSecret).toString('base64'), 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  const getOauthInfo = () => api.get('api/auth-info')
   <%_ } else if (props.authType === 'session') { _%>
   const login = (userAuth) => api.post('api/authentication', userAuth, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   const logout = () => api.post('api/logout')
@@ -97,10 +94,14 @@ const create = (baseURL = AppConfig.apiUrl) => {
     setAuthToken,
     removeAuthToken,
     <%_ } _%>
+    <%_ if (props.authType === 'oauth2') { _%>
+    getOauthInfo,
+    <%_ } else { _%>
+    login,
+    <%_ } _%>
     <%_ if (props.socialLogin) { _%>
     socialLogin,
     <%_ } _%>
-    login,
     register,
     forgotPassword,
     getAccount,
