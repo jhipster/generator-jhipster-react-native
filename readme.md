@@ -39,7 +39,7 @@ Answer the prompts (enter the path to your JHipster app and choose any plugins y
 
 The generator will create a new directory containing the project.  It also sets up the Android and iOS app directories.
 
-After generating, you can use the [entity generator and other commands]((docs/generators-and-plugins.md)).
+After generating, you can use the [entity generator and other commands](docs/generators-and-plugins.md).
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
