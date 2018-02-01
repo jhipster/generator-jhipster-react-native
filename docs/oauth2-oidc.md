@@ -27,7 +27,9 @@ Configure Linking for the iOS platform by adding the following lines to your app
   return [RCTLinkingManager application:application openURL:url options:options];
 }
 ```
-Then configure your iOS url scheme on the `Project` -> `Info` -> `URL Types` section like in [this screenshot](https://user-images.githubusercontent.com/4294623/35599933-434fa4a8-05f9-11e8-8474-017d96ba5b10.png). 
+Then configure your iOS url scheme on the `Project` -> `Info` -> `URL Types` section like in the screenshot below:
+
+![35599933-434fa4a8-05f9-11e8-8474-017d96ba5b10](https://user-images.githubusercontent.com/4294623/35661218-b5d2694e-06de-11e8-8cbb-bab63213f790.png)
 
 #### Android URL Scheme Setup
 Where `oidc-example` is your chosen URL scheme, add the following to your app's `android/app/src/main/AndroidManifest.xml` file:
