@@ -13,18 +13,20 @@ const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('login success path', () => {
   <%_ if (props.authType === 'oauth2') { _%>
-  const response = FixtureAPI.getOauthInfo()
-  const step = stepper(login(FixtureAPI, { 'issuer': 'http://localhost:9080/auth/realms/jhipster', 'clientId': 'web_app', 'scope': 'openid profile email' }))
+  const oauthInfo = FixtureAPI.getOauthInfo()
+  const oauthIssuerInfo = FixtureAPI.getOauthIssuerInfo()
+  const step = stepper(login(FixtureAPI, oauthInfo))
   const sampleOauthResponse = {
     'url': 'oidcapp://authorize#state=test-nonce&id_token=test-id-token&access_token=test-access-token&token_type=bearer&session_state=6d5b0148-979a-4ff9-b56d-77af3111f72a&expires_in=900&not-before-policy=0'
   }
-  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
+  expect(step(oauthInfo)).toEqual(call(FixtureAPI.getOauthInfo))
+  expect(step(oauthInfo)).toEqual(call(FixtureAPI.getOauthIssuerInfo, oauthInfo.data.issuer))
   // await the response from the oauth2 issuer
-  step(response)
+  step(oauthIssuerInfo)
   expect(step(sampleOauthResponse)).toEqual(call(FixtureAPI.setAuthToken, 'test-access-token'))
   expect(step()).toEqual(put(LoginActions.loginSuccess('test-access-token')))
   // Request the account details
-  expect(step(response)).toEqual(put(AccountActions.accountRequest()))
+  expect(step()).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
   <%_} else { _%>
@@ -59,22 +61,24 @@ test('login success path', () => {
   expect(step(response)).toEqual(put(LoginActions.loginSuccess(response.data)))
   <%_ } _%>
   // Request the account details
-  expect(step(response)).toEqual(put(AccountActions.accountRequest()))
+  expect(step()).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
   <%_ } _%>
 })
 <%_ if (props.authType === 'oauth2') { _%>
 test('login failure from bad nonce path', () => {
-  const response = FixtureAPI.getOauthInfo()
-  const step = stepper(login(FixtureAPI, { 'issuer': 'http://localhost:9080/auth/realms/jhipster', 'clientId': 'web_app', 'scope': 'openid profile email' }))
+  const oauthInfo = FixtureAPI.getOauthInfo()
+  const oauthIssuerInfo = FixtureAPI.getOauthIssuerInfo()
+  const step = stepper(login(FixtureAPI, oauthInfo))
 
-  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
+  expect(step(oauthInfo)).toEqual(call(FixtureAPI.getOauthInfo))
+  expect(step(oauthInfo)).toEqual(call(FixtureAPI.getOauthIssuerInfo, oauthInfo.data.issuer))
   const sampleOauthResponse = {
     'url': 'oidcapp://authorize#state=test-wrong-nonce&id_token=test-id-token&access_token=test-access-token&token_type=bearer&session_state=6d5b0148-979a-4ff9-b56d-77af3111f72a&expires_in=900&not-before-policy=0'
   }
   // await the response from the oauth2 issuer
-  step(response)
+  step(oauthIssuerInfo)
   expect(step(sampleOauthResponse)).toEqual(put(LoginActions.loginFailure('WRONG')))
 })
 <%_ } _%>

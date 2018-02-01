@@ -46,6 +46,12 @@ export default {
       data: require('../Fixtures/getOauthInfo.json')
     }
   },
+  getOauthIssuerInfo: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/getOauthIssuerInfo.json')
+    }
+  },
   <%_ } _%>
   register: ({user}) => {
     if (user === 'user') {

@@ -159,6 +159,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     await filesystem.remove('App/Lib/GenerateNonce.js')
     await filesystem.remove('App/Transforms/ParseOauthResponse.js')
     await filesystem.remove('App/Fixtures/getOauthInfo.json')
+    await filesystem.remove('App/Fixtures/getOauthIssuerInfo.json.json')
   }
 
   /**

@@ -56,6 +56,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   <%_ } _%>
   <%_ if (props.authType === 'oauth2') { _%>
   const getOauthInfo = () => api.get('api/auth-info')
+  const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
   <%_ } else if (props.authType === 'session') { _%>
   const login = (userAuth) => api.post('api/authentication', userAuth, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
   const logout = () => api.post('api/logout')
@@ -96,6 +97,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
     <%_ } _%>
     <%_ if (props.authType === 'oauth2') { _%>
     getOauthInfo,
+    getOauthIssuerInfo,
     <%_ } else { _%>
     login,
     <%_ } _%>

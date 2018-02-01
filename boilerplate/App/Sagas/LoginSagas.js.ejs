@@ -23,12 +23,14 @@ export function * login (api) {
   // get the oauth issuer information from the backend
   const authInfo = yield call(api.getOauthInfo)
   if (authInfo.ok) {
-    const {issuer, clientId, scope} = authInfo.data
+    const { issuer, clientId, scope } = authInfo.data
+    const issuerInfo = yield call(api.getOauthIssuerInfo, issuer)
+    const authorizationEndpoint = issuerInfo.data['authorization_endpoint']
 
     const nonce = generateNonce()
     const url = [
-      `${issuer}/protocol/openid-connect/auth`,
-      `?response_type=id_token%20token`,
+      `${authorizationEndpoint}`,
+      `?response_type=${encodeURIComponent(`id_token token`)}`,
       `&client_id=${clientId}`,
       `&scope=${encodeURIComponent(scope)}`,
       `&redirect_uri=${encodeURIComponent(`${AppConfig.appUrlScheme}://authorize`)}`,
