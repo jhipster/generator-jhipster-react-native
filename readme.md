@@ -17,7 +17,7 @@ For a quick tour, check out the [Sample Application for Android](https://play.go
  - [Social Login](docs/social-login.md)
  - [Websockets](docs/websockets.md)
  - [JHipster Version Compatibility](docs/jhipster-version-compatability.md)
- - [Upgrading Your IgniteJHipster App](docs/upgrading.md)
+ - [Upgrading Your Ignite JHipster App](docs/upgrading.md)
  - [Advanced Usage](docs/advanced-usage.md)
 
 ## Getting Started
@@ -35,9 +35,11 @@ To generate an app, run the following command:
 ignite new SampleApp --boilerplate ignite-jhipster
 ```
 
-Answer the prompts (choose your JHipster auth type, search engine, and any plugins you want) and wait for the project to finish generation.  
+Answer the prompts (enter the path to your JHipster app and choose any plugins you want) and wait for the project to finish generation.  
 
 The generator will create a new directory containing the project.  It also sets up the Android and iOS app directories.
+
+After generating, you can use the [entity generator and other commands]((docs/generators-and-plugins.md)).
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
