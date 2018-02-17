@@ -1,10 +1,16 @@
 ### Generators
 
-##### JHipster Entity Generator
+##### Custom Generators
  - Entity - `ignite generate entity <name>`
     - Prompts for the path to the entity's config (`.jhipster` folder in your app)
-    - Generates all files needed for fetching and displaying the entity.
+    - Generates all files needed for fetching and displaying the entity
     - Includes the API endpoints, redux/saga config, and the user interface
+ - Import JDL - `ignite generate import-jdl <jdl-filename>`
+    - Import several entities at once using JDL
+    - Runs the entity generator for each entity present in the JDL
+ - Upgrade - `ignite generate upgrade`
+    - Upgrades your generated app to the latest template code
+    - Use a branch to merge just the updates into your code
  
 ##### Ignite Generators
 This generator adds Ignite's usual generators to the mix as well.  We have access to:

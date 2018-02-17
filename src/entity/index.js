@@ -32,7 +32,7 @@ module.exports = async function (context) {
 
   // if the file exists, skip loading it
   if (fs.existsSync(localEntityFilePath)) {
-    print.success(`Found the entity config locally in .jhipster`)
+    print.success(`Found the ${this.name} entity config locally in .jhipster`)
   } else if (jhDirectoryFlag) {
     if (!fs.existsSync(`${jhDirectoryFlag}/${localEntityFilePath}`)) {
       print.error(`No entity configuration file found at ${jhDirectoryFlag}/${localEntityFilePath}`)
