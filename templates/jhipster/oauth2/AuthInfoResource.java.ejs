@@ -30,11 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AuthInfoResource {
 
-    @Value("${security.oauth2.client.access-token-uri}")
+    @Value("${security.oauth2.client.access-token-uri:}")
     private String accessTokenUri;
-    @Value("${security.oauth2.client.client-id}")
+    @Value("${security.oauth2.client.client-id:}")
     private String clientId;
-    @Value("${security.oauth2.client.scope}")
+    @Value("${security.oauth2.client.scope:}")
     private String scope;
 
     @GetMapping("/auth-info")
