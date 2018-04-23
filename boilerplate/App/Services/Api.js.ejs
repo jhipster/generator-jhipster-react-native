@@ -49,7 +49,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   //
   <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
-  const removeAuthToken = () => api.setHeader('Authorization', '')
+  const removeAuthToken = () => api.deleteHeader('Authorization')
   <%_ } _%>
   <%_ if (props.socialLogin) { _%>
   const socialLogin = (userAuth) => api.post(`social/token?token=${userAuth.token}&secret=${userAuth.secret}&provider=${userAuth.provider}`)
