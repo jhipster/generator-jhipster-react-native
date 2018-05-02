@@ -151,7 +151,12 @@ module.exports = async function (context, props, jhipsterConfig) {
       })
       const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
       if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
-        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`, { replace: '"/api/profile-info"', insert: '"/api/profile-info", "/api/auth-info"' })
+        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
+          {
+            replace: '.antMatchers("/api/**").authenticated()',
+            insert: '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
+          }
+        )
       }
     }
   } else {
