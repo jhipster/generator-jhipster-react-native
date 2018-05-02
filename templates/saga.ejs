@@ -33,7 +33,8 @@ export function * get<%= props.pluralName %> (api, action) {
 export function * update<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %> } = action
   // make the call to the api
-  const apiCall = call(!!<%= camelCase(props.name) %>.id ? api.update<%= props.name %> : api.create<%= props.name %>, <%= camelCase(props.name) %>)
+  const idIsNotNull = !!<%= camelCase(props.name) %>.id
+  const apiCall = call(idIsNotNull ? api.update<%= props.name %> : api.create<%= props.name %>, <%= camelCase(props.name) %>)
   const response = yield call(callApi, apiCall)
 
   // success?

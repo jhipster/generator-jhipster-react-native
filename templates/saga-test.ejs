@@ -7,7 +7,7 @@ const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('get success path', () => {
   const response = FixtureAPI.get<%= props.name %>(1)
-  const step = stepper(get<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(get<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -16,7 +16,7 @@ test('get success path', () => {
 
 test('get failure path', () => {
   const response = {ok: false}
-  const step = stepper(get<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(get<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
@@ -25,7 +25,7 @@ test('get failure path', () => {
 
 test('getAll success path', () => {
   const response = FixtureAPI.get<%= props.pluralName %>()
-  const step = stepper(get<%= props.pluralName %>(FixtureAPI, {page: 0, sort: 'id,asc', size: 20}))
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -34,7 +34,7 @@ test('getAll success path', () => {
 
 test('getAll failure path', () => {
   const response = {ok: false}
-  const step = stepper(get<%= props.pluralName %>(FixtureAPI, {page: 0, sort: 'id,asc', size: 20}))
+  const step = stepper(get<%= props.pluralName %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
@@ -43,7 +43,7 @@ test('getAll failure path', () => {
 
 test('update success path', () => {
   const response = FixtureAPI.update<%= props.name %>({id: 1})
-  const step = stepper(update<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(update<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -52,7 +52,7 @@ test('update success path', () => {
 
 test('update failure path', () => {
   const response = {ok: false}
-  const step = stepper(update<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(update<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
@@ -80,7 +80,7 @@ test('search failure path', () => {
 <%_ } _%>
 test('delete success path', () => {
   const response = FixtureAPI.delete<%= props.name %>({id: 1})
-  const step = stepper(delete<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(delete<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
@@ -89,7 +89,7 @@ test('delete success path', () => {
 
 test('delete failure path', () => {
   const response = {ok: false}
-  const step = stepper(delete<%= props.name %>(FixtureAPI, {id: 1}))
+  const step = stepper(delete<%= props.name %>(FixtureAPI, { <%= camelCase(props.name) %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
