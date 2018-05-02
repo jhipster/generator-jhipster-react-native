@@ -35,6 +35,7 @@ module.exports = async function (generator, igniteContext) {
   let apiMethods = `
   const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
   const get${props.pluralName} = (options) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}', options)
+  const create${props.name} = (${camelCase(props.name)}) => api.post('${props.microserviceName}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
   const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microserviceName}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
   const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
@@ -64,6 +65,7 @@ module.exports = async function (generator, igniteContext) {
   },`
 
   let apiMethodsExport = `
+    create${props.name},
     update${props.name},
     get${props.pluralName},
     get${props.name},
