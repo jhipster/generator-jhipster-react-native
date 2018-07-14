@@ -28,15 +28,11 @@ module.exports = async function (context, props, jhipsterConfig) {
   // copy our App, Tests, and storybook directories
   spinner.text = '▸ copying files'
   spinner.start()
-  await filesystem.copy(`${__dirname}/../../boilerplate/App`, `${process.cwd()}/App`, {
+  await filesystem.copy(`${__dirname}/../../boilerplate/app`, `${process.cwd()}/app`, {
     overwrite: true,
     matching: '!*.ejs'
   })
-  await filesystem.copy(`${__dirname}/../../boilerplate/Tests`, `${process.cwd()}/Tests`, {
-    overwrite: true,
-    matching: '!*.ejs'
-  })
-  await filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
+  await filesystem.copy(`${__dirname}/../../boilerplate/test`, `${process.cwd()}/test`, {
     overwrite: true,
     matching: '!*.ejs'
   })
@@ -52,80 +48,80 @@ module.exports = async function (context, props, jhipsterConfig) {
     { template: '.babelrc', target: '.babelrc' },
     { template: '.env.example', target: '.env.example' },
     {
-      template: 'App/Config/AppConfig.js.ejs',
-      target: 'App/Config/AppConfig.js'
+      template: 'app/config/app-config.js.ejs',
+      target: 'app/config/app-config.js'
     },
     {
-      template: 'App/Containers/RootContainer.js.ejs',
-      target: 'App/Containers/RootContainer.js'
+      template: 'app/root-container.js.ejs',
+      target: 'app/root-container.js'
     },
     {
-      template: 'App/Containers/DrawerContent.js.ejs',
-      target: 'App/Containers/DrawerContent.js'
+      template: 'app/navigation/drawer/drawer-content.js.ejs',
+      target: 'app/navigation/drawer/drawer-content.js'
     },
     {
-      template: 'App/Containers/LoginScreen.js.ejs',
-      target: 'App/Containers/LoginScreen.js'
+      template: 'app/modules/login/login-screen.js.ejs',
+      target: 'app/modules/login/login-screen.js'
     },
     {
-      template: 'App/Containers/RegisterScreen.js.ejs',
-      target: 'App/Containers/RegisterScreen.js'
+      template: 'app/modules/account/register/register-screen.js.ejs',
+      target: 'app/modules/account/register/register-screen.js'
     },
     {
-      template: 'App/Services/Api.js.ejs',
-      target: 'App/Services/Api.js'
+      template: 'app/shared/services/api.js.ejs',
+      target: 'app/shared/services/api.js'
     },
     {
-      template: 'App/Redux/LoginRedux.js.ejs',
-      target: 'App/Redux/LoginRedux.js'
+      template: 'app/modules/login/login.reducer.js.ejs',
+      target: 'app/modules/login/login.reducer.js'
     },
     {
-      template: 'Tests/Redux/LoginReduxTest.js.ejs',
-      target: 'Tests/Redux/LoginReduxTest.js'
+      template: 'test/spec/modules/login/login.reducer.spec.js.ejs',
+      target: 'test/spec/modules/login/login.reducer.spec.js'
     },
     {
-      template: 'App/Sagas/LoginSagas.js.ejs',
-      target: 'App/Sagas/LoginSagas.js'
+      template: 'app/modules/login/login.sagas.js.ejs',
+      target: 'app/modules/login/login.sagas.js'
     },
     {
-      template: 'Tests/Sagas/LoginSagaTest.js.ejs',
-      target: 'Tests/Sagas/LoginSagaTest.js'
+      template: 'test/spec/modules/login/login.sagas.spec.js.ejs',
+      target: 'test/spec/modules/login/login.sagas.spec.js'
     },
     {
-      template: 'App/Services/FixtureApi.js.ejs',
-      target: 'App/Services/FixtureApi.js'
+      template: 'app/shared/services/fixture-api.js.ejs',
+      target: 'app/shared/services/fixture-api.js'
     },
     {
-      template: 'App/Fixtures/login.json.ejs',
-      target: 'App/Fixtures/login.json'
+      template: 'app/shared/fixtures/login.json.ejs',
+      target: 'app/shared/fixtures/login.json'
     },
     {
-      template: 'App/Sagas/index.js.ejs',
-      target: 'App/Sagas/index.js'
+      template: 'app/shared/sagas/index.js.ejs',
+      target: 'app/shared/sagas/index.js'
     },
     {
-      template: 'App/Sagas/CallApiSaga.js.ejs',
-      target: 'App/Sagas/CallApiSaga.js'
+      template: 'app/shared/sagas/call-api.saga.js.ejs',
+      target: 'app/shared/sagas/call-api.saga.js'
     },
     {
-      template: 'App/Sagas/StartupSagas.js.ejs',
-      target: 'App/Sagas/StartupSagas.js'
+      template: 'app/shared/sagas/startup.saga.js.ejs',
+      target: 'app/shared/sagas/startup.saga.js'
     },
     {
-      template: 'Tests/Sagas/StartupSagaTest.js.ejs',
-      target: 'Tests/Sagas/StartupSagaTest.js'
+      template: 'test/spec/shared/sagas/startup.saga.spec.js.ejs',
+      target: 'test/spec/shared/sagas/startup.saga.spec.js'
     },
     {
-      template: 'Tests/Setup.js.ejs',
-      target: 'Tests/Setup.js'
+      template: 'test/setup.js.ejs',
+      target: 'test/setup.js'
     },
     {
-      template: 'storybook/storybook.ejs',
-      target: 'storybook/storybook.js'
+      template: 'test/storybook/storybook.ejs',
+      target: 'test/storybook/storybook.js'
     },
     {
-      template: 'App/Redux/CreateStore.js.ejs',
-      target: 'App/Redux/CreateStore.js'
+      template: 'app/shared/reducers/create-store.js.ejs',
+      target: 'app/shared/reducers/create-store.js'
     }
   ]
 
@@ -161,32 +157,12 @@ module.exports = async function (context, props, jhipsterConfig) {
     }
   } else {
     // remove OAuth2 files if not enabled
-    await filesystem.remove('App/Lib/GenerateNonce.js')
-    await filesystem.remove('App/Transforms/ParseOauthResponse.js')
-    await filesystem.remove('App/Fixtures/getOauthInfo.json')
-    await filesystem.remove('App/Fixtures/getOauthIssuerInfo.json.json')
+    await filesystem.remove('app/shared/utils/generate-nonce.js')
+    await filesystem.remove('app/shared/utils/parse-oauth-response.js')
+    await filesystem.remove('app/shared/fixtures/getOauthInfo.json')
+    await filesystem.remove('app/shared/fixtures/getOauthIssuerInfo.json.json')
   }
 
-  /**
-   * If using social login, set it up
-   */
-  if (props.socialLogin) {
-    const socialLoginFiles = [
-      { template: 'SocialController.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/SocialController.java` },
-      { template: 'SocialService.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/service/SocialService.java` },
-      { template: 'SocialServiceIntTest.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/test/${props.packageFolder}/service/SocialServiceIntTest.java` }
-    ]
-    // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
-      await ignite.copyBatch(context, socialLoginFiles, props, {
-        quiet: true,
-        directory: `${__dirname}/../../templates/jhipster/social-login`
-      })
-    }
-  } else {
-    await filesystem.remove('App/Containers/SocialLoginContainer.js')
-    await filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
-  }
   /**
    * If using websockets, set it up
    */
@@ -194,15 +170,15 @@ module.exports = async function (context, props, jhipsterConfig) {
     spinner.text = '▸ setting up websocket code'
     spinner.start()
     // import ChatRedux in redux/index.js
-    await ignite.patchInFile('App/Redux/index.js', {
+    await ignite.patchInFile('app/shared/reducers/index.js', {
       before: 'ignite-jhipster-redux-store-import-needle',
-      insert: `  chat: require('./ChatRedux').reducer,`,
-      match: `  chat: require('./ChatRedux').reducer,`
+      insert: `  chat: require('../../modules/chat/chat.reducer').reducer,`,
+      match: `  chat: require('../../modules/chat/chat.reducer').reducer,`
     })
 
     // wire ChatScreen in NavigationRouter
-    const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
-    const navigationImportEdit = `import ChatScreen from '../Containers/ChatScreen'`
+    const navigationRouterFilePath = `${process.cwd()}/app/navigation/navigation-router.js`
+    const navigationImportEdit = `import ChatScreen from '../modules/chat/chat-screen'`
     await ignite.patchInFile(navigationRouterFilePath, {
       before: 'ignite-jhipster-navigation-import-needle',
       insert: navigationImportEdit,
@@ -223,13 +199,9 @@ module.exports = async function (context, props, jhipsterConfig) {
     }
     spinner.stop()
   } else {
-    await filesystem.remove('App/Containers/ChatScreen.js')
-    await filesystem.remove('App/Containers/Styles/ChatScreenStyle.js')
-    await filesystem.remove('App/Services/WebsocketService.js')
-    await filesystem.remove('Tests/Services/WebsocketServiceTest.js')
-    await filesystem.remove('App/Sagas/WebsocketSagas.js')
-    await filesystem.remove('Tests/Sagas/WebsocketSagaTest.js')
-    await filesystem.remove('App/Redux/ChatRedux.js')
-    await filesystem.remove('Tests/Redux/ChatReduxTest.js')
+    await filesystem.remove('app/modules/chat/')
+    await filesystem.remove('app/shared/websockets/')
+    await filesystem.remove('test/spec/shared/websockets/')
+    await filesystem.remove('test/spec/modules/chat/')
   }
 }

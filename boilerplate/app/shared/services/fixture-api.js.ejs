@@ -1,0 +1,104 @@
+export default {
+  // Functions return fixtures
+
+  // entity fixtures
+  // ignite-jhipster-api-fixture-needle
+
+  // auth fixtures
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+  setAuthToken: () => {
+
+  },
+  removeAuthToken: () => {
+
+  },
+  <%_ } _%>
+  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+  logout: () => {
+    return {
+      ok: true
+    }
+  },
+  <%_ } _%>
+  <%_ if (props.authType !== 'oauth2') { _%>
+  login: (authObj) => {
+    <%_ if (props.authType === 'session') { _%>
+    if (authObj === 'j_username=user&j_password=user&remember-me=true') {
+    <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
+    if (authObj.username === 'user' && authObj.password === 'user') {
+    <%_ } _%>
+      return {
+        ok: true,
+        data: require('../fixtures/login.json')
+      }
+    } else {
+      return {
+        ok: false,
+        status: 400,
+        data: 'Invalid credentials'
+      }
+    }
+  },
+  <%_ } else { _%>
+  getOauthInfo: () => {
+    return {
+      ok: true,
+      data: require('../fixtures/getOauthInfo.json')
+    }
+  },
+  getOauthIssuerInfo: () => {
+    return {
+      ok: true,
+      data: require('../fixtures/getOauthIssuerInfo.json')
+    }
+  },
+  <%_ } _%>
+  register: ({user}) => {
+    if (user === 'user') {
+      return {
+        ok: true
+      }
+    } else {
+      return {
+        ok: false,
+        data: 'Invalid email'
+      }
+    }
+  },
+  forgotPassword: ({email}) => {
+    if (email === 'valid@gmail.com') {
+      return {
+        ok: true
+      }
+    } else {
+      return {
+        ok: false,
+        data: 'Invalid email'
+      }
+    }
+  },
+  getAccount: () => {
+    return {
+      ok: true,
+      status: 200,
+      data: require('../fixtures/getAccount.json')
+    }
+  },
+  updateAccount: () => {
+    return {
+      ok: true
+    }
+  },
+  changePassword: ({password}) => {
+    if (password === 'valid-password') {
+      return {
+        ok: true
+      }
+    } else {
+      return {
+        ok: false,
+        data: 'Password error'
+      }
+    }
+  }
+}

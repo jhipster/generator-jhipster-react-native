@@ -1,0 +1,104 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { ScrollView, Image, BackHandler } from 'react-native'
+import { connect } from 'react-redux'
+import { Actions as NavigationActions } from 'react-native-router-flux'
+
+import styles from './drawer-content.styles'
+import { Images } from '../../shared/themes'
+import DrawerButton from './drawer-button'
+import LoginActions from '../../modules/login/login.reducer'
+import { isLoggedIn } from '../../shared/reducers/account.reducer'
+
+class DrawerContent extends Component {
+  componentDidMount () {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      NavigationActions.drawerClose()
+    })
+  }
+
+  handlePressLogin = () => {
+    NavigationActions.drawerClose()
+    <%_ if (props.authType === 'oauth2') { _%>
+    this.props.login()
+    <%_ } else { _%>
+    NavigationActions.login()
+    <%_ } _%>
+  }
+  <%_ if (props.authType !== 'oauth2') { _%>
+  handlePressRegister = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.register()
+  }
+  handlePressForgotPassword = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.forgotPassword()
+  }
+  handlePressSettings = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.settings()
+  }
+  handlePressChangePassword = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.changePassword()
+  }
+  <%_ } _%>
+  handlePressEntities = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.entities()
+  }
+  <%_ if (props.websockets) { _%>
+  handlePressChat = () => {
+    NavigationActions.drawerClose()
+    NavigationActions.chat()
+  }
+  <%_ } _%>
+  handlePressLogout = () => {
+    NavigationActions.drawerClose()
+    this.props.logout()
+  }
+
+  render () {
+    return (
+      <ScrollView style={styles.container}>
+        <Image source={Images.logoJhipster} style={styles.logo} />
+        {!this.props.loggedIn && (<DrawerButton text='Login' onPress={this.handlePressLogin} />)}
+        <%_ if (props.authType !== 'oauth2') { _%>
+        {!this.props.loggedIn && (<DrawerButton text='Register' onPress={this.handlePressRegister} />)}
+        {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
+        <%_ } _%>
+
+        {this.props.loggedIn && (<DrawerButton text='Entities' onPress={this.handlePressEntities} />)}
+        <%_ if (props.websockets) { _%>
+        {this.props.loggedIn && (<DrawerButton text='Chat' onPress={this.handlePressChat} />)}
+        <%_ } _%>
+        <%_ if (props.authType !== 'oauth2') { _%>
+        {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
+        {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
+        <%_ } _%>
+        {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}
+      </ScrollView>
+    )
+  }
+}
+
+DrawerContent.contextTypes = {
+  drawer: PropTypes.object
+}
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: isLoggedIn(state.account)
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    <%_ if (props.authType === 'oauth2') { _%>
+    login: () => dispatch(LoginActions.loginRequest()),
+    <%_ } _%>
+    logout: () => dispatch(LoginActions.logoutRequest())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)
