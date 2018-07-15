@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
-import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
 import <%= pascalCase(relation.otherEntityName) %>Actions from '../Redux/<%= pascalCase(relation.otherEntityName) %>Redux'
 <%_ }) _%>
@@ -13,8 +13,7 @@ import { jsDateToLocalDate } from '../Transforms/DateTransforms'
 
 import t from 'tcomb-form-native'
 
-// Styles
-import styles from './Styles/<%= props.name %>EntityEditScreenStyle'
+import styles from './<%= props.kebabName %>-entity-edit-screen-style'
 
 let Form = t.form.Form
 <%_ props.entityConfig.fields.forEach((field) => {
