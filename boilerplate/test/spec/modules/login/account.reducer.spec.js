@@ -1,4 +1,4 @@
-import Actions, { reducer, INITIAL_STATE } from '../../../../app/shared/reducers/account.reducer'
+import Actions, { reducer, INITIAL_STATE, isLoggedIn, getLogin } from '../../../../app/shared/reducers/account.reducer'
 
 test('request', () => {
   const state = reducer(INITIAL_STATE, Actions.accountRequest())
