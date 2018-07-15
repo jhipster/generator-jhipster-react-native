@@ -207,7 +207,7 @@ module.exports = async function (generator, igniteContext) {
 
   await ignite.copyBatch(igniteContext, entityFiles, props, {
     directory: `${__dirname}/../../templates/entity`
-  });
+  })
 
   // import entity screens to navigation
   const navigationImport = `import ${props.name}EntityScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-screen'`

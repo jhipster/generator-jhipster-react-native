@@ -1,4 +1,4 @@
-import { call, put } from 'redux-saga/effects'
+import { put } from 'redux-saga/effects'
 
 import FixtureAPI from '../../../../../app/shared/services/fixture-api'
 import { changePassword } from '../../../../../app/modules/account/password/change-password.sagas'

@@ -11,8 +11,8 @@ import WebsocketService from '../../shared/websockets/websocket-service'
 <%_ } _%>
 <%_ if (props.authType === 'oauth2') { _%>
 import AppConfig from '../../config/app-config'
-import { generateNonce } from '../../shared/utils/generateNonce'
-import { parseOauthResponse } from '../../shared/utils/parseOauthResponse'
+import { generateNonce } from '../../shared/util/generate-nonce'
+import { parseOauthResponse } from '../../shared/util/parse-oauth-response'
 <%_ } _%>
 
 <%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>

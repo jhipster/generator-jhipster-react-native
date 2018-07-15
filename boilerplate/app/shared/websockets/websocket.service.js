@@ -1,10 +1,11 @@
 import { call, take } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
 import SockJS from 'sockjs-client'
-const webstomp = require('stompjs')
 
 import AppConfig from '../../config/app-config'
 import { processWebsocketMessage } from './websocket.sagas'
+
+const webstomp = require('stompjs')
 
 let em
 let accessToken
