@@ -179,13 +179,7 @@ async function install (context) {
   filesystem.append('.gitignore', '.env\n')
   filesystem.append('.gitignore', 'ios/Index/DataStore\n')
 
-  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-  // NOTE(steve): I'm re-adding this here because boilerplates now hold permanent files
-  // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
   try {
-    // Disabled slow but reliable method here
-    // await system.spawn(`ignite add ignite-jhipster ${debugFlag}`, { stdio: 'inherit' })
-    // mini version of `ignite add ignite-jhipster` here -- but faster
     const moduleName = 'ignite-jhipster'
 
     const perfStart = (new Date()).getTime()
@@ -209,17 +203,11 @@ async function install (context) {
     spinner.start()
     spinner.succeed()
 
-    await system.spawn(`ignite add ignite-ir-boilerplate ${debugFlag}`, { stdio: 'inherit' })
-
     // now run install of Ignite Plugins
     if (props.devScreens) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
-    await system.spawn(`ignite add vector-icons ${debugFlag}`, { stdio: 'inherit' })
-
-    // todo make a plugin?
-    // await system.spawn(`ignite add cookies ${debugFlag}`, { stdio: 'inherit' })
     if (props.authType === 'session' || props.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
     }
