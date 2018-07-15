@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects'
-import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
-import { callApi } from './CallApiSaga'
+
+import { callApi } from '../../../shared/sagas/call-api.saga'
+import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 
 export function * get<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %>Id } = action

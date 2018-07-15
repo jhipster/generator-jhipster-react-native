@@ -12,7 +12,7 @@ test('get success path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  const account = require('../../App/Fixtures/getAccount.json')
+  const account = require('../../../../app/shared/fixtures/getAccount.json')
   expect(step(response)).toEqual(put(AccountActions.accountSuccess(account)))
 })
 

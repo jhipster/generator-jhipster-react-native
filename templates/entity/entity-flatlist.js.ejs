@@ -1,19 +1,16 @@
 import React from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
-<%_ if (props.searchEngine) { _%>
-import SearchBar from '../Components/SearchBar'
-<%_ } _%>
 
-// For empty lists
-import AlertMessage from '../Components/AlertMessage'
+import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
+<%_ if (props.searchEngine) { _%>
+import SearchBar from '../../../shared/components/search-bar/search-bar'
+<%_ } _%>
+import styles from './<%= props.kebabName %>-entity-screen-style'
+import AlertMessage from '../../../shared/components/alert-message/alert-message'
 
 // More info here: https://facebook.github.io/react-native/docs/flatlist.html
-
-// Styles
-import styles from './Styles/<%= props.name %>EntityScreenStyle'
 
 class <%= props.name %>EntityScreen extends React.PureComponent {
   /* ***********************************************************

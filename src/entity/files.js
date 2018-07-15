@@ -14,7 +14,8 @@ module.exports = async function (generator, igniteContext) {
     name,
     searchEngine,
     getEntityFormField,
-    pluralName: pluralize(name)
+    pluralName: pluralize(name),
+    kebabName: kebabCase(name)
   }
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`
@@ -24,12 +25,12 @@ module.exports = async function (generator, igniteContext) {
   props.entityConfig = entityConfig
   props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
 
-  const apiFilePath = `${process.cwd()}/App/Services/Api.js`
-  const fixtureApiFilePath = `${process.cwd()}/App/Services/FixtureApi.js`
-  const reduxIndexFilePath = `${process.cwd()}/App/Redux/index.js`
-  const sagaIndexFilePath = `${process.cwd()}/App/Sagas/index.js`
-  const entityScreenFilePath = `${process.cwd()}/App/Containers/EntitiesScreen.js`
-  const navigationRouterFilePath = `${process.cwd()}/App/Navigation/NavigationRouter.js`
+  const apiFilePath = `${process.cwd()}/app/shared/services/api.js`
+  const fixtureApiFilePath = `${process.cwd()}/app/shared/services/fixture-api.js`
+  const reduxIndexFilePath = `${process.cwd()}/app/shared/reducers/index.js`
+  const sagaIndexFilePath = `${process.cwd()}/app/shared/sagas/index.js`
+  const entityScreenFilePath = `${process.cwd()}/app/modules/entities/entities-screen.js`
+  const navigationRouterFilePath = `${process.cwd()}/app/navigation/navigation-router.js`
 
   // REDUX AND SAGA SECTION
   let apiMethods = `
@@ -43,19 +44,19 @@ module.exports = async function (generator, igniteContext) {
   update${props.name}: (${camelCase(props.name)}) => {
     return {
       ok: true,
-      data: require('../Fixtures/update${props.name}.json')
+      data: require('../../shared/fixtures/update${props.name}.json')
     }
   },
   get${props.pluralName}: () => {
     return {
       ok: true,
-      data: require('../Fixtures/get${props.pluralName}.json')
+      data: require('../../shared/fixtures/get${props.pluralName}.json')
     }
   },
   get${props.name}: (${camelCase(props.name)}Id) => {
     return {
       ok: true,
-      data: require('../Fixtures/get${props.name}.json')
+      data: require('../../shared/fixtures/get${props.name}.json')
     }
   },
   delete${props.name}: (${camelCase(props.name)}Id) => {
@@ -86,7 +87,7 @@ module.exports = async function (generator, igniteContext) {
   search${props.pluralName}: (query) => {
     return {
       ok: true,
-      data: require('../Fixtures/search${props.pluralName}.json')
+      data: require('../../shared/fixtures/search${props.pluralName}.json')
     }
   },`
 
@@ -116,20 +117,20 @@ module.exports = async function (generator, igniteContext) {
   // import redux in redux/index.js
   ignite.patchInFile(reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
-    insert: `  ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`,
-    match: `  ${camelCase(props.pluralName)}: require('./${props.name}Redux').reducer,`
+    insert: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`,
+    match: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`
   })
 
   // import saga/redux in sagas/index.js
   ignite.patchInFile(sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-import-needle',
-    insert: `import { ${props.name}Types } from '../Redux/${props.name}Redux'`,
-    match: `import { ${props.name}Types } from '../Redux/${props.name}Redux'`
+    insert: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`,
+    match: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`
   })
   ignite.patchInFile(sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-method-import-needle',
-    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from './${props.name}Sagas'`,
-    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from './${props.name}Sagas'`
+    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`,
+    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`
   })
 
   ignite.patchInFile(sagaIndexFilePath, {
@@ -141,85 +142,87 @@ module.exports = async function (generator, igniteContext) {
   const entityFiles = [
     // generate entity saga/redux
     {
-      template: `saga.ejs`,
-      target: `App/Sagas/${props.name}Sagas.js`
+      template: `entity-sagas.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}.sagas.js`
     },
     {
-      template: `redux.ejs`,
-      target: `App/Redux/${props.name}Redux.js`
+      template: `entity-reducer.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}.reducer.js`
     },
     // generate entity listing container
     {
-      template: `entity-flatlist.ejs`,
-      target: `App/Containers/${props.name}EntityScreen.js`
+      template: `entity-flatlist.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-screen.js`
     },
     {
-      template: `entity-flatlist-style.ejs`,
-      target: `App/Containers/Styles/${props.name}EntityScreenStyle.js`
+      template: `entity-flatlist-style.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-screen-style.js`
     },
     {
-      template: `entity-detail-screen-style.ejs`,
-      target: `App/Containers/Styles/${props.name}EntityDetailScreenStyle.js`
+      template: `entity-detail-screen.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-detail-screen.js`
     },
     {
-      template: `entity-detail-screen.ejs`,
-      target: `App/Containers/${props.name}EntityDetailScreen.js`
+      template: `entity-detail-screen-style.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-detail-screen-style.js`
     },
     {
-      template: `entity-edit-screen-style.ejs`,
-      target: `App/Containers/Styles/${props.name}EntityEditScreenStyle.js`
+      template: `entity-edit-screen.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-edit-screen.js`
     },
     {
-      template: `entity-edit-screen.ejs`,
-      target: `App/Containers/${props.name}EntityEditScreen.js`
+      template: `entity-edit-screen-style.js.ejs`,
+      target: `app/modules/entities/${props.kebabName}/${props.kebabName}-entity-edit-screen-style.js`
     },
     // generate entity fixtures
     {
       template: `fixtures/entity-get.json.ejs`,
-      target: `App/Fixtures/get${props.name}.json`
+      target: `app/shared/fixtures/get${props.name}.json`
     },
     {
       template: `fixtures/entity-get-all.json.ejs`,
-      target: `App/Fixtures/get${props.pluralName}.json`
+      target: `app/shared/fixtures/get${props.pluralName}.json`
     },
     {
       template: `fixtures/entity-update.json.ejs`,
-      target: `App/Fixtures/update${props.name}.json`
+      target: `app/shared/fixtures/update${props.name}.json`
     },
     // generate entity tests
     {
-      template: `saga-test.ejs`,
-      target: `Tests/Sagas/${props.name}SagaTest.js`
+      template: `entity-sagas.spec.js.ejs`,
+      target: `test/spec/modules/entities/${props.kebabName}/${props.kebabName}.sagas.spec.js`
     },
     {
-      template: `redux-test.ejs`,
-      target: `Tests/Redux/${props.name}ReduxTest.js`
+      template: `entity-reducer.spec.js.ejs`,
+      target: `test/spec/modules/entities/${props.kebabName}/${props.kebabName}.reducer.spec.js`
     }
   ]
 
   if (props.searchEngine) {
     entityFiles.push({
       template: `fixtures/entity-get-all.json.ejs`,
-      target: `App/Fixtures/search${props.pluralName}.json`
+      target: `app/shared/fixtures/search${props.pluralName}.json`
     })
   }
 
-  await ignite.copyBatch(igniteContext, entityFiles, props)
+  await ignite.copyBatch(igniteContext, entityFiles, props, {
+    directory: `${__dirname}/../../templates/entity`
+  });
 
   // import entity screens to navigation
-  const navigationImport = `import ${props.name}EntityScreen from '../Containers/${props.name}EntityScreen'`
+  const navigationImport = `import ${props.name}EntityScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-screen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
     insert: navigationImport,
     match: navigationImport
   })
-  const navigationImportDetail = `import ${props.name}EntityDetailScreen from '../Containers/${props.name}EntityDetailScreen'`
+  const navigationImportDetail = `import ${props.name}EntityDetailScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-detail-screen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
     insert: navigationImportDetail,
     match: navigationImportDetail
   })
-  const navigationImportEdit = `import ${props.name}EntityEditScreen from '../Containers/${props.name}EntityEditScreen'`
+  const navigationImportEdit = `import ${props.name}EntityEditScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-edit-screen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
     insert: navigationImportEdit,

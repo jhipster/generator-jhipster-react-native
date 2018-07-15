@@ -1,14 +1,12 @@
 import React from 'react'
 import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
-import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
 import t from 'tcomb-form-native'
 
-// Styles
-import styles from './Styles/<%= props.name %>EntityEditScreenStyle'
+import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
+import styles from './<%= props.kebabName %>-entity-edit-screen-style'
 
 let Form = t.form.Form
 
