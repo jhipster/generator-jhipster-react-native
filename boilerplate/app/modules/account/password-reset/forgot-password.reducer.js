@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 const { Types, Creators } = createActions({
   forgotPasswordRequest: ['email'],
   forgotPasswordSuccess: ['response'],
-  forgotPasswordFailure: ['error'],
+  forgotPasswordFailure: ['error']
 })
 
 export const ForgotPasswordTypes = Types
@@ -35,7 +35,7 @@ export const failure = (state, { error }) => state.merge({ fetching: false, erro
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FORGOT_PASSWORD_REQUEST]: request,
   [Types.FORGOT_PASSWORD_SUCCESS]: success,
-  [Types.FORGOT_PASSWORD_FAILURE]: failure,
+  [Types.FORGOT_PASSWORD_FAILURE]: failure
 })
 
 /* ------------- Selectors ------------- */
