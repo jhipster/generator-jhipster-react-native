@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 
-import DrawerButton from './drawer-button'
+import DrawerButton from '../../../app/navigation/drawer/drawer-button'
 
 storiesOf('DrawerButton', module)
   .add('Default', () => (
