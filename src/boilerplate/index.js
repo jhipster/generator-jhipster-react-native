@@ -4,6 +4,7 @@ const { getReactNativeVersion } = require('../lib/react-native-version')
 const Insight = require('../lib/insight')
 const generateFiles = require('./files')
 const fs = require('fs-extra')
+const pkg = require('../../package')
 
 /**
  * Is Android installed?
@@ -118,7 +119,7 @@ async function install (context) {
   props.searchEngine = !!jhipsterConfig['generator-jhipster'].searchEngine
   props.websockets = !!jhipsterConfig['generator-jhipster'].websocket
   props.socialLogin = !!jhipsterConfig['generator-jhipster'].enableSocialSignIn
-
+  props.packageVersion = pkg.version
   await generateFiles(context, props, jhipsterConfig)
 
   /**
@@ -180,14 +181,6 @@ async function install (context) {
   filesystem.append('.gitignore', 'ios/Index/DataStore\n')
 
   try {
-    const moduleName = 'ignite-jhipster'
-
-    const perfStart = (new Date()).getTime()
-    const spinner = print.spin(`adding ${print.colors.cyan(moduleName)}`)
-
-    const boilerplate = parameters.options.b || parameters.options.boilerplate || moduleName
-    await system.spawn(`ignite add ${boilerplate} ${debugFlag}`, { stdio: 'inherit' })
-
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
     const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
     ignite.setIgnitePluginPath(__dirname)
@@ -197,17 +190,15 @@ async function install (context) {
     fs.writeJsonSync('.jhipster/yo-rc.json', jhipsterConfig, { spaces: '\t' })
     print.success(`JHipster config saved to your app's .jhipster folder.`)
 
-    const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
-
-    spinner.text = `added ${print.colors.cyan(moduleName)} in ${perfDuration}s`
-    spinner.start()
-    spinner.succeed()
+    // link vector-icons again so it for sure links
+    await system.spawn('react-native link react-native-vector-icons')
 
     // now run install of Ignite Plugins
     if (props.devScreens) {
       await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
     }
 
+    // todo move any addModule calls directly into package.json.ejs (good first contribution)
     if (props.authType === 'session' || props.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
     }
