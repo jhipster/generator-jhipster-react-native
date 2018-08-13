@@ -14,13 +14,19 @@ class ChangePasswordScreen extends React.Component {
     super(props)
     this.state = {
       formModel: t.struct({
-        password: t.String,
+        currentPassword: t.String,
+        newPassword: t.String,
         confirmPassword: t.String
       }),
       formValue: { password: null, confirmPassword: null },
       formOptions: {
         fields: {
-          password: {
+          currentPassword: {
+            secureTextEntry: true,
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('newPassword').refs.input.focus()
+          },
+          newPassword: {
             secureTextEntry: true,
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
@@ -45,11 +51,11 @@ class ChangePasswordScreen extends React.Component {
     // call getValue() to get the values of the form
     const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
-      if (value.password !== value.confirmPassword) {
+      if (value.newPassword !== value.confirmPassword) {
         Alert.alert('Error', 'Passwords do not match', [{text: 'OK'}])
         return
       }
-      this.props.changePassword(value.password)
+      this.props.changePassword(value.currentPassword, value.newPassword)
     }
   }
 
@@ -102,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changePassword: (account) => dispatch(PasswordActions.changePasswordRequest(account))
+    changePassword: (currentPassword, newPassword) => dispatch(PasswordActions.changePasswordRequest(currentPassword, newPassword))
   }
 }
 

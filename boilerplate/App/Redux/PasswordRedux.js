@@ -7,7 +7,7 @@ const { Types, Creators } = createActions({
   forgotPasswordSuccess: ['response'],
   forgotPasswordFailure: ['error'],
 
-  changePasswordRequest: ['password'],
+  changePasswordRequest: ['currentPassword', 'newPassword'],
   changePasswordSuccess: ['response'],
   changePasswordFailure: ['error']
 })
