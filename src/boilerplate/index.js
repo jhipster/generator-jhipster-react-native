@@ -261,9 +261,9 @@ async function install (context) {
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  react-native run-android'))
   print.info('')
-  print.info('To see what ignite can do for you:')
+  print.info('To see what JHipster generators are available:')
   print.info(print.colors.bold(`  cd ${name}`))
-  print.info(print.colors.bold('  ignite'))
+  print.info(print.colors.bold('  ignite generate'))
   print.info('')
 }
 
