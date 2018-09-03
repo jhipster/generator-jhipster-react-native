@@ -40,7 +40,7 @@ module.exports = async function (context) {
     }
     print.success(`Found the entity config at ${jhDirectoryFlag}/${localEntityFilePath}`)
     jhipsterDirectory = jhDirectoryFlag
-    fullEntityFilePath = `${jhDirectoryFlag}/.jhipster/${localEntityFilePath}`
+    fullEntityFilePath = `${jhDirectoryFlag}/${localEntityFilePath}`
   } else {
     // prompt the user until an entity configuration file is found
     while (true) {
@@ -56,18 +56,14 @@ module.exports = async function (context) {
         print.error(`Could not find entity file, please try again.`)
       }
     }
-
-    if (!fs.existsSync(`.jhipster`)) {
-      fs.mkdirSync(`.jhipster`)
-    }
-
-    await fs.copy(fullEntityFilePath, localEntityFilePath)
-    print.success(`Entity config saved to your app's .jhipster folder.`)
-
-    // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
-    this.igniteConfig.jhipsterDirectory = jhipsterDirectory
-    await fs.writeJson('ignite/ignite.json', this.igniteConfig, { spaces: '\t' })
   }
+
+  await fs.copy(fullEntityFilePath, localEntityFilePath)
+  print.success(`Entity config saved to your app's .jhipster folder.`)
+
+  // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
+  this.igniteConfig.jhipsterDirectory = jhipsterDirectory
+  await fs.writeJson('ignite/ignite.json', this.igniteConfig, { spaces: '\t' })
 
   await generateFiles(this, context)
 
