@@ -89,8 +89,8 @@ export default {
       ok: true
     }
   },
-  changePassword: ({password}) => {
-    if (password === 'valid-password') {
+  changePassword: ({currentPassword}) => {
+    if (currentPassword === 'valid-password') {
       return {
         ok: true
       }

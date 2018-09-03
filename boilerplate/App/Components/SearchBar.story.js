@@ -1,10 +1,9 @@
-import React from 'react'
 import { View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 
 import SearchBar from './SearchBar'
 
-storiesOf('SearchBar')
+storiesOf('SearchBar', module)
   .add('Default', () => (
     <View style={{ backgroundColor: 'black', height: 50 }}>
       <SearchBar
