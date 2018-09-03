@@ -4,8 +4,8 @@ import ChangePasswordActions from './change-password.reducer'
 import { callApi } from '../../../shared/sagas/call-api.saga'
 
 // attempts to request a password change
-export function * changePassword (api, { password }) {
-  const apiCall = call(api.changePassword, password)
+export function * changePassword (api, { currentPassword, newPassword }) {
+  const apiCall = call(api.changePassword, currentPassword, newPassword)
   const response = yield call(callApi, apiCall)
   // success?
   if (response.ok) {
