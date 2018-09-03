@@ -43,7 +43,7 @@ async function install (context) {
 
   const name = parameters.third
   const spinner = print
-    .spin(`using the ${print.colors.blue('JHipster')} boilerplate`)
+    .spin(`Generating a React Native client for JHipster apps`)
     .succeed()
 
   let props = {
