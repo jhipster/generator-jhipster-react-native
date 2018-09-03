@@ -48,7 +48,7 @@ async function install (context) {
 
   let props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
-    disableInsight: parameters.options['disable-insight']
+    disableInsight: parameters.options['disable-insight'] || false
   }
   let jhipsterConfig
   let jhipsterDirectory
@@ -81,7 +81,7 @@ async function install (context) {
     }
   }
 
-  if (props.disableInsight === undefined && Insight.insight.optOut === undefined) {
+  if (!props.disableInsight && Insight.insight.optOut === undefined) {
     Insight.insight.optOut = !((await prompt.ask(prompts.insight)).insight)
   }
 
