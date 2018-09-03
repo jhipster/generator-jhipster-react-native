@@ -22,7 +22,7 @@ For a quick tour, check out the [Sample Application for Android](https://play.go
 
 ## Getting Started
 #### Requirements
- - Node v7.6+
+ - Node v8+
     - Verify version with `node -v`
  - [React Native setup](https://facebook.github.io/react-native/docs/getting-started.html#content)
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)

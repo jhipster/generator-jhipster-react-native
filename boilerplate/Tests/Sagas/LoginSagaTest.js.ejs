@@ -4,9 +4,10 @@ import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oau
 import LoginActions from '../../App/Redux/LoginRedux'
 import AccountActions from '../../App/Redux/AccountRedux'
 <%_ if (props.authType === 'oauth2') { _%>
-jest.mock('../../App/Lib/GenerateNonce', () => ({
-  generateNonce: jest.fn(() => 'test-nonce')
-}))
+var reference = require('../../App/Lib/GenerateNonce');
+reference.generateNonce = function () {
+  return 'test-nonce';
+}
 <%_ } _%>
 
 const stepper = (fn) => (mock) => fn.next(mock).value
