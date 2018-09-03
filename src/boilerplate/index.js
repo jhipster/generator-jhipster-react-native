@@ -193,7 +193,7 @@ async function install (context) {
       // install websocket dependencies
       await ignite.addModule('stompjs', { version: '2.3.3' })
       // this is a github module for a react-native specific fix that hasn't been released yet
-      await ignite.addModule('sockjs-client', { version: 'https://github.com/sockjs/sockjs-client#4d18fd56a6c4fb476c3e1931543a6cb9daaa6eba' })
+      await ignite.addModule('sockjs-client', { version: '1.1.5' })
       await ignite.addModule('net', { version: '1.0.2' })
     }
 
