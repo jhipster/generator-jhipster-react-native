@@ -17,23 +17,12 @@ module.exports = {
       return true
     }
   },
-  devScreens: {
-    name: 'devScreens',
-    message: 'Would you like Ignite Development Screens?',
-    type: 'confirm'
-  },
   // i18n: {
   //   name: 'i18n',
   //   message: 'What internationalization library will you use?',
   //   type: 'list',
   //   choices: ['none', 'react-native-i18n']
   // },
-  animatable: {
-    name: 'animatable',
-    message: 'What animation library will you use?',
-    type: 'radio',
-    choices: ['react-native-animatable']
-  },
   insight: {
     name: 'insight',
     message: 'May IgniteJHipster anonymously report usage statistics to improve the tool over time?',

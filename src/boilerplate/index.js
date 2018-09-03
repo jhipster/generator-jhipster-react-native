@@ -48,8 +48,6 @@ async function install (context) {
 
   let props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
-    devScreens: parameters.options['dev-screens'],
-    animatable: parameters.options['animatable'],
     disableInsight: parameters.options['disable-insight']
   }
   let jhipsterConfig
@@ -83,12 +81,6 @@ async function install (context) {
     }
   }
 
-  if (props.devScreens === undefined) {
-    props.devScreens = (await prompt.ask(prompts.devScreens)).devScreens
-  }
-  if (props.animatable === undefined) {
-    props.animatable = (await prompt.ask(prompts.animatable)).animatable
-  }
   if (props.disableInsight === undefined && Insight.insight.optOut === undefined) {
     Insight.insight.optOut = !((await prompt.ask(prompts.insight)).insight)
   }
@@ -97,8 +89,7 @@ async function install (context) {
   props.skipLint = parameters.options['skip-lint']
 
   // very hacky but correctly handles both strings and booleans and converts to boolean
-  props.devScreens = JSON.parse(props.devScreens)
-  props.disableInsight = JSON.parse(props.devScreens)
+  props.disableInsight = JSON.parse(props.disableInsight)
 
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
@@ -193,11 +184,6 @@ async function install (context) {
     // link vector-icons again so it for sure links
     await system.spawn('react-native link react-native-vector-icons')
 
-    // now run install of Ignite Plugins
-    if (props.devScreens) {
-      await system.spawn(`ignite add dev-screens ${debugFlag}`, { stdio: 'inherit' })
-    }
-
     // todo move any addModule calls directly into package.json.ejs (good first contribution)
     if (props.authType === 'session' || props.authType === 'uaa') {
       await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
@@ -214,10 +200,6 @@ async function install (context) {
     if (props.socialLogin) {
       // install social login dependencies
       await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
-    }
-
-    if (props.animatable === 'react-native-animatable') {
-      await system.spawn(`ignite add animatable ${debugFlag}`, { stdio: 'inherit' })
     }
 
     if (!props.skipLint) {

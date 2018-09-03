@@ -22,8 +22,6 @@ describe('JWT Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=false',
-      '--animatable=false',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
@@ -70,8 +68,6 @@ describe('OAuth2 Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=false',
-      '--animatable=false',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
@@ -118,8 +114,6 @@ describe('UAA Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=false',
-      '--animatable=false',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
@@ -166,8 +160,6 @@ describe('Session Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=false',
-      '--animatable=false',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
@@ -214,8 +206,6 @@ describe('ElasticSearch Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=false',
-      '--animatable=false',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
@@ -262,8 +252,6 @@ describe('Max Options Integration Test', () => {
     await execa(IGNITE, [
       'new', APP,
       '--jh-dir=backend',
-      '--dev-screens=true',
-      '--animatable=true',
       '--skip-git',
       '--disable-insight',
       '--boilerplate', BOILERPLATE
