@@ -64,7 +64,6 @@ Contains a preconfigured Redux and Redux-Sagas setup. Review each file carefully
 Contains your API service and other important utilities for your application.
 
 * `Api.js` - main API service, giving you an interface to communicate with your back end
-* `ExamplesRegistry.js` - lets you view component and Ignite plugin examples in your app
 * `FixtureApi.js` - mocks your API service, making it faster to develop early on in your app
 * `ImmutablePersistenceTransform.js` - part of the redux-persist implementation
 * `RehydrationServices.js` - part of the redux-persist implementation

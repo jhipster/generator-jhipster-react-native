@@ -44,6 +44,7 @@
     "@storybook/channels": "3.4.10",
     "@storybook/react-native": "3.4.10",
     "@babel/core": "7.0.0",
+    "babel-core": "npm:@babel/core",
     "babel-plugin-ignite-ignore-reactotron": "0.3.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-react-native": "5.0.2",
@@ -67,7 +68,8 @@
     ],
     "testPathIgnorePatterns":[
       "/node_modules/",
-      "Tests/Setup.js"
+      "Tests/Setup.js",
+      "Tests/StoriesTest.js"
     ],
     "moduleNameMapper": {
       "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy"
@@ -75,6 +77,9 @@
     "setupFiles": [
       "./Tests/Setup"
     ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
     "coveragePathIgnorePatterns": [
       "App/Services/Api.js",
       "App/Themes/",
