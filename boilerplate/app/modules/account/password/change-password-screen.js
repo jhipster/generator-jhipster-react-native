@@ -108,7 +108,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    changePassword: (currentPassword, newPassword) => dispatch(PasswordActions.changePasswordRequest(currentPassword, newPassword))
+    changePassword: (currentPassword, newPassword) => dispatch(ChangePasswordActions.changePasswordRequest(currentPassword, newPassword))
   }
 }
 
