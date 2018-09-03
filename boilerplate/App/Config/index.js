@@ -1,4 +1,3 @@
-import { Text } from 'react-native'
 import DebugConfig from './DebugConfig'
 
 if (__DEV__) {
