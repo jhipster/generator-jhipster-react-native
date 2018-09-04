@@ -152,12 +152,6 @@ async function install (context) {
 
   spinner.stop()
 
-  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
-  spinner.text = `▸ linking native libraries`
-  spinner.start()
-  await system.spawn('react-native link', { stdio: 'ignore' })
-  spinner.stop()
-
   // pass long the debug flag if we're running in that mode
   const debugFlag = parameters.options.debug ? '--debug' : ''
 
@@ -180,9 +174,6 @@ async function install (context) {
     fs.mkdirSync(`.jhipster`)
     fs.writeJsonSync('.jhipster/yo-rc.json', jhipsterConfig, { spaces: '\t' })
     print.success(`JHipster config saved to your app's .jhipster folder.`)
-
-    // link vector-icons again so it for sure links
-    await system.spawn('react-native link react-native-vector-icons')
 
     // todo move any addModule calls directly into package.json.ejs (good first contribution)
     if (props.authType === 'session' || props.authType === 'uaa') {
@@ -213,6 +204,12 @@ async function install (context) {
     ignite.log(e)
     throw e
   }
+
+  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
+  spinner.text = `▸ linking native libraries`
+  spinner.start()
+  await system.spawn('react-native link', { stdio: 'ignore' })
+  spinner.stop()
 
   // git configuration
   const gitExists = await filesystem.exists('./.git')
