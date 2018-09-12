@@ -5,7 +5,7 @@ import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oau
 import LoginActions from '../../../../app/modules/login/login.reducer'
 import AccountActions from '../../../../app/shared/reducers/account.reducer'
 <%_ if (props.authType === 'oauth2') { _%>
-var reference = require('../../App/Lib/GenerateNonce')
+var reference = require('../../app/shared/util/generate-nonce')
 reference.generateNonce = function () {
   return 'test-nonce'
 }
