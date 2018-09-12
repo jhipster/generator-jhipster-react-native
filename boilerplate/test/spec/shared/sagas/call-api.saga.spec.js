@@ -15,7 +15,7 @@ test('returns the response if authorized', () => {
   const account = {
     ok: true,
     status: 200,
-    data: require('../../../../app/shared/fixtures/getAccount.json')
+    data: require('../../../../app/shared/fixtures/get-account.json')
   }
   expect(step(response)).toEqual(account)
 })

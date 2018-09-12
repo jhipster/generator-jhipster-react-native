@@ -159,10 +159,10 @@ module.exports = async function (context, props, jhipsterConfig) {
     }
   } else {
     // remove OAuth2 files if not enabled
-    await filesystem.remove('App/Lib/GenerateNonce.js')
-    await filesystem.remove('App/Transforms/ParseOauthResponse.js')
-    await filesystem.remove('App/Fixtures/getOauthInfo.json')
-    await filesystem.remove('App/Fixtures/getOauthIssuerInfo.json')
+    await filesystem.remove('app/shared/util/generate-nonce.js')
+    await filesystem.remove('app/shared/util/parse-oauth-response.js')
+    await filesystem.remove('app/shared/fixtures/get-oauth-info.json')
+    await filesystem.remove('app/shared/fixtures/get-oauth-issuer-info.json')
   }
 
   /**
