@@ -59,5 +59,11 @@
     "jhipster-core": "3.3.3",
     "pluralize": "6.0.0",
     "ramda": "0.23.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns":[
+      "node_modules/",
+      "boilerplate/"
+    ]
   }
 }
