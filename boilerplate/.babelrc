@@ -1,5 +1,5 @@
 {
-  "presets": ["module:metro-react-native-babel-preset"],
+  "presets": ["react-native"],
   "env": {
     "production": {
       "plugins": ["ignite-ignore-reactotron"]
