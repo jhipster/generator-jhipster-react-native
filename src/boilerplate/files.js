@@ -138,19 +138,21 @@ module.exports = async function (context, props, jhipsterConfig) {
    * If using OIDC (OAuth2), copy the AuthInfoResource into the JHipster project
    */
   if (props.authType === 'oauth2') {
+    const isMonolith = jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
       const oauth2Files = [
         { template: 'AuthInfoResource.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` },
-        jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
-          ? { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
-          : { template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` }
+        { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
       ]
+      if (!isMonolith) {
+        oauth2Files.push({ template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` })
+      }
       await ignite.copyBatch(context, oauth2Files, props, {
         quiet: true,
         directory: `${__dirname}/../../templates/jhipster/oauth2`
       })
-      const securityConfigFile = (jhipsterConfig['generator-jhipster'].applicationType === 'monolith') ? 'SecurityConfiguration' : 'OAuth2SsoConfiguration'
-      if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
+      const securityConfigFile = 'SecurityConfiguration'
+      if (isMonolith && fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
         await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
           {
             replace: '.antMatchers("/api/**").authenticated()',

@@ -16,15 +16,15 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -%>
-package <%=props.packageName%>.config;
+package <%=packageName%>.config;
 
-import <%=props.packageName%>.security.AuthoritiesConstants;
+import <%=packageName%>.security.AuthoritiesConstants;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
@@ -43,9 +43,14 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
         http
             .csrf().disable()
             .addFilterBefore(corsFilter, CsrfFilter.class)
-            .requestMatcher(new RequestHeaderRequestMatcher("Authorization"))
+            .requestMatcher(requestHeaderRequestMatcher())
             .authorizeRequests()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
+    }
+
+    @Bean("authorizationHeaderRequestMatcher")
+    RequestHeaderRequestMatcher requestHeaderRequestMatcher() {
+        return new RequestHeaderRequestMatcher("Authorization");
     }
 }
