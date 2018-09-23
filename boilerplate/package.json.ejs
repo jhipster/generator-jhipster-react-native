@@ -16,6 +16,11 @@
     "precommit": "npm run git-hook",
     "prepush": "npm run git-hook",
     "git-hook": "npm test -s",
+    <%_ if (!props.skipLint) { _%>
+    "lint": "standard --verbose | snazzy",
+    "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
+    "fixcode": "standard --fix",
+    <%_ } _%>
     "storybook": "storybook start -p 7007"
   },
   "dependencies": {
@@ -58,6 +63,22 @@
     "reactotron-react-native": "2.1.0",
     "reactotron-redux": "2.1.0",
     "reactotron-redux-saga": "2.1.0",
+    <%_ if (props.socialLogin) { _%>
+    "react-native-simple-auth": "2.2.0",
+    <%_ } _%>
+    <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+    "react-native-cookies": "3.2.0",
+    <%_ } _%>
+    <%_ if (props.websockets) { _%>
+    "stompjs": "2.3.3",
+    "sockjs-client": "1.1.5",
+    "net": "1.0.2",
+    <%_ } _%>
+    <%_ if (!props.skipLint) { _%>
+    "babel-eslint": "7.1.1",
+    "snazzy": "8.0.0",
+    "standard": "10.0.2",
+    <%_ } _%>
     "rimraf": "2.6.2"
   },
   "jest": {
@@ -86,5 +107,25 @@
     ],
     "preset": "react-native"
   },
+  <%_ if (!props.skipLint) { _%>
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [
+      "describe",
+      "test",
+      "jest",
+      "expect",
+      "fetch",
+      "navigator",
+      "__DEV__",
+      "XMLHttpRequest",
+      "FormData",
+      "React$Element"
+    ],
+    "ignore": [
+      "ignite/**"
+    ]
+  },
+  <%_ } _%>
   "config": { }
 }

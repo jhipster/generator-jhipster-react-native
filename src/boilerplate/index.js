@@ -149,11 +149,17 @@ async function install (context) {
     filesystem.write('package.json', newPackage, { jsonIndent: 2 })
   }
   await mergePackageJsons()
-
   spinner.stop()
+  spinner.succeed(`Project generated`)
+
+  spinner.text = `▸ installing dependencies`
+  spinner.start()
+  // install any missing dependencies
+  await system.run('yarn', { stdio: 'ignore' })
+  spinner.succeed(`Dependencies installed`)
 
   // pass long the debug flag if we're running in that mode
-  const debugFlag = parameters.options.debug ? '--debug' : ''
+  // const debugFlag = parameters.options.debug ? '--debug' : ''
 
   /**
    * Append to files
@@ -174,32 +180,6 @@ async function install (context) {
     fs.mkdirSync(`.jhipster`)
     fs.writeJsonSync('.jhipster/yo-rc.json', jhipsterConfig, { spaces: '\t' })
     print.success(`JHipster config saved to your app's .jhipster folder.`)
-
-    // todo move any addModule calls directly into package.json.ejs (good first contribution)
-    if (props.authType === 'session' || props.authType === 'uaa') {
-      await ignite.addModule('react-native-cookies', {version: '3.2.0', link: true})
-    }
-
-    if (props.websockets) {
-      // install websocket dependencies
-      await ignite.addModule('stompjs', { version: '2.3.3' })
-      // this is a github module for a react-native specific fix that hasn't been released yet
-      await ignite.addModule('sockjs-client', { version: '1.1.5' })
-      await ignite.addModule('net', { version: '1.0.2' })
-    }
-
-    if (props.socialLogin) {
-      // install social login dependencies
-      await ignite.addModule('react-native-simple-auth', { version: '2.2.0' })
-    }
-
-    if (!props.skipLint) {
-      await system.spawn(`ignite add standard ${debugFlag}`, { stdio: 'inherit' })
-      // ignore the ignite folder
-      let pkg = filesystem.read(`package.json`, 'json')
-      pkg.standard['ignore'] = [ 'ignite/**' ]
-      filesystem.write(`package.json`, pkg)
-    }
   } catch (e) {
     ignite.log(e)
     throw e
