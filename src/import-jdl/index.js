@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const Insight = require('../lib/insight')
-const jhiCore = require('jhipster-core')
+const importJDL = require('../lib/import-jdl').importJDL
 
 module.exports = async function (context) {
   // grab some features
@@ -22,33 +22,20 @@ module.exports = async function (context) {
   const applicationType = jhipsterConfig['generator-jhipster'].applicationType
   const baseName = jhipsterConfig['generator-jhipster'].baseName
   try {
-    const jdlObject = jhiCore.convertToJDLFromConfigurationObject({
-      document: jhiCore.parseFromFiles(jdlFiles),
-      databaseType: prodDatabaseType,
-      applicationType: applicationType,
-      applicationName: baseName
-    })
-    const entities = jhiCore.convertToJHipsterJSON({
-      jdlObject,
-      databaseType: prodDatabaseType,
-      applicationType: applicationType
-    })
-    print.info('Writing entity JSON files.')
-    this.changedEntities = jhiCore.exportEntities({
-      entities,
-      forceNoFiltering: false
-    })
-
-    this.updatedKeys = Object.keys(this.changedEntities)
-    if (this.updatedKeys.length > 0) {
-      print.info(`Updated entities: ${this.updatedKeys}`)
+    const importState = importJDL(jdlFiles, prodDatabaseType, applicationType, baseName, print)
+    let entityNames = []
+    if (importState.exportedEntities.length > 0) {
+      entityNames = importState.exportedEntities.map(exportedEntity => exportedEntity.name).join(', ')
+      print.info(`Found entities: ${entityNames}.`)
     } else {
-      print.info('No change in entity configurations. No entities were updated')
+      print.info('No change in entity configurations, no entities were updated.')
     }
 
+    print.success(entityNames)
     // generate update entities
-    for (let i = 0; i < this.updatedKeys.length; i++) {
-      await system.spawn(`ignite g entity ${this.updatedKeys[i]}`, { stdio: 'inherit' })
+    for (let i = 0; i < entityNames.length; i++) {
+      console.log(`ignite g entity ${entityNames[i]}`)
+      await system.spawn(`ignite g entity ${entityNames[i]}`, { stdio: 'inherit' })
     }
 
     print.success(`JDL successfully imported!`)
