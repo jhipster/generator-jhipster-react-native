@@ -11,10 +11,10 @@ module.exports = async function (generator, igniteContext) {
   let name = generator.name
   let searchEngine = generator.igniteConfig.searchEngine
   const props = {
-    name,
+    name: pluralize.singular(name),
     searchEngine,
     getEntityFormField,
-    pluralName: pluralize(name)
+    pluralName: pluralize.plural(name)
   }
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`

@@ -58,13 +58,15 @@ module.exports = async function (context) {
     }
   }
 
-  await fs.copy(fullEntityFilePath, localEntityFilePath)
-  print.success(`Entity config saved to your app's .jhipster folder.`)
-
-  // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
-  this.igniteConfig.jhipsterDirectory = jhipsterDirectory
-  await fs.writeJson('ignite/ignite.json', this.igniteConfig, { spaces: '\t' })
-
+  if (fullEntityFilePath) {
+    await fs.copy(fullEntityFilePath, localEntityFilePath)
+    print.success(`Entity config saved to your app's .jhipster folder.`)
+  }
+  if (jhipsterDirectory) {
+    // save the jhipster app directory to the ignite config as the new jhipsterDirectory default
+    this.igniteConfig.jhipsterDirectory = jhipsterDirectory
+    await fs.writeJson('ignite/ignite.json', this.igniteConfig, { spaces: '\t' })
+  }
   await generateFiles(this, context)
 
   Insight.trackGenerator(context, 'entity')
