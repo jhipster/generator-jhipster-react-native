@@ -1,5 +1,6 @@
 const execa = require('execa')
 const tempy = require('tempy')
+const jetpack = require('fs-jetpack')
 
 const IGNITE = 'ignite'
 const APP = 'IntegrationTest'
@@ -52,5 +53,11 @@ describe('OAuth2 Integration Test', () => {
     const tests = await execa('npm', ['-s', 'run', 'test', '--', '-u'])
     console.log('Tests Complete')
     expect(tests.stderr).not.toMatch(/failed/)
+  })
+
+  test('generates oauth2 files in the JHipster project directory', async () => {
+    console.log('Checking for OAuth2 files...')
+    expect(jetpack.exists('../backend/src/main/java/com/mycompany/myapp/config/ResourceServerConfiguration.java')).toBe('file')
+    expect(jetpack.exists('../backend/src/main/java/com/mycompany/myapp/web/rest/AuthInfoResource.java')).toBe('file')
   })
 })
