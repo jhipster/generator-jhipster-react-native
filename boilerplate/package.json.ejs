@@ -40,6 +40,17 @@
     "redux-saga": "0.16.0",
     "reduxsauce": "1.0.0",
     "seamless-immutable": "7.1.4",
+    <%_ if (props.socialLogin) { _%>
+    "react-native-simple-auth": "2.2.0",
+    <%_ } _%>
+    <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+    "react-native-cookies": "3.2.0",
+    <%_ } _%>
+    <%_ if (props.websockets) { _%>
+    "stompjs": "2.3.3",
+    "sockjs-client": "1.1.5",
+    "net": "1.0.2",
+    <%_ } _%>
     "tcomb-form-native": "0.6.16"
   },
   "devDependencies": {
@@ -63,17 +74,6 @@
     "reactotron-react-native": "2.1.0",
     "reactotron-redux": "2.1.0",
     "reactotron-redux-saga": "2.1.0",
-    <%_ if (props.socialLogin) { _%>
-    "react-native-simple-auth": "2.2.0",
-    <%_ } _%>
-    <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
-    "react-native-cookies": "3.2.0",
-    <%_ } _%>
-    <%_ if (props.websockets) { _%>
-    "stompjs": "2.3.3",
-    "sockjs-client": "1.1.5",
-    "net": "1.0.2",
-    <%_ } _%>
     <%_ if (!props.skipLint) { _%>
     "babel-eslint": "7.1.1",
     "snazzy": "8.0.0",
