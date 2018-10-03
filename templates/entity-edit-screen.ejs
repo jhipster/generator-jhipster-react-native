@@ -5,7 +5,7 @@ import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
 import <%= pascalCase(relation.otherEntityName) %>Actions from '../Redux/<%= pascalCase(relation.otherEntityName) %>Redux'
 <%_ }) _%>
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Navigation } from 'react-native-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 <%_ if (props.entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../Transforms/DateTransforms'
@@ -33,6 +33,7 @@ _%>
 class <%= props.name %>EntityEditScreen extends React.Component {
   constructor (props) {
     super(props)
+    Navigation.events().bindComponent(this)
     this.state = {
       updating: props.entityId !== null && props.entityId !== undefined,
       formModel: t.struct({
@@ -121,7 +122,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
         })
         Alert.alert('Success', 'Entity saved successfully', [{text: 'OK'}])
         this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
-        NavigationActions.pop()
+        Navigation.pop(this.props.componentId)
       }
     }
   }

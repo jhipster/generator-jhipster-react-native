@@ -1,59 +1,77 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { ScrollView, Image, BackHandler } from 'react-native'
+import { Navigation } from 'react-native-navigation'
+
 import styles from './Styles/DrawerContentStyles'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, entitiesScreen} from '../Navigation/Layouts'
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux'
 import { isLoggedIn } from '../Redux/AccountRedux'
 
 class DrawerContent extends Component {
+  constructor (context, props) {
+    super(context, props)
+    Navigation.events().bindComponent(this)
+  }
+
+
+  hideSideMenu () {
+    Navigation.mergeOptions(this.props.componentId, {
+      sideMenu: {
+        left: {
+          visible: false
+        }
+      }
+    })
+  }
+
   componentDidMount () {
     BackHandler.addEventListener('hardwareBackPress', () => {
-      NavigationActions.drawerClose()
+      this.hideSideMenu()
     })
   }
 
   handlePressLogin = () => {
-    NavigationActions.drawerClose()
+    this.hideSideMenu()
     <%_ if (props.authType === 'oauth2') { _%>
     this.props.login()
     <%_ } else { _%>
-    NavigationActions.login()
+    loginScreen()
     <%_ } _%>
   }
   <%_ if (props.authType !== 'oauth2') { _%>
   handlePressRegister = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.register()
+    this.hideSideMenu()
+    registerScreen()
   }
   handlePressForgotPassword = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.forgotPassword()
+    this.hideSideMenu()
+    forgotPasswordScreen()
   }
   handlePressSettings = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.settings()
+    this.hideSideMenu()
+    settingsScreen()
   }
   handlePressChangePassword = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.changePassword()
+    this.hideSideMenu()
+    changePasswordScreen()
   }
   <%_ } _%>
   handlePressEntities = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.entities()
+    this.hideSideMenu()
+    entitiesScreen()
   }
   <%_ if (props.websockets) { _%>
   handlePressChat = () => {
-    NavigationActions.drawerClose()
-    NavigationActions.chat()
+    this.hideSideMenu()
+    chatScreen()
   }
   <%_ } _%>
   handlePressLogout = () => {
-    NavigationActions.drawerClose()
+    this.hideSideMenu()
     this.props.logout()
   }
 

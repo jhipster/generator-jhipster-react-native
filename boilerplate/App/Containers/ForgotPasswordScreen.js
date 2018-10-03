@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { Navigation } from 'react-native-navigation'
 import PasswordActions from '../Redux/PasswordRedux'
 import t from 'tcomb-form-native'
 // Styles
@@ -13,6 +13,7 @@ let Form = t.form.Form
 class ForgotPasswordScreen extends React.Component {
   constructor (props) {
     super(props)
+    Navigation.events().bindComponent(this)
     this.state = {
       formModel: t.struct({
         email: t.String
@@ -53,7 +54,7 @@ class ForgotPasswordScreen extends React.Component {
           success: true
         })
         Alert.alert('Success', 'Password reset email sent', [{text: 'OK'}])
-        NavigationActions.pop()
+        Navigation.popToRoot(this.props.componentId)
       }
     }
   }

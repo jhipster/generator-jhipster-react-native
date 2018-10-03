@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/EntitiesScreenStyle'
 import RoundedButton from '../Components/RoundedButton' // eslint-disable-line
-import { Actions as NavigationActions } from 'react-native-router-flux' // eslint-disable-line
+import {
+  // ignite-jhipster-entity-screen-import-needle
+} from '../Navigation/Layouts' // eslint-disable-line
 
 class EntitiesScreen extends React.Component {
   render () {
