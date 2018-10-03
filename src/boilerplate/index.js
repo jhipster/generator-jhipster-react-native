@@ -79,6 +79,7 @@ async function install (context) {
         print.error(`Could not find JHipster config file, please try again.`)
       }
     }
+    props.jhipsterDirectory = jhipsterDirectory
   }
 
   if (!props.disableInsight && Insight.insight.optOut === undefined) {
