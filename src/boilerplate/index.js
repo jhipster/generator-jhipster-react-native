@@ -1,6 +1,7 @@
 const prompts = require('./prompts')
 const { merge, pipe, assoc, omit, __ } = require('ramda')
 const { getReactNativeVersion } = require('../lib/react-native-version')
+const { patchReactNativeNavigation } = require('../lib/react-native-navigation')
 const Insight = require('../lib/insight')
 const generateFiles = require('./files')
 const fs = require('fs-extra')
@@ -186,6 +187,8 @@ async function install (context) {
     ignite.log(e)
     throw e
   }
+
+  await patchReactNativeNavigation(context, name)
 
   // react native link -- must use spawn & stdio: ignore or it hangs!! :(
   spinner.text = `▸ linking native libraries`
