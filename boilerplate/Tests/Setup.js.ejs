@@ -10,8 +10,5 @@ jest
   return { get: jest.fn((url) => { return [] }) }
 })
 <%_ } _%>
-.mock('react-native-router-flux', () => {
-  return { Actions: { login: jest.fn(() => { return false }) } }
-})
 
 console.tron = { log: () => {}, display: () => {} }

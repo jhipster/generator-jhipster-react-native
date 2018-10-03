@@ -15,6 +15,8 @@ import SettingsScreen from '../Containers/SettingsScreen'
 import RegisterScreen from '../Containers/RegisterScreen'
 import ForgotPasswordScreen from '../Containers/ForgotPasswordScreen'
 import ChangePasswordScreen from '../Containers/ChangePasswordScreen'
+import EntitiesScreen from '../Containers/EntitiesScreen'
+// ignite-jhipster-navigation-import-needle
 
 export const LOGIN_SCREEN = 'nav.LoginScreen'
 export const REGISTER_SCREEN = 'nav.RegisterScreen'
@@ -23,6 +25,8 @@ export const CHANGE_PASSWORD_SCREEN = 'nav.ChangePasswordScreen'
 export const SETTINGS_SCREEN = 'nav.SettingsScreen'
 export const LAUNCH_SCREEN = 'nav.LaunchScreen'
 export const DRAWER_CONTENT = 'nav.DrawerContent'
+export const ENTITIES_SCREEN = 'nav.EntitiesScreen'
+// ignite-jhipster-navigation-declaration-needle
 
 const store = createStore()
 
@@ -35,8 +39,27 @@ export const appStack = {
         }
       },
       center: {
-        component: {
-          name: LAUNCH_SCREEN
+        stack: {
+          id: 'center',
+          children: [{
+            component: {
+              name: LAUNCH_SCREEN,
+              options: {
+                topBar: {
+                  title: {
+                    text: 'Welcome!',
+                    color: Colors.snow
+                  },
+                  leftButtons: [
+                    {
+                      id: 'menuButton',
+                      icon: Images.menuIcon
+                    }
+                  ]
+                }
+              }
+            }
+          }]
         }
       }
     }
@@ -67,7 +90,7 @@ function handleOpenURL (event) {
     switch (importantParameters[0]) {
       case 'register':
         console.tron.log(`Sending to Register Page`)
-        registerScreen('clipsTabStack')
+        registerScreen()
         break
       default:
         console.tron.warn(`Unhandled deep link: ${event.url}`)
@@ -84,6 +107,8 @@ export function registerScreensAndStartApp () {
   Navigation.registerComponentWithRedux(SETTINGS_SCREEN, () => SettingsScreen, Provider, store)
   Navigation.registerComponentWithRedux(DRAWER_CONTENT, () => DrawerContent, Provider, store)
   Navigation.registerComponentWithRedux(LAUNCH_SCREEN, () => LaunchScreen, Provider, store)
+  Navigation.registerComponentWithRedux(ENTITIES_SCREEN, () => EntitiesScreen, Provider, store)
+  // ignite-jhipster-navigation-registration-needle
 
   Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setDefaultOptions({
@@ -101,6 +126,11 @@ export function registerScreensAndStartApp () {
         },
         background: {
           color: Colors.background
+        }
+      },
+      sideMenu: {
+        left: {
+          enabled: false
         }
       }
     })
@@ -129,14 +159,10 @@ export const loginScreen = () => Navigation.showModal({
   }
 })
 
-export const registerScreen = (componentId) => Navigation.push(componentId, {
+export const registerScreen = () => Navigation.push('center', {
   component: {
     name: REGISTER_SCREEN,
     options: {
-      bottomTabs: {
-        visible: false,
-        drawBehind: true
-      },
       topBar: {
         title: {
           text: 'Sign Up',
@@ -147,14 +173,10 @@ export const registerScreen = (componentId) => Navigation.push(componentId, {
   }
 })
 
-export const forgotPasswordScreen = (componentId) => Navigation.push(componentId, {
+export const forgotPasswordScreen = () => Navigation.push('center', {
   component: {
     name: FORGOT_PASSWORD_SCREEN,
     options: {
-      bottomTabs: {
-        visible: false,
-        drawBehind: true
-      },
       topBar: {
         title: {
           text: 'Forgot Password',
@@ -164,14 +186,10 @@ export const forgotPasswordScreen = (componentId) => Navigation.push(componentId
     }
   }
 })
-export const changePasswordScreen = (componentId) => Navigation.push(componentId, {
+export const changePasswordScreen = () => Navigation.push('center', {
   component: {
     name: CHANGE_PASSWORD_SCREEN,
     options: {
-      bottomTabs: {
-        visible: false,
-        drawBehind: true
-      },
       topBar: {
         title: {
           text: 'Change Password',
@@ -181,14 +199,10 @@ export const changePasswordScreen = (componentId) => Navigation.push(componentId
     }
   }
 })
-export const settingsScreen = (componentId) => Navigation.push(componentId, {
+export const settingsScreen = () => Navigation.push('center', {
   component: {
     name: SETTINGS_SCREEN,
     options: {
-      bottomTabs: {
-        visible: false,
-        drawBehind: true
-      },
       topBar: {
         title: {
           text: 'Settings',
@@ -198,3 +212,18 @@ export const settingsScreen = (componentId) => Navigation.push(componentId, {
     }
   }
 })
+
+export const entitiesScreen = () => Navigation.push('center', {
+  component: {
+    name: ENTITIES_SCREEN,
+    options: {
+      topBar: {
+        title: {
+          text: 'Settings',
+          color: Colors.snow
+        }
+      }
+    }
+  }
+})
+// ignite-jhipster-navigation-method-needle

@@ -1,14 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 import styles from './Styles/LoginScreenStyles'
 import { Images, Metrics } from '../Themes'
 import LoginActions from '../Redux/LoginRedux'
-import { Actions as NavigationActions } from 'react-native-router-flux'
-<%_ if (props.socialLogin) { _%>
-import SocialLoginContainer from '../Containers/SocialLoginContainer'
-<%_ } _%>
 
 class LoginScreen extends React.Component {
   static propTypes = {
@@ -19,6 +16,7 @@ class LoginScreen extends React.Component {
 
   constructor (props) {
     super(props)
+    Navigation.events().bindComponent(this)
     this.state = {
       username: '',
       password: '',
@@ -35,7 +33,7 @@ class LoginScreen extends React.Component {
           Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
         }
       } else if (newProps.account) {
-        NavigationActions.pop()
+        Navigation.dismissModal(this.props.componentId)
       }
     }
   }
@@ -47,7 +45,7 @@ class LoginScreen extends React.Component {
   }
   handlePressCancel = () => {
     this.props.logout()
-    NavigationActions.pop()
+    Navigation.dismissModal(this.props.componentId)
   }
 
   handleChangeUsername = (text) => {
@@ -114,9 +112,6 @@ class LoginScreen extends React.Component {
               </View>
             </TouchableOpacity>
           </View>
-          <%_ if (props.socialLogin) { _%>
-          <SocialLoginContainer />
-          <%_ } _%>
         </View>
 
       </ScrollView>

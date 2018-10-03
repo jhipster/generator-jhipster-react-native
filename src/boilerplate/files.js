@@ -170,26 +170,6 @@ module.exports = async function (context, props, jhipsterConfig) {
   }
 
   /**
-   * If using social login, set it up
-   */
-  if (props.socialLogin) {
-    const socialLoginFiles = [
-      { template: 'SocialController.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/SocialController.java` },
-      { template: 'SocialService.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/service/SocialService.java` },
-      { template: 'SocialServiceIntTest.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/test/${props.packageFolder}/service/SocialServiceIntTest.java` }
-    ]
-    // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
-      await ignite.copyBatch(context, socialLoginFiles, props, {
-        quiet: true,
-        directory: `${__dirname}/../../templates/jhipster/social-login`
-      })
-    }
-  } else {
-    await filesystem.remove('App/Containers/SocialLoginContainer.js')
-    await filesystem.remove('App/Containers/Styles/SocialLoginContainerStyle.js')
-  }
-  /**
    * If using websockets, set it up
    */
   if (props.websockets) {

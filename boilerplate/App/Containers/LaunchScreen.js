@@ -1,11 +1,39 @@
 import React from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import { Images } from '../Themes'
 
 // Styles
 import styles from './Styles/LaunchScreenStyles'
 
 export default class LaunchScreen extends React.Component {
+  constructor (props) {
+    super(props)
+    Navigation.events().bindComponent(this)
+  }
+  componentDidAppear () {
+    Navigation.mergeOptions(this.props.componentId, {
+      sideMenu: {
+        left: {
+          enabled: true
+        }
+      }
+    })
+  }
+  showSideMenu () {
+    Navigation.mergeOptions(this.props.componentId, {
+      sideMenu: {
+        left: {
+          visible: true
+        }
+      }
+    })
+  }
+
+  navigationButtonPressed ({ buttonId }) {
+    this.showSideMenu()
+  }
+
   render () {
     return (
       <View style={styles.mainContainer}>

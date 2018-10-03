@@ -6,6 +6,7 @@ const images = {
   logoJhipsterDrinkCoffee: require('../Images/logo-jhipster-drink-coffee.png'),
   ready: require('../Images/your-app.png'),
   chevronLeftIcon: require('../Images/chevron-left.png'),
+  menuIcon: require('../Images/bars.png'),
   background: require('../Images/bg.png')
 }
 
