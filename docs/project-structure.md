@@ -51,9 +51,7 @@ We recommend using this folder for modules that can be extracted into their own 
 
 Your primary and other navigation components reside here.
 
-* `NavigationRouter.js` - contains your navigation scenes
-* `CustomNavBar.js` - contains a sample custom navbar
-* `Styles` - styling for the navigation
+* `Layouts.js` - contains your navigation scenes
 
 ### Redux, Sagas
 
