@@ -1,9 +1,10 @@
 import React from 'react'
 import { Alert, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import RoundedButton from '../Components/RoundedButton'
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { <%= camelCase(props.name) %>EntityEditScreen } from '../Navigation/Layouts'
 <%_ if (props.entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../Transforms/DateTransforms'
 <%_ } _%>
@@ -14,6 +15,7 @@ import styles from './Styles/<%= props.name %>EntityDetailScreenStyle'
 class <%= props.name %>EntityDetailScreen extends React.Component {
   constructor (context, props) {
     super(context, props)
+    Navigation.events().bindComponent(this)
     this.state = {
       entityId: props.entityId,
       <%= camelCase(props.name) %>: {},
@@ -76,7 +78,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         <Text><%= upperFirst(field.fieldName) %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
         <%_ } _%>
         <%_ }) _%>
-        <RoundedButton text='Edit' onPress={NavigationActions.<%= camelCase(props.name) %>EntityEdit.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
+        <RoundedButton text='Edit' onPress={<%= camelCase(props.name) %>EntityEditScreen.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
         <RoundedButton text='Delete' onPress={this.confirmDelete} />
       </ScrollView>
     )

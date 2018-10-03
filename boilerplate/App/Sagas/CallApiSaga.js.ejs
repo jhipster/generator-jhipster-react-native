@@ -2,7 +2,7 @@ import { put, take } from 'redux-saga/effects'
 <%_ if (props.authType === 'oauth2') { _%>
 import LoginActions from '../Redux/LoginRedux'
 <%_ } else { _%>
-import { Actions as NavigationActions } from 'react-native-router-flux'
+import { loginScreen } from '../Navigation/Layouts'
 <%_ } _%>
 
 // this saga is used for showing the LoginScreen when a 401 error is received
@@ -19,7 +19,7 @@ export function * callApi (apiCall) {
   <%_ if (props.authType === 'oauth2') { _%>
   LoginActions.loginRequest()
   <%_ } else { _%>
-  NavigationActions.login()
+  loginScreen()
   <%_ } _%>
   const action = yield take(['RELOGIN_OK', 'RELOGIN_ABORT'])
 
