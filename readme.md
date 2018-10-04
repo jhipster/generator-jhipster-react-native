@@ -41,6 +41,10 @@ The generator will create a new directory containing the project.  It also sets 
 
 After generating, you can use the [entity generator and other commands](docs/generators-and-plugins.md).
 
+#### XCode 10
+
+When running your app in XCode 10, you will need to change `File -> Project Settings -> Build System` to the `Legacy Build System`
+
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
 [semaphore-image]: https://semaphoreci.com/api/v1/ruddell/ignite-jhipster/branches/master/shields_badge.svg
