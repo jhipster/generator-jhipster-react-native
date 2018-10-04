@@ -16,6 +16,16 @@ import AlertMessage from '../Components/AlertMessage'
 import styles from './Styles/<%= props.name %>EntityScreenStyle'
 
 class <%= props.name %>EntityScreen extends React.PureComponent {
+
+  static onEnter () {
+    NavigationActions.refresh({
+      rightTitle: 'Create',
+      onRight: () => {
+        NavigationActions.<%= camelCase(props.name) %>EntityEdit({ entityId: null })
+      }
+    })
+  }
+
   /* ***********************************************************
   * STEP 1
   * This is an array of objects with the properties you desire
@@ -145,12 +155,6 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
 
   componentWillMount () {
     this.fetch<%= props.pluralName %>()
-    NavigationActions.refresh({
-      rightTitle: 'Create',
-      onRight: () => {
-        NavigationActions.<%= camelCase(props.name) %>EntityEdit({ entityId: null })
-      }
-    })
   }
 
   render () {
