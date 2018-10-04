@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { callApi } from './CallApiSaga'
-
+import { localDateToJsDate } from '../Transforms/DateTransforms'
 export function * get<%= props.name %> (api, action) {
   const { <%= camelCase(props.name) %>Id } = action
   // make the call to the api
@@ -10,6 +10,13 @@ export function * get<%= props.name %> (api, action) {
 
   // success?
   if (response.ok) {
+    <%_ props.entityConfig.fields.forEach(function (field) { _%>
+    <%_ if (field.fieldType === 'LocalDate') { _%>
+    if (response.data.<%= field.fieldName %>) {
+      response.data.<%= field.fieldName %> = localDateToJsDate(response.data.<%= field.fieldName %>)
+    }
+    <%_ } _%>
+    <%_ }) _%>
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data))
@@ -39,6 +46,13 @@ export function * update<%= props.name %> (api, action) {
 
   // success?
   if (response.ok) {
+    <%_ props.entityConfig.fields.forEach(function (field) { _%>
+    <%_ if (field.fieldType === 'LocalDate') { _%>
+    if (response.data.<%= field.fieldName %>) {
+      response.data.<%= field.fieldName %> = localDateToJsDate(response.data.<%= field.fieldName %>)
+    }
+    <%_ } _%>
+    <%_ }) _%>
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateSuccess(response.data))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateFailure(response.data))
