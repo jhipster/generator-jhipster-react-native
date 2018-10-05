@@ -2,6 +2,9 @@ import React from 'react'
 import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
+<%_ props.entityConfig.relationships.forEach((relation) => { _%>
+import <%= pascalCase(relation.otherEntityName) %>Actions from '../Redux/<%= pascalCase(relation.otherEntityName) %>Redux'
+<%_ }) _%>
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 <%_ if (props.entityContainsLocalDate) { _%>
@@ -31,19 +34,28 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
+      updating: props.entityId !== null && props.entityId !== undefined,
       formModel: t.struct({
         id: t.maybe(t.Number),
-        <%_ props.entityConfig.fields.forEach(function (field, index) { _%>
-        <%= props.getEntityFormField(field, index, props.entityConfig.fields.length) %>
+        <%_ props.entityConfig.fields.forEach((field, index) => { _%>
+        <%= props.getEntityFormField(field, index, props.entityConfig.fields.length, props.entityConfig.relationships.length) %>
+        <%_ }) _%>
+        <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+        <%= relation.otherEntityName %>Id: this.get<%= pascalCase(relation.otherEntityNamePlural)%>()<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
         <%_ }) _%>
       }),
-      formValue: this.props.<%= camelCase(props.name) %>,
+      formValue: {},
       formOptions: {
         fields: {
           id: {
             hidden: true
           },
-          <%_ props.entityConfig.fields.forEach(function (field, index) {
+          <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+          <%= relation.otherEntityName %>Id: {
+            label: '<%= pascalCase(relation.relationshipName) %>'
+          },
+          <%_ }) _%>
+          <%_ props.entityConfig.fields.forEach((field, index) => {
               if (index !== props.entityConfig.fields.length - 1) {
                 let nextFieldName = props.entityConfig.fields[index + 1].fieldName
             _%>
@@ -53,8 +65,6 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             config: {
               format: date => jsDateToLocalDate(date)
             },
-            <%_ } else if (field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') { _%>
-            mode: 'time',
             <%_ } _%>
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus()
@@ -82,11 +92,16 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     } else {
       this.setState({formValue: null})
     }
+    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
+    <%_ }) _%>
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %>) {
-      this.setState({ <%= camelCase(props.name) %>: newProps.<%= camelCase(props.name) %> })
+    if (newProps.<%= camelCase(props.name) %> && this.state.updating) {
+      this.setState({
+        formValue: this.entityToFormValue(newProps.<%= camelCase(props.name) %>)
+      })
     }
 
     // Did the update attempt complete?
@@ -110,6 +125,43 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     }
   }
 
+  // convenience methods for customizing the mapping of the entity to/from the form value
+  entityToFormValue = (value) => {
+    if (!value) {
+      return {}
+    }
+    return {
+      <%_ props.entityConfig.fields.forEach((field, index) => { _%>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
+      <%_ }) _%>
+      <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+      <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+      <%_ }) _%>
+    }
+  }
+  formValueToEntity = (value) => {
+    return {
+      <%_ props.entityConfig.fields.forEach((field, index) => { _%>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
+      <%_ }) _%>
+      <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+      <%= relation.otherEntityName %>: {
+        id: value.<%= relation.otherEntityName %>Id || null
+      }<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+    <%_ }) _%>
+    }
+  }
+
+<%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+  get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
+    const <%= camelCase(relation.otherEntityNamePlural) %> = {}
+    this.props.<%= camelCase(relation.otherEntityNamePlural) %>.forEach(<%= camelCase(relation.otherEntityName) %> => {
+      <%= camelCase(relation.otherEntityNamePlural) %>[<%= camelCase(relation.otherEntityName) %>.id] = <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %>.toString()
+    })
+    return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
+  }
+<%_ }) _%>
+
   submitForm () {
     this.setState({
       success: false,
@@ -118,7 +170,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     // call getValue() to get the values of the form
     const <%= camelCase(props.name) %> = this.refs.form.getValue()
     if (<%= camelCase(props.name) %>) { // if validation fails, value will be null
-      this.props.update<%= props.name %>(<%= camelCase(props.name) %>)
+      this.props.update<%= props.name %>(this.formValueToEntity(<%= camelCase(props.name) %>))
     }
   }
 
@@ -150,6 +202,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    <%= camelCase(relation.otherEntityNamePlural) %>: state.<%= camelCase(relation.otherEntityNamePlural) %>.<%= camelCase(relation.otherEntityNamePlural) %> || [],
+    <%_ }) _%>
     <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
     fetching: state.<%= camelCase(props.pluralName) %>.fetchingOne,
     updating: state.<%= camelCase(props.pluralName) %>.updating,
@@ -159,6 +214,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    getAll<%= pascalCase(relation.otherEntityNamePlural) %>: (options) => dispatch(<%= pascalCase(relation.otherEntityName) %>Actions.<%= camelCase(relation.otherEntityName) %>AllRequest(options)),
+    <%_ }) _%>
     get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id)),
     getAll<%= props.pluralName %>: (options) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest(options)),
     update<%= props.name %>: (<%= camelCase(props.name) %>) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateRequest(<%= camelCase(props.name) %>))

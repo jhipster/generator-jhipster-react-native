@@ -19,6 +19,7 @@ module.exports = async function (generator, igniteContext) {
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`
 
+  let entityContainsDate = false
   let entityContainsLocalDate = false
   // load the entity config into memory
   let entityConfig = await fs.readJson(localEntityFilePath)
@@ -40,9 +41,16 @@ module.exports = async function (generator, igniteContext) {
     if (field.fieldType === 'LocalDate') {
       entityContainsLocalDate = true
     }
+    if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime') {
+      entityContainsDate = true
+    }
+  })
+  entityConfig.relationships.forEach((relation) => {
+    relation.otherEntityNamePlural = pluralize.plural(relation.otherEntityName)
   })
 
   props.entityConfig = entityConfig
+  props.entityContainsDate = entityContainsDate
   props.entityContainsLocalDate = entityContainsLocalDate
   props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
 

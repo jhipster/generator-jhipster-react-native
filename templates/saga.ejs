@@ -13,13 +13,9 @@ export function * get<%= props.name %> (api, action) {
 
   // success?
   if (response.ok) {
-    <%_ props.entityConfig.fields.forEach(function (field) { _%>
-    <%_ if (field.fieldType === 'LocalDate') { _%>
-    if (response.data.<%= field.fieldName %>) {
-      response.data.<%= field.fieldName %> = localDateToJsDate(response.data.<%= field.fieldName %>)
-    }
+    <%_ if (props.entityContainsDate) { _%>
+    response.data = mapDateFields(response.data)
     <%_ } _%>
-    <%_ }) _%>
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Success(response.data))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>Failure(response.data))
@@ -49,13 +45,9 @@ export function * update<%= props.name %> (api, action) {
 
   // success?
   if (response.ok) {
-    <%_ props.entityConfig.fields.forEach(function (field) { _%>
-    <%_ if (field.fieldType === 'LocalDate') { _%>
-    if (response.data.<%= field.fieldName %>) {
-      response.data.<%= field.fieldName %> = localDateToJsDate(response.data.<%= field.fieldName %>)
-    }
+    <%_ if (props.entityContainsDate) { _%>
+    response.data = mapDateFields(response.data)
     <%_ } _%>
-    <%_ }) _%>
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateSuccess(response.data))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateFailure(response.data))
@@ -90,3 +82,19 @@ export function * delete<%= props.name %> (api, action) {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteFailure(response.data))
   }
 }
+<%_ if (props.entityContainsDate) { _%>
+function mapDateFields (data) {
+<%_ props.entityConfig.fields.forEach(function (field) { _%>
+<%_ if (field.fieldType === 'LocalDate') { _%>
+  if (data.<%= field.fieldName %>) {
+    data.<%= field.fieldName %> = localDateToJsDate(data.<%= field.fieldName %>)
+  }
+<%_ } else if (field.fieldType === 'ZonedDateTime') { _%>
+  if (data.<%= field.fieldName %>) {
+    data.<%= field.fieldName %> = new Date(data.<%= field.fieldName %>)
+  }
+<%_ } _%>
+<%_ }) _%>
+  return data
+}
+<%_ } _%>

@@ -1,4 +1,4 @@
-const getEntityFormField = (field, index, total) => {
+const getEntityFormField = (field, index, total, numRelationships) => {
   const isFieldRequired = field.fieldValidateRules && field.fieldValidateRules.includes('required')
   let tcombFieldType = 't.String'
   // todo - handle constraints, relationships
@@ -12,7 +12,7 @@ const getEntityFormField = (field, index, total) => {
   } else if (field.fieldIsEnum) {
     tcombFieldType = field.fieldType
   }
-  return `${field.fieldName}: ${!isFieldRequired ? 't.maybe(' : ''}${tcombFieldType}${isFieldRequired ? '' : ')'}${index !== total - 1 ? ',' : ''}`
+  return `${field.fieldName}: ${!isFieldRequired ? 't.maybe(' : ''}${tcombFieldType}${isFieldRequired ? '' : ')'}${(numRelationships !== 0 || index !== total - 1) ? ',' : ''}`
 }
 
 module.exports = {
