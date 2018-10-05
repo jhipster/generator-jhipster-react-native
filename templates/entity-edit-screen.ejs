@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+<%_ if (props.entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../Transforms/DateTransforms'
+<%_ } _%>
 
 import t from 'tcomb-form-native'
 
@@ -12,7 +14,6 @@ import t from 'tcomb-form-native'
 import styles from './Styles/<%= props.name %>EntityEditScreenStyle'
 
 let Form = t.form.Form
-
 <%_ props.entityConfig.fields.forEach((field) => {
   if (field.fieldIsEnum) { _%>
 const <%= field.fieldType %> = t.enums({
@@ -20,7 +21,7 @@ const <%= field.fieldType %> = t.enums({
     const enumValues = field.fieldValues.split(',')
     enumValues.forEach((enumValue, index) => {
 _%>
-  <%= enumValue %>:  '<%= enumValue %>'<%= index !== enumValues.length -1 ? ',' : '' %>
+  <%= enumValue %>: '<%= enumValue %>'<%= index !== enumValues.length -1 ? ',' : '' %>
 <%_ }) //end of value loop _%>
 })
 <%_ } // end of if statement

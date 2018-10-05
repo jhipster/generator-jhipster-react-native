@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import RoundedButton from '../Components/RoundedButton'
 import { Actions as NavigationActions } from 'react-native-router-flux'
+<%_ if (props.entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../Transforms/DateTransforms'
+<%_ } _%>
 
 // Styles
 import styles from './Styles/<%= props.name %>EntityDetailScreenStyle'

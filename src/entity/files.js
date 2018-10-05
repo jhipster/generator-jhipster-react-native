@@ -19,6 +19,7 @@ module.exports = async function (generator, igniteContext) {
   const entityFileName = `${name}.json`
   const localEntityFilePath = `.jhipster/${entityFileName}`
 
+  let entityContainsLocalDate = false
   // load the entity config into memory
   let entityConfig = await fs.readJson(localEntityFilePath)
   entityConfig.fields.forEach((field) => {
@@ -36,9 +37,13 @@ module.exports = async function (generator, igniteContext) {
       'byte[]',
       'ByteBuffer'
     ].includes(field.fieldType)
+    if (field.fieldType === 'LocalDate') {
+      entityContainsLocalDate = true
+    }
   })
 
   props.entityConfig = entityConfig
+  props.entityContainsLocalDate = entityContainsLocalDate
   props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
 
   const apiFilePath = `${process.cwd()}/App/Services/Api.js`
