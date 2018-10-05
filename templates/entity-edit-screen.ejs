@@ -13,6 +13,19 @@ import styles from './Styles/<%= props.name %>EntityEditScreenStyle'
 
 let Form = t.form.Form
 
+<%_ props.entityConfig.fields.forEach((field) => {
+  if (field.fieldIsEnum) { _%>
+const <%= field.fieldType %> = t.enums({
+<%_
+    const enumValues = field.fieldValues.split(',')
+    enumValues.forEach((enumValue, index) => {
+_%>
+  <%= enumValue %>:  '<%= enumValue %>'<%= index !== enumValues.length -1 ? ',' : '' %>
+<%_ }) //end of value loop _%>
+})
+<%_ } // end of if statement
+}) // end of field loop _%>
+
 class <%= props.name %>EntityEditScreen extends React.Component {
   constructor (props) {
     super(props)

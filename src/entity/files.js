@@ -21,6 +21,23 @@ module.exports = async function (generator, igniteContext) {
 
   // load the entity config into memory
   let entityConfig = await fs.readJson(localEntityFilePath)
+  entityConfig.fields.forEach((field) => {
+    field.fieldIsEnum = ![
+      'String',
+      'Integer',
+      'Long',
+      'Float',
+      'Double',
+      'BigDecimal',
+      'LocalDate',
+      'Instant',
+      'ZonedDateTime',
+      'Boolean',
+      'byte[]',
+      'ByteBuffer'
+    ].includes(field.fieldType)
+  })
+
   props.entityConfig = entityConfig
   props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
 
