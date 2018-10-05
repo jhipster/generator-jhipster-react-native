@@ -10,6 +10,7 @@ import { LoginTypes } from '../Redux/LoginRedux'
 import { RegisterTypes } from '../Redux/RegisterRedux'
 import { PasswordTypes } from '../Redux/PasswordRedux'
 import { AccountTypes } from '../Redux/AccountRedux'
+import { UserTypes } from '../Redux/UserRedux'
 // ignite-jhipster-saga-redux-import-needle
 
 /* ------------- Sagas ------------- */
@@ -19,6 +20,7 @@ import { login, logout<% if (props.socialLogin) { %>, socialLogin<% } %><% if (p
 import { register } from './RegisterSagas'
 import { forgotPassword, changePassword } from './PasswordSagas'
 import { getAccount, updateAccount } from './AccountSagas'
+import { getUser, getUsers, updateUser, deleteUser } from './UserSagas'
 // ignite-jhipster-saga-method-import-needle
 
 /* ------------- API ------------- */
@@ -46,6 +48,11 @@ export default function * root () {
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
     takeLatest(PasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
     takeLatest(PasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
+
+    takeLatest(UserTypes.USER_REQUEST, getUser, api),
+    takeLatest(UserTypes.USER_ALL_REQUEST, getUsers, api),
+    takeLatest(UserTypes.USER_UPDATE_REQUEST, updateUser, api),
+    takeLatest(UserTypes.USER_DELETE_REQUEST, deleteUser, api),
     // ignite-jhipster-saga-redux-connect-needle
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),

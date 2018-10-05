@@ -4,6 +4,30 @@ export default {
   // entity fixtures
   // ignite-jhipster-api-fixture-needle
 
+  // user fixtures
+  updateUser: (user) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/updateUser.json')
+    }
+  },
+  getUsers: () => {
+    return {
+      ok: true,
+      data: require('../Fixtures/getUsers.json')
+    }
+  },
+  getUser: (userId) => {
+    return {
+      ok: true,
+      data: require('../Fixtures/getUser.json')
+    }
+  },
+  deleteUser: (userId) => {
+    return {
+      ok: true
+    }
+  },
   // auth fixtures
   <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   setAuthToken: () => {
