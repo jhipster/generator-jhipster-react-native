@@ -78,9 +78,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     // Did the update attempt complete?
     if (!newProps.updating && this.state.requesting) {
       if (newProps.error) {
-        if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Something went wrong updating the entity', [{text: 'OK'}])
-        }
+        Alert.alert('Error', 'Something went wrong updating the entity', [{text: 'OK'}])
         this.setState({
           success: false,
           requesting: false
@@ -141,7 +139,7 @@ const mapStateToProps = (state) => {
     <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
     fetching: state.<%= camelCase(props.pluralName) %>.fetchingOne,
     updating: state.<%= camelCase(props.pluralName) %>.updating,
-    error: state.<%= camelCase(props.pluralName) %>.errorOne
+    error: state.<%= camelCase(props.pluralName) %>.errorUpdating
   }
 }
 
