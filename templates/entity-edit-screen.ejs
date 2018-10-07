@@ -44,7 +44,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
         <%= relation.otherEntityName %>Id: this.get<%= pascalCase(relation.otherEntityNamePlural)%>()<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
         <%_ }) _%>
       }),
-      formValue: {},
+      formValue: {
+        id: null
+      },
       formOptions: {
         fields: {
           id: {
@@ -98,7 +100,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %> && this.state.updating) {
+    if (newProps.<%= camelCase(props.name) %> && this.state.formValue.id === null && this.state.updating) {
       this.setState({
         formValue: this.entityToFormValue(newProps.<%= camelCase(props.name) %>)
       })
@@ -131,6 +133,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       return {}
     }
     return {
+      id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
       <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
       <%_ }) _%>
@@ -141,6 +144,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
   formValueToEntity = (value) => {
     return {
+      id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
       <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
       <%_ }) _%>
