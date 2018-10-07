@@ -16,7 +16,7 @@ module.exports = async function (context) {
 
   // load the ignite config and set the default jhipster directory
   const jdlFiles = parameters.array
-  print.info('The jdl is being parsed.')
+  print.info('The JDL is being parsed.')
   const jhipsterConfig = await fs.readJson(`.jhipster/yo-rc.json`)
   const prodDatabaseType = jhipsterConfig['generator-jhipster'].prodDatabaseType
   const applicationType = jhipsterConfig['generator-jhipster'].applicationType

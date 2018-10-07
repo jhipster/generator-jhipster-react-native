@@ -26,7 +26,6 @@ const jhiCore = require('jhipster-core')
  * The app .yo-rc.json files and entity json files are written to disk
  */
 const importJDL = (jdlFiles, prodDatabaseType, applicationType, baseName, print) => {
-  console.info('The JDL is being parsed.')
   const jdlImporter = new jhiCore.JDLImporter(jdlFiles, {
     databaseType: prodDatabaseType,
     applicationType: applicationType,
