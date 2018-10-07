@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text } from 'react-native'
+import { Alert, ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
 import RoundedButton from '../Components/RoundedButton'
@@ -16,7 +16,8 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
     super(context, props)
     this.state = {
       entityId: props.entityId,
-      <%= camelCase(props.name) %>: {}
+      <%= camelCase(props.name) %>: {},
+      deleting: false
     }
   }
 
@@ -28,6 +29,38 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
     if (newProps.<%= camelCase(props.name) %>) {
       this.setState({ <%= camelCase(props.name) %>: newProps.<%= camelCase(props.name) %> })
     }
+
+    if (this.state.deleting && newProps.deleting === false) {
+      if (!newProps.errorDeleting) {
+        this.props.getAll<%= props.pluralName %>()
+        NavigationActions.pop()
+      } else {
+        Alert.alert('Error', 'Something went wrong deleting the entity', [{text: 'OK'}])
+        this.setState({
+          success: false,
+          requesting: false
+        })
+      }
+    }
+  }
+
+  confirmDelete = () => {
+    Alert.alert(
+      'Delete <%= props.name %>?',
+      'Are you sure you want to delete the <%= props.name %>?',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {
+          text: 'OK',
+          onPress: () => {
+            this.setState({ deleting: true }, () => {
+              this.props.delete<%= props.name %>(this.props.entityId)
+            })
+          }
+        }
+      ],
+      { cancelable: false }
+    )
   }
 
   render () {
@@ -44,6 +77,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         <%_ } _%>
         <%_ }) _%>
         <RoundedButton text='Edit' onPress={NavigationActions.<%= camelCase(props.name) %>EntityEdit.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
+        <RoundedButton text='Delete' onPress={this.confirmDelete} />
       </ScrollView>
     )
   }
@@ -51,13 +85,17 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>
+    <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
+    deleting: state.<%= camelCase(props.pluralName) %>.deleting,
+    errorDeleting: state.<%= camelCase(props.pluralName) %>.errorDeleting
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id))
+    get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id)),
+    getAll<%= props.pluralName %>: (options) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest(options)),
+    delete<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteRequest(id))
   }
 }
 
