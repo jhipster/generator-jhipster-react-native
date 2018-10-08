@@ -1,11 +1,13 @@
 const fs = require('fs-extra')
 const Insight = require('../lib/insight')
 const importJDL = require('../lib/import-jdl').importJDL
+const generateFiles = require('../entity/files')
 
 module.exports = async function (context) {
   // grab some features
-  const { parameters, print, strings, system } = context
+  const { ignite, parameters, print, strings } = context
   const { isBlank } = strings
+  this.igniteConfig = ignite.loadIgniteConfig()
 
   // validation
   if (isBlank(parameters.first)) {
@@ -29,13 +31,23 @@ module.exports = async function (context) {
       print.info(`Found entities: ${entityNames.join(', ')}.`)
     } else {
       print.info('No change in entity configurations, no entities were updated.')
+      if (parameters.options.regenerate) {
+        print.info('Regenerate Flag - regenerating all entities')
+        fs.readdirSync('.jhipster')
+          .filter(file => file !== 'yo-rc.json')
+          .forEach(file => {
+            entityNames.push(file.split('.')[0])
+          })
+      }
     }
 
     print.success(entityNames)
     // generate update entities
     for (let i = 0; i < entityNames.length; i++) {
-      console.log(`ignite g entity ${entityNames[i]}`)
-      await system.spawn(`ignite g entity ${entityNames[i]}`, { stdio: 'inherit' })
+      this.name = entityNames[i]
+      print.success(`Generating ${this.name}`)
+      await generateFiles(this, context)
+      // await system.spawn(`ignite g entity ${entityNames[i]}`, { stdio: 'inherit' })
     }
 
     print.success(`JDL successfully imported!`)
