@@ -2,7 +2,7 @@ import React from 'react'
 import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from '../Redux/<%= props.name %>Redux'
-<%_ props.entityConfig.relationships.forEach((relation) => { _%>
+<%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
 import <%= pascalCase(relation.otherEntityName) %>Actions from '../Redux/<%= pascalCase(relation.otherEntityName) %>Redux'
 <%_ }) _%>
 import { Actions as NavigationActions } from 'react-native-router-flux'
@@ -38,10 +38,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       formModel: t.struct({
         id: t.maybe(t.Number),
         <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-        <%= props.getEntityFormField(field, index, props.entityConfig.fields.length, props.entityConfig.relationships.length) %>
+        <%= props.getEntityFormField(field, index, props.entityConfig.fields.length, props.entityConfig.ownerSideRelationships.length) %>
         <%_ }) _%>
-        <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
-        <%= props.getRelationshipFormField(relation, index, props.entityConfig.relationships.length, props) %>
+        <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
+        <%= props.getRelationshipFormField(relation, index, props.entityConfig.ownerSideRelationships.length, props) %>
         <%_ }) _%>
       }),
       formValue: { },
@@ -50,7 +50,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           id: {
             hidden: true
           },
-          <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+          <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
           <%= relation.otherEntityName %>Id: {
             label: '<%= pascalCase(relation.relationshipName) %>'
           },
@@ -71,7 +71,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             <%_ if (nextFieldName) { _%>
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus()
-            <%_ } else if (props.entityConfig.relationships.length === 0) { _%>
+            <%_ } else if (props.entityConfig.ownerSideRelationships.length === 0) { _%>
             returnKeyType: 'done',
             onSubmitEditing: () => this.submitForm()
           <%_ } _%>
@@ -93,13 +93,13 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     } else {
       this.setState({formValue: null})
     }
-    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
     this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
     <%_ }) _%>
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %> && !newProps.updating && !this.state.requesting) {
+    if (newProps.<%= camelCase(props.name) %> && !newProps.updating && !this.state.requesting && this.state.updating) {
       this.setState({
         formValue: this.entityToFormValue(newProps.<%= camelCase(props.name) %>)
       })
@@ -134,13 +134,21 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     return {
       id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
       <%_ }) _%>
-      <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+      <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
       <%_ if (props.entityConfig.dto === 'no') { _%>
-      <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } else { _%>
+      <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } _%>
       <%_ } else if (props.entityConfig.dto === 'mapstruct') { _%>
-      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } else { _%>
+      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } _%>
       <%_ } _%>
       <%_ }) _%>
     }
@@ -149,25 +157,35 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     return {
       id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
       <%_ }) _%>
-      <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+      <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
       <%_ if (props.entityConfig.dto === 'no') { _%>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } else if (relation.relationshipType === 'many-to-one') { _%>
+      <%= relation.otherEntityName %>: value.<%= relation.otherEntityName %>Id ? { id: value.<%= relation.otherEntityName %>Id } : null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } else { _%>
       <%= relation.otherEntityName %>: {
         id: value.<%= relation.otherEntityName %>Id || null
-      }<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+      }<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } _%>
       <%_ } else if (props.entityConfig.dto === 'mapstruct') { _%>
-      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } else { _%>
+      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+        <%_ } _%>
       <%_ } _%>
     <%_ }) _%>
     }
   }
 
-<%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
+<%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
   get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
     const <%= camelCase(relation.otherEntityNamePlural) %> = {}
     this.props.<%= camelCase(relation.otherEntityNamePlural) %>.forEach(<%= camelCase(relation.otherEntityName) %> => {
-      <%= camelCase(relation.otherEntityNamePlural) %>[<%= camelCase(relation.otherEntityName) %>.id] = <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %>.toString()
+      <%= camelCase(relation.otherEntityNamePlural) %>[<%= camelCase(relation.otherEntityName) %>.id] = <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %> ? <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= camelCase(relation.otherEntityName) %>.id.toString()
     })
     return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
   }
@@ -212,7 +230,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    <%_ props.entityConfig.uniqueOwnerSideRelationships.forEach((relation) => { _%>
     <%= camelCase(relation.otherEntityNamePlural) %>: state.<%= camelCase(relation.otherEntityNamePlural) %>.<%= camelCase(relation.otherEntityNamePlural) %> || [],
     <%_ }) _%>
     <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
@@ -224,7 +242,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ props.entityConfig.relationships.forEach((relation) => { _%>
+    <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
     getAll<%= pascalCase(relation.otherEntityNamePlural) %>: (options) => dispatch(<%= pascalCase(relation.otherEntityName) %>Actions.<%= camelCase(relation.otherEntityName) %>AllRequest(options)),
     <%_ }) _%>
     get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id)),

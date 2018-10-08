@@ -47,9 +47,23 @@ module.exports = async function (generator, igniteContext) {
       entityContainsDate = true
     }
   })
+  // these lists are to prevent double imports when there are multiple relations between the same entity
+  const alreadyIncludedEntities = []
+  const uniqueEntityRelationships = []
   entityConfig.relationships.forEach((relation) => {
+    if (relation.relationshipType === 'many-to-one') {
+      relation.ownerSide = true
+    }
     relation.otherEntityNamePlural = pluralize.plural(relation.otherEntityName)
+    relation.relationshipNamePlural = pluralize.plural(relation.relationshipName)
+    if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
+      alreadyIncludedEntities.push(relation.otherEntityName)
+      uniqueEntityRelationships.push(relation)
+    }
   })
+
+  entityConfig.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide)
+  entityConfig.ownerSideRelationships = entityConfig.relationships.filter(relation => relation.ownerSide)
 
   props.entityConfig = entityConfig
   props.entityContainsDate = entityContainsDate

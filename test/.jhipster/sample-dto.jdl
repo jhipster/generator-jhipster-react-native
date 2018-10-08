@@ -60,18 +60,6 @@ enum Language {
     FRENCH, ENGLISH, SPANISH
 }
 
-relationship OneToOne {
-	Country{region(regionName)} to Region
-}
-
-relationship OneToOne {
-	Location{country(countryName)} to Country
-}
-
-relationship OneToOne {
-	Department{location(streetAddress)} to Location
-}
-
 relationship ManyToMany {
 	Job{task(title)} to Task{job(jobTitle)}
 }
@@ -90,7 +78,10 @@ relationship OneToMany {
 }
 
 relationship ManyToOne {
-	Employee{manager} to Employee
+  Department{location(streetAddress)} to Location
+  Location{country(countryName)} to Country
+  Country{region(regionName)} to Region
+  Employee{manager} to Employee
 }
 
 // defining multiple oneToOne relationships
