@@ -41,12 +41,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
         <%= props.getEntityFormField(field, index, props.entityConfig.fields.length, props.entityConfig.relationships.length) %>
         <%_ }) _%>
         <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
-        <%= relation.otherEntityName %>Id: this.get<%= pascalCase(relation.otherEntityNamePlural)%>()<%= index !== props.entityConfig.relationships.length - 1 ? ',' : '' %>
+        <%= props.getRelationshipFormField(relation, index, props.entityConfig.relationships.length, props) %>
         <%_ }) _%>
       }),
-      formValue: {
-        id: null
-      },
+      formValue: { },
       formOptions: {
         fields: {
           id: {
@@ -58,8 +56,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           },
           <%_ }) _%>
           <%_ props.entityConfig.fields.forEach((field, index) => {
+              let nextFieldName = null
               if (index !== props.entityConfig.fields.length - 1) {
-                let nextFieldName = props.entityConfig.fields[index + 1].fieldName
+                nextFieldName = props.entityConfig.fields[index + 1].fieldName
+              }
             _%>
           <%= field.fieldName %>: {
             <%_ if (field.fieldType === 'LocalDate') { _%>
@@ -68,16 +68,15 @@ class <%= props.name %>EntityEditScreen extends React.Component {
               format: date => jsDateToLocalDate(date)
             },
             <%_ } _%>
+            <%_ if (nextFieldName) { _%>
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus()
-          },
-          <%_ } else { _%>
-          <%= field.fieldName %>: {
+            <%_ } else if (props.entityConfig.relationships.length === 0) { _%>
             returnKeyType: 'done',
             onSubmitEditing: () => this.submitForm()
-          }
           <%_ } _%>
-          <%_ }) _%>
+          }<%= (index === props.entityConfig.fields.length - 1) ? '' : ',' %>
+          <%_ }) // end entity field loop _%>
         }
       },
       success: false,
@@ -100,7 +99,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %> && this.state.formValue.id === null && this.state.updating) {
+    if (newProps.<%= camelCase(props.name) %> && !newProps.updating && !this.state.requesting) {
       this.setState({
         formValue: this.entityToFormValue(newProps.<%= camelCase(props.name) %>)
       })
@@ -135,7 +134,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     return {
       id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
       <%_ }) _%>
       <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
       <%_ if (props.entityConfig.dto === 'no') { _%>
@@ -150,7 +149,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     return {
       id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.entities.length - 1 ? ',' : '' %>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.relationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
       <%_ }) _%>
       <%_ props.entityConfig.relationships.forEach((relation, index) => { _%>
       <%_ if (props.entityConfig.dto === 'no') { _%>
@@ -173,7 +172,6 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
   }
 <%_ }) _%>
-
   submitForm () {
     this.setState({
       success: false,
