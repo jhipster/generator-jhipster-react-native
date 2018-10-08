@@ -37,10 +37,10 @@ describe('OAuth2 Integration Test', () => {
     expect(lint.stderr).toBe('')
   })
 
-  test('generates two entity', async () => {
+  test('generates entities', async () => {
     console.log('Generating entities...')
-    await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])
     await execa(IGNITE, ['g', 'entity', 'FieldTestEntity', '--jh-dir=../test'])
+    await execa(IGNITE, ['g', 'import-jdl', '../test/.jhipster/jdl-sample-no-dto.jdl'])
     console.log('Generated entities')
     // t.is(jetpack.exists('App/Components/Test.js'), 'file')
     // t.is(jetpack.exists('App/Components/Styles/TestStyle.js'), 'file')

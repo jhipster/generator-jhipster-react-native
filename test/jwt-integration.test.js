@@ -38,8 +38,8 @@ describe('JWT Integration Test', () => {
 
   test('generates two entities', async () => {
     console.log('Generating entities...')
-    await execa(IGNITE, ['g', 'entity', 'Foo', '--jh-dir=../test'])
     await execa(IGNITE, ['g', 'entity', 'FieldTestEntity', '--jh-dir=../test'])
+    await execa(IGNITE, ['g', 'import-jdl', '../test/.jhipster/jdl-sample-dto.jdl'])
     console.log('Generated entities')
     // t.is(jetpack.exists('App/Components/Test.js'), 'file')
     // t.is(jetpack.exists('App/Components/Styles/TestStyle.js'), 'file')
