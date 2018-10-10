@@ -20,6 +20,8 @@ The value of the URL scheme is up to the app developer, but needs to be consiste
 Add the URL scheme from above as a valid redirect URI, followed by the word "authorize".  For example, if your URL scheme is `oidc-example` then the redirect URI
  should look like `oidc-example://authorize`
 
+**Note:** When running the backend locally for Android, you will need to change the Keycloak config in `application.yml`.  Replace `localhost` with your computer's network IP or another IP that resolves to your Keycloak instance.  This is not an issue for Okta.
+
 #### Android URL Scheme Setup
 Where `oidc-example` is your chosen URL scheme, add the following to your app's `android/app/src/main/AndroidManifest.xml` file:
 ```xml
