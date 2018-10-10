@@ -151,14 +151,15 @@ async function install (context) {
   }
   await mergePackageJsons()
   spinner.stop()
-  spinner.succeed(`Project generated`)
+  spinner.succeed(`project generated`)
 
-  spinner.text = `▸ installing dependencies`
-  spinner.start()
-  // install any missing dependencies
-  await system.run('yarn', { stdio: 'ignore' })
-  spinner.succeed(`Dependencies installed`)
-
+  if (!parameters.options.skipInstall) {
+    spinner.text = `▸ installing dependencies`
+    spinner.start()
+    // install any missing dependencies
+    await system.run('yarn', {stdio: 'ignore'})
+    spinner.succeed(`dependencies installed`)
+  }
   // pass long the debug flag if we're running in that mode
   // const debugFlag = parameters.options.debug ? '--debug' : ''
 
@@ -194,16 +195,16 @@ async function install (context) {
 
   // git configuration
   const gitExists = await filesystem.exists('./.git')
-  if (!gitExists && !props.skipGit && system.which('git')) {
+  if (!gitExists && !props.skipGit) {
     // initial git
     const spinner = print.spin('configuring git')
 
-    // TODO: Add git hooks flag.  Disabled by default for now
-    // "husky": "0.14.3",
-    const huskyCmd = '' // `&& node node_modules/husky/bin/install .`
-    system.run(`git init . && git add . && git commit -m "Initial commit." ${huskyCmd}`)
-
-    spinner.succeed(`configured git`)
+    try {
+      await system.run(`git init . && git add . && git commit -m "Initial commit."`)
+      spinner.succeed(`created a git repository and an initial commit`)
+    } catch (e) {
+      spinner.fail(`failed to create a git repository`)
+    }
   }
 
   const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
