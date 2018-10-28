@@ -35,7 +35,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
     if (this.state.deleting && newProps.deleting === false) {
       if (!newProps.errorDeleting) {
         this.props.getAll<%= props.pluralName %>()
-        NavigationActions.pop()
+        Navigation.pop(this.props.componentId)
       } else {
         Alert.alert('Error', 'Something went wrong deleting the entity', [{text: 'OK'}])
         this.setState({
