@@ -52,11 +52,6 @@ const updateAndroidFiles = async (context) => {
   })
 
   await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
-    replace: `classpath 'com.android.tools.build:gradle:2.3.3'`,
-    insert: `classpath 'com.android.tools.build:gradle:3.1.3'`
-  })
-
-  await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
     replace: `buildToolsVersion = "26.0.3"`,
     insert: `buildToolsVersion = "27.0.3"`
   })
@@ -96,15 +91,6 @@ const updateAndroidFiles = async (context) => {
     after: `// From node_modules`,
     insert: `    implementation project(':react-native-navigation')`
   })
-  // gradle-wrapper.properties
-  await ignite.patchInFile(
-    `${process.cwd()}/android/gradle/wrapper/gradle-wrapper.properties`,
-    {
-      replace: 'gradle-3.5.1-all.zip',
-      insert: 'gradle-4.4-all.zip',
-      force: true
-    }
-  )
 }
 
 module.exports = {

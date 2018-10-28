@@ -6,7 +6,7 @@ import { Navigation } from 'react-native-navigation'
 import styles from './Styles/DrawerContentStyles'
 import { Images } from '../Themes'
 import DrawerButton from '../Components/DrawerButton'
-import { loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, entitiesScreen} from '../Navigation/Layouts'
+import { loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, entitiesScreen } from '../Navigation/Layouts'
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux'
 import { isLoggedIn } from '../Redux/AccountRedux'
@@ -16,7 +16,6 @@ class DrawerContent extends Component {
     super(context, props)
     Navigation.events().bindComponent(this)
   }
-
 
   hideSideMenu () {
     Navigation.mergeOptions(this.props.componentId, {
