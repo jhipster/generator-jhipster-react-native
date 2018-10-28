@@ -9,7 +9,6 @@ const patchReactNativeNavigation = async (context = {}, name) => {
   spinner.start()
 
   // print.info('Installing and linking react-native-navigation')
-  spinner.succeed('Installed and linking react-native-navigation')
 
   const props = {
     name,
