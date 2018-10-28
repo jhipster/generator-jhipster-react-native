@@ -335,8 +335,7 @@ export const ${camelCase(props.name)}EntityScreen = () => Navigation.push('cente
       }
     }
   }
-})
-`
+})`
 
   const navigationMethodDetail = `
 export const ${camelCase(props.name)}EntityDetailScreen = (data) => Navigation.push('center', {
@@ -354,8 +353,7 @@ export const ${camelCase(props.name)}EntityDetailScreen = (data) => Navigation.p
       }
     }
   }
-})
-`
+})`
   const navigationMethodEdit = `
 export const ${camelCase(props.name)}EntityEditScreen = (data) => Navigation.push('center', {
   component: {
@@ -372,8 +370,7 @@ export const ${camelCase(props.name)}EntityEditScreen = (data) => Navigation.pus
       }
     }
   }
-})
-`
+})`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-method-needle',
     insert: navigationMethodMain,
@@ -390,7 +387,7 @@ export const ${camelCase(props.name)}EntityEditScreen = (data) => Navigation.pus
     match: navigationMethodDetail
   })
   // add entity to entities screen
-  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={${camelCase(props.name)}Entity} />`
+  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={${camelCase(props.name)}EntityScreen} />`
   ignite.patchInFile(entityScreenFilePath, {
     before: 'ignite-jhipster-entity-screen-needle',
     insert: entityScreenButton,
