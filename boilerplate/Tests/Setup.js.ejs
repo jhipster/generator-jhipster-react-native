@@ -1,14 +1,19 @@
 import { configure } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import Config from '../App/Config/DebugConfig'
 
+Config.useReactotron = false
 configure({ adapter: new Adapter() })
 
 // Mock your external modules here if needed
 jest
+  .mock('react-native-navigation', () => {
+    return { Navigation: { showModal: jest.fn((url) => { return [] }) } }
+  })
 <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
-.mock('react-native-cookies', () => {
-  return { get: jest.fn((url) => { return [] }) }
-})
+  .mock('react-native-cookies', () => {
+    return { get: jest.fn((url) => { return [] }) }
+  })
 <%_ } _%>
 
 console.tron = { log: () => {}, display: () => {} }

@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 // Styles
 import styles from './Styles/EntitiesScreenStyle'
 import RoundedButton from '../Components/RoundedButton' // eslint-disable-line
+/*eslint-disable */
 import {
   // ignite-jhipster-entity-screen-import-needle
-} from '../Navigation/Layouts' // eslint-disable-line
+} from '../Navigation/Layouts'
+/*eslint-enable */
 
 class EntitiesScreen extends React.Component {
   render () {
