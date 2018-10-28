@@ -35,7 +35,7 @@ export const appStack = {
     sideMenu: {
       left: {
         component: {
-          name: DRAWER_CONTENT,
+          name: DRAWER_CONTENT
         }
       },
       center: {
