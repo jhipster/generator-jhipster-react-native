@@ -1,6 +1,6 @@
 import { call, put } from 'redux-saga/effects'
-import UserActions from '../Redux/UserRedux'
-import { callApi } from './CallApiSaga'
+import UserActions from '../reducers/user.reducer'
+import { callApi } from './call-api.saga'
 
 export function * getUser (api, action) {
   const { userId } = action

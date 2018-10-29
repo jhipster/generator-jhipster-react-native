@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import { <%= camelCase(props.name) %>EntityEditScreen } from '../../../navigation/layouts'
 <%_ if (props.entityContainsLocalDate) { _%>
-import { jsDateToLocalDate } from '../Transforms/DateTransforms'
+import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'

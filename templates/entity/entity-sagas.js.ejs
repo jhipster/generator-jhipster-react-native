@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects'
 import { callApi } from '../../../shared/sagas/call-api.saga'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ if (props.entityContainsLocalDate) { _%>
-import { localDateToJsDate } from '../Transforms/DateTransforms'
+import { localDateToJsDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 export function * get<%= props.name %> (api, action) {
