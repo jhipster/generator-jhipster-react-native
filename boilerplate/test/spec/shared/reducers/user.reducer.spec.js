@@ -1,4 +1,4 @@
-import Actions, { reducer, INITIAL_STATE } from '../../../app/shared/reducers/user.reducer'
+import Actions, { reducer, INITIAL_STATE } from '../../../../app/shared/reducers/user.reducer'
 
 test('attempt retrieving a single user', () => {
   const state = reducer(INITIAL_STATE, Actions.userRequest({id: 1}))
