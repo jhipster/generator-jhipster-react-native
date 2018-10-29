@@ -3,12 +3,12 @@ import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
-import <%= pascalCase(relation.otherEntityName) %>Actions from '../Redux/<%= pascalCase(relation.otherEntityName) %>Redux'
+import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase(relation.otherEntityName) %>/<%= kebabCase(relation.otherEntityName) %>.reducer'
 <%_ }) _%>
 import { Actions as NavigationActions } from 'react-native-router-flux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 <%_ if (props.entityContainsLocalDate) { _%>
-import { jsDateToLocalDate } from '../Transforms/DateTransforms'
+import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 import t from 'tcomb-form-native'
