@@ -1,7 +1,7 @@
-import FixtureAPI from '../../App/Services/FixtureApi'
+import FixtureAPI from '../../../app/shared/services/fixture-api'
 import { put } from 'redux-saga/effects'
-import { getUser, getUsers, updateUser, deleteUser } from '../../App/Sagas/UserSagas'
-import UserActions from '../../App/Redux/UserRedux'
+import { getUser, getUsers, updateUser, deleteUser } from '../../../app/shared/sagas/user.sagas'
+import UserActions from '../../../app/shared/reducers/user.reducer'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
