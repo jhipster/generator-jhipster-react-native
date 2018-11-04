@@ -101,8 +101,8 @@ class ChangePasswordScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fetching: state.password.fetching,
-    error: state.password.error
+    fetching: state.changePassword.fetching,
+    error: state.changePassword.error
   }
 }
 

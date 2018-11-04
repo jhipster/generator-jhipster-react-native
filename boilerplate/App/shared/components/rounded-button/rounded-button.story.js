@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react-native'
 
-import RoundedButton from '../../../app/shared/components/rounded-button/rounded-button'
+import RoundedButton from './rounded-button'
 
 storiesOf('RoundedButton', module)
   .add('Default', () => (

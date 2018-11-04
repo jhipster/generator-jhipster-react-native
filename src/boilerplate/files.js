@@ -52,10 +52,6 @@ module.exports = async function (context, props, jhipsterConfig) {
       target: 'app/config/app-config.js'
     },
     {
-      template: 'app/root-container.js.ejs',
-      target: 'app/root-container.js'
-    },
-    {
       template: 'app/navigation/drawer/drawer-content.js.ejs',
       target: 'app/navigation/drawer/drawer-content.js'
     },
@@ -178,22 +174,23 @@ module.exports = async function (context, props, jhipsterConfig) {
       match: `  chat: require('../../modules/chat/chat.reducer').reducer,`
     })
 
+    // TODO CHAT SCREEN
     // wire ChatScreen in NavigationRouter
-    const navigationRouterFilePath = `${process.cwd()}/app/navigation/navigation-router.js`
-    const navigationImportEdit = `import ChatScreen from '../modules/chat/chat-screen'`
-    await ignite.patchInFile(navigationRouterFilePath, {
-      before: 'ignite-jhipster-navigation-import-needle',
-      insert: navigationImportEdit,
-      match: navigationImportEdit
-    })
-
-    // add chat screen to navigation
-    const navigationScreen = `            <Scene key='chat' component={ChatScreen} title='Chat' back />`
-    await ignite.patchInFile(navigationRouterFilePath, {
-      before: 'ignite-jhipster-navigation-needle',
-      insert: navigationScreen,
-      match: navigationScreen
-    })
+    // const navigationRouterFilePath = `${process.cwd()}/app/navigation/navigation-router.js`
+    // const navigationImportEdit = `import ChatScreen from '../modules/chat/chat-screen'`
+    // await ignite.patchInFile(navigationRouterFilePath, {
+    //   before: 'ignite-jhipster-navigation-import-needle',
+    //   insert: navigationImportEdit,
+    //   match: navigationImportEdit
+    // })
+    //
+    // // add chat screen to navigation
+    // const navigationScreen = `            <Scene key='chat' component={ChatScreen} title='Chat' back />`
+    // await ignite.patchInFile(navigationRouterFilePath, {
+    //   before: 'ignite-jhipster-navigation-needle',
+    //   insert: navigationScreen,
+    //   match: navigationScreen
+    // })
 
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`)) {

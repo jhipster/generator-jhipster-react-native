@@ -1,5 +1,0 @@
-import './alert-message.story'
-import './drawer-button.story'
-import './full-button.story'
-import './rounded-button.story'
-import './search-bar.story'

@@ -31,7 +31,6 @@ Containers are (mostly) full screens, although they can be sections of screens o
 * `LaunchScreen.js` - this is the first screen shown in your application. It's loaded into the Navigation component
 * `LoginScreen.js` - an example login screen. Read the comments in there to learn more!
 * `RegisterScreen.js` - contains the registration page for new users to create an account
-* `RootContainer.js` - main view of your application. Contains your status bar and navigation component
 * `SettingsScreen.js` - contains the settings page for a user to update their account information
 * `Styles` - styling for each of the above containers and screens
 
