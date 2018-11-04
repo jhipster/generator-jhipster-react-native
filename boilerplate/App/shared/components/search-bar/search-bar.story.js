@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 
-import SearchBar from '../../../app/shared/components/search-bar/search-bar'
+import SearchBar from './search-bar'
 
 storiesOf('SearchBar', module)
   .add('Default', () => (

@@ -3,7 +3,7 @@ import { put, take } from 'redux-saga/effects'
 <%_ if (props.authType === 'oauth2') { _%>
 import LoginActions from '../../modules/login/login.reducer'
 <%_ } else { _%>
-import { loginScreen } from '../Navigation/Layouts'
+import { loginScreen } from '../../navigation/layouts'
 <%_ } _%>
 
 // this saga is used for showing the LoginScreen when a 401 error is received

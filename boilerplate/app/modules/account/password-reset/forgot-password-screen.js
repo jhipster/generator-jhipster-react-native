@@ -87,8 +87,8 @@ class ForgotPasswordScreen extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fetching: state.password.fetching,
-    error: state.password.error
+    fetching: state.forgotPassword.fetching,
+    error: state.forgotPassword.error
   }
 }
 
