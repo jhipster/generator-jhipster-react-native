@@ -55,13 +55,14 @@
   },
   "dependencies": {
     "fs-extra": "4.0.0",
-    "insight": "0.8.4",
-    "jhipster-core": "3.3.3",
+    "insight": "0.10.1",
+    "jhipster-core": "3.6.0",
     "pluralize": "6.0.0",
-    "ramda": "0.23.0"
+    "ramda": "0.23.0",
+    "rimraf": "2.6.2"
   },
   "jest": {
-    "testPathIgnorePatterns":[
+    "testPathIgnorePatterns": [
       "node_modules/",
       "boilerplate/"
     ]
