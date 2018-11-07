@@ -35,7 +35,7 @@ export default class LaunchScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.mainContainer}>
+      <View style={styles.mainContainer} testID='launch-screen'>
         <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
         <ScrollView style={styles.container}>
           <View style={styles.centered}>

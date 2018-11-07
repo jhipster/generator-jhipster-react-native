@@ -36,6 +36,12 @@ module.exports = async function (context, props, jhipsterConfig) {
     overwrite: true,
     matching: '!*.ejs'
   })
+  if (props.detox) {
+    await filesystem.copy(`${__dirname}/../../boilerplate/e2e`, `${process.cwd()}/e2e`, {
+      overwrite: true,
+      matching: '!*.ejs'
+    })
+  }
   spinner.stop()
 
   // generate some templates
