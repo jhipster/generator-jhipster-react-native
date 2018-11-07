@@ -6,7 +6,7 @@
     "react-native",
     "jhipster-module"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
   "version": "1.14.0",
