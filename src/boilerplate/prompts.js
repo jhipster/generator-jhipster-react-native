@@ -23,6 +23,11 @@ module.exports = {
   //   type: 'list',
   //   choices: ['none', 'react-native-i18n']
   // },
+  detox: {
+    name: 'detox',
+    message: 'Do you want to enable end-to-end tests with Detox?',
+    type: 'confirm'
+  },
   insight: {
     name: 'insight',
     message: 'May IgniteJHipster anonymously report usage statistics to improve the tool over time?',

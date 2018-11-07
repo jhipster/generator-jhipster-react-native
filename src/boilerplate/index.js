@@ -52,6 +52,7 @@ async function install (context) {
 
   let props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
+    detox: parameters.options['e2e'],
     disableInsight: parameters.options['disable-insight'] || false
   }
   let jhipsterConfig
@@ -105,10 +106,15 @@ async function install (context) {
     Insight.insight.optOut = !((await prompt.ask(prompts.insight)).insight)
   }
 
+  if (!props.detox && props.detox !== false) {
+    props.detox = (await prompt.ask(prompts.detox)).detox
+  }
+
   props.skipGit = parameters.options['skip-git']
   props.skipLint = parameters.options['skip-lint']
 
   // very hacky but correctly handles both strings and booleans and converts to boolean
+  props.detox = JSON.parse(props.detox)
   props.disableInsight = JSON.parse(props.disableInsight)
 
   // attempt to install React Native or die trying
