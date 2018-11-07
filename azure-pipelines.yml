@@ -1,18 +1,32 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
 pool:
-  vmImage: 'Ubuntu 16.04'
+# note: both ios and android emulator is only available on mac-os on azure pipelines
+  vmImage: 'macOS-10.13'
+variables:
+  SCRIPT_DIR: $BUILD_REPOSITORY_LOCALPATH/test/scripts
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '8.x'
-  displayName: 'Install Node.js'
+    versionSpec: '10.x'
+  displayName: 'TOOLS: install Node.js'
+- script: npm install -g npm
+  displayName: 'TOOLS: update NPM'
+#- script: $(SCRIPT_DIR)/display-tools.sh
+#  displayName: 'TOOLS: install docker'
+- script: $(SCRIPT_DIR)/display-tools.sh
+  displayName: 'TOOLS: display tools'
+- script: $(SCRIPT_DIR)/install-node-dependencies.sh
+  displayName: 'TOOLS: install node dependencies'
+- script: cp ${BUILD_REPOSITORY_LOCALPATH}/test/.jhipster/application-with-entities.jdl ../mono.jdl
+  displayName: 'TOOLS: npm install and link in ignite-jhipster'
+- script: npm ci && npm link
+  displayName: 'SETUP: copy the JDL file for the backend and app'
+- script: $(SCRIPT_DIR)/generate-ignite-jhipster-app.sh
+  displayName: 'GENERATING: generating ignite-jhipster app'
+#- script: $(SCRIPT_DIR)/package-ignite-jhipster-app.sh
+#  displayName: 'PACKAGING: packaging ignite-jhipster project apk'
+- script: $(SCRIPT_DIR)/generate-jhipster-backend.sh
+  displayName: 'GENERATING: generate jhipster project'
+#- script: $(SCRIPT_DIR)/package-jhipster-backend.sh
+#  displayName: 'PACKAGING: packaging jhipster project into docker'
 
-- script: |
-    npm install
-    npm run lint
-  displayName: 'npm install and list'
