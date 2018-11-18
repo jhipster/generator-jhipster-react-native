@@ -27,10 +27,12 @@ class SettingsScreen extends React.Component {
         fields: {
           firstName: {
             returnKeyType: 'next',
+            testID: 'firstNameInput',
             onSubmitEditing: () => this.refs.form.getComponent('lastName').refs.input.focus()
           },
           lastName: {
             returnKeyType: 'next',
+            testID: 'lastNameInput',
             onSubmitEditing: () => this.refs.form.getComponent('email').refs.input.focus()
           },
           login: {
@@ -38,6 +40,7 @@ class SettingsScreen extends React.Component {
           },
           email: {
             returnKeyType: 'done',
+            testID: 'emailInput',
             onSubmitEditing: () => this.submitUpdate()
           },
           langKey: {
@@ -99,7 +102,7 @@ class SettingsScreen extends React.Component {
             value={this.state.accountValue}
             onChange={this.accountChange}
           />
-          <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
+          <TouchableHighlight testID='settingsSubmitButton' style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </ScrollView>

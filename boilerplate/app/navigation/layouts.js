@@ -54,7 +54,8 @@ export const appStack = {
                   leftButtons: [
                     {
                       id: 'menuButton',
-                      icon: Images.menuIcon
+                      icon: Images.menuIcon,
+                      testID: 'menuButton'
                     }
                   ]
                 }
@@ -121,6 +122,7 @@ export function registerScreensAndStartApp () {
         },
         backButton: {
           showTitle: false,
+          testID: 'backButton',
           icon: Images.chevronLeftIcon,
           color: Colors.snow,
           iconColor: Colors.snow
@@ -220,7 +222,7 @@ export const entitiesScreen = () => Navigation.push('center', {
     options: {
       topBar: {
         title: {
-          text: 'Settings',
+          text: 'Entities',
           color: Colors.snow
         }
       }

@@ -19,14 +19,17 @@ steps:
   displayName: 'TOOLS: install node dependencies'
 - script: cp ${BUILD_REPOSITORY_LOCALPATH}/test/.jhipster/application-with-entities.jdl ../mono.jdl
   displayName: 'TOOLS: npm install and link in ignite-jhipster'
+- script: $(SCRIPT_DIR)/install-detox.sh
+  displayName: 'TOOLS: installing detox CLI '
 - script: npm ci && npm link
   displayName: 'SETUP: copy the JDL file for the backend and app'
 - script: $(SCRIPT_DIR)/generate-ignite-jhipster-app.sh
   displayName: 'GENERATING: generating ignite-jhipster app'
-#- script: $(SCRIPT_DIR)/package-ignite-jhipster-app.sh
-#  displayName: 'PACKAGING: packaging ignite-jhipster project apk'
+- script: $(SCRIPT_DIR)/package-ignite-jhipster-app.sh
+  displayName: 'PACKAGING: packaging ignite-jhipster app for detox'
 - script: $(SCRIPT_DIR)/generate-jhipster-backend.sh
   displayName: 'GENERATING: generate jhipster project'
-#- script: $(SCRIPT_DIR)/package-jhipster-backend.sh
-#  displayName: 'PACKAGING: packaging jhipster project into docker'
-
+- script: $(SCRIPT_DIR)/package-jhipster-backend.sh
+  displayName: 'PACKAGING: packaging jhipster project into docker'
+- script: $(SCRIPT_DIR)/run-detox-tests.sh
+  displayName: 'TESTING: running detox tests'

@@ -78,22 +78,22 @@ class DrawerContent extends Component {
   render () {
     return (
       <ScrollView style={styles.container}>
-        <Image source={Images.logoJhipster} style={styles.logo} />
-        {!this.props.loggedIn && (<DrawerButton text='Login' onPress={this.handlePressLogin} />)}
+        <Image testID='drawerLogo' source={Images.logoJhipster} style={styles.logo} />
+        {!this.props.loggedIn && (<DrawerButton testID='loginDrawerButton' text='Login' onPress={this.handlePressLogin} />)}
         <%_ if (props.authType !== 'oauth2') { _%>
-        {!this.props.loggedIn && (<DrawerButton text='Register' onPress={this.handlePressRegister} />)}
-        {!this.props.loggedIn && (<DrawerButton text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
+        {!this.props.loggedIn && (<DrawerButton testID='registerDrawerButton' text='Register' onPress={this.handlePressRegister} />)}
+        {!this.props.loggedIn && (<DrawerButton testID='forgotPasswordDrawerButton' text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
         <%_ } _%>
 
-        {this.props.loggedIn && (<DrawerButton text='Entities' onPress={this.handlePressEntities} />)}
+        {this.props.loggedIn && (<DrawerButton testID='entitiesDrawerButton' text='Entities' onPress={this.handlePressEntities} />)}
         <%_ if (props.websockets) { _%>
-        {this.props.loggedIn && (<DrawerButton text='Chat' onPress={this.handlePressChat} />)}
+        {this.props.loggedIn && (<DrawerButton testID='chatDrawerButton' text='Chat' onPress={this.handlePressChat} />)}
         <%_ } _%>
         <%_ if (props.authType !== 'oauth2') { _%>
-        {this.props.loggedIn && (<DrawerButton text='Settings' onPress={this.handlePressSettings} />)}
-        {this.props.loggedIn && (<DrawerButton text='Change Password' onPress={this.handlePressChangePassword} />)}
+        {this.props.loggedIn && (<DrawerButton testID='settingsDrawerButton' text='Settings' onPress={this.handlePressSettings} />)}
+        {this.props.loggedIn && (<DrawerButton testID='changePasswordDrawerButton' text='Change Password' onPress={this.handlePressChangePassword} />)}
         <%_ } _%>
-        {this.props.loggedIn && (<DrawerButton text='Logout' onPress={this.handlePressLogout} />)}
+        {this.props.loggedIn && (<DrawerButton testID='logoutDrawerButton' text='Logout' onPress={this.handlePressLogout} />)}
       </ScrollView>
     )
   }

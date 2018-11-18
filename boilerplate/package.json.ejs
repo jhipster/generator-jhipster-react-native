@@ -51,7 +51,7 @@
     "sockjs-client": "1.1.5",
     "net": "1.0.2",
     <%_ } _%>
-    "tcomb-form-native": "0.6.16"
+    "tcomb-form-native": "0.6.20"
   },
   "devDependencies": {
     "@storybook/addons": "3.4.10",
@@ -69,7 +69,7 @@
     "ignite-jhipster": "<%= props.packageVersion %>",
     "jest": "23.5.0",
     <%_ if (props.detox) { _%>
-    "detox": "9.0.6",
+    "detox": "9.1.2",
     "mocha": "5.2.0",
     <%_ } _%>
     "mockery": "2.1.0",
@@ -127,7 +127,15 @@
       "__DEV__",
       "XMLHttpRequest",
       "FormData",
-      "React$Element"
+      "React$Element",
+      "element",
+      "by",
+      "beforeEach",
+      "device",
+      "it",
+      "before",
+      "after",
+      "afterEach"
     ],
     "ignore": [
       "ignite/**"
@@ -139,13 +147,13 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= props.name %>.app",
-        "build": "xcodebuild -project ios/<%= props.name %>.xcodeproj -scheme <%= props.name %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "xcodebuild -project ios/<%= props.name %>.xcodeproj -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone X"
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= props.name %>.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/<%= props.name %>.xcodeproj -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -project ios/<%= props.name %>.xcodeproj -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone X"
       },
