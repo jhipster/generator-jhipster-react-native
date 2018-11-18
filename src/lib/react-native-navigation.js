@@ -63,7 +63,7 @@ const updateAndroidFiles = async (context) => {
   // app/build.gradle
   await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
     after: `versionCode 1`,
-    insert: `missingDimensionStrategy "RNN.reactNativeVersion", "reactNative56"`
+    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57"`
   })
 
   await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {

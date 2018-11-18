@@ -40,5 +40,5 @@ test('update failure path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(AccountActions.accountFailure('WRONG')))
+  expect(step(response)).toEqual(put(AccountActions.accountUpdateFailure('WRONG')))
 })
