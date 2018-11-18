@@ -2,7 +2,7 @@ const Utils = require('./utils')
 
 describe('Login Screen Tests', () => {
   beforeEach(async () => {
-    await device.reloadReactNative() 
+    await device.reloadReactNative()
   })
 
   it('should close on cancel button press', async () => {

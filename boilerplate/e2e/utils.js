@@ -1,15 +1,15 @@
 navigateToLoginScreen = async () => {
-    await expect(element(by.id('launchScreen'))).toBeVisible()
-    await element(by.id('menuButton')).tap()
-    await element(by.id('loginDrawerButton')).tap()
-    await expect(element(by.id('loginScreenUsername'))).toBeVisible()
+  await expect(element(by.id('launchScreen'))).toBeVisible()
+  await element(by.id('menuButton')).tap()
+  await element(by.id('loginDrawerButton')).tap()
+  await expect(element(by.id('loginScreenUsername'))).toBeVisible()
 }
 
 loginAsUser = async () => {
-    await navigateToLoginScreen()
-    await element(by.id('loginScreenUsername')).replaceText('user')
-    await element(by.id('loginScreenPassword')).replaceText('user')
-    await element(by.id('loginScreenLoginButton')).tap()
+  await navigateToLoginScreen()
+  await element(by.id('loginScreenUsername')).replaceText('user')
+  await element(by.id('loginScreenPassword')).replaceText('user')
+  await element(by.id('loginScreenLoginButton')).tap()
 }
 
 logout = async () => {
@@ -18,7 +18,7 @@ logout = async () => {
 }
 
 module.exports = {
-    navigateToLoginScreen,
-    loginAsUser,
-    logout
+  navigateToLoginScreen,
+  loginAsUser,
+  logout
 }

@@ -24,6 +24,13 @@ test('update success', () => {
   expect(state.updating).toEqual(false)
 })
 
+test('update failure', () => {
+  const state = reducer(INITIAL_STATE, Actions.accountUpdateFailure({error: 'Not Authorized'}))
+
+  expect(state.updating).toEqual(false)
+  expect(state.error).toEqual({error: 'Not Authorized'})
+})
+
 test('failure', () => {
   const state = reducer(INITIAL_STATE, Actions.accountFailure({error: 'Not Authorized'}))
 

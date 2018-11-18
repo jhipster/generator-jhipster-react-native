@@ -6,7 +6,7 @@ describe('Settings Screen Tests', () => {
     await Utils.loginAsUser()
   })
   after(async () => {
-    await element(by.type('_UIBackButtonContainerView')).tap();
+    await element(by.type('_UIBackButtonContainerView')).tap()
     await Utils.logout()
   })
 

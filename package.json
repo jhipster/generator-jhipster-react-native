@@ -42,6 +42,9 @@
       "jasmine",
       "beforeAll",
       "afterAll"
+    ],
+    "ignore": [
+      "boilerplate/e2e"
     ]
   },
   "devDependencies": {
