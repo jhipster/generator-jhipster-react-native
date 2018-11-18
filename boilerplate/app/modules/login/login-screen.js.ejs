@@ -70,6 +70,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.rowLabel}>Username</Text>
             <TextInput
               ref='username'
+              testID='loginScreenUsername'
               style={textInputStyle}
               value={username}
               editable={editable}
@@ -87,6 +88,7 @@ class LoginScreen extends React.Component {
             <Text style={styles.rowLabel}>Password</Text>
             <TextInput
               ref='password'
+              testID='loginScreenPassword'
               style={textInputStyle}
               value={password}
               editable={editable}
@@ -102,12 +104,12 @@ class LoginScreen extends React.Component {
           </View>
 
           <View style={[styles.loginRow]}>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={this.handlePressLogin}>
+            <TouchableOpacity testID='loginScreenLoginButton' style={styles.loginButtonWrapper} onPress={this.handlePressLogin}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginText}>Sign In</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.loginButtonWrapper} onPress={this.handlePressCancel}>
+            <TouchableOpacity testID='loginScreenCancelButton' style={styles.loginButtonWrapper} onPress={this.handlePressCancel}>
               <View style={styles.loginButton}>
                 <Text style={styles.loginText}>Cancel</Text>
               </View>

@@ -1,9 +1,9 @@
-describe('Example', () => {
+describe('Launch Screen Tests', () => {
   beforeEach(async () => {
-    await device.reloadReactNative();
-  });
+    await device.reloadReactNative()
+  })
 
   it('should have welcome screen', async () => {
-    await expect(element(by.id('launch-screen'))).toBeVisible();
-  });
+    await expect(element(by.id('launchScreen'))).toBeVisible()
+  })
 })

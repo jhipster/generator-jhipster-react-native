@@ -23,16 +23,19 @@ class ChangePasswordScreen extends React.Component {
         fields: {
           currentPassword: {
             secureTextEntry: true,
+            testID: 'currentPasswordInput',
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('newPassword').refs.input.focus()
           },
           newPassword: {
             secureTextEntry: true,
+            testID: 'newPasswordInput',
             returnKeyType: 'next',
             onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
           },
           confirmPassword: {
             secureTextEntry: true,
+            testID: 'confirmPasswordInput',
             returnKeyType: 'done',
             onSubmitEditing: () => this.submitForm()
           }
@@ -90,7 +93,7 @@ class ChangePasswordScreen extends React.Component {
             value={this.state.formValue}
             onChange={this.formChange}
           />
-          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
+          <TouchableHighlight testID='changePasswordSubmitButton' style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </ScrollView>

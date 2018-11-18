@@ -41,6 +41,12 @@ module.exports = async function (context, props, jhipsterConfig) {
       overwrite: true,
       matching: '!*.ejs'
     })
+    // remove account files if oauth is used
+    if (props.authType === 'oauth2') {
+      await filesystem.remove(`${process.cwd()}/e2e/login-screen.spec.js`)
+      await filesystem.remove(`${process.cwd()}/e2e/settings-screen.spec.js`)
+      await filesystem.remove(`${process.cwd()}/e2e/change-password-screen.spec.js`)
+    }
   }
   spinner.stop()
 
