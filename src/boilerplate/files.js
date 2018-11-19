@@ -155,6 +155,15 @@ module.exports = async function (context, props, jhipsterConfig) {
         quiet: true,
         directory: `${__dirname}/../../templates/jhipster/oauth2`
       })
+      const keycloakConfigFile = 'src/main/docker/realm-config/jhipster-realm.json'
+      if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`)) {
+        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`,
+          {
+            replace: `"redirectUris": ["http://localhost:8080/*",`,
+            insert: `"redirectUris": ["http://localhost:8080/*", "${props.name.toLowerCase()}://*",`
+          }
+        )
+      }
       const securityConfigFile = 'SecurityConfiguration'
       if (isMonolith && fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
         await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
