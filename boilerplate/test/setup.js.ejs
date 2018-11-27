@@ -15,5 +15,10 @@ jest
     return { get: jest.fn((url) => { return [] }) }
   })
 <%_ } _%>
+<%_ if (props.authType === 'oauth2') { _%>
+  .mock('react-native-app-auth', () => {
+    return { authorize: jest.fn(() => { return {} }) }
+  })
+<%_ } _%>
 
 console.tron = { log: () => {}, display: () => {} }

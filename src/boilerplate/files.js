@@ -174,12 +174,17 @@ module.exports = async function (context, props, jhipsterConfig) {
         )
       }
     }
+    const androidAuthRedirectContent = `        manifestPlaceholders = [
+          appAuthRedirectScheme: '${props.name.toLowerCase()}'
+        ]`
+    await ignite.patchInFile('android/app/build.gradle', {
+      before: 'applicationId',
+      insert: androidAuthRedirectContent,
+      match: androidAuthRedirectContent
+    })
   } else {
     // remove OAuth2 files if not enabled
-    await filesystem.remove('app/shared/util/generate-nonce.js')
-    await filesystem.remove('app/shared/util/parse-oauth-response.js')
     await filesystem.remove('app/shared/fixtures/get-oauth-info.json')
-    await filesystem.remove('app/shared/fixtures/get-oauth-issuer-info.json')
   }
 
   /**

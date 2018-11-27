@@ -1,59 +1,36 @@
 ## OAuth2 OIDC
 
-After generating your app, you need to configure a few things for OIDC to work correctly - you will need to add a URL 
-scheme to your app, and then add that scheme as a valid redirect URI in Keycloak or Okta.
+For iOS support, you must follow [the setup instructions for react-native-app-auth](https://github.com/FormidableLabs/react-native-app-auth#ios-setup).  The Carthage method is recommended unless you plan on using Cocoapods (using Cocoapods can complicate linking of native dependencies).
 
+Install Carthage if needed:
+```
+brew install carthage
+```
+Build AppAuth-iOS native library:
+```
+cd ios
+echo 'github "openid/AppAuth-iOS" "master"' >> Cartfile
+carthage update --platform iOS
+cd ..
+```
+
+Make sure `react-native-app-auth` is found under the header search paths.  In XCode, look under your project's `Build Settings` -> `Header Search Path`.  If not, run `react-native link react-native-app-auth` from the root of your project.
 
 Ignite JHipster generates several files in your JHipster backend's folder.  See the changes in your JHipster app.
 - `web.rest.AuthInfoResource`
   - Adds an API endpoint returning OAuth2 issuer information
 - `config.ResourceServerConfiguration.java` 
-  - Handles authentication with a Bearer token instead of a cookie
-   
-   
-### Choose a URL Scheme
-The value of the URL scheme is up to the app developer, but needs to be consistent throughout the app.  A sample generated URL scheme value is pre-configured in 
-`Config/AppConfig.js`,  matching your app's name.  For purposes of this documentation, we are using `oidc-example` as the URL scheme.
+  - Enables authentication using a Bearer token instead of a cookie
+- `src/main/docker/realm-config/jhipster-realm.json`
+  - Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
 
+**Note:** If you generate your Ignite JHipster app from a JDL Application, you will need to make these changes manually.
+   
+### URL Scheme
+The app's URL scheme is declared in AppConfig, build.gradle, AndroidManifest.xml, and Info.plist.  By default it uses your app name.
 
 #### Keycloak + Okta Configuration
-Add the URL scheme from above as a valid redirect URI, followed by the word "authorize".  For example, if your URL scheme is `oidc-example` then the redirect URI
- should look like `oidc-example://authorize`
+Add the URL scheme from above as a valid redirect URI, followed by the word "authorize".  For example, if your URL scheme is `oauth-app` then the redirect URI
+ should look like `oauth-app://authorize`.  This is patched in JHipster's Keycloak docker config so you may need to restart the docker container.
 
-**Note:** When running the backend locally for Android, you will need to change the Keycloak config in `application.yml`.  Replace `localhost` with your computer's network IP or another IP that resolves to your Keycloak instance.  This is not an issue for Okta.
-
-#### Android URL Scheme Setup
-Where `oidc-example` is your chosen URL scheme, add the following to your app's `android/app/src/main/AndroidManifest.xml` file:
-```xml
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="oidc-example" />
-        </intent-filter>
-```
-
-Set the `launchMode` of `MainActivity` to `singleTask` in `AndroidManifest.xml`
-
-```xml
-    <activity
-      android:name=".MainActivity"
-      android:launchMode="singleTask"
-      ...
-```
-
-#### iOS URL Scheme Setup
-Configure Linking for the iOS platform by adding the following lines to your app's iOS `AppDelegate.m` file:
-
-```c
-#import <React/RCTLinkingManager.h>
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-            options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-  return [RCTLinkingManager application:application openURL:url options:options];
-}
-```
-Then configure your iOS url scheme on the `Project` -> `Info` -> `URL Types` section like in the screenshot below:
-
-![35599933-434fa4a8-05f9-11e8-8474-017d96ba5b10](https://user-images.githubusercontent.com/4294623/35661218-b5d2694e-06de-11e8-8cbb-bab63213f790.png)
+**Note:** When running the backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.

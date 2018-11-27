@@ -1,7 +1,6 @@
-import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %><% if (props.authType === 'oauth2') { %>, take<% } %> } from 'redux-saga/effects'
+import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
 <%_ if (props.authType === 'oauth2') { _%>
-import { Linking } from 'react-native'
-import { eventChannel } from 'redux-saga'
+import { authorize } from 'react-native-app-auth'
 <%_ } _%>
 
 import LoginActions from './login.reducer'
@@ -11,8 +10,6 @@ import WebsocketService from '../../shared/websockets/websocket-service'
 <%_ } _%>
 <%_ if (props.authType === 'oauth2') { _%>
 import AppConfig from '../../config/app-config'
-import { generateNonce } from '../../shared/util/generate-nonce'
-import { parseOauthResponse } from '../../shared/util/parse-oauth-response'
 <%_ } _%>
 
 <%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
@@ -25,46 +22,22 @@ export function * login (api) {
   const authInfo = yield call(api.getOauthInfo)
   if (authInfo.ok) {
     const { issuer, clientId, scope } = authInfo.data
-    const issuerInfo = yield call(api.getOauthIssuerInfo, issuer)
-    if (!issuerInfo.ok) {
-      // note if you are on android, localhost resolves to the device and not your computer
-      alert(`Unable to fetch auth from issuer ${issuer}`) // eslint-disable-line no-undef
-      yield put(LoginActions.loginFailure('WRONG'))
-      return
+    const config = {
+      issuer,
+      clientId,
+      scopes: scope.split(' '),
+      redirectUrl: `${AppConfig.appUrlScheme}://authorize`
     }
-    const authorizationEndpoint = issuerInfo.data['authorization_endpoint']
-
-    const nonce = generateNonce()
-    const url = [
-      `${authorizationEndpoint}`,
-      `?response_type=${encodeURIComponent(`id_token token`)}`,
-      `&client_id=${clientId}`,
-      `&scope=${encodeURIComponent(scope)}`,
-      `&redirect_uri=${encodeURIComponent(`${AppConfig.appUrlScheme}://authorize`)}`,
-      `&nonce=${nonce}`,
-      `&state=${nonce}`
-    ].join('')
-    Linking.openURL(url)
-
-    console.tron.log('Waiting for response from Oauth2 Issuer')
-    // the proper way to add a callback in a saga
-    const chan = eventChannel(emit => {
-      Linking.addEventListener('url', (e) => emit({url: e.url}))
-      return () => {}
-    })
-    const oauthResponse = yield take(chan)
-    chan.close()
-    Linking.removeEventListener('url')
-    // parse the parameters from the redirect URI
-    const { oauthState, accessToken } = parseOauthResponse(oauthResponse)
-
-    if (oauthState === nonce) {
+    try {
+      // result includes accessToken, accessTokenExpirationDate and refreshToken
+      const authorizeResult = yield authorize(config)
+      const { accessToken } = authorizeResult
       yield call(api.setAuthToken, accessToken)
       yield put(LoginActions.loginSuccess(accessToken))
       yield put(AccountActions.accountRequest())
       yield put({ type: 'RELOGIN_OK' })
-    } else {
-      console.tron.log('State variable does not match, login failed')
+    } catch (error) {
+      console.log(error)
       yield put(LoginActions.loginFailure('WRONG'))
     }
   } else {

@@ -212,12 +212,15 @@ async function install (context) {
     throw e
   }
 
-  await patchReactNativeNavigation(context, name)
+  await patchReactNativeNavigation(context, props)
 
   // react native link -- must use spawn & stdio: ignore or it hangs!! :(
   spinner.text = `▸ linking native libraries`
   spinner.start()
   await system.spawn('react-native link', { stdio: 'ignore' })
+  if (props.authType === 'oauth2') {
+    await system.spawn('react-native link react-native-app-auth', { stdio: 'ignore' })
+  }
   spinner.stop()
 
   // if JDL was passed to generate the app, generate any entities
@@ -249,15 +252,12 @@ async function install (context) {
   print.info('🍽 Time to get cooking!')
   print.info('')
   if (props.websockets) {
-    print.info('To enable the websockets example, see docs/websockets.md')
-    print.info('')
-  }
-  if (props.socialLogin) {
-    print.info('To configure Social Login, see docs/social-login.md')
+    print.info('To enable the websockets example, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/websockets.md')
     print.info('')
   }
   if (props.authType === 'oauth2') {
-    print.info('To configure OAuth2 OIDC Login, see docs/oauth2-oidc.md')
+    print.info(print.colors.bold(`Before iOS apps can be run, there are steps that must be complete manually`))
+    print.info('To configure OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md')
     print.info('')
   }
   print.info('To run in iOS:')
