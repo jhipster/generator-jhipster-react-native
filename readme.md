@@ -3,20 +3,25 @@
 
 [![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
 
-A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, and more.
-
-This module uses Infinite Red's [Ignite generator](https://github.com/infinitered/ignite) and is based off of [ignite-ir-boilerplate-2016](https://github.com/infinitered/ignite-ir-boilerplate-2016).  
+A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, E2E tests, and more.  
 
 For a quick tour, check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en), the [YouTube Demo](https://youtu.be/o46CwsJlL-I) or the [blog post](https://jruddell.com/blog/ignite-jhipster).
 
+Uses the following libraries:
+ - [Ignite](https://github.com/infinitered/ignite) - Infinite Red's React Native app generator 
+ - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
+ - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html) - State management
+ - [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons) - Icons from Ionicons, Font Awesome, and more
+ - [Detox](https://github.com/wix/Detox) - End-to-End Testing and Automation Framework for Mobile Apps
+ 
+
 ## Docs
+ - [Getting Started](readme.md#getting-started)
  - [App Config Variables](docs/config-variables.md)
  - [Generators and Plugins](docs/generators-and-plugins.md)
  - [Project Structure](docs/project-structure.md)
  - [OAuth2 OIDC Login](docs/oauth2-oidc.md)
- - [Social Login](docs/social-login.md)
  - [Websockets](docs/websockets.md)
- - [JHipster Version Compatibility](docs/jhipster-version-compatability.md)
  - [Upgrading Your Ignite JHipster App](docs/upgrading.md)
  - [Advanced Usage](docs/advanced-usage.md)
 
@@ -28,18 +33,18 @@ For a quick tour, check out the [Sample Application for Android](https://play.go
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
- - Not required, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
+ - Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
 To generate an app, run the following command:
 ```js
 ignite new SampleApp --boilerplate ignite-jhipster
 ```
 
-Answer the prompts (enter the path to your JHipster app and choose any plugins you want) and wait for the project to finish generation.  
+Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for both iOS and Android).
 
-The generator will create a new directory containing the project.  It also sets up the Android and iOS app directories.
+After generating, you can use the [entity generator, JDL importer, and other commands](docs/generators-and-plugins.md).
 
-After generating, you can use the [entity generator and other commands](docs/generators-and-plugins.md).
+**Note:** When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
