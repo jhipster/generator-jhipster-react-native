@@ -1,4 +1,4 @@
-const patchReactNativeNavigation = async (context = {}, name) => {
+const patchReactNativeNavigation = async (context = {}, props) => {
   // REACT_NATIVE_NAVIGATION_VERSION
   const {
     ignite,
@@ -9,16 +9,17 @@ const patchReactNativeNavigation = async (context = {}, name) => {
   spinner.start()
 
   // print.info('Installing and linking react-native-navigation')
+  // set java packageName for android patches
+  props.packageName = props.name.toLowerCase()
 
-  const props = {
-    name,
-    packageName: name.toLowerCase()
-  }
   const navigationFiles = [
-    { template: 'AppDelegate.m.ejs', target: `ios/${name}/AppDelegate.m` },
-    { template: 'MainActivity.java.ejs', target: `android/app/src/main/java/com/${name.toLowerCase()}/MainActivity.java` },
-    { template: 'MainApplication.java.ejs', target: `android/app/src/main/java/com/${name.toLowerCase()}/MainApplication.java` }
+    { template: 'AppDelegate.m.ejs', target: `ios/${props.name}/AppDelegate.m` },
+    { template: 'MainActivity.java.ejs', target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainActivity.java` },
+    { template: 'MainApplication.java.ejs', target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainApplication.java` }
   ]
+  if (props.authType === 'oauth2') {
+    navigationFiles.push({ template: 'AppDelegate.h.ejs', target: `ios/${props.name}/AppDelegate.h` })
+  }
   await ignite.copyBatch(context, navigationFiles, props, {
     // quiet: true,
     directory: `${__dirname}/../../templates/react-native-navigation/`
