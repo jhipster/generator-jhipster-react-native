@@ -52,9 +52,6 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.deleteHeader('Authorization')
   <%_ } _%>
-  <%_ if (props.socialLogin) { _%>
-  const socialLogin = (userAuth) => api.post(`social/token?token=${userAuth.token}&secret=${userAuth.secret}&provider=${userAuth.provider}`)
-  <%_ } _%>
   <%_ if (props.authType === 'oauth2') { _%>
   const getOauthInfo = () => api.get('api/auth-info')
   const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
@@ -112,9 +109,6 @@ const create = (baseURL = AppConfig.apiUrl) => {
     getOauthIssuerInfo,
     <%_ } else { _%>
     login,
-    <%_ } _%>
-    <%_ if (props.socialLogin) { _%>
-    socialLogin,
     <%_ } _%>
     register,
     forgotPassword,

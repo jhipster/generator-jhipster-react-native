@@ -16,8 +16,7 @@ module.exports = async function (context) {
     authType: this.igniteConfig.authType,
     searchEngine: this.igniteConfig.searchEngine,
     websockets: this.igniteConfig.websockets,
-    jhipsterDirectory: this.igniteConfig.jhipsterDirectory,
-    socialLogin: this.igniteConfig.socialLogin
+    jhipsterDirectory: this.igniteConfig.jhipsterDirectory
   }
 
   const jhipsterConfig = await fs.readJson('.jhipster/yo-rc.json')

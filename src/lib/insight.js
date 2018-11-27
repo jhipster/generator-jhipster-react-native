@@ -42,7 +42,6 @@ const trackAppOptions = (context = {}, props) => {
     insight.track('app/searchEngine', props.searchEngine)
     insight.track('app/authType', props.authType)
     insight.track('app/websockets', props.websockets)
-    insight.track('app/socialLogin', props.socialLogin)
   }
 }
 

@@ -135,7 +135,6 @@ async function install (context) {
   props.authType = jhipsterConfig['generator-jhipster'].authenticationType
   props.searchEngine = !!jhipsterConfig['generator-jhipster'].searchEngine
   props.websockets = !!jhipsterConfig['generator-jhipster'].websocket
-  props.socialLogin = !!jhipsterConfig['generator-jhipster'].enableSocialSignIn
   props.packageVersion = pkg.version
   await generateFiles(context, props, jhipsterConfig)
 
