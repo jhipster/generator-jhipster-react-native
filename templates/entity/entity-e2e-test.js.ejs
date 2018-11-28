@@ -16,7 +16,7 @@ describe('<%= props.name %> Screen Tests', () => {
     await navigateTo<%= props.name %>Screen()
   })
 
-  navigateTo<%= props.name %>Screen = async () => {
+  const navigateTo<%= props.name %>Screen = async () => {
     await expect(element(by.id('launchScreen'))).toBeVisible()
     await element(by.id('menuButton')).tap()
     await element(by.id('entitiesDrawerButton')).tap()
@@ -27,7 +27,7 @@ describe('<%= props.name %> Screen Tests', () => {
     await expect(element(by.id('<%= camelCase(props.name) %>Screen'))).toBeVisible()
     await expect(element(by.text('Create'))).toBeVisible()
     // await element(by.type('_UIButtonBarButton')).tap()
-    await element(by.text('Create').and(by.type( 'UIButtonLabel'))).tap()
+    await element(by.text('Create').and(by.type('UIButtonLabel'))).tap()
     <%_ props.entityConfig.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
@@ -46,7 +46,7 @@ describe('<%= props.name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
       <%_ } _%>
     <%_ }) _%>
-    await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down');
+    await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down')
     await element(by.id('submitButton')).tap()
     await element(by.text('OK')).tap()
   })

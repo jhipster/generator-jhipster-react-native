@@ -63,7 +63,6 @@ class <%= props.name %>EntityEditScreen extends React.Component {
               }
             _%>
           <%= field.fieldName %>: {
-            testID: '<%= field.fieldName %>Input',
             <%_ if (field.fieldType === 'LocalDate') { _%>
             mode: 'date',
             config: {
@@ -72,11 +71,12 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             <%_ } _%>
             <%_ if (nextFieldName) { _%>
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus()
+            onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus(),
             <%_ } else if (props.entityConfig.ownerSideRelationships.length === 0) { _%>
             returnKeyType: 'done',
-            onSubmitEditing: () => this.submitForm()
+            onSubmitEditing: () => this.submitForm(),
           <%_ } _%>
+            testID: '<%= field.fieldName %>Input'
           }<%= (index === props.entityConfig.fields.length - 1) ? '' : ',' %>
           <%_ }) // end entity field loop _%>
         }
