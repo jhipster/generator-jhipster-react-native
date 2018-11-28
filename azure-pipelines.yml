@@ -13,18 +13,18 @@ jobs:
 
   strategy:
     matrix:
-#      jwt:
-#        JHI_AUTH_TYPE: jwt
-#        JHI_DTO: false
+      jwt:
+        JHI_AUTH_TYPE: jwt
+        JHI_DTO: false
       jwt-dto:
         JHI_AUTH_TYPE: jwt
         JHI_DTO: true
       session:
         JHI_AUTH_TYPE: session
         JHI_DTO: false
-#      session-dto:
-#        JHI_AUTH_TYPE: session
-#        JHI_DTO: true
+      session-dto:
+        JHI_AUTH_TYPE: session
+        JHI_DTO: true
   steps:
   - task: NodeTool@0
     inputs:
