@@ -7,4 +7,5 @@ npm -v
 docker version
 docker-compose version
 pwd
+ignite doctor
 ls -al
