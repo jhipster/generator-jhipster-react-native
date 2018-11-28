@@ -196,6 +196,8 @@ async function install (context) {
   filesystem.append('.gitignore', '\n# Misc\n#')
   filesystem.append('.gitignore', '.env\n')
   filesystem.append('.gitignore', 'ios/Index/DataStore\n')
+  filesystem.append('.gitignore', 'ios/Carthage\n')
+  filesystem.append('.gitignore', 'ios/Pods\n')
 
   try {
     const ignitePluginConfigPath = `${__dirname}/ignite.json`
