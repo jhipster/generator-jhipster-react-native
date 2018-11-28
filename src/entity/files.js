@@ -10,12 +10,14 @@ module.exports = async function (generator, igniteContext) {
 
   let name = generator.name
   let searchEngine = generator.igniteConfig.searchEngine
+  let detox = generator.igniteConfig.detox
   const props = {
     name: pluralize.singular(name),
     searchEngine,
     getEntityFormField,
     getRelationshipFormField,
     pascalCase,
+    detox,
     pluralName: pluralize.plural(name),
     kebabName: kebabCase(name)
   }
@@ -250,6 +252,12 @@ module.exports = async function (generator, igniteContext) {
       target: `app/shared/fixtures/search${props.pluralName}.json`
     })
   }
+  if (props.detox) {
+    entityFiles.push({
+      template: `entity-e2e-test.js.ejs`,
+      target: `e2e/entities/${props.kebabName}.spec.js`
+    })
+  }
 
   await ignite.copyBatch(igniteContext, entityFiles, props, {
     directory: `${__dirname}/../../templates/entity`
@@ -390,7 +398,7 @@ export const ${camelCase(props.name)}EntityEditScreen = (data) => Navigation.pus
     match: navigationMethodDetail
   })
   // add entity to entities screen
-  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={${camelCase(props.name)}EntityScreen} />`
+  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={${camelCase(props.name)}EntityScreen} testID='${camelCase(props.name)}EntityScreenButton' />`
   ignite.patchInFile(entityScreenFilePath, {
     before: 'ignite-jhipster-entity-screen-needle',
     insert: entityScreenButton,

@@ -154,7 +154,7 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
 
   render () {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} testID='<%= camelCase(props.name) %>Screen'>
         <FlatList
           contentContainerStyle={styles.listContent}
           data={this.state.dataObjects}

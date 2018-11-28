@@ -34,7 +34,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     super(props)
     Navigation.events().bindComponent(this)
     this.state = {
-      updating: props.entityId !== null && props.entityId !== undefined,
+      updating: props.data.entityId !== null && props.data.entityId !== undefined,
       formModel: t.struct({
         id: t.maybe(t.Number),
         <%_ props.entityConfig.fields.forEach((field, index) => { _%>
@@ -52,6 +52,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           },
           <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
           <%= relation.otherEntityName %>Id: {
+            testID: '<%= relation.otherEntityName %>IdInput',
             label: '<%= pascalCase(relation.relationshipName) %>'
           },
           <%_ }) _%>
@@ -62,6 +63,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
               }
             _%>
           <%= field.fieldName %>: {
+            testID: '<%= field.fieldName %>Input',
             <%_ if (field.fieldType === 'LocalDate') { _%>
             mode: 'date',
             config: {
@@ -88,8 +90,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
 
   componentWillMount () {
-    if (this.props.entityId) {
-      this.props.get<%= props.name %>(this.props.entityId)
+    if (this.props.data.entityId) {
+      this.props.get<%= props.name %>(this.props.data.entityId)
     } else {
       this.setState({formValue: null})
     }
@@ -119,9 +121,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           requesting: false,
           formValue: {}
         })
-        Alert.alert('Success', 'Entity saved successfully', [{text: 'OK'}])
         this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
         Navigation.pop(this.props.componentId)
+        Alert.alert('Success', 'Entity saved successfully', [{text: 'OK'}])
       }
     }
   }
@@ -211,7 +213,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   render () {
     return (
       <KeyboardAwareScrollView>
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} testID='entityScrollView'>
           <Form
             ref='form'
             type={this.state.formModel}
@@ -219,7 +221,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             value={this.state.formValue}
             onChange={this.formChange}
           />
-          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
+          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
             <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>
         </ScrollView>

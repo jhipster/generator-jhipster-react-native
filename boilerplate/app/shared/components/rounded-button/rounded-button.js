@@ -8,7 +8,8 @@ export default class RoundedButton extends React.Component {
     onPress: PropTypes.func,
     text: PropTypes.string,
     children: PropTypes.string,
-    navigator: PropTypes.object
+    navigator: PropTypes.object,
+    testID: PropTypes.string
   }
 
   getText () {
@@ -18,7 +19,7 @@ export default class RoundedButton extends React.Component {
 
   render () {
     return (
-      <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
+      <TouchableOpacity testID={this.props.testID} style={styles.button} onPress={this.props.onPress}>
         <Text style={styles.buttonText}>{this.getText()}</Text>
       </TouchableOpacity>
     )

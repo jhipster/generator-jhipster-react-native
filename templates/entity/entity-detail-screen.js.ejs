@@ -12,18 +12,18 @@ import RoundedButton from '../../../shared/components/rounded-button/rounded-but
 import styles from './<%= props.kebabName %>-entity-detail-screen-style'
 
 class <%= props.name %>EntityDetailScreen extends React.Component {
-  constructor (context, props) {
-    super(context, props)
+  constructor (props) {
+    super(props)
     Navigation.events().bindComponent(this)
     this.state = {
-      entityId: props.entityId,
+      entityId: props.data.entityId,
       <%= camelCase(props.name) %>: {},
       deleting: false
     }
   }
 
   componentWillMount () {
-    this.props.get<%= props.name %>(this.props.entityId)
+    this.props.get<%= props.name %>(this.props.data.entityId)
   }
 
   componentWillReceiveProps (newProps) {
@@ -55,7 +55,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
           text: 'OK',
           onPress: () => {
             this.setState({ deleting: true }, () => {
-              this.props.delete<%= props.name %>(this.props.entityId)
+              this.props.delete<%= props.name %>(this.props.data.entityId)
             })
           }
         }
