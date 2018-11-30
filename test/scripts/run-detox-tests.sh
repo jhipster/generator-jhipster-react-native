@@ -28,5 +28,11 @@ fi
 sleep 60
 
 cd ../JwtApp
+
+# if oauth, only run the launch screen since you need to authenticate for entities (todo: mock auth for entities)
+if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
+  echo ' --grep "Launch Screen"' >> e2e/mocha.opts
+fi
+
 # run the detox tests
 detox test --configuration ios.sim.release

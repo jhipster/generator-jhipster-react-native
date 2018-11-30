@@ -25,6 +25,12 @@ jobs:
       session-dto:
         JHI_AUTH_TYPE: session
         JHI_DTO: true
+      oauth2:
+        JHI_AUTH_TYPE: oauth2
+        JHI_DTO: false
+      oauth2-dto:
+        JHI_AUTH_TYPE: oauth2
+        JHI_DTO: true
   steps:
   - task: NodeTool@0
     inputs:
