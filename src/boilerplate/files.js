@@ -182,6 +182,50 @@ module.exports = async function (context, props, jhipsterConfig) {
       insert: androidAuthRedirectContent,
       match: androidAuthRedirectContent
     })
+    // todo move this to a file
+    // configure podfile after linking other native libraries
+    const podfile = `platform :ios, '9.0'
+target '${props.name}' do
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge',
+    'DevSupport',
+    # the following ones are the ones taken from "Libraries" in Xcode:
+    'RCTAnimation',
+    'RCTActionSheet',
+    'RCTBlob',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket'
+  ]
+ 
+  # the following dependencies are dependencies of React native itself.
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/GLog.podspec'
+ 
+  # our dependencies
+  pod 'AppAuth', '>= 0.94'
+
+end
+ 
+# The following is needed to ensure the "archive" step works in XCode.
+# It removes React from the Pods project, as it is already included in the main project.
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == "React"
+      target.remove_from_project
+    end
+  end
+end
+`
+    filesystem.write('ios/Podfile', podfile)
   } else {
     // remove OAuth2 files if not enabled
     await filesystem.remove('app/shared/fixtures/get-oauth-info.json')

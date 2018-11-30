@@ -5,7 +5,7 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     print
   } = context
 
-  const spinner = print.spin('Installing and linking react-native-navigation')
+  const spinner = print.spin('installing and linking react-native-navigation')
   spinner.start()
 
   // print.info('Installing and linking react-native-navigation')
@@ -21,11 +21,11 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     navigationFiles.push({ template: 'AppDelegate.h.ejs', target: `ios/${props.name}/AppDelegate.h` })
   }
   await ignite.copyBatch(context, navigationFiles, props, {
-    // quiet: true,
+    quiet: true,
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
 
-  spinner.succeed('Set up react-native-navigation for iOS/Android')
+  spinner.succeed('set up react-native-navigation for iOS/Android')
   await updateIosFiles(context, props)
   await updateAndroidFiles(context, props)
 }
@@ -110,20 +110,11 @@ const updateAndroidFiles = async (context, props) => {
       }
   }`
   })
-
-  // register url scheme for deep links
-  await ignite.patchInFile(`${process.cwd()}/android/app/src/main/AndroidManifest.xml`, {
-    before: `android:name=".MainActivity"`,
-    insert: `        android:launchMode="singleTask"`
-  })
-  await ignite.patchInFile(`${process.cwd()}/android/app/src/main/AndroidManifest.xml`, {
-    before: `<intent-filter>`,
-    insert: `        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="${props.name.toLowerCase()}" />
-        </intent-filter>`
+  await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
+    after: `dependencies {`,
+    insert: `
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+    implementation project(':react-native-navigation')`
   })
 }
 

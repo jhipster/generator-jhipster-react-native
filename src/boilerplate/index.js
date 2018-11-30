@@ -215,13 +215,27 @@ async function install (context) {
 
   await patchReactNativeNavigation(context, props)
 
-  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
+  // react native link -- must use spawn & stdio: ignore
   spinner.text = `▸ linking native libraries`
   spinner.start()
   await system.spawn('react-native link', { stdio: 'ignore' })
+  let showCocoapodsInstructions = false
   if (props.authType === 'oauth2') {
     await system.spawn('react-native link react-native-app-auth', { stdio: 'ignore' })
+    // if it's a mac
+    if (process.platform === 'darwin') {
+      // if cocoapods is installed, install the oauth dependencies
+      const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
+      if (podVersionCommandResult.status === 0) {
+        spinner.text = `▸ running pod install`
+        await system.run('cd ios && pod install && cd ..', { stdio: 'ignore' })
+        spinner.succeed(`pod install succeeded`)
+      } else {
+        showCocoapodsInstructions = true
+      }
+    }
   }
+  spinner.succeed(`linked native libraries`)
   spinner.stop()
 
   // if JDL was passed to generate the app, generate any entities
@@ -258,7 +272,10 @@ async function install (context) {
   }
   if (props.authType === 'oauth2') {
     print.info(print.colors.bold(`Before iOS apps can be run, there are steps that must be complete manually`))
-    print.info('To configure OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md')
+    if (showCocoapodsInstructions) {
+      print.info(print.colors.blue(`Cocoapods not found, please install Cocooapods and run 'pod install' from your app's ios directory.`))
+    }
+    print.info('For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md')
     print.info('')
   }
   print.info('To run in iOS:')
