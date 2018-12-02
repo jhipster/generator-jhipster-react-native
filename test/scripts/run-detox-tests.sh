@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # start the backend
-cd ../mono
+cd ../${SYSTEM_JOBNAME}-backend
 nohup ./mvnw &
 
 # wait for the backend to start
@@ -27,7 +27,7 @@ fi
 
 sleep 60
 
-cd ../JwtApp
+cd ../${JHI_IGNITE_APP_NAME}
 
 # if oauth, only run the launch screen since you need to authenticate for entities (todo: mock auth for entities)
 if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then

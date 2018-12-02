@@ -16,6 +16,6 @@ You can pass flags for each of the options.
 
 You can pass a JDL file containing an application config (and optionally entities) to the command line to generate an app:
 
-    ignite new JwtApp -b --jdl=jwt-mono.jdl --e2e=true --skip-git
+    ignite new JhipsterApp -b --jdl=jwt-mono.jdl --e2e=true --skip-git
 
 This will generate the full React Native project and import any entities present in the JDL.

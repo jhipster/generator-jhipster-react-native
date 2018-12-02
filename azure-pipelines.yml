@@ -14,21 +14,27 @@ jobs:
   strategy:
     matrix:
       jwt:
+        JHI_IGNITE_APP_NAME: JwtApp
         JHI_AUTH_TYPE: jwt
         JHI_DTO: false
       jwt-dto:
+        JHI_IGNITE_APP_NAME: JwtDtoApp
         JHI_AUTH_TYPE: jwt
         JHI_DTO: true
       session:
+        JHI_IGNITE_APP_NAME: SessionApp
         JHI_AUTH_TYPE: session
         JHI_DTO: false
       session-dto:
+        JHI_IGNITE_APP_NAME: SessionDtoApp
         JHI_AUTH_TYPE: session
         JHI_DTO: true
       oauth2:
+        JHI_IGNITE_APP_NAME: OauthApp
         JHI_AUTH_TYPE: oauth2
         JHI_DTO: false
       oauth2-dto:
+        JHI_IGNITE_APP_NAME: OauthDtoApp
         JHI_AUTH_TYPE: oauth2
         JHI_DTO: true
   steps:
@@ -49,12 +55,10 @@ jobs:
   - script: npm ci && npm link
     displayName: 'TOOLS: npm install and link in ignite-jhipster'
   - script: $(SCRIPT_DIR)/generate-ignite-jhipster-app.sh
-    displayName: 'GENERATING: generating ignite-jhipster app'
+    displayName: 'GENERATING: generate ignite-jhipster app'
   - script: $(SCRIPT_DIR)/package-ignite-jhipster-app.sh
-    displayName: 'PACKAGING: packaging ignite-jhipster app for detox'
-  - script: $(SCRIPT_DIR)/generate-jhipster-backend.sh
-    displayName: 'GENERATING: generate jhipster project'
+    displayName: 'PACKAGING: package ignite-jhipster app for detox'
   - script: $(SCRIPT_DIR)/package-jhipster-backend.sh
-    displayName: 'PACKAGING: packaging jhipster project into docker'
+    displayName: 'PACKAGING: generate and package jhipster backend'
   - script: $(SCRIPT_DIR)/run-detox-tests.sh
     displayName: 'TESTING: running detox tests'

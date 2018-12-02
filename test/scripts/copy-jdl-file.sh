@@ -7,4 +7,4 @@ fi
 
 echo "Using JDL file: ${JDL_FILE}"
 
-cp ${BUILD_REPOSITORY_LOCALPATH}/test/.jhipster/${JDL_FILE} ../mono.jdl
+cp ${BUILD_REPOSITORY_LOCALPATH}/test/.jhipster/${JDL_FILE} ../${SYSTEM_JOBNAME}.jdl
