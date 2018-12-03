@@ -10,6 +10,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 <%_ if (props.entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
+import { <%= camelCase(props.name) %>EntityDetailScreen } from '../../../navigation/layouts'
 
 import t from 'tcomb-form-native'
 
@@ -44,7 +45,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
         <%= props.getRelationshipFormField(relation, index, props.entityConfig.ownerSideRelationships.length, props) %>
         <%_ }) _%>
       }),
-      formValue: { },
+      formValue: { id: null },
       formOptions: {
         fields: {
           id: {
@@ -93,7 +94,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     if (this.props.data.entityId) {
       this.props.get<%= props.name %>(this.props.data.entityId)
     } else {
-      this.setState({formValue: null})
+      this.setState({formValue: { id: null }})
     }
     <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
     this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
@@ -116,14 +117,22 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           requesting: false
         })
       } else {
+        this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
+        const entityId = newProps.<%= camelCase(props.name) %>.id
+        const alertOptions = [{ text: 'OK'}]
+        if (!this.state.formValue.id) {
+          alertOptions.push({
+            text: 'View',
+            onPress: <%= camelCase(props.name) %>EntityDetailScreen.bind(this, { entityId })
+          })
+        }
         this.setState({
           success: true,
           requesting: false,
-          formValue: {}
+          formValue: { id: null }
         })
-        this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
         Navigation.pop(this.props.componentId)
-        Alert.alert('Success', 'Entity saved successfully', [{text: 'OK'}])
+        Alert.alert('Success', 'Entity saved successfully', alertOptions)
       }
     }
   }

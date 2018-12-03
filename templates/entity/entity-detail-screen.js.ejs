@@ -70,11 +70,11 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         <Text>ID: {this.state.<%= camelCase(props.name) %>.id}</Text>
         <%_ props.entityConfig.fields.forEach(function (field) { _%>
         <%_ if (field.fieldType === 'LocalDate') { _%>
-        <Text><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
         <%_ } else if (field.fieldType === 'ZonedDateTime') { _%>
-        <Text><%= upperFirst(field.fieldName) %>: {String(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
         <%_ } else { _%>
-        <Text><%= upperFirst(field.fieldName) %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
         <%_ } _%>
         <%_ }) _%>
         <RoundedButton text='Edit' onPress={<%= camelCase(props.name) %>EntityEditScreen.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />

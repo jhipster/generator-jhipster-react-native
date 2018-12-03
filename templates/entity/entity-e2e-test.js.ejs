@@ -26,7 +26,7 @@ describe('<%= props.name %> Screen Tests', () => {
   it('should allow you to create an entity', async () => {
     await expect(element(by.id('<%= camelCase(props.name) %>Screen'))).toBeVisible()
     await expect(element(by.text('Create'))).toBeVisible()
-    // await element(by.type('_UIButtonBarButton')).tap()
+    // create
     await element(by.text('Create').and(by.type('UIButtonLabel'))).tap()
     <%_ props.entityConfig.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
@@ -48,6 +48,69 @@ describe('<%= props.name %> Screen Tests', () => {
     <%_ }) _%>
     await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down')
     await element(by.id('submitButton')).tap()
+    await element(by.text('View')).tap()
+    <%_ props.entityConfig.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    if (tcombFieldType === 'String') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 123')
+    <%_ } _%>
+    <%_ }) _%>
+    // update
+    await element(by.text('EDIT')).tap()
+    <%_ props.entityConfig.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    if (tcombFieldType === 'String') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
+    <%_ } _%>
+    <%_ }) _%>
+    await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down')
+    await element(by.id('submitButton')).tap()
     await element(by.text('OK')).tap()
+    <%_ props.entityConfig.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    if (tcombFieldType === 'String') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data-2')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 1234')
+    <%_ } _%>
+    <%_ }) _%>
+    // delete
+    await element(by.text('DELETE')).tap()
+    await element(by.text('OK')).tap()
+    await expect(element(by.id('<%= camelCase(props.name) %>Screen'))).toBeVisible()
   })
 })
