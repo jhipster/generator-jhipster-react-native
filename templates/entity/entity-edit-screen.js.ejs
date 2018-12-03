@@ -165,23 +165,13 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     }
   }
   formValueToEntity = (value) => {
-    return {
+    const entity = {
       id: value.id || null,
       <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
+      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.dto === 'mapstruct' && props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
       <%_ }) _%>
       <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
-      <%_ if (props.entityConfig.dto === 'no') { _%>
-        <%_ if (relation.relationshipType === 'many-to-many') { _%>
-      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } else if (relation.relationshipType === 'many-to-one') { _%>
-      <%= relation.otherEntityName %>: value.<%= relation.otherEntityName %>Id ? { id: value.<%= relation.otherEntityName %>Id } : null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } else { _%>
-      <%= relation.otherEntityName %>: {
-        id: value.<%= relation.otherEntityName %>Id || null
-      }<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } _%>
-      <%_ } else if (props.entityConfig.dto === 'mapstruct') { _%>
+      <%_  if (props.entityConfig.dto === 'mapstruct') { _%>
         <%_ if (relation.relationshipType === 'many-to-many') { _%>
       <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
         <%_ } else { _%>
@@ -190,6 +180,18 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       <%_ } _%>
     <%_ }) _%>
     }
+    <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
+      <%_ if (props.entityConfig.dto === 'no') { _%>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))
+        <%_ } else { _%>
+    if (value.<%= relation.otherEntityName %>Id) {
+      entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }
+    }
+        <%_ } _%>
+      <%_ } _%>
+    <%_ }) _%>
+    return entity
   }
 
 <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>

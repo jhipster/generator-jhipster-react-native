@@ -31,7 +31,7 @@ cd ../${JHI_IGNITE_APP_NAME}
 
 # if oauth, only run the launch screen since you need to authenticate for entities (todo: mock auth for entities)
 if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
-  echo ' --grep "Launch Screen"' >> e2e/mocha.opts
+  rm -rf e2e/entities
 fi
 
 # run the detox tests

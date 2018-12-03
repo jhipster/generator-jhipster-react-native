@@ -52,7 +52,7 @@ async function install (context) {
 
   let props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
-    detox: parameters.options.detox || false,
+    detox: parameters.options.detox,
     disableInsight: parameters.options['disable-insight'] || false
   }
   let jhipsterConfig
