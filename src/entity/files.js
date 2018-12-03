@@ -5,12 +5,12 @@ module.exports = async function (generator, igniteContext) {
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
   const { getEntityFormField, getRelationshipFormField } = require('../lib/entity-helpers')
-  const { ignite, strings } = igniteContext
+  const { ignite, strings, parameters } = igniteContext
   const { kebabCase, pascalCase, snakeCase, upperCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
   let name = generator.name
   let searchEngine = generator.igniteConfig.searchEngine
-  let detox = generator.igniteConfig.detox
+  let detox = generator.igniteConfig.detox || parameters.options.detox
   const props = {
     name: pluralize.singular(name),
     searchEngine,

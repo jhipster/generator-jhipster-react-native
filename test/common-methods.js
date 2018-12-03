@@ -22,7 +22,7 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
     '--jh-dir=backend',
     '--skip-git',
     '--disable-insight',
-    '--e2e=false',
+    '--detox=false',
     '--boilerplate', BOILERPLATE
   ])
   console.log(generationLog.stdout)
