@@ -119,7 +119,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       } else {
         this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
         const entityId = newProps.<%= camelCase(props.name) %>.id
-        const alertOptions = [{ text: 'OK'}]
+        const alertOptions = [{ text: 'OK' }]
         if (!this.state.formValue.id) {
           alertOptions.push({
             text: 'View',
