@@ -33,6 +33,7 @@ Uses the following libraries:
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
+ - OAuth2 iOS apps require [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) to be installed
  - Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
 To generate an app, run the following command:
