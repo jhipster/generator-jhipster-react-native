@@ -3,7 +3,11 @@ import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
+<%_ if (relation.otherEntityName === 'user') { _%>
+import UserActions from '../../../shared/reducers/user.reducer'
+<%_ } else { _%>
 import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase(relation.otherEntityName) %>/<%= kebabCase(relation.otherEntityName) %>.reducer'
+<%_ } _%>
 <%_ }) _%>
 import { Navigation } from 'react-native-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
