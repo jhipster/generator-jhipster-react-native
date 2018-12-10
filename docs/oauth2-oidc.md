@@ -1,6 +1,6 @@
 ## OAuth2 OIDC
 
-**Note:** When running the backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend. Also run `adb reverse tcp:9080 tcp:9080` to enable connections to Keycloak on localhost.
+**Note:** When running the backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend. Also run `adb reverse tcp:9080 tcp:9080` to enable connections to Keycloak on `localhost`
 ### Native iOS Library Setup
 
 Cocoapods is the usual choice for setting up the native iOS libraries needed for OAuth2 support.  If you didn't have Cocoapods installed before generating your app, [install it](https://guides.cocoapods.org/using/getting-started.html), then run `pod install` from the `ios` directory.  Note that you open the `xcworkspace` file rather than the `xcproject` file when using Cocoapods.  
@@ -22,6 +22,19 @@ Ignite JHipster generates several files in your JHipster backend's folder.  See 
 ### URL Scheme
 The app's URL scheme is declared in AppConfig, build.gradle, AndroidManifest.xml, and Info.plist.  By default it uses your app name.
 
-#### Keycloak + Okta Configuration
 Add the URL scheme from above as a valid redirect URI, followed by the word "authorize".  For example, if your URL scheme is `oauth-app` then the redirect URI
  should look like `oauth-app://authorize`.  This is patched in JHipster's Keycloak docker config so you may need to restart the docker container.
+ 
+### Okta
+
+To use Okta with the AppAuth library, you will need to create a new Native application in Okta's dashboard.  Make sure PKCE support is enabled, then modify `app/modules/login/login.sagas.js` to use the new client ID:
+
+```javascript
+const { issuer, scope } = authInfo.data
+const config = {
+ issuer,
+ clientId: '0oai3n8l3dgEIfg5k90h7',
+ scopes: scope.split(' '),
+ redirectUrl: `${AppConfig.appUrlScheme}://authorize`
+}
+```
