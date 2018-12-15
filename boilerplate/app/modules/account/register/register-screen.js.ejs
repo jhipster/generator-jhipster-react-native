@@ -38,6 +38,10 @@ class RegisterScreen extends React.Component {
           },
           confirmPassword: {
             secureTextEntry: true,
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.refs.form.getComponent('email').refs.input.focus()
+          },
+          email: {
             returnKeyType: 'done',
             onSubmitEditing: () => this.submitUpdate()
           },
@@ -71,13 +75,13 @@ class RegisterScreen extends React.Component {
     // Did the register attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
-        Alert.alert('Error', newProps.error, [{text: 'OK'}])
+        Alert.alert('Error', (newProps.error && newProps.error.title) ? newProps.error.title : '', [{text: 'OK'}])
       } else {
         this.setState({
           success: true
         })
-        Alert.alert('Registration Successful', 'Please check your email', [{text: 'OK'}])
         Navigation.popToRoot(this.props.componentId)
+        Alert.alert('Registration Successful', 'Please check your email', [{text: 'OK'}])
       }
     }
   }
