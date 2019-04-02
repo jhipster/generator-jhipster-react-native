@@ -6,8 +6,8 @@ import ChatActions from '../../../../app/modules/chat/chat.reducer'
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('chat success path', () => {
-  const chat = {username: 'user', message: 'test'}
-  const step = stepper(processWebsocketMessage({subscription: 'chat', msg: chat}))
+  const chat = { username: 'user', message: 'test' }
+  const step = stepper(processWebsocketMessage({ subscription: 'chat', msg: chat }))
   // Call the redux with a successful chat receipt
   expect(step()).toEqual(select(selectState, 'chat', 'chat'))
   expect(step(chat)).toEqual(put(ChatActions.chatSuccess([chat, chat])))
@@ -15,8 +15,8 @@ test('chat success path', () => {
 })
 
 test('unknown message path', () => {
-  const message = {message: 'unknown'}
-  const step = stepper(processWebsocketMessage({subscription: 'notifications', msg: message}))
+  const message = { message: 'unknown' }
+  const step = stepper(processWebsocketMessage({ subscription: 'notifications', msg: message }))
   // Call the redux with a successful chat receipt
   expect(step()).toEqual(undefined)
 })

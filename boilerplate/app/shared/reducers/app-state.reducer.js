@@ -19,7 +19,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // rehydration is complete
-export const setRehydrationComplete = (state: Object) =>
+export const setRehydrationComplete = (state) =>
   state.merge({ rehydrationComplete: true })
 
 /* ------------- Hookup Reducers To Types ------------- */

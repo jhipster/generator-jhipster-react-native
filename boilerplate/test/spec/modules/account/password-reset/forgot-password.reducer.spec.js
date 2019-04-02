@@ -14,8 +14,8 @@ test('forgot password success', () => {
 })
 
 test('forgot password failure', () => {
-  const state = reducer(INITIAL_STATE, Actions.forgotPasswordFailure({error: 'Email not found'}))
+  const state = reducer(INITIAL_STATE, Actions.forgotPasswordFailure({ error: 'Email not found' }))
 
   expect(state.fetching).toBe(false)
-  expect(state.error).toEqual({error: 'Email not found'})
+  expect(state.error).toEqual({ error: 'Email not found' })
 })

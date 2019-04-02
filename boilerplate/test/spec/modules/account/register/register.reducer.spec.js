@@ -14,8 +14,8 @@ test('success', () => {
 })
 
 test('failure', () => {
-  const state = reducer(INITIAL_STATE, Actions.registerFailure({error: 'Duplicate Email'}))
+  const state = reducer(INITIAL_STATE, Actions.registerFailure({ error: 'Duplicate Email' }))
 
   expect(state.fetching).toBe(false)
-  expect(state.error).toEqual({error: 'Duplicate Email'})
+  expect(state.error).toEqual({ error: 'Duplicate Email' })
 })

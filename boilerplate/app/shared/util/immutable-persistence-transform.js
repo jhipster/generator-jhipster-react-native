@@ -5,7 +5,7 @@ import Immutable from 'seamless-immutable'
 const isImmutable = R.has('asMutable')
 
 // change this Immutable object into a JS object
-const convertToJs = (state) => state.asMutable({deep: true})
+const convertToJs = (state) => state.asMutable({ deep: true })
 
 // optionally convert this object into a JS object if it is Immutable
 const fromImmutable = R.when(isImmutable, convertToJs)

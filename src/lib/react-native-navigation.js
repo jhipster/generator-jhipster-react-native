@@ -30,7 +30,7 @@ const patchReactNativeNavigation = async (context = {}, props) => {
   await updateAndroidFiles(context, props)
 }
 const updateIosFiles = async (context, props) => {
-  const {ignite} = context
+  const { ignite } = context
   /*eslint-disable */
   await ignite.patchInFile(`${process.cwd()}/ios/${props.name}/Info.plist`, {
     before: `<key>CFBundleDisplayName</key>`,
@@ -49,11 +49,11 @@ const updateIosFiles = async (context, props) => {
 		</dict>
 	</array>`
   })
-  /*eslint-enable */
+  /* eslint-enable */
 }
 
 const updateAndroidFiles = async (context, props) => {
-  const {ignite} = context
+  const { ignite } = context
   // settings.gradle
   await ignite.patchInFile(`${process.cwd()}/android/settings.gradle`, {
     after: `include ':app'`,

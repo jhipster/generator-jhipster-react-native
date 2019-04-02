@@ -7,7 +7,7 @@ import RoundedButton from '../../shared/components/rounded-button/rounded-button
 import {
   // ignite-jhipster-entity-screen-import-needle
 } from '../../navigation/layouts'
-/*eslint-enable */
+/* eslint-enable */
 
 import styles from './entities-screen.styles'
 

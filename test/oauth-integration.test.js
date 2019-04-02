@@ -1,4 +1,5 @@
 const commonMethods = require('./common-methods')
+const fs = require('fs')
 
 // calling the ignite cli takes a while
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000

@@ -181,7 +181,7 @@ async function install (context) {
     spinner.text = `▸ installing dependencies`
     spinner.start()
     // install any missing dependencies
-    await system.run('yarn', {stdio: 'ignore'})
+    await system.run('yarn', { stdio: 'ignore' })
     spinner.succeed(`dependencies installed`)
   }
   // pass long the debug flag if we're running in that mode

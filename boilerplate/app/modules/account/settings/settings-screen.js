@@ -73,13 +73,13 @@ class SettingsScreen extends React.Component {
     if (!newProps.updating) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Something went wrong while saving the settings', [{text: 'OK'}])
+          Alert.alert('Error', 'Something went wrong while saving the settings', [{ text: 'OK' }])
         }
       } else if (!this.state.success) {
         this.setState({
           success: true
         })
-        Alert.alert('Success', 'Settings updated', [{text: 'OK'}])
+        Alert.alert('Success', 'Settings updated', [{ text: 'OK' }])
         this.props.getAccount()
       }
     }

@@ -14,8 +14,8 @@ test('change password success', () => {
 })
 
 test('change password failure', () => {
-  const state = reducer(INITIAL_STATE, Actions.changePasswordFailure({error: 'Passwords do not match'}))
+  const state = reducer(INITIAL_STATE, Actions.changePasswordFailure({ error: 'Passwords do not match' }))
 
   expect(state.fetching).toBe(false)
-  expect(state.error).toEqual({error: 'Passwords do not match'})
+  expect(state.error).toEqual({ error: 'Passwords do not match' })
 })

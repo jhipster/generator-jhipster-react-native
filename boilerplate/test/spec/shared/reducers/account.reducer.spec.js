@@ -7,13 +7,13 @@ test('request', () => {
 })
 
 test('success', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountSuccess({login: 'user'}))
+  const state = reducer(INITIAL_STATE, Actions.accountSuccess({ login: 'user' }))
 
-  expect(state.account).toEqual({login: 'user'})
+  expect(state.account).toEqual({ login: 'user' })
 })
 
 test('update request', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountUpdateRequest({login: 'user2'}))
+  const state = reducer(INITIAL_STATE, Actions.accountUpdateRequest({ login: 'user2' }))
 
   expect(state.updating).toBe(true)
 })
@@ -25,27 +25,27 @@ test('update success', () => {
 })
 
 test('update failure', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountUpdateFailure({error: 'Not Authorized'}))
+  const state = reducer(INITIAL_STATE, Actions.accountUpdateFailure({ error: 'Not Authorized' }))
 
   expect(state.updating).toEqual(false)
-  expect(state.error).toEqual({error: 'Not Authorized'})
+  expect(state.error).toEqual({ error: 'Not Authorized' })
 })
 
 test('failure', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountFailure({error: 'Not Authorized'}))
+  const state = reducer(INITIAL_STATE, Actions.accountFailure({ error: 'Not Authorized' }))
 
   expect(state.fetching).toBe(false)
-  expect(state.error).toEqual({error: 'Not Authorized'})
+  expect(state.error).toEqual({ error: 'Not Authorized' })
 })
 
 test('isLoggedIn', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountSuccess({login: 'user'}))
+  const state = reducer(INITIAL_STATE, Actions.accountSuccess({ login: 'user' }))
 
   expect(isLoggedIn(state)).toBe(true)
 })
 
 test('getLogin', () => {
-  const state = reducer(INITIAL_STATE, Actions.accountSuccess({login: 'user'}))
+  const state = reducer(INITIAL_STATE, Actions.accountSuccess({ login: 'user' }))
 
   expect(getLogin(state)).toBe('user')
 })

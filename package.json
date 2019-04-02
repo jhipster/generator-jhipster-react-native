@@ -48,10 +48,11 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "7.2.3",
-    "jest": "21.2.1",
+    "babel-eslint": "10.0.1",
+    "eslint": "5.16.0",
+    "jest": "24.6.0",
     "np": "4.0.2",
-    "standard": "10.0.2",
+    "standard": "12.0.1",
     "tempy": "0.2.1"
   },
   "dependencies": {
@@ -59,8 +60,9 @@
     "insight": "0.10.1",
     "jhipster-core": "3.6.12",
     "pluralize": "7.0.0",
-    "ramda": "0.23.0",
-    "rimraf": "2.6.3"
+    "ramda": "0.26.1",
+    "rimraf": "2.6.3",
+    "semver": "6.0.0"
   },
   "jest": {
     "testPathIgnorePatterns": [

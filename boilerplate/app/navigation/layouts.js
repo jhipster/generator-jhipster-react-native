@@ -82,8 +82,8 @@ function refreshAccount () {
 // for deep linking
 function handleOpenURL (event) {
   console.tron.log(event.url)
-  let splitUrl = event.url.split('/')             // ['https:', '', 'domain', 'route', 'params']
-  let importantParameters = splitUrl.splice(3)    // ['route', 'params']
+  let splitUrl = event.url.split('/') // ['https:', '', 'domain', 'route', 'params']
+  let importantParameters = splitUrl.splice(3) // ['route', 'params']
   if (importantParameters.length === 0) {
     console.tron.log('Sending to home page')
     return null

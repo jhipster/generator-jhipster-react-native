@@ -35,7 +35,7 @@ const askForOptOut = (context = {}) => {
 const trackAppOptions = (context = {}, props) => {
   const noInsight = context.parameters.options['disable-insight']
   if (!noInsight) {
-    insight.trackEvent({category: 'generator', action: 'app'})
+    insight.trackEvent({ category: 'generator', action: 'app' })
     insight.track('app/igniteVersion', props.igniteVersion)
     insight.track('app/igniteJhipsterVersion', pkg.version)
     insight.track('app/reactNativeVersion', props.reactNativeVersion)
@@ -48,7 +48,7 @@ const trackAppOptions = (context = {}, props) => {
 const trackGenerator = (context = {}, generatorName) => {
   const noInsight = context.parameters.options['disable-insight']
   if (!noInsight) {
-    insight.trackEvent({category: 'generator', action: generatorName})
+    insight.trackEvent({ category: 'generator', action: generatorName })
   }
 }
 // i18n: params.i18n

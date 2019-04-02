@@ -17,7 +17,7 @@ test('get success path', () => {
 })
 
 test('get failure path', () => {
-  const response = {ok: false}
+  const response = { ok: false }
   const step = stepper(getAccount(FixtureAPI))
   // Step 1: Hit the api
   step()
@@ -26,17 +26,17 @@ test('get failure path', () => {
 })
 
 test('update success path', () => {
-  const response = FixtureAPI.updateAccount({id: 1})
-  const step = stepper(updateAccount(FixtureAPI, {id: 1}))
+  const response = FixtureAPI.updateAccount({ id: 1 })
+  const step = stepper(updateAccount(FixtureAPI, { id: 1 }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(AccountActions.accountUpdateSuccess({id: 1})))
+  expect(step(response)).toEqual(put(AccountActions.accountUpdateSuccess({ id: 1 })))
 })
 
 test('update failure path', () => {
-  const response = {ok: false}
-  const step = stepper(updateAccount(FixtureAPI, {id: 1}))
+  const response = { ok: false }
+  const step = stepper(updateAccount(FixtureAPI, { id: 1 }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.

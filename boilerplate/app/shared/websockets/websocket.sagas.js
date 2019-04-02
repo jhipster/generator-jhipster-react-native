@@ -5,7 +5,7 @@ import ChatActions from '../../modules/chat/chat.redux'
 export const selectState = (state, key, subKey) => state[key][subKey]
 
 // processes the websocket message
-export function * processWebsocketMessage ({subscription, msg}) {
+export function * processWebsocketMessage ({ subscription, msg }) {
   console.tron.log(`WS-Saga: ${subscription}`)
   switch (subscription) {
     case 'chat':

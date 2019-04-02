@@ -125,7 +125,7 @@ function onMessage (subscription, fullMessage) {
     console.tron.error(`Error parsing : ${fullMessage}`)
   }
   if (msg) {
-    return em({subscription, msg})
+    return em({ subscription, msg })
   }
 }
 

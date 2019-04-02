@@ -18,7 +18,7 @@ class ChatScreen extends React.PureComponent {
     }
   }
 
-  renderRow ({item}) {
+  renderRow ({ item }) {
     return (
       <View style={styles.row}>
         <Text style={styles.boldLabel}>{item.user}</Text>

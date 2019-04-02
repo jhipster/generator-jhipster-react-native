@@ -7,8 +7,8 @@ import ForgotPasswordActions from '../../../../../app/modules/account/password-r
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('forgot password success path', () => {
-  const response = FixtureAPI.forgotPassword({email: 'valid@gmail.com'})
-  const step = stepper(forgotPassword(FixtureAPI, {email: 'valid@gmail.com'}))
+  const response = FixtureAPI.forgotPassword({ email: 'valid@gmail.com' })
+  const step = stepper(forgotPassword(FixtureAPI, { email: 'valid@gmail.com' }))
   // Step 1: Hit the api
   expect(step(response)).toEqual(call(FixtureAPI.forgotPassword, 'valid@gmail.com'))
   // Step 2: Successful return and data!
@@ -16,8 +16,8 @@ test('forgot password success path', () => {
 })
 
 test('forgot password failure path', () => {
-  const response = FixtureAPI.forgotPassword({email: 'not-valid@gmail.com'})
-  const step = stepper(forgotPassword(FixtureAPI, {email: 'not-valid@gmail.com'}))
+  const response = FixtureAPI.forgotPassword({ email: 'not-valid@gmail.com' })
+  const step = stepper(forgotPassword(FixtureAPI, { email: 'not-valid@gmail.com' }))
   // Step 1: Hit the api
   expect(step(response)).toEqual(call(FixtureAPI.forgotPassword, 'not-valid@gmail.com'))
   // Step 2: Successful return and data!
