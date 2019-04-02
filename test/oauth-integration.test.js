@@ -1,5 +1,4 @@
 const commonMethods = require('./common-methods')
-const jetpack = require('fs-jetpack')
 
 // calling the ignite cli takes a while
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
@@ -19,7 +18,7 @@ describe('JWT Integration Test', () => {
 
   test('generates oauth2 files in the JHipster project directory', async () => {
     console.log('Checking for OAuth2 files...')
-    expect(jetpack.exists('../backend/src/main/java/com/mycompany/myapp/config/ResourceServerConfiguration.java')).toBe('file')
-    expect(jetpack.exists('../backend/src/main/java/com/mycompany/myapp/web/rest/AuthInfoResource.java')).toBe('file')
+    expect(fs.existsSync('../backend/src/main/java/com/mycompany/myapp/config/ResourceServerConfiguration.java')).toBe(true)
+    expect(fs.existsSync('../backend/src/main/java/com/mycompany/myapp/web/rest/AuthInfoResource.java')).toBe(true)
   })
 })
