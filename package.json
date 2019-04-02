@@ -49,20 +49,20 @@
   },
   "devDependencies": {
     "babel-eslint": "7.2.3",
-    "fs-jetpack": "1.0.0",
+    "fs-jetpack": "2.2.2",
     "jest": "21.2.1",
-    "np": "2.15.0",
+    "np": "4.0.2",
     "sinon": "2.3.1",
     "standard": "10.0.2",
-    "tempy": "0.1.0"
+    "tempy": "0.2.1"
   },
   "dependencies": {
-    "fs-extra": "4.0.0",
+    "fs-extra": "7.0.1",
     "insight": "0.10.1",
-    "jhipster-core": "3.6.0",
-    "pluralize": "6.0.0",
+    "jhipster-core": "3.6.12",
+    "pluralize": "7.0.0",
     "ramda": "0.23.0",
-    "rimraf": "2.6.2"
+    "rimraf": "2.6.3"
   },
   "jest": {
     "testPathIgnorePatterns": [
