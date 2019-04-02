@@ -1,4 +1,5 @@
 const fs = require('fs-extra')
+const semver = require('semver')
 
 /**
  * The files portion of the entity generator
@@ -24,6 +25,13 @@ module.exports = async function (context, props, jhipsterConfig) {
   const main = upperFirst(props.angularAppName)
   const acceptableForJava = new RegExp('^[A-Z][a-zA-Z0-9_]*$')
   props.mainClass = acceptableForJava.test(main) ? main : 'Application'
+
+  props.jhipsterVersion = jhipsterConfig['generator-jhipster'].jhipsterVersion
+  // used for the session auth change in v5.8.2 that removed the `j_` from login parameters. remove this in the future
+  props.oldSessionAuthParameters = false
+  if (props.jhipsterVersion && semver.lt(props.jhipsterVersion, '5.8.2')) {
+    props.oldSessionAuthParameters = true
+  }
 
   // copy our App, Tests, and storybook directories
   spinner.text = '▸ copying files'

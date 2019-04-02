@@ -53,7 +53,11 @@ export function * login (api) {
 <%_ } else { _%>
 export function * login (api, { username, password }) {
   <%_ if (props.authType === 'session') { _%>
+    <%_ if (props.oldSessionAuthParameters) { _%>
   const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
+    <%_ } else { _%>
+  const authObj = 'username=' + username + '&password=' + password + '&remember-me=true'
+    <%_ }_%>
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
     username: username,
