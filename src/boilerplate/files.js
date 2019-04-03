@@ -65,7 +65,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     { template: 'README.md', target: 'README.md' },
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
     { template: '.editorconfig', target: '.editorconfig' },
-    { template: '.babelrc', target: '.babelrc' },
+    { template: 'babel.config.js', target: 'babel.config.js' },
     { template: '.env.example', target: '.env.example' },
     {
       template: 'app/config/app-config.js.ejs',

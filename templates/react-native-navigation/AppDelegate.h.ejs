@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#import <React/RCTBridgeDelegate.h>
 #import <UIKit/UIKit.h>
 #import "RNAppAuthAuthorizationFlowManager.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, RNAppAuthAuthorizationFlowManager>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, RCTBridgeDelegate, RNAppAuthAuthorizationFlowManager>
 
 @property(nonatomic, weak)id<RNAppAuthAuthorizationFlowManagerDelegate>authorizationFlowManagerDelegate;
 
