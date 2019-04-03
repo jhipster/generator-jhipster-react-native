@@ -177,6 +177,8 @@ async function install (context) {
   spinner.stop()
   spinner.succeed(`project generated`)
 
+  await patchReactNativeNavigation(context, props)
+
   if (!parameters.options.skipInstall) {
     spinner.text = `▸ installing dependencies`
     spinner.start()
@@ -212,8 +214,6 @@ async function install (context) {
     ignite.log(e)
     throw e
   }
-
-  await patchReactNativeNavigation(context, props)
 
   // react native link -- must use spawn & stdio: ignore
   spinner.text = `▸ linking native libraries`

@@ -25,6 +25,13 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
 
+  // related to https://github.com/wix/react-native-navigation/issues/4691
+  const rnnPatch = [{ template: 'patches/react-native-navigation+2.16.0.patch', target: `patches/react-native-navigation+2.16.0.patch` }]
+  await ignite.copyBatch(context, rnnPatch, props, {
+    quiet: true,
+    directory: `${__dirname}/../../boilerplate`
+  })
+
   spinner.succeed('set up react-native-navigation for iOS/Android')
   await updateIosFiles(context, props)
   await updateAndroidFiles(context, props)
