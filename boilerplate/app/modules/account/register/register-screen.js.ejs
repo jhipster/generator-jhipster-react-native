@@ -64,7 +64,7 @@ class RegisterScreen extends React.Component {
     const value = this.refs.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.password !== value.confirmPassword) {
-        Alert.alert('Error', 'Passwords do not match', [{text: 'OK'}])
+        Alert.alert('Error', 'Passwords do not match', [{ text: 'OK' }])
         return
       }
       this.props.register(value)
@@ -75,13 +75,13 @@ class RegisterScreen extends React.Component {
     // Did the register attempt complete?
     if (!newProps.fetching) {
       if (newProps.error) {
-        Alert.alert('Error', (newProps.error && newProps.error.title) ? newProps.error.title : '', [{text: 'OK'}])
+        Alert.alert('Error', (newProps.error && newProps.error.title) ? newProps.error.title : '', [{ text: 'OK' }])
       } else {
         this.setState({
           success: true
         })
         Navigation.popToRoot(this.props.componentId)
-        Alert.alert('Registration Successful', 'Please check your email', [{text: 'OK'}])
+        Alert.alert('Registration Successful', 'Please check your email', [{ text: 'OK' }])
       }
     }
   }

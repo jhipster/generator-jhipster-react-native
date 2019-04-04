@@ -42,11 +42,11 @@ test('login success path', () => {
   <%_ if (props.authType === 'jwt') { _%>
   const step = stepper(login(FixtureAPI, authObj))
   <%_ } else { _%>
-  const step = stepper(login(FixtureAPI, {username: 'user', password: 'user'}))
+  const step = stepper(login(FixtureAPI, { username: 'user', password: 'user' }))
   <%_ } _%>
 
   <%_ if (props.authType === 'jwt') { _%>
-  expect(step(response)).toEqual(call(FixtureAPI.login, {username: 'user', password: 'user', rememberMe: true}))
+  expect(step(response)).toEqual(call(FixtureAPI.login, { username: 'user', password: 'user', rememberMe: true }))
   <%_} else if (props.authType === 'uaa' || props.authType === 'session') { _%>
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   <%_ } _%>
@@ -90,7 +90,7 @@ test('login failure path', () => {
   }
   <%_ } _%>
   const response = FixtureAPI.login(authObj)
-  const step = stepper(login(FixtureAPI, {username: 'user', password: 'user2'}))
+  const step = stepper(login(FixtureAPI, { username: 'user', password: 'user2' }))
 
   // Attempt to login and fail
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
@@ -134,7 +134,7 @@ test('logout success path', () => {
 })
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 test('selects the auth token', () => {
-  const state = {login: {authToken: 'hi'}}
+  const state = { login: { authToken: 'hi' } }
   // Retrieve the API token
   expect(selectAuthToken(state)).toEqual('hi')
 })

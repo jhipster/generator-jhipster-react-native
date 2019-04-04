@@ -31,7 +31,7 @@ class LoginScreen extends React.Component {
     if (!newProps.fetching) {
       if (newProps.error) {
         if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Invalid login', [{text: 'OK'}])
+          Alert.alert('Error', 'Invalid login', [{ text: 'OK' }])
         }
       } else if (newProps.account) {
         Navigation.dismissModal(this.props.componentId)
@@ -63,7 +63,7 @@ class LoginScreen extends React.Component {
     const editable = !fetching
     const textInputStyle = editable ? styles.textInput : styles.textInputReadonly
     return (
-      <ScrollView contentContainerStyle={{justifyContent: 'center'}} style={[styles.container, {height: this.state.visibleHeight}]} keyboardShouldPersistTaps='always'>
+      <ScrollView contentContainerStyle={{ justifyContent: 'center' }} style={[styles.container, { height: this.state.visibleHeight }]} keyboardShouldPersistTaps='always'>
         <Image source={Images.logoLogin} style={[styles.topLogo, this.state.topLogo]} />
         <View style={styles.form}>
           <View style={styles.row}>

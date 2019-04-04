@@ -30,14 +30,14 @@ test('load login success', () => {
 })
 <%_ } _%>
 test('logout', () => {
-  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
+  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({ id_token: 'hi' }))
   const state = reducer(loginState, Actions.logoutRequest())
 
   expect(state.username).toBe(undefined)
 })
 
 test('logout success', () => {
-  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({id_token: 'hi'}))
+  const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({ id_token: 'hi' }))
   const state = reducer(loginState, Actions.logoutSuccess())
 
   expect(state).toBe(INITIAL_STATE)

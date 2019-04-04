@@ -46,7 +46,7 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
   * e.g.
     return <MyCustomCell title={item.title} description={item.description} />
   *************************************************************/
-  renderRow ({item}) {
+  renderRow ({ item }) {
     return (
       <TouchableOpacity onPress={<%= camelCase(props.name) %>EntityDetailScreen.bind(this, { entityId: item.id })}>
         <View style={styles.row}>
