@@ -15,7 +15,7 @@ describe('Settings Screen Tests', () => {
     await navigateToSettingsScreen()
   })
 
-  navigateToSettingsScreen = async () => {
+  const navigateToSettingsScreen = async () => {
     await expect(element(by.id('launchScreen'))).toBeVisible()
     await element(by.id('menuButton')).tap()
     await element(by.id('settingsDrawerButton')).tap()

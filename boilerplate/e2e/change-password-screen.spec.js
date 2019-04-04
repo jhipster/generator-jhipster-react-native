@@ -15,13 +15,13 @@ describe('Change Password Screen Tests', () => {
     await navigateToChangePasswordScreen()
   })
 
-  navigateToChangePasswordScreen = async () => {
+  const navigateToChangePasswordScreen = async () => {
     await expect(element(by.id('launchScreen'))).toBeVisible()
     await element(by.id('menuButton')).tap()
     await element(by.id('changePasswordDrawerButton')).tap()
   }
 
-  changePassword = async (oldPassword, newPassword) => {
+  const changePassword = async (oldPassword, newPassword) => {
     await element(by.id('currentPasswordInput')).replaceText(oldPassword)
     await element(by.id('newPasswordInput')).replaceText(newPassword)
     await element(by.id('confirmPasswordInput')).replaceText(newPassword)

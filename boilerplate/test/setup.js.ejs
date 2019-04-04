@@ -20,5 +20,6 @@ jest
     return { authorize: jest.fn(() => { return {} }) }
   })
 <%_ } _%>
+  .mock('react-native-vector-icons/FontAwesome', () => 'Icon')
 
 console.tron = { log: () => {}, display: () => {} }
