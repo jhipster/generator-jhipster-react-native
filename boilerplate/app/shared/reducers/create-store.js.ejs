@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import Reactotron from 'reactotron-react-native'
 
 import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
@@ -29,8 +30,10 @@ export default (rootReducer, rootSaga) => {
   enhancers.push(applyMiddleware(...middleware))
 
   // if Reactotron is enabled (default for __DEV__), we'll create the store through Reactotron
-  const createAppropriateStore = Config.useReactotron ? console.tron.createStore : createStore
-  const store = createAppropriateStore(rootReducer, compose(...enhancers))
+  if (Config.useReactotron) {
+    enhancers.push(Reactotron.createEnhancer())
+  }
+  const store = createStore(rootReducer, compose(...enhancers))
 
   // configure persistStore and check reducer version number
   if (ReduxPersist.active) {
