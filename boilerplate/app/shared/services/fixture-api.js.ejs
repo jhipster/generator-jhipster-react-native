@@ -75,7 +75,7 @@ export default {
     }
   },
   <%_ } _%>
-  register: ({user}) => {
+  register: ({ user }) => {
     if (user === 'user') {
       return {
         ok: true
@@ -87,7 +87,7 @@ export default {
       }
     }
   },
-  forgotPassword: ({email}) => {
+  forgotPassword: ({ email }) => {
     if (email === 'valid@gmail.com') {
       return {
         ok: true
@@ -111,7 +111,7 @@ export default {
       ok: true
     }
   },
-  changePassword: ({currentPassword}) => {
+  changePassword: ({ currentPassword }) => {
     if (currentPassword === 'valid-password') {
       return {
         ok: true

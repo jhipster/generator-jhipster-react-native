@@ -36,7 +36,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         this.props.getAll<%= props.pluralName %>()
         Navigation.pop(this.props.componentId)
       } else {
-        Alert.alert('Error', 'Something went wrong deleting the entity', [{text: 'OK'}])
+        Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
         this.setState({
           success: false,
           requesting: false
@@ -50,7 +50,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
       'Delete <%= props.name %>?',
       'Are you sure you want to delete the <%= props.name %>?',
       [
-        {text: 'Cancel', style: 'cancel'},
+        { text: 'Cancel', style: 'cancel' },
         {
           text: 'OK',
           onPress: () => {

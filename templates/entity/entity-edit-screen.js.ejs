@@ -98,7 +98,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     if (this.props.data.entityId) {
       this.props.get<%= props.name %>(this.props.data.entityId)
     } else {
-      this.setState({formValue: { id: null }})
+      this.setState({ formValue: { id: null } })
     }
     <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
     this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
@@ -115,13 +115,13 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     // Did the update attempt complete?
     if (!newProps.updating && this.state.requesting) {
       if (newProps.error) {
-        Alert.alert('Error', 'Something went wrong updating the entity', [{text: 'OK'}])
+        Alert.alert('Error', 'Something went wrong updating the entity', [{ text: 'OK' }])
         this.setState({
           success: false,
           requesting: false
         })
       } else {
-        this.props.getAll<%= props.pluralName %>({page: 0, sort: 'id,asc', size: 20})
+        this.props.getAll<%= props.pluralName %>({ page: 0, sort: 'id,asc', size: 20 })
         const entityId = newProps.<%= camelCase(props.name) %>.id
         const alertOptions = [{ text: 'OK' }]
         if (!this.state.formValue.id) {
@@ -177,7 +177,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
       <%_  if (props.entityConfig.dto === 'mapstruct') { _%>
         <%_ if (relation.relationshipType === 'many-to-many') { _%>
-      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
         <%_ } else { _%>
       <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
         <%_ } _%>
@@ -187,7 +187,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
       <%_ if (props.entityConfig.dto === 'no') { _%>
         <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return {id: <%= relation.relationshipName %>} }))
+    entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))
         <%_ } else { _%>
     if (value.<%= relation.otherEntityName %>Id) {
       entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }

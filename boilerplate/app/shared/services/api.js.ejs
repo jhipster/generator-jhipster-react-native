@@ -56,7 +56,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const getOauthInfo = () => api.get('api/auth-info')
   const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
   <%_ } else if (props.authType === 'session') { _%>
-  const login = (userAuth) => api.post('api/authentication', userAuth, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*'}})
+  const login = (userAuth) => api.post('api/authentication', userAuth, { headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*' } })
   const logout = () => api.post('api/logout')
   <%_ } else if (props.authType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
@@ -65,11 +65,11 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const logout = () => api.post('auth/logout')
   <%_ } _%>
   const register = (user) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/register', user)
-  const forgotPassword = (data) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset-password/init', data, {headers: {'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*'}})
+  const forgotPassword = (data) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset-password/init', data, { headers: { 'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*' } })
 
   const getAccount = () => api.get(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account')
   const updateAccount = (account) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account', account)
-  const changePassword = (currentPassword, newPassword) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/change-password', {currentPassword, newPassword}, {headers: {'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*'}})
+  const changePassword = (currentPassword, newPassword) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/change-password', { currentPassword, newPassword }, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' } })
 
   const getUser = (userId) => api.get('api/users/' + userId)
   const getUsers = (options) => api.get('api/users', options)
