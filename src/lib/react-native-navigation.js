@@ -82,10 +82,11 @@ const updateAndroidFiles = async (context, props) => {
         mavenCentral()`
   })
 
-  await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
-    replace: `buildToolsVersion = "26.0.3"`,
-    insert: `buildToolsVersion = "27.0.3"`
-  })
+  // react-native-init uses a later version so this is not currently needed
+  // await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
+  //   replace: `buildToolsVersion = "26.0.3"`,
+  //   insert: `buildToolsVersion = "28.0.3"`
+  // })
 
   await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
     replace: `minSdkVersion = 16`,
@@ -95,7 +96,7 @@ const updateAndroidFiles = async (context, props) => {
   // app/build.gradle
   await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
     after: `versionCode 1`,
-    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57"`
+    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"`
   })
 
   await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {

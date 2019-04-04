@@ -22,4 +22,21 @@ if (Config.useReactotron) {
   // Totally hacky, but this allows you to not both importing reactotron-react-native
   // on every file.  This is just DEV mode, so no big deal.
   console.tron = Reactotron
+} else {
+  const noop = () => undefined
+  // attach a mock so if things sneaky by our __DEV__ guards, we won't crash.
+  console.tron = {
+    configure: noop,
+    connect: noop,
+    use: noop,
+    useReactNative: noop,
+    clear: noop,
+    log: noop,
+    logImportant: noop,
+    display: noop,
+    error: noop,
+    warn: noop,
+    image: noop,
+    reportError: noop
+  }
 }
