@@ -14,7 +14,8 @@ export default class LaunchScreen extends React.Component {
     Navigation.mergeOptions(this.props.componentId, {
       sideMenu: {
         left: {
-          enabled: true
+          enabled: true,
+          visible: false
         }
       }
     })
