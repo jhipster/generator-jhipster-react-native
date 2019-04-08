@@ -45,6 +45,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
             .addFilterBefore(corsFilter, CsrfFilter.class)
             .requestMatcher(requestHeaderRequestMatcher())
             .authorizeRequests()
+            .antMatchers("/api/auth-info").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
     }
