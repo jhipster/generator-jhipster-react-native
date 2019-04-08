@@ -167,8 +167,8 @@ module.exports = async function (context, props, jhipsterConfig) {
       if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`)) {
         await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`,
           {
-            replace: `"redirectUris": ["http://localhost:8080/*",`,
-            insert: `"redirectUris": ["http://localhost:8080/*", "${props.name.toLowerCase()}://*",`
+            replace: `"http://localhost:8080/*",`,
+            insert: `"http://localhost:8080/*", "${props.name.toLowerCase()}://*",`
           }
         )
       }
