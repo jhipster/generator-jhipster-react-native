@@ -2,10 +2,11 @@
  * The files portion of the entity generator
  */
 module.exports = async function (generator, igniteContext) {
+  const semver = require('semver')
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
   const { getEntityFormField, getRelationshipFormField } = require('../lib/entity-helpers')
-  const { ignite, strings, parameters } = igniteContext
+  const { ignite, strings, parameters, print } = igniteContext
   const { kebabCase, pascalCase, snakeCase, upperCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
   let name = generator.name
@@ -71,7 +72,23 @@ module.exports = async function (generator, igniteContext) {
   props.entityConfig = entityConfig
   props.entityContainsDate = entityContainsDate
   props.entityContainsLocalDate = entityContainsLocalDate
-  props.microserviceName = entityConfig.hasOwnProperty('microserviceName') ? (entityConfig.microserviceName + '/') : ''
+
+  props.microservicePath = ''
+  // if a microservice name is available, set the path prefix in the API paths
+  if (entityConfig.hasOwnProperty('microserviceName')) {
+    props.microservicePath = `services/${entityConfig.microserviceName}/`
+    // check if it's an older JHipster version which does not use the 'services' prefix for microservice
+    try {
+      const jhipsterConfig = await fs.readJson(`ignite/yo-rc.json`)
+      const jhipsterVersion = jhipsterConfig['generator-jhipster'].jhipsterVersion
+      if (jhipsterVersion && semver.lt(jhipsterVersion, '5.9.0')) {
+        props.microservicePath = `${entityConfig.microserviceName}/`
+      } else {
+      }
+    } catch (e) {
+      print.warning(`Couldn't find JHipster version, generating v6 microservice routes`)
+    }
+  }
 
   const apiFilePath = `${process.cwd()}/app/shared/services/api.js`
   const fixtureApiFilePath = `${process.cwd()}/app/shared/services/fixture-api.js`
@@ -82,11 +99,11 @@ module.exports = async function (generator, igniteContext) {
 
   // REDUX AND SAGA SECTION
   let apiMethods = `
-  const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
-  const get${props.pluralName} = (options) => api.get('${props.microserviceName}api/${kebabCase(props.pluralName)}', options)
-  const create${props.name} = (${camelCase(props.name)}) => api.post('${props.microserviceName}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microserviceName}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microserviceName}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
+  const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
+  const get${props.pluralName} = (options) => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}', options)
+  const create${props.name} = (${camelCase(props.name)}) => api.post('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
   let fixtureApiMethods = `
   update${props.name}: (${camelCase(props.name)}) => {
@@ -129,7 +146,7 @@ module.exports = async function (generator, igniteContext) {
   // add searchEngine methods
   if (props.searchEngine) {
     apiMethods += `
-  const search${props.pluralName} = (query) => api.get('${props.microserviceName}api/_search/${kebabCase(props.pluralName)}', { query: query })`
+  const search${props.pluralName} = (query) => api.get('${props.microservicePath}api/_search/${kebabCase(props.pluralName)}', { query: query })`
 
     fixtureApiMethods += `
   search${props.pluralName}: (query) => {
