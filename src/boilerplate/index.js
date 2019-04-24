@@ -89,8 +89,8 @@ async function install (context) {
       // strip the trailing slash from the directory
       jhipsterDirectory = `${jhipsterPathAnswer.filePath}`.replace(/\/$/, ``)
       let jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
-      print.info(`Looking for ${jhipsterConfigPath}`)
-      const pathPrefix = props.jhipsterDirectory.startsWith('/') ? '' : '../'
+      const pathPrefix = jhipsterDirectory.startsWith('/') ? '' : '../'
+      print.info(`Looking for ${pathPrefix}${jhipsterConfigPath}`)
       if (fs.existsSync(`${pathPrefix}${jhipsterConfigPath}`)) {
         print.success(`Found JHipster config file at ${jhipsterConfigPath}`)
         jhipsterConfig = await fs.readJson(`${pathPrefix}${jhipsterConfigPath}`)
