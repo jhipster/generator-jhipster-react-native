@@ -45,7 +45,7 @@ async function install (context) {
 
   const perfStart = (new Date()).getTime()
 
-  const name = parameters.third
+  const name = parameters.first
   const spinner = print
     .spin(`Generating a React Native client for JHipster apps`)
     .succeed()
@@ -202,16 +202,11 @@ async function install (context) {
   filesystem.append('.gitignore', 'ios/Pods\n')
 
   try {
-    const ignitePluginConfigPath = `${__dirname}/ignite.json`
-    const newConfig = filesystem.read(ignitePluginConfigPath, 'json')
-    ignite.setIgnitePluginPath(__dirname)
-    ignite.saveIgniteConfig(newConfig)
-
     fs.mkdirSync(`.jhipster`)
     fs.writeJsonSync('.jhipster/yo-rc.json', jhipsterConfig, { spaces: '\t' })
     print.success(`JHipster config saved to your app's .jhipster folder.`)
   } catch (e) {
-    ignite.log(e)
+    print.error(e)
     throw e
   }
 
@@ -240,7 +235,7 @@ async function install (context) {
 
   // if JDL was passed to generate the app, generate any entities
   if (parameters.options.jdl) {
-    await importEntityJdl(context)
+    await importEntityJdl.run(context)
   }
 
   // git configuration

@@ -5,12 +5,13 @@ const semver = require('semver')
  * The files portion of the entity generator
  */
 module.exports = async function (context, props, jhipsterConfig) {
-  const { filesystem, ignite, print, strings, parameters } = context
+  const { filesystem, ignite, print, strings } = context
   const { camelCase, upperFirst } = strings
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
 
   // this is needed because the "upgrade "command is run from within an app, while the "new" command is run from one level deeper
-  const jhipsterPathPrefix = parameters.rawCommand.startsWith('upgrade') ? '' : '../'
+  // if the ignite/ignite.json file exists (created below), it's an upgrade, otherwise it's a new app
+  const jhipsterPathPrefix = fs.existsSync('ignite/ignite.json') ? '' : '../'
 
   if (props.authType === 'uaa') {
     props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
