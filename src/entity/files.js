@@ -47,7 +47,7 @@ module.exports = async function (generator, igniteContext) {
     if (field.fieldType === 'LocalDate') {
       entityContainsLocalDate = true
     }
-    if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime') {
+    if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') {
       entityContainsDate = true
     }
   })

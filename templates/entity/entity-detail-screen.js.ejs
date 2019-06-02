@@ -71,7 +71,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         <%_ props.entityConfig.fields.forEach(function (field) { _%>
         <%_ if (field.fieldType === 'LocalDate') { _%>
         <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
-        <%_ } else if (field.fieldType === 'ZonedDateTime') { _%>
+        <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
         <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
         <%_ } else { _%>
         <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>

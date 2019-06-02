@@ -89,7 +89,7 @@ function mapDateFields (data) {
   if (data.<%= field.fieldName %>) {
     data.<%= field.fieldName %> = localDateToJsDate(data.<%= field.fieldName %>)
   }
-<%_ } else if (field.fieldType === 'ZonedDateTime') { _%>
+<%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
   if (data.<%= field.fieldName %>) {
     data.<%= field.fieldName %> = new Date(data.<%= field.fieldName %>)
   }
