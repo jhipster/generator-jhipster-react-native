@@ -134,8 +134,9 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
     this.setState({
       page: this.state.page + 1,
       loading: true
+    }, () => {
+      this.fetch<%= props.pluralName %>()
     })
-    this.fetch<%= props.pluralName %>()
   }
 
   componentWillReceiveProps (newProps) {
