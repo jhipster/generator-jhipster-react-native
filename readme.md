@@ -1,5 +1,5 @@
 # Ignite JHipster
-[![NPM version][npm-image]][npm-url] [![Build Status][semaphore-image]][semaphore-url] [![Azure Pipelines Status][azure-pipelines-url]]([azure-pipelines-url]) [![Dependency Status][daviddm-image]][daviddm-url] 
+[![NPM version][npm-image]][npm-url] [![Build Status][semaphore-image]][semaphore-url] [![Azure Pipelines Status][azure-pipelines-image]][azure-pipelines-url] [![Dependency Status][daviddm-image]][daviddm-url] 
 
 [![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
 
@@ -53,4 +53,5 @@ After generating, you can use the [entity generator, JDL importer, and other com
 [semaphore-url]: https://semaphoreci.com/ruddell/ignite-jhipster
 [daviddm-image]: https://david-dm.org/ruddell/ignite-jhipster.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/ruddell/ignite-jhipster
-[azure-pipelines-url]: https://dev.azure.com/Ruddell/Ignite%20JHipster/_apis/build/status/ruddell.ignite-jhipster?branchName=master
+[azure-pipelines-image]: https://dev.azure.com/Ruddell/Ignite%20JHipster/_apis/build/status/ruddell.ignite-jhipster?branchName=master
+[azure-pipelines-url]: https://dev.azure.com/Ruddell/Ignite%20JHipster/_build?definitionId=1
