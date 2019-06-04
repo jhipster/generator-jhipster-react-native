@@ -25,8 +25,11 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
 
-  // related to https://github.com/wix/react-native-navigation/issues/4691
-  const rnnPatch = [{ template: 'patches/react-native-navigation+2.16.0.patch', target: `patches/react-native-navigation+2.16.0.patch` }]
+  // related to https://github.com/wix/react-native-navigation/issues/4691 and https://github.com/gcanti/tcomb-form-native/pull/560
+  const rnnPatch = [
+    { template: 'patches/react-native-navigation+2.16.0.patch', target: `patches/react-native-navigation+2.16.0.patch` },
+    { template: 'patches/tcomb-form-native+0.6.20.patch', target: `patches/tcomb-form-native+0.6.20.patch` }
+  ]
   await ignite.copyBatch(context, rnnPatch, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`

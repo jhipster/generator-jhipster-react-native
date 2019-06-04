@@ -1,0 +1,13 @@
+diff --git a/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js b/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
+index 56385d1..488b6e9 100644
+--- a/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
++++ b/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
+@@ -107,7 +107,7 @@ class CollapsiblePickerIOS extends React.Component {
+           ]}
+           onPress={this.togglePicker}
+         >
+-          <Text style={pickerValue}>{selectedOption.text}</Text>
++          <Text style={pickerValue}>{selectedOption ? selectedOption.text : ""}</Text>
+         </TouchableOpacity>
+         <Animated.View
+           style={{ height: this.state.height, overflow: "hidden" }}
