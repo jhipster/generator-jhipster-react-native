@@ -141,16 +141,16 @@ module.exports = async function (context, props, jhipsterConfig) {
       target: 'app/shared/reducers/create-store.js'
     },
     {
-      template: 'app/fastlane/Appfile.ejs',
-      target: 'app/fastlane/Appfile'
+      template: 'fastlane/Appfile.ejs',
+      target: 'fastlane/Appfile'
     },
     {
-      template: 'app/fastlane/Fastfile.ejs',
-      target: 'app/fastlane/Fastfile'
+      template: 'fastlane/Fastfile.ejs',
+      target: 'fastlane/Fastfile'
     },
     {
-      template: 'app/fastlane/Matchfile.ejs',
-      target: 'app/fastlane/Matchfile'
+      template: 'fastlane/Matchfile.ejs',
+      target: 'fastlane/Matchfile'
     }
   ]
 
