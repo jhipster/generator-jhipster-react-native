@@ -11,7 +11,7 @@ test('attempt retrieving a list of <%= camelCase(props.name) %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllRequest({ id: 1 }))
 
   expect(state.fetchingAll).toBe(true)
-  expect(state.<%= camelCase(props.pluralName) %>).toBe(null)
+  expect(state.<%= camelCase(props.pluralName) %>).toBe([])
 })
 
 test('attempt updating a <%= camelCase(props.name) %>', () => {
@@ -85,7 +85,7 @@ test('failure retrieving a list of <%= camelCase(props.name) %>', () => {
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toEqual({ error: 'Not found' })
-  expect(state.<%= camelCase(props.pluralName) %>).toEqual(null)
+  expect(state.<%= camelCase(props.pluralName) %>).toEqual([])
 })
 
 test('failure updating a <%= camelCase(props.name) %>', () => {
@@ -101,7 +101,7 @@ test('failure searching a <%= camelCase(props.name) %>', () => {
 
   expect(state.searching).toBe(false)
   expect(state.errorSearching).toEqual({ error: 'Not found' })
-  expect(state.<%= camelCase(props.pluralName) %>).toEqual(null)
+  expect(state.<%= camelCase(props.pluralName) %>).toEqual([])
 })
 <%_ } _%>
 test('failure deleting a <%= camelCase(props.name) %>', () => {

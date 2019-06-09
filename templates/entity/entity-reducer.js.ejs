@@ -43,7 +43,7 @@ export const INITIAL_STATE = Immutable({
   <%_ } _%>
   deleting: null,
   <%= camelCase(props.name) %>: null,
-  <%= camelCase(props.pluralName) %>: null,
+  <%= camelCase(props.pluralName) %>: [],
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
@@ -66,7 +66,7 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    <%= camelCase(props.pluralName) %>: null
+    <%= camelCase(props.pluralName) %>: []
   })
 
 // request to update from an api
@@ -149,7 +149,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    <%= camelCase(props.pluralName) %>: null
+    <%= camelCase(props.pluralName) %>: []
   })
 }
 // Something went wrong updating.
@@ -177,7 +177,7 @@ export const searchFailure = (state, action) => {
   return state.merge({
     searching: false,
     errorSearching: error,
-    <%= camelCase(props.pluralName) %>: null
+    <%= camelCase(props.pluralName) %>: []
   })
 }
 <%_ } _%>

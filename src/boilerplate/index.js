@@ -200,6 +200,8 @@ async function install (context) {
   filesystem.append('.gitignore', 'ios/Index/DataStore\n')
   filesystem.append('.gitignore', 'ios/Carthage\n')
   filesystem.append('.gitignore', 'ios/Pods\n')
+  filesystem.append('.gitignore', 'fastlane/report.xml\n')
+  filesystem.append('.gitignore', 'android/app/bin\n')
 
   try {
     fs.mkdirSync(`.jhipster`)

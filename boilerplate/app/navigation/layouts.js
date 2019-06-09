@@ -55,7 +55,8 @@ export const appStack = {
                     {
                       id: 'menuButton',
                       icon: Images.menuIcon,
-                      testID: 'menuButton'
+                      testID: 'menuButton',
+                      color: Colors.snow
                     }
                   ]
                 }

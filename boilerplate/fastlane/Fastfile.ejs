@@ -41,21 +41,17 @@ platform :ios do
     # always get latest certificates/provisioning profiles
     match(type: 'appstore', readonly: true)
 
-    if options[:beta]
-      # Change build number
-      increment_build_number(
-        xcodeproj: "./ios/<%= props.name %>.xcodeproj"
-      )
-    end
+    # Change build number
+    increment_build_number(
+      xcodeproj: "./ios/<%= props.name %>.xcodeproj"
+    )
 
     gym(
       scheme: "<%= props.name %>",
-      workspace: "./ios/<%= props.name %>.xcworkspace"
+      workspace: "./ios/<%= props.name %>.<%= props.authType === 'oauth2' ? 'xcworkspace' : 'xcodeproj' %>"
     )
 
-    if options[:beta]
-      pilot(username: @username, skip_waiting_for_build_processing: true)
-    end
+    pilot(username: @username, skip_waiting_for_build_processing: true)
 
     # Print reminder of testers
     # sh "fastlane pilot list -u #{@username}"
@@ -94,20 +90,18 @@ platform :android do
   lane :build do |options|
     gradle(task: 'clean', project_dir: "android/")
 
-    if options[:beta]
-      increment_version_code gradle_build: 'android/app/build.gradle'
-    end
+    increment_version_code gradle_build: 'android/app/build.gradle'
 
     # Build the release version of the Android App
     gradle(
-      task: "app:assemble",
+      task: "app:bundle",
       build_type: "Release",
       project_dir: "android/"
     )
 
     supply(
       track: "beta",
-      apk: "android/app/build/outputs/apk/release/app-release.apk"
+      aab: "android/app/build/outputs/bundle/release/app.aab"
     )
 
   end
