@@ -26,7 +26,6 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
       page: 0,
       sort: 'id,asc',
       size: 20,
-      loading: true,
       done: false,
       <%_ if (props.searchEngine) { _%>
       searchTerm: '',
@@ -132,8 +131,7 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
       return
     }
     this.setState({
-      page: this.state.page + 1,
-      loading: true
+      page: this.state.page + 1
     }, () => {
       this.fetch<%= props.pluralName %>()
     })
@@ -143,8 +141,7 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
     if (newProps.<%= camelCase(props.pluralName) %>) {
       this.setState({
         done: newProps.<%= camelCase(props.pluralName) %>.length < this.state.size,
-        dataObjects: this.state.loading ? [...this.state.dataObjects, ...newProps.<%= camelCase(props.pluralName) %>] : newProps.<%= camelCase(props.pluralName) %>,
-        loading: false
+        dataObjects: [...this.state.dataObjects, ...newProps.<%= camelCase(props.pluralName) %>]
       })
     }
   }
@@ -163,7 +160,6 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
           keyExtractor={this.keyExtractor}
           initialNumToRender={this.oneScreensWorth}
           onEndReached={this.handleLoadMore}
-          onEndThreshold={100}
           <%_ if (props.searchEngine) { _%>
           ListHeaderComponent={this.renderHeader}
           <%_ } else { _%>
