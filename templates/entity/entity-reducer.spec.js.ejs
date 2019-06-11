@@ -11,7 +11,7 @@ test('attempt retrieving a list of <%= camelCase(props.name) %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllRequest({ id: 1 }))
 
   expect(state.fetchingAll).toBe(true)
-  expect(state.<%= camelCase(props.pluralName) %>).toBe([])
+  expect(state.<%= camelCase(props.pluralName) %>).toEqual([])
 })
 
 test('attempt updating a <%= camelCase(props.name) %>', () => {
