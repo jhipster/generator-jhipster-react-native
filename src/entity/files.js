@@ -304,19 +304,19 @@ module.exports = async function (generator, igniteContext) {
   let upperSnakeCaseNameDetail = upperCase(snakeCase(props.name + 'EntityDetailScreen')).replace(/ /g, '_')
 
   // import entity screens to navigation
-  const navigationDeclaration = `export const ${upperSnakeCaseName} = 'Nav.${props.name}EntityScreen'`
+  const navigationDeclaration = `export const ${upperSnakeCaseName} = 'nav.${props.name}EntityScreen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
     insert: navigationDeclaration,
     match: navigationDeclaration
   })
-  const navigationDeclarationDetail = `export const ${upperSnakeCaseNameDetail} = 'Nav.${props.name}EntityDetailScreen'`
+  const navigationDeclarationDetail = `export const ${upperSnakeCaseNameDetail} = 'nav.${props.name}EntityDetailScreen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
     insert: navigationDeclarationDetail,
     match: navigationDeclarationDetail
   })
-  const navigationDeclarationEdit = `export const ${upperSnakeCaseNameEdit} = 'Nav.${props.name}EntityEditScreen'`
+  const navigationDeclarationEdit = `export const ${upperSnakeCaseNameEdit} = 'nav.${props.name}EntityEditScreen'`
   ignite.patchInFile(navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
     insert: navigationDeclarationEdit,
