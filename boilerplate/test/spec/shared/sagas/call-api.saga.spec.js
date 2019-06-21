@@ -11,13 +11,8 @@ test('returns the response if authorized', () => {
   const step = stepper(callApi(apiCall))
   step()
 
-  const response = FixtureAPI.getAccount(1)
-  const account = {
-    ok: true,
-    status: 200,
-    data: require('../../../../app/shared/fixtures/get-account.json')
-  }
-  expect(step(response)).toEqual(account)
+  const response = FixtureAPI.getAccount()
+  expect(step(response)).toEqual(response)
 })
 
 test('prompts for login if not authorized, then fails to relogin', () => {
