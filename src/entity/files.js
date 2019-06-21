@@ -109,19 +109,19 @@ module.exports = async function (generator, igniteContext) {
   update${props.name}: (${camelCase(props.name)}) => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/update${props.name}.json')
+      data: require('../../shared/fixtures/update-${props.name.toLowerCase()}.json')
     }
   },
   get${props.pluralName}: () => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get${props.pluralName}.json')
+      data: require('../../shared/fixtures/get-${props.pluralName.toLowerCase()}.json')
     }
   },
   get${props.name}: (${camelCase(props.name)}Id) => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get${props.name}.json')
+      data: require('../../shared/fixtures/get-${props.name.toLowerCase()}.json')
     }
   },
   delete${props.name}: (${camelCase(props.name)}Id) => {
@@ -152,7 +152,7 @@ module.exports = async function (generator, igniteContext) {
   search${props.pluralName}: (query) => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/search${props.pluralName}.json')
+      data: require('../../shared/fixtures/search-${props.pluralName.toLowerCase()}.json')
     }
   },`
 
@@ -242,15 +242,15 @@ module.exports = async function (generator, igniteContext) {
     // generate entity fixtures
     {
       template: `fixtures/entity-get.json.ejs`,
-      target: `app/shared/fixtures/get${props.name}.json`
+      target: `app/shared/fixtures/get-${props.name.toLowerCase()}.json`
     },
     {
       template: `fixtures/entity-get-all.json.ejs`,
-      target: `app/shared/fixtures/get${props.pluralName}.json`
+      target: `app/shared/fixtures/get-${props.pluralName.toLowerCase()}.json`
     },
     {
       template: `fixtures/entity-update.json.ejs`,
-      target: `app/shared/fixtures/update${props.name}.json`
+      target: `app/shared/fixtures/update-${props.name.toLowerCase()}.json`
     },
     // generate entity tests
     {
@@ -266,7 +266,7 @@ module.exports = async function (generator, igniteContext) {
   if (props.searchEngine) {
     entityFiles.push({
       template: `fixtures/entity-get-all.json.ejs`,
-      target: `app/shared/fixtures/search${props.pluralName}.json`
+      target: `app/shared/fixtures/search-${props.pluralName.toLowerCase()}.json`
     })
   }
   if (props.detox) {
