@@ -229,7 +229,7 @@ target '${props.name}' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/GLog.podspec'
  
   # our dependencies
-  pod 'AppAuth', '>= 0.94'
+  pod 'AppAuth', '0.94'
 
 end
  
