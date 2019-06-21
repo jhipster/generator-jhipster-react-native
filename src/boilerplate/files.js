@@ -165,10 +165,7 @@ module.exports = async function (context, props, jhipsterConfig) {
   if (props.authType === 'oauth2') {
     const isMonolith = jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
-      const oauth2Files = [
-        { template: 'AuthInfoResource.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/web/rest/AuthInfoResource.java` },
-        { template: 'ResourceServerConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/ResourceServerConfiguration.java` }
-      ]
+      const oauth2Files = []
       if (!isMonolith) {
         oauth2Files.push({ template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` })
       }
