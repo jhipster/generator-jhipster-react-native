@@ -103,6 +103,9 @@ export default {
     return {
       ok: true,
       status: 200,
+      headers: {
+        'content-type': 'application/json;charset=UTF-8'
+      },
       data: require('../fixtures/get-account.json')
     }
   },
