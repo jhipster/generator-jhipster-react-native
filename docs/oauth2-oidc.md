@@ -30,7 +30,7 @@ const { issuer, scope } = authInfo.data
 const config = {
  issuer,
  clientId: '0oai3n8l3dgEIfg5k90h7',
- scopes: scope.split(' '),
+ scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access']
  redirectUrl: `${AppConfig.appUrlScheme}://authorize`
 }
 ```

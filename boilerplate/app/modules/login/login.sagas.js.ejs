@@ -25,11 +25,11 @@ export function * login (api) {
   // get the oauth issuer information from the backend
   const authInfo = yield call(api.getOauthInfo)
   if (authInfo.ok) {
-    const { issuer, clientId, scope } = authInfo.data
+    const { issuer, clientId } = authInfo.data
     const config = {
       issuer,
       clientId,
-      scopes: scope.split(' '),
+      scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'],
       redirectUrl: `${AppConfig.appUrlScheme}://authorize`
     }
     if (__DEV__ && Platform.OS === 'android') {
@@ -45,7 +45,7 @@ export function * login (api) {
       yield put(AccountActions.accountRequest())
       yield put({ type: 'RELOGIN_OK' })
     } catch (error) {
-      console.log(error)
+      console.tron.log(error)
       yield put(LoginActions.loginFailure('WRONG'))
     }
   } else {
