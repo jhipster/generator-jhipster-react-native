@@ -41,7 +41,7 @@
     "reduxsauce": "1.0.1",
     "react-native-navigation": "2.21.0",
     "seamless-immutable": "7.1.4",
-    <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+    <%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
     "react-native-cookies": "3.2.0",
     <%_ } _%>
     <%_ if (props.websockets) { _%>
@@ -65,7 +65,7 @@
     "ignite-jhipster": "<%= props.packageVersion %>",
     "jest": "24.7.1",
     <%_ if (props.authType === 'oauth2') { _%>
-    "react-native-app-auth": "4.0.0",
+    "react-native-app-auth": "4.4.0",
     <%_ } _%>
     <%_ if (props.detox) { _%>
     "detox": "12.10.2",

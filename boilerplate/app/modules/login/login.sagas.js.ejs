@@ -3,6 +3,9 @@ import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt'
 import { Platform } from 'react-native'
 import { authorize } from 'react-native-app-auth'
 <%_ } _%>
+<%_ if (props.authType === 'oauth2') { _%>
+import CookieManager from 'react-native-cookies'
+<%_ } _%>
 
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
@@ -92,7 +95,10 @@ export function * login (api, { username, password }) {
 export function * logout (api) {
   <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
   yield call(api.logout)
-  <%_ } else { _%>
+  <%_ } else if (props.authType === 'jwt') { _%>
+  yield call(api.removeAuthToken)
+  <%_ } else if (props.authType === 'oauth2') { _%>
+  yield CookieManager.clearAll()
   yield call(api.removeAuthToken)
   <%_ } _%>
   yield put(AccountActions.accountRequest())
