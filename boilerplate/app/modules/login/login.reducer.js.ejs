@@ -47,7 +47,7 @@ export const load = (state) => state.merge({ loading: true })
 export const loadSuccess = (state) => state.merge({ loading: false })
 <%_ } _%>
 // we need to logout, meaning clear access tokens and account
-export const logoutRequest = state => state
+export const logoutRequest = state => INITIAL_STATE
 
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE

@@ -123,7 +123,12 @@ test('logout success path', () => {
   const response = FixtureAPI.logout()
   // Remove the API token
   expect(step(response)).toEqual(call(FixtureAPI.logout))
-  <%_ } else { _%>
+  <%_ } else if (props.authType === 'jwt') { _%>
+  expect(step()).toEqual(call(FixtureAPI.removeAuthToken))
+  FixtureAPI.removeAuthToken()
+  <%_ } else if (props.authType === 'oauth2') { _%>
+  // clear cookies
+  step()
   expect(step()).toEqual(call(FixtureAPI.removeAuthToken))
   FixtureAPI.removeAuthToken()
   <%_ } _%>
