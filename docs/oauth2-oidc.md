@@ -10,10 +10,6 @@ If you don't want to use Cocoapods, follow one of the [other setup instructions 
 ### Backend Generated Files
 
 Ignite JHipster generates several files in your JHipster backend's folder.  See the changes in your JHipster app.
-- `web.rest.AuthInfoResource`
-  - Adds an API endpoint returning OAuth2 issuer information
-- `config.ResourceServerConfiguration.java` 
-  - Enables authentication using a Bearer token instead of a cookie
 - `src/main/docker/realm-config/jhipster-realm.json`
   - Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
 
