@@ -58,6 +58,14 @@ async function install (context) {
   let jhipsterConfig
   let jhipsterDirectory
 
+  // does the user want to use yarn?
+  let useNpm = !parameters.options.yarn
+  // `npm i` fails due to symlinks, so if the developer is using this boilerplate from a local directory, yarn is forced
+  if (context.parameters.options.boilerplate !== 'ignite-jhipster' && context.parameters.options.boilerplate !== 'jhipster') {
+    useNpm = false
+  }
+  ignite.useYarn = !useNpm
+
   // if the user is passing in JDL
   if (parameters.options.jdl) {
     print.info('Importing JDL')
@@ -120,7 +128,8 @@ async function install (context) {
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
     name,
-    version: getReactNativeVersion(context)
+    version: getReactNativeVersion(context),
+    useNpm: useNpm
   })
   if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
 
@@ -183,7 +192,7 @@ async function install (context) {
     spinner.text = `▸ installing dependencies`
     spinner.start()
     // install any missing dependencies
-    await system.run('yarn', { stdio: 'ignore' })
+    await system.run(useNpm ? 'npm i' : 'yarn', { stdio: 'ignore' })
     spinner.succeed(`dependencies installed`)
   }
   // pass long the debug flag if we're running in that mode
