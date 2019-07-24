@@ -240,20 +240,6 @@ async function install (context) {
     await importEntityJdl.run(context)
   }
 
-  // git configuration
-  const gitExists = await filesystem.exists('./.git')
-  if (!gitExists && !props.skipGit) {
-    // initial git
-    const spinner = print.spin('configuring git')
-
-    try {
-      await system.run(`git init . && git add . && git commit -m "Initial commit."`)
-      spinner.succeed(`created a git repository and an initial commit`)
-    } catch (e) {
-      spinner.fail(`failed to create a git repository`)
-    }
-  }
-
   const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${print.colors.yellow(name)} in ${perfDuration}s`)
 
