@@ -60,10 +60,6 @@ async function install (context) {
 
   // does the user want to use yarn?
   let useNpm = !parameters.options.yarn
-  // `npm i` fails due to symlinks, so if the developer is using this boilerplate from a local directory, yarn is forced
-  if (context.parameters.options.boilerplate !== 'ignite-jhipster' && context.parameters.options.boilerplate !== 'jhipster') {
-    useNpm = false
-  }
   ignite.useYarn = !useNpm
 
   // if the user is passing in JDL
@@ -286,6 +282,10 @@ async function install (context) {
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  ignite generate'))
   print.info('')
+  if (useNpm && context.parameters.options.boilerplate !== 'ignite-jhipster' && context.parameters.options.boilerplate !== 'jhipster') {
+    print.warning('NOTE: Using local ignite-jhipster, removing `.git` folder from `node_modules/ignite-jhipster` to prevent issues with `npm i`')
+    await rimraf.sync('../node_modules/ignite-jhipster/.git')
+  }
 }
 
 module.exports = {
