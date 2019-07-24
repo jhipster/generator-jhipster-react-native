@@ -7,10 +7,11 @@ You can pass flags for each of the options.
 | Flag                     | Possible Values                | Action                                         |
 | ------------------------ | ------------------------------ | ---------------------------------------------- |
 | `--jh-dir`               | backend, ../backend            | The JHipster app's directory                   |
-| `--detox`                | true, false                    | Enables Detox E2E tests                     |
+| `--detox`                | true, false                    | Enables Detox E2E tests                        |
 | `--skip-git`             |                                | Skips git init                                 |
 | `--skip-lint`            |                                | Skips `standard` initialization (linting)      |
 | `--react-native-version` | 0.60.0                         | Install specific React Native version          |
+| `--yarn                ` |                                | Uses yarn in place of npm when generating      |
 
 #### JDL App Generation
 
