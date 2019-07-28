@@ -56,6 +56,10 @@ module.exports = async function (context, props, jhipsterConfig) {
       await filesystem.remove(`${process.cwd()}/e2e/settings-screen.spec.js`)
       await filesystem.remove(`${process.cwd()}/e2e/change-password-screen.spec.js`)
     }
+    // remove websocket ChatScreen test if unused
+    if (!props.websockets) {
+      await filesystem.remove(`${process.cwd()}/e2e/chat-screen.spec.js`)
+    }
   }
   spinner.stop()
 
