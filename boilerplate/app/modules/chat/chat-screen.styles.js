@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { ApplicationStyles, Metrics, Colors } from '../../shared/themes'
 
@@ -32,18 +32,27 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   list: {
-    height: Metrics.screenHeight - ((Platform.OS === 'ios') ? 110 : 130)
+    flex: 1
+    // todo replace with flex styling
+    // height: Metrics.screenHeight - ((Platform.OS === 'ios') ? 110 : 130)
   },
   listContent: {
     left: 0,
     right: 0
   },
   messageInput: {
+    flex: 1,
     padding: 10,
     color: 'white',
     alignItems: 'flex-end',
     bottom: 0,
     left: 0,
     right: 0
+  },
+  inputContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
