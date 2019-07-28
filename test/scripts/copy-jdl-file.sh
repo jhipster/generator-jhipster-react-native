@@ -6,8 +6,10 @@ if [ "$JHI_WEBSOCKETS" = true ] ; then
   WEBSOCKET_SUFFIX="-websockets"
 fi
 
-JDL_FILE="application-with-entities-${JHI_AUTH_TYPE}${DTO_SUFFIX}${WEBSOCKET_SUFFIX}.jdl"
+APP_JDL="app-${JHI_AUTH_TYPE}${WEBSOCKET_SUFFIX}.jdl"
+ENTITY_JDL="entities${DTO_SUFFIX}.jdl"
 
-echo "Using JDL file: ${JDL_FILE}"
+echo "Using JDL files: ${APP_JDL} ${ENTITY_JDL}"
 
-cp ${BUILD_REPOSITORY_LOCALPATH}/test/.jhipster/${JDL_FILE} ../${SYSTEM_JOBNAME}.jdl
+# combine the app and entity JDL file
+cat ${BUILD_REPOSITORY_LOCALPATH}/test/jdl/${APP_JDL} ${BUILD_REPOSITORY_LOCALPATH}/test/jdl/${ENTITY_JDL} >> ../${SYSTEM_JOBNAME}.jdl

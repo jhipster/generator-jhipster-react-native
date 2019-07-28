@@ -1,0 +1,8 @@
+application {
+	config {
+		skipClient true
+		authenticationType jwt
+		websocket spring-websocket
+	}
+	entities *
+}

@@ -1,0 +1,7 @@
+application {
+	config {
+		skipClient true
+		authenticationType oauth2
+	}
+	entities *
+}

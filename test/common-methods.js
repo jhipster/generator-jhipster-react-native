@@ -14,7 +14,7 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
   await execa('mkdir', ['backend'])
   await execa('mkdir', ['backend/.jhipster'])
   await execa('cp', [`${testFolder}/.jhipster/${authType}-yo-rc.json`, 'backend/.yo-rc.json'])
-  await execa('cp', [`${testFolder}/.jhipster/entities${useDto ? '-dto' : ''}.jdl`, 'backend/backend.jdl'])
+  await execa('cp', [`${testFolder}/jdl/entities${useDto ? '-dto' : ''}.jdl`, 'backend/backend.jdl'])
   await execa('cp', [`${testFolder}/.jhipster/FieldTestEntity.json`, 'backend/.jhipster/FieldTestEntity.json'])
 
   const generationLog = await execa('ignite', [

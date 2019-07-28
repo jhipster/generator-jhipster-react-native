@@ -1,11 +1,3 @@
-application {
-	config {
-		skipClient true
-		authenticationType oauth2
-	}
-	entities *
-}
-
 entity Region {
 	regionName String
 }
@@ -102,9 +94,6 @@ relationship OneToOne {
 // Set pagination options
 paginate JobHistory, Employee with infinite-scroll
 paginate Job with pagination
-
-// Use Data Transfert Objects (DTO)
-// dto * with mapstruct
 
 // Set service options to all except few
 service all with serviceClass
