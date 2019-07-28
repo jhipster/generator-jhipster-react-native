@@ -6,7 +6,7 @@ import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
 import Config from '../../config/debug-config'
 <%_ if (props.websockets) { _%>
-import WebsocketService from '../websockets/websocket-service'
+import WebsocketService from '../websockets/websocket.service'
 <%_ } _%>
 // creates the store
 export default (rootReducer, rootSaga) => {

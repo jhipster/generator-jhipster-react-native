@@ -10,7 +10,7 @@ import CookieManager from 'react-native-cookies'
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
 <%_ if (props.websockets) { _%>
-import WebsocketService from '../../shared/websockets/websocket-service'
+import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
 <%_ if (props.authType === 'oauth2') { _%>
 import AppConfig from '../../config/app-config'

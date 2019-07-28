@@ -1,6 +1,6 @@
 import { put, select } from 'redux-saga/effects'
 
-import ChatActions from '../../modules/chat/chat.redux'
+import ChatActions from '../../modules/chat/chat.reducer'
 
 export const selectState = (state, key, subKey) => state[key][subKey]
 
