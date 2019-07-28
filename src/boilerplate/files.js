@@ -77,6 +77,10 @@ module.exports = async function (context, props, jhipsterConfig) {
       target: 'app/navigation/drawer/drawer-content.js'
     },
     {
+      template: 'app/navigation/layouts.js.ejs',
+      target: 'app/navigation/layouts.js'
+    },
+    {
       template: 'app/modules/login/login-screen.js.ejs',
       target: 'app/modules/login/login-screen.js'
     },
