@@ -9,9 +9,9 @@ module.exports = async function (generator, igniteContext) {
   const { ignite, strings, parameters, print } = igniteContext
   const { kebabCase, pascalCase, snakeCase, upperCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
-  let name = generator.name
-  let searchEngine = generator.igniteConfig.searchEngine
-  let detox = generator.igniteConfig.detox || parameters.options.detox
+  const name = generator.name
+  const searchEngine = generator.igniteConfig.searchEngine
+  const detox = generator.igniteConfig.detox || parameters.options.detox
   const props = {
     name: pluralize.singular(name),
     searchEngine,
@@ -28,7 +28,7 @@ module.exports = async function (generator, igniteContext) {
   let entityContainsDate = false
   let entityContainsLocalDate = false
   // load the entity config into memory
-  let entityConfig = await fs.readJson(localEntityFilePath)
+  const entityConfig = await fs.readJson(localEntityFilePath)
   entityConfig.fields.forEach((field) => {
     field.fieldIsEnum = ![
       'String',
@@ -75,7 +75,7 @@ module.exports = async function (generator, igniteContext) {
 
   props.microservicePath = ''
   // if a microservice name is available, set the path prefix in the API paths
-  if (entityConfig.hasOwnProperty('microserviceName')) {
+  if (Object.prototype.hasOwnProperty.call(entityConfig, 'microserviceName')) {
     props.microservicePath = `services/${entityConfig.microserviceName}/`
     // check if it's an older JHipster version which does not use the 'services' prefix for microservice
     try {
@@ -299,9 +299,9 @@ module.exports = async function (generator, igniteContext) {
     insert: navigationImportEdit,
     match: navigationImportEdit
   })
-  let upperSnakeCaseName = upperCase(snakeCase(props.name + 'EntityScreen')).replace(/ /g, '_')
-  let upperSnakeCaseNameEdit = upperCase(snakeCase(props.name + 'EntityEditScreen')).replace(/ /g, '_')
-  let upperSnakeCaseNameDetail = upperCase(snakeCase(props.name + 'EntityDetailScreen')).replace(/ /g, '_')
+  const upperSnakeCaseName = upperCase(snakeCase(props.name + 'EntityScreen')).replace(/ /g, '_')
+  const upperSnakeCaseNameEdit = upperCase(snakeCase(props.name + 'EntityEditScreen')).replace(/ /g, '_')
+  const upperSnakeCaseNameDetail = upperCase(snakeCase(props.name + 'EntityDetailScreen')).replace(/ /g, '_')
 
   // import entity screens to navigation
   const navigationDeclaration = `export const ${upperSnakeCaseName} = 'nav.${props.name}EntityScreen'`

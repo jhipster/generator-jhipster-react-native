@@ -7,7 +7,7 @@ import t from 'tcomb-form-native'
 import ChangePasswordActions from '../password/change-password.reducer'
 import styles from './change-password-screen.styles'
 
-let Form = t.form.Form
+const Form = t.form.Form
 
 class ChangePasswordScreen extends React.Component {
   constructor (props) {

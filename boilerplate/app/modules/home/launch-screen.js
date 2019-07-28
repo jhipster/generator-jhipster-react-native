@@ -10,6 +10,7 @@ export default class LaunchScreen extends React.Component {
     super(props)
     Navigation.events().bindComponent(this)
   }
+
   componentDidAppear () {
     Navigation.mergeOptions(this.props.componentId, {
       sideMenu: {
@@ -20,6 +21,7 @@ export default class LaunchScreen extends React.Component {
       }
     })
   }
+
   showSideMenu () {
     Navigation.mergeOptions(this.props.componentId, {
       sideMenu: {

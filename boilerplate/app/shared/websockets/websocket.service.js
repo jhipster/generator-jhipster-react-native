@@ -22,7 +22,7 @@ let attempts = 0
 
 let chatSubscriber
 
-let subscriptions = {}
+const subscriptions = {}
 function onConnect () {
   setWsSessionId(socket)
   connectedPromise('success')
@@ -42,7 +42,7 @@ function onConnect () {
 
 function onError (error) {
   console.tron.error(`Error connecting to websockets ${error}`)
-  let time = generateInterval(attempts)
+  const time = generateInterval(attempts)
   alreadyConnectedOnce = false
   connected = false
   connectedPromise = null
@@ -92,7 +92,7 @@ function disconnect () {
 // methods for subscribing
 function subscribeToChat () {
   console.tron.log('Subscribing to Chat')
-  if (!subscriptions.hasOwnProperty('chat')) {
+  if (!Object.prototype.hasOwnProperty.call(subscriptions, 'chat')) {
     subscriptions.chat = { subscribed: true }
     connection.then(() => {
       chatSubscriber = stompClient.subscribe('/topic/chat', onMessage.bind(this, 'chat'))
@@ -151,7 +151,7 @@ function getWsSessionId () {
 }
 
 function setWsSessionId (socket) {
-  let splitUrl = socket._transport.url.split('/')
+  const splitUrl = socket._transport.url.split('/')
   wsSessionId = splitUrl[5]
   console.tron.log(`Set WS Session ID to ${wsSessionId}`)
 }

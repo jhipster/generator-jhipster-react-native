@@ -8,7 +8,7 @@ import t from 'tcomb-form-native'
 import ForgotPasswordActions from './forgot-password.reducer'
 import styles from './forgot-password-screen.styles'
 
-let Form = t.form.Form
+const Form = t.form.Form
 
 class ForgotPasswordScreen extends React.Component {
   constructor (props) {

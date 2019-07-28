@@ -8,7 +8,7 @@ import AccountActions from '../../../shared/reducers/account.reducer'
 // Styles
 import styles from './settings-screen.styles'
 
-let Form = t.form.Form
+const Form = t.form.Form
 
 class SettingsScreen extends React.Component {
   constructor (props) {

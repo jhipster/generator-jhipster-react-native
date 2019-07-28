@@ -15,7 +15,7 @@ export default class AlertMessage extends React.Component {
   }
 
   render () {
-    let messageComponent = null
+    const messageComponent = null
     if (this.props.show) {
       const { title } = this.props
       return (

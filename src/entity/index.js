@@ -45,7 +45,7 @@ module.exports = {
     } else {
       // prompt the user until an entity configuration file is found
       while (true) {
-        let entityAnswers = await prompt.ask(prompts.entityPrompts)
+        const entityAnswers = await prompt.ask(prompts.entityPrompts)
         // strip the trailing slash from the directory
         jhipsterDirectory = `${entityAnswers.filePath}`.replace(/\/$/, ``)
         fullEntityFilePath = `${jhipsterDirectory}/.jhipster/${entityFileName}`

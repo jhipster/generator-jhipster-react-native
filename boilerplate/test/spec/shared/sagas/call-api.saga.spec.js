@@ -23,7 +23,7 @@ test('prompts for login if not authorized, then fails to relogin', () => {
   const account = {
     ok: true,
     status: 401,
-    data: { 'message': 'Not Authorized' }
+    data: { message: 'Not Authorized' }
   }
   expect(step(account)).toEqual(put({ type: 'RELOGIN' }))
   expect(step()).toEqual(take(['RELOGIN_OK', 'RELOGIN_ABORT']))
@@ -39,7 +39,7 @@ test('prompts for login if not authorized, then succeeds to relogin', () => {
   const account = {
     ok: true,
     status: 401,
-    data: { 'message': 'Not Authorized' }
+    data: { message: 'Not Authorized' }
   }
   expect(step(account)).toEqual(put({ type: 'RELOGIN' }))
   expect(step()).toEqual(take(['RELOGIN_OK', 'RELOGIN_ABORT']))

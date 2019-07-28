@@ -10,7 +10,7 @@ export function * processWebsocketMessage ({ subscription, msg }) {
   switch (subscription) {
     case 'chat':
       const state = yield select(selectState, 'chat', 'chat')
-      let chat = [].concat(state)
+      const chat = [].concat(state)
       chat.push(msg)
       yield put(ChatActions.chatSuccess(chat))
       break

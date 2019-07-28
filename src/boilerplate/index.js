@@ -50,7 +50,7 @@ async function install (context) {
     .spin(`Generating a React Native client for JHipster apps`)
     .succeed()
 
-  let props = {
+  const props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
     detox: parameters.options.detox,
     disableInsight: parameters.options['disable-insight'] || false
@@ -59,7 +59,7 @@ async function install (context) {
   let jhipsterDirectory
 
   // does the user want to use yarn?
-  let useNpm = !parameters.options.yarn
+  const useNpm = !parameters.options.yarn
   ignite.useYarn = !useNpm
 
   // if the user is passing in JDL
@@ -89,10 +89,10 @@ async function install (context) {
   } else {
     // prompt the user until an JHipster configuration file is found
     while (true) {
-      let jhipsterPathAnswer = await prompt.ask(prompts.jhipsterPath)
+      const jhipsterPathAnswer = await prompt.ask(prompts.jhipsterPath)
       // strip the trailing slash from the directory
       jhipsterDirectory = `${jhipsterPathAnswer.filePath}`.replace(/\/$/, ``)
-      let jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
+      const jhipsterConfigPath = `${jhipsterDirectory}/.yo-rc.json`
       const pathPrefix = jhipsterDirectory.startsWith('/') ? '' : '../'
       print.info(`Looking for ${pathPrefix}${jhipsterConfigPath}`)
       if (fs.existsSync(`${pathPrefix}${jhipsterConfigPath}`)) {
