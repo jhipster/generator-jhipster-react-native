@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
-
-JDL_FILE="application-with-entities-${JHI_AUTH_TYPE}.jdl"
 if [ "$JHI_DTO" = true ] ; then
-    JDL_FILE="application-with-entities-${JHI_AUTH_TYPE}-dto.jdl"
+  DTO_SUFFIX="-dto"
 fi
+if [ "$JHI_WEBSOCKETS" = true ] ; then
+  WEBSOCKET_SUFFIX="-websockets"
+fi
+
+JDL_FILE="application-with-entities-${JHI_AUTH_TYPE}${DTO_SUFFIX}${WEBSOCKET_SUFFIX}.jdl"
 
 echo "Using JDL file: ${JDL_FILE}"
 
