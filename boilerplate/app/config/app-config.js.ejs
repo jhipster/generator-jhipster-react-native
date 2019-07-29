@@ -3,7 +3,7 @@
 export default {
   <%_ if (props.authType ==='uaa') { _%>
   // this is your UAA's base name, lower-cased and followed by a /
-  uaaBaseUrl: '<%= props.uaaBaseUrl %>/',
+  uaaBaseUrl: 'services/<%= props.uaaBaseUrl %>/',
   <%_ } _%>
   apiUrl: 'http://localhost:8080/',
   appUrlScheme: '<%= props.name.toLowerCase() %>'
