@@ -237,6 +237,18 @@ async function install (context) {
   spinner.succeed(`linked native libraries`)
   spinner.stop()
 
+  // patch test scheme to not build for running
+  // https://github.com/react-native-community/cli/issues/462 (issue)
+  // https://github.com/facebook/react-native/issues/4210 (workaround)
+  await ignite.patchInFile(`ios/${name}.xcodeproj/xcshareddata/xcschemes/${name}.xcscheme`,
+    {
+      replace: `buildForRunning = "YES"
+            buildForProfiling = "NO"`,
+      insert: `buildForRunning = "NO"
+            buildForProfiling = "NO"`
+    }
+  )
+
   // if JDL was passed to generate the app, generate any entities
   if (parameters.options.jdl) {
     await importEntityJdl.run(context)
