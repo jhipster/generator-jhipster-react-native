@@ -221,21 +221,17 @@ async function install (context) {
   // react native link -- must use spawn & stdio: ignore
   spinner.text = `▸ linking native libraries`
   spinner.start()
-  await system.spawn('react-native link', { stdio: 'ignore' })
   let showCocoapodsInstructions = false
-  if (props.authType === 'oauth2') {
-    await system.spawn('react-native link react-native-app-auth', { stdio: 'ignore' })
-    // if it's a mac
-    if (process.platform === 'darwin') {
-      // if cocoapods is installed, install the oauth dependencies
-      const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
-      if (podVersionCommandResult.status === 0) {
-        spinner.text = `▸ running pod install`
-        await system.run('cd ios && pod install && cd ..', { stdio: 'ignore' })
-        spinner.succeed(`pod install succeeded`)
-      } else {
-        showCocoapodsInstructions = true
-      }
+  // if it's a mac
+  if (process.platform === 'darwin') {
+    // if cocoapods is installed, install the oauth dependencies
+    const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
+    if (podVersionCommandResult.status === 0) {
+      spinner.text = `▸ running pod install`
+      await system.run('cd ios && pod install && cd ..', { stdio: 'ignore' })
+      spinner.succeed(`pod install succeeded`)
+    } else {
+      showCocoapodsInstructions = true
     }
   }
   spinner.succeed(`linked native libraries`)

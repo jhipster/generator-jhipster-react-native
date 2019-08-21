@@ -48,7 +48,7 @@ platform :ios do
 
     gym(
       scheme: "<%= props.name %>",
-      workspace: "./ios/<%= props.name %>.<%= props.authType === 'oauth2' ? 'xcworkspace' : 'xcodeproj' %>"
+      workspace: "./ios/<%= props.name %>.xcworkspace"
     )
 
     pilot(username: @username, skip_waiting_for_build_processing: true)

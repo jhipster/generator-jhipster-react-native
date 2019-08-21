@@ -98,7 +98,7 @@ const updateAndroidFiles = async (context, props) => {
   // app/build.gradle
   await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {
     after: `versionCode 1`,
-    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"`
+    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"`
   })
 
   await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {

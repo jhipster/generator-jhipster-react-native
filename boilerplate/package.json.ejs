@@ -38,10 +38,10 @@
     "redux-persist": "5.10.0",
     "redux-saga": "1.0.5",
     "reduxsauce": "1.1.0",
-    "react-native-navigation": "2.21.0",
+    "react-native-navigation": "3.1.0",
     "seamless-immutable": "7.1.4",
     <%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
-    "react-native-cookies": "3.2.0",
+    "react-native-cookies": "3.3.0",
     <%_ } _%>
     <%_ if (props.websockets) { _%>
     "stompjs": "2.3.3",
@@ -143,26 +143,18 @@
     ]
   },
   <%_ } _%>
-  <%_ if (props.detox) {
-    let iosProjectType = 'project'
-    let iosProjectSuffix = 'xcodeproj'
-    if (props.authType === 'oauth2') {
-      // cocoapods
-      iosProjectType = 'workspace'
-      iosProjectSuffix = 'xcworkspace'
-    }
-  _%>
+  <%_ if (props.detox) { _%>
   "detox": {
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= props.name %>.app",
-        "build": "xcodebuild -<%= iosProjectType %> ios/<%= props.name %>.<%= iosProjectSuffix %> -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "xcodebuild -workspace ios/<%= props.name %>.xcworkspace -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone X"
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= props.name %>.app",
-        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -<%= iosProjectType %> ios/<%= props.name %>.<%= iosProjectSuffix %> -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/<%= props.name %>.xcworkspace -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone X"
       }
