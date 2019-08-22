@@ -45,6 +45,10 @@ module.exports = async function (context, props, jhipsterConfig) {
     overwrite: true,
     matching: '!*.ejs'
   })
+  await filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
+    overwrite: true,
+    matching: '!*.ejs'
+  })
   if (props.detox) {
     await filesystem.copy(`${__dirname}/../../boilerplate/e2e`, `${process.cwd()}/e2e`, {
       overwrite: true,
@@ -139,10 +143,6 @@ module.exports = async function (context, props, jhipsterConfig) {
     {
       template: 'test/setup.js.ejs',
       target: 'test/setup.js'
-    },
-    {
-      template: 'test/storybook/storybook.ejs',
-      target: 'test/storybook/storybook.js'
     },
     {
       template: 'app/shared/reducers/create-store.js.ejs',

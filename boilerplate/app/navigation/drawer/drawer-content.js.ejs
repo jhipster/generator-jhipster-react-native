@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ScrollView, Image, BackHandler } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
-import { <% if (props.authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (props.websockets) { %>chatScreen, <% } %>entitiesScreen } from '../layouts'
+import { <% if (props.authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (props.websockets) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
 import { connect } from 'react-redux'
 
 import styles from './drawer-content.styles'
@@ -74,6 +74,10 @@ class DrawerContent extends Component {
     this.hideSideMenu()
     this.props.logout()
   }
+  handlePressStorybook = () => {
+    this.hideSideMenu()
+    storybookScreen()
+  }
 
   render () {
     return (
@@ -94,6 +98,7 @@ class DrawerContent extends Component {
         {this.props.loggedIn && (<DrawerButton testID='changePasswordDrawerButton' text='Change Password' onPress={this.handlePressChangePassword} />)}
         <%_ } _%>
         {this.props.loggedIn && (<DrawerButton testID='logoutDrawerButton' text='Logout' onPress={this.handlePressLogout} />)}
+        {__DEV__ && (<DrawerButton testID='storybookDrawerButton' text='Storybook' onPress={this.handlePressStorybook} />)}
       </ScrollView>
     )
   }

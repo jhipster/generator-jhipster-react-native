@@ -2,7 +2,6 @@ import { AppState, Linking } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Provider } from 'react-redux'
 import { Images } from '../shared/themes'
-// import { StorybookUIRoot } from '../../storybook'
 
 import createStore from '../shared/reducers'
 import Colors from '../shared/themes/colors'
@@ -17,6 +16,7 @@ import RegisterScreen from '../modules/account/register/register-screen'
 import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen'
 import ChangePasswordScreen from '../modules/account/password/change-password-screen'
 import EntitiesScreen from '../modules/entities/entities-screen'
+import StorybookScreen from '../../storybook'
 <%_ if (props.websockets) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
@@ -30,6 +30,7 @@ export const SETTINGS_SCREEN = 'nav.SettingsScreen'
 export const LAUNCH_SCREEN = 'nav.LaunchScreen'
 export const DRAWER_CONTENT = 'nav.DrawerContent'
 export const ENTITIES_SCREEN = 'nav.EntitiesScreen'
+export const STORYBOOK_SCREEN = 'nav.StorybookScreen'
 <%_ if (props.websockets) { _%>
 export const CHAT_SCREEN = 'nav.ChatScreen'
 <%_ } _%>
@@ -117,6 +118,7 @@ export function registerScreensAndStartApp () {
   Navigation.registerComponentWithRedux(DRAWER_CONTENT, () => DrawerContent, Provider, store)
   Navigation.registerComponentWithRedux(LAUNCH_SCREEN, () => LaunchScreen, Provider, store)
   Navigation.registerComponentWithRedux(ENTITIES_SCREEN, () => EntitiesScreen, Provider, store)
+  Navigation.registerComponent(STORYBOOK_SCREEN, () => StorybookScreen)
   <%_ if (props.websockets) { _%>
   Navigation.registerComponentWithRedux(CHAT_SCREEN, () => ChatScreen, Provider, store)
   <%_ } _%>
@@ -239,6 +241,21 @@ export const entitiesScreen = () => Navigation.push('center', {
     }
   }
 })
+export const storybookScreen = () => {
+  Navigation.push('center', {
+    component: {
+      name: STORYBOOK_SCREEN,
+      options: {
+        topBar: {
+          title: {
+            text: 'Storybook',
+            color: Colors.snow
+          }
+        }
+      }
+    }
+  })
+}
 <%_ if (props.websockets) { _%>
 export const chatScreen = () => Navigation.push('center', {
   component: {
