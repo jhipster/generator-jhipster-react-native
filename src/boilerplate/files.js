@@ -8,6 +8,7 @@ module.exports = async function (context, props, jhipsterConfig) {
   const { filesystem, ignite, print, strings } = context
   const { camelCase, upperFirst } = strings
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
+  const { patchNeedle } = require('../lib/patch-needle')
 
   // this is needed because the "upgrade "command is run from within an app, while the "new" command is run from one level deeper
   // if the ignite/ignite.json file exists (created below), it's an upgrade, otherwise it's a new app
@@ -183,7 +184,7 @@ module.exports = async function (context, props, jhipsterConfig) {
       })
       const keycloakConfigFile = 'src/main/docker/realm-config/jhipster-realm.json'
       if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`)) {
-        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`,
+        await patchNeedle(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`,
           {
             replace: `"dev.localhost.ionic:*"`,
             insert: `"dev.localhost.ionic:*", "${props.name.toLowerCase()}://*"`
@@ -192,7 +193,7 @@ module.exports = async function (context, props, jhipsterConfig) {
       }
       const securityConfigFile = 'SecurityConfiguration'
       if (isMonolith && fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
-        await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
+        await patchNeedle(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
           {
             replace: '.antMatchers("/api/**").authenticated()',
             insert: '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
@@ -203,7 +204,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     const androidAuthRedirectContent = `        manifestPlaceholders = [
           appAuthRedirectScheme: '${props.name.toLowerCase()}'
         ]`
-    await ignite.patchInFile('android/app/build.gradle', {
+    await patchNeedle(context, 'android/app/build.gradle', {
       before: 'applicationId',
       insert: androidAuthRedirectContent,
       match: androidAuthRedirectContent
@@ -264,7 +265,7 @@ end
     spinner.text = '▸ setting up websocket code'
     spinner.start()
     // import ChatRedux in redux/index.js
-    await ignite.patchInFile('app/shared/reducers/index.js', {
+    await patchNeedle(context, 'app/shared/reducers/index.js', {
       before: 'ignite-jhipster-redux-store-import-needle',
       insert: `  chat: require('../../modules/chat/chat.reducer').reducer,`,
       match: `  chat: require('../../modules/chat/chat.reducer').reducer,`
@@ -274,7 +275,7 @@ end
     // wire ChatScreen in NavigationRouter
     // const navigationRouterFilePath = `${process.cwd()}/app/navigation/navigation-router.js`
     // const navigationImportEdit = `import ChatScreen from '../modules/chat/chat-screen'`
-    // await ignite.patchInFile(navigationRouterFilePath, {
+    // await patchNeedle(context, navigationRouterFilePath, {
     //   before: 'ignite-jhipster-navigation-import-needle',
     //   insert: navigationImportEdit,
     //   match: navigationImportEdit
@@ -282,7 +283,7 @@ end
     //
     // // add chat screen to navigation
     // const navigationScreen = `            <Scene key='chat' component={ChatScreen} title='Chat' back />`
-    // await ignite.patchInFile(navigationRouterFilePath, {
+    // await patchNeedle(context, navigationRouterFilePath, {
     //   before: 'ignite-jhipster-navigation-needle',
     //   insert: navigationScreen,
     //   match: navigationScreen
@@ -290,7 +291,7 @@ end
 
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`)) {
-      await ignite.patchInFile(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`, { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' })
+      await patchNeedle(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`, { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' })
     }
     spinner.stop()
   } else {

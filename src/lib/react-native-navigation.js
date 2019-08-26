@@ -1,3 +1,5 @@
+const { patchNeedle } = require('../lib/patch-needle')
+
 const patchReactNativeNavigation = async (context = {}, props) => {
   // REACT_NATIVE_NAVIGATION_VERSION
   const {
@@ -39,9 +41,8 @@ const patchReactNativeNavigation = async (context = {}, props) => {
   await updateAndroidFiles(context, props)
 }
 const updateIosFiles = async (context, props) => {
-  const { ignite } = context
   /*eslint-disable */
-  await ignite.patchInFile(`${process.cwd()}/ios/${props.name}/Info.plist`, {
+  await patchNeedle(context, `${process.cwd()}/ios/${props.name}/Info.plist`, {
     before: `<key>CFBundleDisplayName</key>`,
     insert: `
 <key>CFBundleURLTypes</key>
@@ -62,22 +63,21 @@ const updateIosFiles = async (context, props) => {
 }
 
 const updateAndroidFiles = async (context, props) => {
-  const { ignite } = context
   // settings.gradle
-  await ignite.patchInFile(`${process.cwd()}/android/settings.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/settings.gradle`, {
     after: `include ':app'`,
     insert: `include ':react-native-navigation'\nproject(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/lib/android/app/')`
   })
 
   // build.gradle
-  await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/build.gradle`, {
     before: `mavenLocal()`,
     insert: `        google()
         mavenCentral()
         maven { url 'https://jitpack.io' }`
   })
 
-  await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/build.gradle`, {
     after: `repositories {`,
     insert: `        google()
         mavenLocal()
@@ -85,23 +85,23 @@ const updateAndroidFiles = async (context, props) => {
   })
 
   // react-native-init uses a later version so this is not currently needed
-  // await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
+  // await patchNeedle(context, `${process.cwd()}/android/build.gradle`, {
   //   replace: `buildToolsVersion = "26.0.3"`,
   //   insert: `buildToolsVersion = "28.0.3"`
   // })
 
-  await ignite.patchInFile(`${process.cwd()}/android/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/build.gradle`, {
     replace: `minSdkVersion = 16`,
     insert: `minSdkVersion = 19`
   })
 
   // app/build.gradle
-  await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {
     after: `versionCode 1`,
     insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative57_5"`
   })
 
-  await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {
     before: `buildTypes {`,
     insert: `    compileOptions {
       sourceCompatibility JavaVersion.VERSION_1_8
@@ -109,7 +109,7 @@ const updateAndroidFiles = async (context, props) => {
     }`
   })
 
-  await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {
     before: `dependencies {`,
     insert: `configurations.all {
       resolutionStrategy.eachDependency { DependencyResolveDetails details ->
@@ -120,7 +120,7 @@ const updateAndroidFiles = async (context, props) => {
       }
   }`
   })
-  await ignite.patchInFile(`${process.cwd()}/android/app/build.gradle`, {
+  await patchNeedle(context, `${process.cwd()}/android/app/build.gradle`, {
     after: `dependencies {`,
     insert: `
     implementation "com.facebook.react:react-native:+"  // From node_modules
