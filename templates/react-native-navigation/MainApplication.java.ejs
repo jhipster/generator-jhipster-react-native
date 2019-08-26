@@ -35,11 +35,11 @@ public class MainApplication extends NavigationApplication {
   }
 
   protected List<ReactPackage> getPackages() {
-    // Add additional packages you require here
-    // No need to add RnnPackage and MainReactPackage
-    return Arrays.<ReactPackage>asList(
-      // eg. new VectorIconsPackage()
-    );
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    List<ReactPackage> packages = new PackageList(this).getPackages();
+    // Packages that cannot be autolinked yet can be added manually here, for example:
+    // packages.add(new MyReactNativePackage());
+    return packages;
   }
 
   @Override
