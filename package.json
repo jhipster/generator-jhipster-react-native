@@ -48,9 +48,9 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "10.0.2",
-    "eslint": "6.1.0",
-    "jest": "24.8.0",
+    "babel-eslint": "10.0.3",
+    "eslint": "6.2.2",
+    "jest": "24.9.0",
     "np": "5.0.3",
     "standard": "13.1.0",
     "tempy": "0.3.0"
@@ -58,10 +58,10 @@
   "dependencies": {
     "fs-extra": "8.1.0",
     "insight": "0.10.3",
-    "jhipster-core": "4.2.0",
+    "jhipster-core": "4.3.0",
     "pluralize": "8.0.0",
     "ramda": "0.26.1",
-    "rimraf": "2.6.3",
+    "rimraf": "3.0.0",
     "semver": "6.3.0"
   },
   "jest": {
