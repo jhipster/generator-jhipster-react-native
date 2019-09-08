@@ -32,6 +32,7 @@ const defaultOptions = {
   jsxBracketSameLine: false
 }
 const prettierTransform = async (file) => {
+  if (!file.target.endsWith('.js')) return
   /* resolve from the projects config */
   let options = await prettier.resolveConfig(file.target)
   if (!options || Object.keys(options).length === 0) {
