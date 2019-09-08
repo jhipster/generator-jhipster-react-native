@@ -5,8 +5,9 @@ const semver = require('semver')
  * The files portion of the entity generator
  */
 module.exports = async function (context, props, jhipsterConfig) {
-  const { filesystem, ignite, print, strings } = context
+  const { filesystem, print, strings } = context
   const { camelCase, upperFirst } = strings
+  const { copyBatch } = require('../lib/copy-batch')
   const spinner = print.spin(`using the ${print.colors.blue('JHipster')} boilerplate`).succeed()
   const { patchInFile } = require('../lib/patch-in-file')
 
@@ -169,7 +170,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     }
   ]
 
-  await ignite.copyBatch(context, templates, props, {
+  await copyBatch(context, templates, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`
   })
@@ -184,7 +185,7 @@ module.exports = async function (context, props, jhipsterConfig) {
       if (!isMonolith) {
         oauth2Files.push({ template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` })
       }
-      await ignite.copyBatch(context, oauth2Files, props, {
+      await copyBatch(context, oauth2Files, props, {
         quiet: true,
         directory: `${__dirname}/../../templates/jhipster/oauth2`
       })
@@ -213,7 +214,6 @@ module.exports = async function (context, props, jhipsterConfig) {
     await patchInFile(context, 'android/app/build.gradle', {
       before: 'applicationId',
       insert: androidAuthRedirectContent,
-      match: androidAuthRedirectContent
     })
   } else {
     // remove OAuth2 files if not enabled
@@ -230,7 +230,6 @@ module.exports = async function (context, props, jhipsterConfig) {
     await patchInFile(context, 'app/shared/reducers/index.js', {
       before: 'ignite-jhipster-redux-store-import-needle',
       insert: `  chat: require('../../modules/chat/chat.reducer').reducer,`,
-      match: `  chat: require('../../modules/chat/chat.reducer').reducer,`
     })
 
     // TODO CHAT SCREEN

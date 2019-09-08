@@ -254,6 +254,12 @@ async function install (context) {
     await importEntityJdl.run(context)
   }
 
+  // run prettier to pass lint on generation
+  spinner.text = `▸ running prettier on generated code`
+  spinner.start()
+  // install any missing dependencies
+  await system.run(`${useNpm ? 'npm' : 'yarn'} run prettier`, { stdio: 'ignore' })
+
   const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${print.colors.yellow(name)} in ${perfDuration}s`)
 

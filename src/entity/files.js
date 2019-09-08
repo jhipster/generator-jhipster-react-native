@@ -1,13 +1,15 @@
 /**
  * The files portion of the entity generator
  */
+
 module.exports = async function (generator, igniteContext) {
   const semver = require('semver')
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
   const { patchInFile } = require('../lib/patch-in-file')
   const { getEntityFormField, getRelationshipFormField } = require('../lib/entity-helpers')
-  const { ignite, strings, parameters, print } = igniteContext
+  const { copyBatch } = require('../lib/copy-batch')
+  const { strings, parameters, print } = igniteContext
   const { kebabCase, pascalCase, snakeCase, upperCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
   const name = generator.name
@@ -100,34 +102,33 @@ module.exports = async function (generator, igniteContext) {
 
   // REDUX AND SAGA SECTION
   let apiMethods = `
-  const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
-  const get${props.pluralName} = (options) => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}', options)
-  const create${props.name} = (${camelCase(props.name)}) => api.post('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
-  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
+  const get${props.name} = ${camelCase(props.name)}Id => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)
+  const get${props.pluralName} = options => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}', options)
+  const create${props.name} = ${camelCase(props.name)} => api.post('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const update${props.name} = ${camelCase(props.name)} => api.put('${props.microservicePath}api/${kebabCase(props.pluralName)}', ${camelCase(props.name)})
+  const delete${props.name} = ${camelCase(props.name)}Id => api.delete('${props.microservicePath}api/${kebabCase(props.pluralName)}/' + ${camelCase(props.name)}Id)`
 
-  let fixtureApiMethods = `
-  update${props.name}: (${camelCase(props.name)}) => {
+  let fixtureApiMethods = `  update${props.name}: ${camelCase(props.name)} => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/update-${props.name.toLowerCase()}.json')
+      data: require('../../shared/fixtures/update-${props.name.toLowerCase()}.json'),
     }
   },
   get${props.pluralName}: () => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get-${props.pluralName.toLowerCase()}.json')
+      data: require('../../shared/fixtures/get-${props.pluralName.toLowerCase()}.json'),
     }
   },
-  get${props.name}: (${camelCase(props.name)}Id) => {
+  get${props.name}: ${camelCase(props.name)}Id => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get-${props.name.toLowerCase()}.json')
+      data: require('../../shared/fixtures/get-${props.name.toLowerCase()}.json'),
     }
   },
-  delete${props.name}: (${camelCase(props.name)}Id) => {
+  delete${props.name}: ${camelCase(props.name)}Id => {
     return {
-      ok: true
+      ok: true,
     }
   },`
 
@@ -167,42 +168,35 @@ module.exports = async function (generator, igniteContext) {
   await patchInFile(igniteContext, apiFilePath, {
     before: 'ignite-jhipster-api-method-needle',
     insert: apiMethods,
-    match: apiMethods
   })
   await patchInFile(igniteContext, apiFilePath, {
     before: 'ignite-jhipster-api-export-needle',
     insert: apiMethodsExport,
-    match: apiMethodsExport
   })
   await patchInFile(igniteContext, fixtureApiFilePath, {
     before: 'ignite-jhipster-api-fixture-needle',
     insert: fixtureApiMethods,
-    match: fixtureApiMethods
   })
 
   // import redux in redux/index.js
   await patchInFile(igniteContext, reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
     insert: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`,
-    match: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`
   })
 
   // import saga/redux in sagas/index.js
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-import-needle',
     insert: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`,
-    match: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`
   })
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-method-import-needle',
     insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`,
-    match: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`
   })
 
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-connect-needle',
     insert: sagaConnections,
-    match: sagaConnections
   })
 
   const entityFiles = [
@@ -277,7 +271,7 @@ module.exports = async function (generator, igniteContext) {
     })
   }
 
-  await ignite.copyBatch(igniteContext, entityFiles, props, {
+  await copyBatch(igniteContext, entityFiles, props, {
     directory: `${__dirname}/../../templates/entity`
   })
 
@@ -286,19 +280,16 @@ module.exports = async function (generator, igniteContext) {
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
     insert: navigationImport,
-    match: navigationImport
   })
   const navigationImportDetail = `import ${props.name}EntityDetailScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-detail-screen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
     insert: navigationImportDetail,
-    match: navigationImportDetail
   })
   const navigationImportEdit = `import ${props.name}EntityEditScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-edit-screen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
-    insert: navigationImportEdit,
-    match: navigationImportEdit
+    insert: navigationImportEdit
   })
   const upperSnakeCaseName = upperCase(snakeCase(props.name + 'EntityScreen')).replace(/ /g, '_')
   const upperSnakeCaseNameEdit = upperCase(snakeCase(props.name + 'EntityEditScreen')).replace(/ /g, '_')
@@ -308,124 +299,116 @@ module.exports = async function (generator, igniteContext) {
   const navigationDeclaration = `export const ${upperSnakeCaseName} = 'nav.${props.name}EntityScreen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
-    insert: navigationDeclaration,
-    match: navigationDeclaration
+    insert: navigationDeclaration
   })
   const navigationDeclarationDetail = `export const ${upperSnakeCaseNameDetail} = 'nav.${props.name}EntityDetailScreen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
-    insert: navigationDeclarationDetail,
-    match: navigationDeclarationDetail
+    insert: navigationDeclarationDetail
   })
   const navigationDeclarationEdit = `export const ${upperSnakeCaseNameEdit} = 'nav.${props.name}EntityEditScreen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-declaration-needle',
-    insert: navigationDeclarationEdit,
-    match: navigationDeclarationEdit
+    insert: navigationDeclarationEdit
   })
 
   // add entity screens to navigation
   const navigationScreen = `  Navigation.registerComponentWithRedux(${upperSnakeCaseName}, () => ${props.name}EntityScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreen,
-    match: navigationScreen
+    insert: navigationScreen
   })
   const navigationScreenDetail = `  Navigation.registerComponentWithRedux(${upperSnakeCaseNameDetail}, () => ${props.name}EntityDetailScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreenDetail,
-    match: navigationScreenDetail
+    insert: navigationScreenDetail
   })
   const navigationScreenEdit = `  Navigation.registerComponentWithRedux(${upperSnakeCaseNameEdit}, () => ${props.name}EntityEditScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreenEdit,
-    match: navigationScreenEdit
+    insert: navigationScreenEdit
   })
 
   const navigationMethodMain = `
-export const ${camelCase(props.name)}EntityScreen = () => Navigation.push('center', {
-  component: {
-    name: ${upperSnakeCaseName},
-    options: {
-      topBar: {
-        title: {
-          text: '${props.pluralName}',
-          color: Colors.snow
+export const ${camelCase(props.name)}EntityScreen = () =>
+  Navigation.push('center', {
+    component: {
+      name: ${upperSnakeCaseName},
+      options: {
+        topBar: {
+          title: {
+            text: '${props.pluralName}',
+            color: Colors.snow,
+          },
+          rightButtons: [
+            {
+              id: 'createButton',
+              text: 'Create',
+              color: Colors.snow,
+            },
+          ],
         },
-        rightButtons: [
-          {
-            id: 'createButton',
-            text: 'Create',
-            color: Colors.snow
-          }
-        ]
-      }
-    }
-  }
-})`
+      },
+    },
+  })`
 
   const navigationMethodDetail = `
-export const ${camelCase(props.name)}EntityDetailScreen = (data) => Navigation.push('center', {
-  component: {
-    name: ${upperSnakeCaseNameDetail},
-    passProps: {
-      data
+export const ${camelCase(props.name)}EntityDetailScreen = data =>
+  Navigation.push('center', {
+    component: {
+      name: ${upperSnakeCaseNameDetail},
+      passProps: {
+        data,
+      },
+      options: {
+        topBar: {
+          title: {
+            text: '${props.pluralName}',
+            color: Colors.snow,
+          },
+        },
+      },
     },
-    options: {
-      topBar: {
-        title: {
-          text: '${props.pluralName}',
-          color: Colors.snow
-        }
-      }
-    }
-  }
-})`
+  })`
   const navigationMethodEdit = `
-export const ${camelCase(props.name)}EntityEditScreen = (data) => Navigation.push('center', {
-  component: {
-    name: ${upperSnakeCaseNameEdit},
-    passProps: {
-      data
+export const ${camelCase(props.name)}EntityEditScreen = data =>
+  Navigation.push('center', {
+    component: {
+      name: ${upperSnakeCaseNameEdit},
+      passProps: {
+        data,
+      },
+      options: {
+        topBar: {
+          title: {
+            text: '${props.pluralName}',
+            color: Colors.snow,
+          },
+        },
+      },
     },
-    options: {
-      topBar: {
-        title: {
-          text: '${props.pluralName}',
-          color: Colors.snow
-        }
-      }
-    }
-  }
-})`
+  })`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-method-needle',
-    insert: navigationMethodMain,
-    match: navigationMethodMain
+    insert: navigationMethodMain
   })
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-method-needle',
-    insert: navigationMethodEdit,
-    match: navigationMethodEdit
+    insert: navigationMethodEdit
   })
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-method-needle',
-    insert: navigationMethodDetail,
-    match: navigationMethodDetail
+    insert: navigationMethodDetail
   })
   // add entity to entities screen
-  const entityScreenButton = `        <RoundedButton text='${props.name}' onPress={${camelCase(props.name)}EntityScreen} testID='${camelCase(props.name)}EntityScreenButton' />`
+  const entityScreenButton = `        <RoundedButton text="${props.name}" onPress={${camelCase(props.name)}EntityScreen} testID="${camelCase(props.name)}EntityScreenButton" />`
   await patchInFile(igniteContext, entityScreenFilePath, {
     before: 'ignite-jhipster-entity-screen-needle',
-    insert: entityScreenButton,
-    match: entityScreenButton
+    insert: entityScreenButton
   })
   const entityScreenImport = `  ${camelCase(props.name)}EntityScreen,`
   await patchInFile(igniteContext, entityScreenFilePath, {
     before: 'ignite-jhipster-entity-screen-import-needle',
-    insert: entityScreenImport,
-    match: entityScreenImport
+    insert: entityScreenImport
   })
 }

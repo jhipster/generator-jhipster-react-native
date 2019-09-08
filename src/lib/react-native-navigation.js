@@ -1,4 +1,5 @@
 const { patchInFile } = require('../lib/patch-in-file')
+const { copyBatch } = require('../lib/copy-batch')
 
 const patchReactNativeNavigation = async (context = {}, props) => {
   // REACT_NATIVE_NAVIGATION_VERSION
@@ -22,7 +23,7 @@ const patchReactNativeNavigation = async (context = {}, props) => {
   if (props.authType === 'oauth2') {
     navigationFiles.push({ template: 'AppDelegate.h.ejs', target: `ios/${props.name}/AppDelegate.h` })
   }
-  await ignite.copyBatch(context, navigationFiles, props, {
+  await copyBatch(context, navigationFiles, props, {
     quiet: true,
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
@@ -31,7 +32,7 @@ const patchReactNativeNavigation = async (context = {}, props) => {
   const rnnPatch = [
     { template: 'patches/tcomb-form-native+0.6.20.patch', target: `patches/tcomb-form-native+0.6.20.patch` }
   ]
-  await ignite.copyBatch(context, rnnPatch, props, {
+  await copyBatch(context, rnnPatch, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`
   })
