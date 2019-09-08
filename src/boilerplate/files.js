@@ -72,6 +72,8 @@ module.exports = async function (context, props, jhipsterConfig) {
   spinner.text = '▸ generating files'
   const templates = [
     { template: 'index.js.ejs', target: 'index.js' },
+    { template: '.eslintrc.js', target: '.eslintrc.js' },
+    { template: '.prettierrc.js', target: '.prettierrc.js' },
     { template: 'README.md', target: 'README.md' },
     { template: 'ignite.json.ejs', target: 'ignite/ignite.json' },
     { template: '.editorconfig', target: '.editorconfig' },

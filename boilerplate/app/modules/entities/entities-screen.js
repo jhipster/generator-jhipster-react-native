@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, Text } from 'react-native'
 import { connect } from 'react-redux'
 // Styles
-/*eslint-disable */
+/*eslint-disable no-unused-vars*/
 import RoundedButton from '../../shared/components/rounded-button/rounded-button'
 import {
   // ignite-jhipster-entity-screen-import-needle
