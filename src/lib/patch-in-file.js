@@ -1,5 +1,5 @@
-
-const patchNeedle = async (context, filePath, params) => {
+// wrapped version of ignite's patchInFile method printing debug messages and preventing errors from exiting
+const patchInFile = async (context, filePath, params) => {
   const { ignite, print } = context
   try {
     await ignite.patchInFile(filePath, params)
@@ -9,5 +9,5 @@ const patchNeedle = async (context, filePath, params) => {
 }
 
 module.exports = {
-  patchNeedle
+  patchInFile
 }
