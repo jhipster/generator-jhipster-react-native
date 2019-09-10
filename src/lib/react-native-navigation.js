@@ -4,7 +4,6 @@ const { copyBatch } = require('../lib/copy-batch')
 const patchReactNativeNavigation = async (context = {}, props) => {
   // REACT_NATIVE_NAVIGATION_VERSION
   const {
-    ignite,
     print
   } = context
 

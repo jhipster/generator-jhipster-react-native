@@ -167,36 +167,36 @@ module.exports = async function (generator, igniteContext) {
   // add methods to api
   await patchInFile(igniteContext, apiFilePath, {
     before: 'ignite-jhipster-api-method-needle',
-    insert: apiMethods,
+    insert: apiMethods
   })
   await patchInFile(igniteContext, apiFilePath, {
     before: 'ignite-jhipster-api-export-needle',
-    insert: apiMethodsExport,
+    insert: apiMethodsExport
   })
   await patchInFile(igniteContext, fixtureApiFilePath, {
     before: 'ignite-jhipster-api-fixture-needle',
-    insert: fixtureApiMethods,
+    insert: fixtureApiMethods
   })
 
   // import redux in redux/index.js
   await patchInFile(igniteContext, reduxIndexFilePath, {
     before: 'ignite-jhipster-redux-store-import-needle',
-    insert: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`,
+    insert: `  ${camelCase(props.pluralName)}: require('../../modules/entities/${props.kebabName}/${props.kebabName}.reducer').reducer,`
   })
 
   // import saga/redux in sagas/index.js
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-import-needle',
-    insert: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`,
+    insert: `import { ${props.name}Types } from '../../modules/entities/${props.kebabName}/${props.kebabName}.reducer'`
   })
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-method-import-needle',
-    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`,
+    insert: `import { get${props.name}, get${props.pluralName}, update${props.name}, delete${props.name}${props.searchEngine ? `, search${props.pluralName}` : ''} } from '../../modules/entities/${props.kebabName}/${props.kebabName}.sagas'`
   })
 
   await patchInFile(igniteContext, sagaIndexFilePath, {
     before: 'ignite-jhipster-saga-redux-connect-needle',
-    insert: sagaConnections,
+    insert: sagaConnections
   })
 
   const entityFiles = [
@@ -279,12 +279,12 @@ module.exports = async function (generator, igniteContext) {
   const navigationImport = `import ${props.name}EntityScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-screen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
-    insert: navigationImport,
+    insert: navigationImport
   })
   const navigationImportDetail = `import ${props.name}EntityDetailScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-detail-screen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-import-needle',
-    insert: navigationImportDetail,
+    insert: navigationImportDetail
   })
   const navigationImportEdit = `import ${props.name}EntityEditScreen from '../modules/entities/${props.kebabName}/${props.kebabName}-entity-edit-screen'`
   await patchInFile(igniteContext, navigationRouterFilePath, {

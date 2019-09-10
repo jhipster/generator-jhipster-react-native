@@ -115,7 +115,7 @@ async function install (context) {
   }
 
   props.skipGit = parameters.options['skip-git']
-  props.skipLint = parameters.options['skip-lint']
+  props.skipCommitHook = parameters.options['skip-commit-hook']
   props.useNpm = useNpm
 
   // very hacky but correctly handles both strings and booleans and converts to boolean

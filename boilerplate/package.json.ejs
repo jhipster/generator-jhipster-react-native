@@ -15,7 +15,9 @@
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
     "lint": "eslint app test index.js --ext .js",
     "prettier": "prettier --write \"app/**/*.js\" \"test/**/*.js\" index.js",
+    <%_ if (!props.skipCommitHook) { _%>
     "precommit": "lint-staged",
+    <%_ } _%>
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -58,7 +60,9 @@
     "ignite-jhipster": "<%= props.packageVersion %>",
     "jest": "24.9.0",
     "@react-native-community/eslint-config": "0.0.5",
+    <%_ if (!props.skipCommitHook) { _%>
     "lint-staged": "9.2.3",
+    <%_ } _%>
     <%_ if (props.authType === 'oauth2') { _%>
     "react-native-app-auth": "4.4.0",
     <%_ } _%>
@@ -75,6 +79,7 @@
     "patch-package": "6.1.2",
     "rimraf": "3.0.0"
   },
+  <%_ if (!props.skipCommitHook) { _%>
   "lint-staged": {
     "{,app/**/,test/**/}*.{js}": [
       "prettier --write",
@@ -82,6 +87,7 @@
       "git add"
     ]
   },
+  <%_ } _%>
   "jest": {
     "testMatch": [
       "**/test/**/*.js",

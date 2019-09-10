@@ -44,7 +44,7 @@
       "afterAll"
     ],
     "ignore": [
-      "boilerplate/e2e"
+      "boilerplate/"
     ]
   },
   "devDependencies": {

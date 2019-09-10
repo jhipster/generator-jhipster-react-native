@@ -10,7 +10,7 @@ You can pass flags for each of the options.
 | `--jdl`                  | app.jdl                        | Pass a JDL file in place of an app directory   |
 | `--detox`                | true, false                    | Enables Detox E2E tests                        |
 | `--skip-git`             |                                | Skips git init                                 |
-| `--skip-lint`            |                                | Skips `standard` initialization (linting)      |
+| `--skip-commit-hook`     |                                | Skips `lint-staged` initialization             |
 | `--react-native-version` | 0.60.0                         | Install specific React Native version          |
 | `--yarn                ` |                                | Uses yarn in place of npm when generating      |
 
