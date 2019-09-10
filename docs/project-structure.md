@@ -104,4 +104,4 @@ Contains sample Jest snapshot and unit tests for your application.
 
 ### storybook
 
-[Storybook](https://storybook.js.org/) has been setup to show off components in the different states. Storybook is a great way to develop and test components outside of use in your app.  Install your app on a device or emulator, exit the React Native packager, and run run `npm run storybook` to get started. All stores are contained in the `*.story.js` files along side the components.
+[Storybook](https://storybook.js.org/) has been setup to show off components in the different states. Storybook is a great way to develop and test components outside of use in your app.  View the Storybook when running on an emulator or local device via the "Storybook" option in the Side Menu. All stores are contained in the `*.story.js` files along side the components.

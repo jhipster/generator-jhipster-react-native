@@ -3,37 +3,34 @@
 
 [![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
 
-A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, E2E tests, and more.  
+A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.  
 
-For a quick tour, check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en), the [YouTube Demo](https://youtu.be/o46CwsJlL-I) or the [blog post](https://jruddell.com/blog/ignite-jhipster).
-
-Uses the following libraries:
- - [Ignite](https://github.com/infinitered/ignite) - Infinite Red's React Native app generator 
- - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
- - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html) - State management
- - [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons) - Icons from Ionicons, Font Awesome, and more
- - [Detox](https://github.com/wix/Detox) - End-to-End Testing and Automation Framework for Mobile Apps
- 
+Check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en) or the [presentation at JHipster Conf on Youtube](https://youtu.be/QZMAH2q6ViI).
 
 ## Docs
- - [Getting Started](readme.md#getting-started)
- - [App Config Variables](docs/config-variables.md)
- - [Generators and Plugins](docs/generators-and-plugins.md)
+ - [Getting Started](README.md#getting-started)
+ - [Generators](docs/generators.md)
  - [Project Structure](docs/project-structure.md)
- - [OAuth2 OIDC Login](docs/oauth2-oidc.md)
- - [Websockets](docs/websockets.md)
- - [Upgrading Your Ignite JHipster App](docs/upgrading.md)
+ - JHipster Integrations
+   - [OAuth2 OIDC Login](docs/oauth2-oidc.md)
+   - [Websockets](docs/websockets.md)
+ - React Native Integrations
+   - [Storybook](docs/storybook.md) - Develop UI components in isolation
+   - [Fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
+   - [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
+   - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
+   - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html) - State management
  - [Advanced Usage](docs/advanced-usage.md)
 
 ## Getting Started
 #### Requirements
  - Node v8+
     - Verify version with `node -v`
- - [React Native setup](https://facebook.github.io/react-native/docs/getting-started.html#content)
+ - [React Native CLI setup](https://facebook.github.io/react-native/docs/getting-started.html#content)
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
- - OAuth2 iOS apps require [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) to be installed
+ - iOS apps require [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) to be installed
  - Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
 To generate an app, run the following command:
@@ -43,9 +40,18 @@ ignite new SampleApp --boilerplate ignite-jhipster
 
 Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for both iOS and Android).
 
-After generating, you can use the [entity generator, JDL importer, and other commands](docs/generators-and-plugins.md).
+After generating, you can use the [entity generator, JDL importer, and other commands](docs/generators.md).
 
-**Note:** When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
+#### Configuration
+
+`app/config/app-config.js` contains several important variables:
+ - `apiUrl`: Your JHipster app's API url
+ - `appUrlScheme`: Your app's URL scheme for deep-linking, this is also configured for iOS (Info.plist) and Android (AndroidManifest.xml) separately.
+ - `uaaBaseUrl`: (UAA only) If you use a `uaaBasePath` other than `uaa`, configure this variable
+
+**Notes for Android:** 
+ - When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
+ - When building the Android app manually, prepend `app:` to the command (due to React Native Navigation).  For example: `./gradlew app:bundleRelease`
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster

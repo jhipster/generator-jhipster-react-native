@@ -7,6 +7,7 @@ You can pass flags for each of the options.
 | Flag                     | Possible Values                | Action                                         |
 | ------------------------ | ------------------------------ | ---------------------------------------------- |
 | `--jh-dir`               | backend, ../backend            | The JHipster app's directory                   |
+| `--jdl`                  | app.jdl                        | Pass a JDL file in place of an app directory   |
 | `--detox`                | true, false                    | Enables Detox E2E tests                        |
 | `--skip-git`             |                                | Skips git init                                 |
 | `--skip-lint`            |                                | Skips `standard` initialization (linting)      |
@@ -20,3 +21,5 @@ You can pass a JDL file containing an application config (and optionally entitie
     ignite new JhipsterApp -b --jdl=jwt-mono.jdl --detox=true --skip-git
 
 This will generate the full React Native project and import any entities present in the JDL.
+
+**Note:** Ignite JHipster only supports JDL files containing a single application config.
