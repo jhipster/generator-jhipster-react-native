@@ -2,6 +2,11 @@
 
 For a full walkthrough of generating and configuring OAuth2 with Ignite JHipster, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [Youtube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
 
+### Native iOS Library Setup
+
+Cocoapods is the usual choice for setting up the native iOS libraries needed for OAuth2 support.  If you didn't have Cocoapods installed before generating your app, [install it](https://guides.cocoapods.org/using/getting-started.html), then run `pod install` from the `ios` directory.  Note that you open the `xcworkspace` file rather than the `xcproject` file when using Cocoapods.  
+    
+If you don't want to use Cocoapods, follow one of the [other setup instructions for react-native-app-auth](https://github.com/FormidableLabs/react-native-app-auth#ios-setup) and delete the `ios/Podfile` file.
 
 ### Backend Generated Files
 Ignite JHipster generates several files in your JHipster backend's folder.  See the changes in your JHipster app.
