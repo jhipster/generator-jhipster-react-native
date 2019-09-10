@@ -7,7 +7,7 @@
 
 **Step 2:** cd to the cloned repo:
 
-**Step 3:** Install the Application with `<%= useNpm ? 'npm' : 'yarn' %> install`
+**Step 3:** Install the Application with `<%= props.useNpm ? 'npm' : 'yarn' %> install`
 
 
 ## :arrow_forward: How to Run App
