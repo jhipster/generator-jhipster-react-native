@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native'
 import { Colors, Metrics } from '../../shared/themes'
 
 export default StyleSheet.create({
+  contentContainer: {
+    justifyContent: 'center',
+  },
   container: {
     paddingTop: 70,
     backgroundColor: Colors.jhipsterBlue

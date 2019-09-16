@@ -8,6 +8,9 @@ export default StyleSheet.create({
     flex: 1,
     padding: 20
   },
+  centerText: {
+    textAlign: 'center',
+  },
   buttonText: {
     fontSize: 18,
     color: 'white',

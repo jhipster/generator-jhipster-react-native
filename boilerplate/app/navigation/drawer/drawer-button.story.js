@@ -1,15 +1,15 @@
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { storiesOf } from '@storybook/react-native'
 
 import DrawerButton from '../../../app/navigation/drawer/drawer-button'
 
-storiesOf('DrawerButton', module)
-  .add('Default', () => (
-    <View style={{ backgroundColor: 'black' }}>
-      <DrawerButton
-        text='Drawer Button'
-        onPress={() => { }}
-      />
-    </View>
-  ))
+const styles = StyleSheet.create({
+  container: { backgroundColor: 'black' },
+})
+
+storiesOf('DrawerButton', module).add('Default', () => (
+  <View style={styles.container}>
+    <DrawerButton text="Drawer Button" onPress={() => {}} />
+  </View>
+))

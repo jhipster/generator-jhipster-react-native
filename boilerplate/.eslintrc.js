@@ -5,7 +5,6 @@ module.exports = {
     semi: [2, 'never'],
     quotes: [2, 'single', { avoidEscape: true }],
     //todo remove the next two rules
-    'react-native/no-inline-styles': 0,
     'react/no-string-refs': 0,
   },
   globals: {
