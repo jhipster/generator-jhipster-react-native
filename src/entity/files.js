@@ -7,6 +7,7 @@ module.exports = async function (generator, igniteContext) {
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
   const { patchInFile } = require('../lib/patch-in-file')
+  const { prettierTransformBatch } = require('../lib/prettier-transform')
   const { getEntityFormField, getRelationshipFormField } = require('../lib/entity-helpers')
   const { copyBatch } = require('../lib/copy-batch')
   const { strings, parameters, print } = igniteContext
@@ -411,4 +412,14 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
     before: 'ignite-jhipster-entity-screen-import-needle',
     insert: entityScreenImport
   })
+
+  // todo run prettier on
+  const filesToRunPrettierOn = [
+    { target: 'app/shared/services/api.js' },
+    { target: 'app/shared/sagas/index.js' },
+    { target: 'app/shared/reducers/index.js' },
+    { target: 'app/navigation/layouts.js' },
+    { target: 'app/modules/entities/entities-screen.js' },
+  ]
+  await prettierTransformBatch(filesToRunPrettierOn)
 }
