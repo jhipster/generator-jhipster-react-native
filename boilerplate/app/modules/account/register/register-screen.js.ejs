@@ -29,17 +29,17 @@ class RegisterScreen extends React.Component {
           login: {
             label: 'Username',
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('password').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('password').refs.input.focus()
           },
           password: {
             secureTextEntry: true,
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('confirmPassword').refs.input.focus()
           },
           confirmPassword: {
             secureTextEntry: true,
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('email').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('email').refs.input.focus()
           },
           email: {
             returnKeyType: 'done',
@@ -61,7 +61,7 @@ class RegisterScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue()
+    const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.password !== value.confirmPassword) {
         Alert.alert('Error', 'Passwords do not match', [{ text: 'OK' }])
@@ -97,7 +97,9 @@ class RegisterScreen extends React.Component {
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container}>
           <Form
-            ref='form'
+            ref={c => {
+              this.form = c
+            }}
             type={this.state.accountModel}
             options={this.state.options}
             value={this.state.accountValue}

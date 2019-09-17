@@ -4,8 +4,6 @@ module.exports = {
   rules: {
     semi: [2, 'never'],
     quotes: [2, 'single', { avoidEscape: true }],
-    //todo remove the next two rules
-    'react/no-string-refs': 0,
   },
   globals: {
     describe: 'readonly',

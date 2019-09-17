@@ -36,7 +36,7 @@ class ForgotPasswordScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue()
+    const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
       this.props.resetPassword(value.email)
     }
@@ -70,7 +70,9 @@ class ForgotPasswordScreen extends React.Component {
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container}>
           <Form
-            ref='form'
+            ref={c => {
+              this.form = c
+            }}
             type={this.state.formModel}
             options={this.state.formOptions}
             value={this.state.formValue}

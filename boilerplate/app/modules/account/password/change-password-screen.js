@@ -25,13 +25,13 @@ class ChangePasswordScreen extends React.Component {
             secureTextEntry: true,
             testID: 'currentPasswordInput',
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('newPassword').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('newPassword').refs.input.focus()
           },
           newPassword: {
             secureTextEntry: true,
             testID: 'newPasswordInput',
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('confirmPassword').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('confirmPassword').refs.input.focus()
           },
           confirmPassword: {
             secureTextEntry: true,
@@ -52,7 +52,7 @@ class ChangePasswordScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue()
+    const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.newPassword !== value.confirmPassword) {
         Alert.alert('Error', 'Passwords do not match', [{ text: 'OK' }])
@@ -87,7 +87,9 @@ class ChangePasswordScreen extends React.Component {
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container}>
           <Form
-            ref='form'
+            ref={c => {
+              this.form = c
+            }}
             type={this.state.formModel}
             options={this.state.formOptions}
             value={this.state.formValue}

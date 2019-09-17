@@ -76,7 +76,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             <%_ } _%>
             <%_ if (nextFieldName) { _%>
             returnKeyType: 'next',
-            onSubmitEditing: () => this.refs.form.getComponent('<%= nextFieldName %>').refs.input.focus(),
+            onSubmitEditing: () => this.form.getComponent('<%= nextFieldName %>').refs.input.focus(),
             <%_ } else if (props.entityConfig.ownerSideRelationships.length === 0) { _%>
             returnKeyType: 'done',
             onSubmitEditing: () => this.submitForm(),
@@ -213,7 +213,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       requesting: true
     })
     // call getValue() to get the values of the form
-    const <%= camelCase(props.name) %> = this.refs.form.getValue()
+    const <%= camelCase(props.name) %> = this.form.getValue()
     if (<%= camelCase(props.name) %>) { // if validation fails, value will be null
       this.props.update<%= props.name %>(this.formValueToEntity(<%= camelCase(props.name) %>))
     }
@@ -230,7 +230,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container} testID='entityScrollView'>
           <Form
-            ref='form'
+            ref={c => {
+              this.form = c
+            }}
             type={this.state.formModel}
             options={this.state.formOptions}
             value={this.state.formValue}

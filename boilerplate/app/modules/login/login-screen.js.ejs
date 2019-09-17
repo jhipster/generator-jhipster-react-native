@@ -69,7 +69,9 @@ class LoginScreen extends React.Component {
           <View style={styles.row}>
             <Text style={styles.rowLabel}>Username</Text>
             <TextInput
-              ref='username'
+              ref={c => {
+                this.usernameInput = c
+              }}
               testID='loginScreenUsername'
               style={textInputStyle}
               value={username}
@@ -80,14 +82,16 @@ class LoginScreen extends React.Component {
               autoCorrect={false}
               onChangeText={this.handleChangeUsername}
               underlineColorAndroid='transparent'
-              onSubmitEditing={() => this.refs.password.focus()}
+              onSubmitEditing={() => this.passwordInput.focus()}
               placeholder='Username' />
           </View>
 
           <View style={styles.row}>
             <Text style={styles.rowLabel}>Password</Text>
             <TextInput
-              ref='password'
+              ref={c => {
+                this.passwordInput = c
+              }}
               testID='loginScreenPassword'
               style={textInputStyle}
               value={password}

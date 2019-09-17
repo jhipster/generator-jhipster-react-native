@@ -28,12 +28,12 @@ class SettingsScreen extends React.Component {
           firstName: {
             returnKeyType: 'next',
             testID: 'firstNameInput',
-            onSubmitEditing: () => this.refs.form.getComponent('lastName').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('lastName').refs.input.focus()
           },
           lastName: {
             returnKeyType: 'next',
             testID: 'lastNameInput',
-            onSubmitEditing: () => this.refs.form.getComponent('email').refs.input.focus()
+            onSubmitEditing: () => this.form.getComponent('email').refs.input.focus()
           },
           login: {
             hidden: true
@@ -62,7 +62,7 @@ class SettingsScreen extends React.Component {
       success: false
     })
     // call getValue() to get the values of the form
-    const value = this.refs.form.getValue()
+    const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
       this.props.updateAccount(value)
     }
@@ -96,7 +96,9 @@ class SettingsScreen extends React.Component {
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container}>
           <Form
-            ref='form'
+            ref={c => {
+              this.form = c
+            }}
             type={this.state.accountModel}
             options={this.state.options}
             value={this.state.accountValue}
