@@ -83,7 +83,9 @@ export default {
     } else {
       return {
         ok: false,
-        data: 'Invalid email'
+        data: {
+          title: 'Invalid email',
+        }
       }
     }
   },

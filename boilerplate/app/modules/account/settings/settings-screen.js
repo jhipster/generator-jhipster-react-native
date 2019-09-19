@@ -51,16 +51,12 @@ class SettingsScreen extends React.Component {
           }
         }
       },
-      success: false
     }
     this.submitUpdate = this.submitUpdate.bind(this)
     this.accountChange = this.accountChange.bind(this)
   }
 
   submitUpdate () {
-    this.setState({
-      success: false
-    })
     // call getValue() to get the values of the form
     const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
@@ -68,17 +64,11 @@ class SettingsScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    // Did the update attempt complete?
-    if (!newProps.updating) {
-      if (newProps.error) {
-        if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Something went wrong while saving the settings', [{ text: 'OK' }])
-        }
-      } else if (!this.state.success) {
-        this.setState({
-          success: true
-        })
+  componentDidUpdate(prevProps) {
+    if (prevProps.updating && !this.props.updating) {
+      if (this.props.error) {
+        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
+      } else {
         Alert.alert('Success', 'Settings updated', [{ text: 'OK' }])
         this.props.getAccount()
       }

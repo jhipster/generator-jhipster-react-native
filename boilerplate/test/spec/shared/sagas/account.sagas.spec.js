@@ -22,7 +22,7 @@ test('get failure path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(AccountActions.accountFailure('WRONG')))
+  expect(step(response)).toEqual(put(AccountActions.accountFailure('Failed to get account')))
 })
 
 test('update success path', () => {
@@ -40,5 +40,5 @@ test('update failure path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(AccountActions.accountUpdateFailure('WRONG')))
+  expect(step(response)).toEqual(put(AccountActions.accountUpdateFailure('Failed to update account')))
 })

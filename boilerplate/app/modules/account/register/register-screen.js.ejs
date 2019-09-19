@@ -50,16 +50,12 @@ class RegisterScreen extends React.Component {
           }
         }
       },
-      success: false
     }
     this.submitUpdate = this.submitUpdate.bind(this)
     this.accountChange = this.accountChange.bind(this)
   }
 
   submitUpdate () {
-    this.setState({
-      success: false
-    })
     // call getValue() to get the values of the form
     const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
@@ -71,15 +67,11 @@ class RegisterScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    // Did the register attempt complete?
-    if (!newProps.fetching) {
-      if (newProps.error) {
-        Alert.alert('Error', (newProps.error && newProps.error.title) ? newProps.error.title : '', [{ text: 'OK' }])
+  componentDidUpdate(prevProps) {
+    if (prevProps.fetching && !this.props.fetching) {
+      if (this.props.error) {
+        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       } else {
-        this.setState({
-          success: true
-        })
         Navigation.popToRoot(this.props.componentId)
         Alert.alert('Registration Successful', 'Please check your email', [{ text: 'OK' }])
       }

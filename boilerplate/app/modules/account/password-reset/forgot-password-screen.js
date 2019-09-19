@@ -25,16 +25,12 @@ class ForgotPasswordScreen extends React.Component {
           onSubmitEditing: () => this.submitForm()
         }
       },
-      success: false
     }
     this.submitForm = this.submitForm.bind(this)
     this.formChange = this.formChange.bind(this)
   }
 
   submitForm () {
-    this.setState({
-      success: false
-    })
     // call getValue() to get the values of the form
     const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
@@ -42,17 +38,11 @@ class ForgotPasswordScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    // Did the update attempt complete?
-    if (!newProps.fetching) {
-      if (newProps.error) {
-        if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Something when wrong resetting your password', [{ text: 'OK' }])
-        }
+  componentDidUpdate(prevProps) {
+    if (prevProps.fetching && !this.props.fetching) {
+      if (this.props.error) {
+        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       } else {
-        this.setState({
-          success: true
-        })
         Alert.alert('Success', 'Password reset email sent', [{ text: 'OK' }])
         Navigation.popToRoot(this.props.componentId)
       }

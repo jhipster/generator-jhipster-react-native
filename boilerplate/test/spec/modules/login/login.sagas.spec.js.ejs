@@ -74,7 +74,7 @@ test('login failure path', () => {
 
   // set response.ok to false as if the oauth issuer is down
   response.ok = false
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Could not connect to OAuth2 Provider')))
   <%_} else { _%>
   <%_ if (props.authType === 'session') { _%>
     <%_ if (props.oldSessionAuthParameters) { _%>
@@ -95,7 +95,7 @@ test('login failure path', () => {
   // Attempt to login and fail
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   // Send the error
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('WRONG')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad Credentials')))
   <%_ } _%>
 })
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>

@@ -11,6 +11,6 @@ export function * forgotPassword (api, { email }) {
     yield put(ForgotPasswordActions.forgotPasswordSuccess(response.data))
   } else {
     console.tron.log('ForgotPassword - FAIL')
-    yield put(ForgotPasswordActions.forgotPasswordFailure('WRONG'))
+    yield put(ForgotPasswordActions.forgotPasswordFailure((response.data && response.data.title) || 'Something when wrong resetting your password'))
   }
 }

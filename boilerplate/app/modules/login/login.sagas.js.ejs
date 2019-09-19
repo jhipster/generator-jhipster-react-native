@@ -46,10 +46,11 @@ export function * login (api) {
       yield put({ type: 'RELOGIN_OK' })
     } catch (error) {
       console.tron.log(error)
-      yield put(LoginActions.loginFailure('WRONG'))
+      <%_ // todo get expected error format _%>
+      yield put(LoginActions.loginFailure('Login failed'))
     }
   } else {
-    yield put(LoginActions.loginFailure('WRONG'))
+    yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Could not connect to OAuth2 Provider'))
   }
 }
 
@@ -87,7 +88,7 @@ export function * login (api, { username, password }) {
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
   } else {
-    yield put(LoginActions.loginFailure('WRONG'))
+    yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad Credentials'))
   }
 }
 <%_ } _%>

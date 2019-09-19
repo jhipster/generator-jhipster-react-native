@@ -41,16 +41,12 @@ class ChangePasswordScreen extends React.Component {
           }
         }
       },
-      success: false
     }
     this.submitForm = this.submitForm.bind(this)
     this.formChange = this.formChange.bind(this)
   }
 
   submitForm () {
-    this.setState({
-      success: false
-    })
     // call getValue() to get the values of the form
     const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
@@ -62,15 +58,11 @@ class ChangePasswordScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    // Did the changePassword attempt complete?
-    if (!newProps.fetching) {
-      if (newProps.error) {
-        Alert.alert('Error', newProps.error, [{ text: 'OK' }])
+  componentDidUpdate(prevProps) {
+    if (prevProps.fetching && !this.props.fetching) {
+      if (this.props.error) {
+        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       } else {
-        this.setState({
-          success: true
-        })
         Alert.alert('Success', 'Password changed', [{ text: 'OK' }])
       }
     }

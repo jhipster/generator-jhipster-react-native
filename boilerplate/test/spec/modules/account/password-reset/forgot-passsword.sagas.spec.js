@@ -21,5 +21,5 @@ test('forgot password failure path', () => {
   // Step 1: Hit the api
   expect(step(response)).toEqual(call(FixtureAPI.forgotPassword, 'not-valid@gmail.com'))
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(ForgotPasswordActions.forgotPasswordFailure('WRONG')))
+  expect(step(response)).toEqual(put(ForgotPasswordActions.forgotPasswordFailure('Something when wrong resetting your password')))
 })

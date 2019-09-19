@@ -26,14 +26,12 @@ class LoginScreen extends React.Component {
     }
   }
 
-  componentWillReceiveProps (newProps) {
-    // Did the login attempt complete?
-    if (!newProps.fetching) {
-      if (newProps.error) {
-        if (newProps.error === 'WRONG') {
-          Alert.alert('Error', 'Invalid login', [{ text: 'OK' }])
-        }
-      } else if (newProps.account) {
+  componentDidUpdate(prevProps) {
+    if (!this.props.fetching) {
+      if (prevProps.fetching && this.props.error) {
+        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
+      }
+      if (!prevProps.account && this.props.account) {
         Navigation.dismissModal(this.props.componentId)
       }
     }

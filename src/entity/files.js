@@ -419,7 +419,7 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
     { target: 'app/shared/sagas/index.js' },
     { target: 'app/shared/reducers/index.js' },
     { target: 'app/navigation/layouts.js' },
-    { target: 'app/modules/entities/entities-screen.js' },
+    { target: 'app/modules/entities/entities-screen.js' }
   ]
   await prettierTransformBatch(filesToRunPrettierOn)
 }

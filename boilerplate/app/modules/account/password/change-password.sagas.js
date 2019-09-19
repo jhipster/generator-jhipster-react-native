@@ -13,6 +13,6 @@ export function * changePassword (api, { currentPassword, newPassword }) {
     yield put(ChangePasswordActions.changePasswordSuccess())
   } else {
     console.tron.log('ChangePassword - FAIL')
-    yield put(ChangePasswordActions.changePasswordFailure('WRONG'))
+    yield put(ChangePasswordActions.changePasswordFailure((response.data && response.data.title) || 'Failed to change password'))
   }
 }

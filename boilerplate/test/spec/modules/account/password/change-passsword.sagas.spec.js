@@ -21,5 +21,5 @@ test('change password failure path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(ChangePasswordActions.changePasswordFailure('WRONG')))
+  expect(step(response)).toEqual(put(ChangePasswordActions.changePasswordFailure('Failed to change password')))
 })
