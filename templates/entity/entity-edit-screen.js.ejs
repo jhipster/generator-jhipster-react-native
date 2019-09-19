@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
+import { Alert, ScrollView, Text, TouchableHighlight, View } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
@@ -39,7 +39,6 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     super(props)
     Navigation.events().bindComponent(this)
     this.state = {
-      updating: props.data.entityId !== null && props.data.entityId !== undefined,
       formModel: t.struct({
         id: t.maybe(t.Number),
         <%_ props.entityConfig.fields.forEach((field, index) => { _%>
@@ -86,43 +85,34 @@ class <%= props.name %>EntityEditScreen extends React.Component {
           <%_ }) // end entity field loop _%>
         }
       },
-      success: false,
-      <%= camelCase(props.name) %>: {}
+      <%= camelCase(props.name) %>: {},
+      isNewEntity: true
     }
+    if (props.data && props.data.entityId) {
+      this.state.isNewEntity = false
+      this.props.getFoo(props.data.entityId)
+    }
+  <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
+    this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
+  <%_ }) _%>
 
     this.submitForm = this.submitForm.bind(this)
     this.formChange = this.formChange.bind(this)
   }
 
-  componentWillMount () {
-    if (this.props.data.entityId) {
-      this.props.get<%= props.name %>(this.props.data.entityId)
-    } else {
-      this.setState({ formValue: { id: null } })
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (nextProps.<%= camelCase(props.name) %> !== prevState.<%= camelCase(props.name) %> && !prevState.isNewEntity) {
+      return { formValue: entityToFormValue(nextProps.<%= camelCase(props.name) %>), <%= camelCase(props.name) %>: nextProps.<%= camelCase(props.name) %> }
     }
-    <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
-    this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
-    <%_ }) _%>
+    return null
   }
-
-  componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %> && !newProps.updating && !this.state.requesting && this.state.updating) {
-      this.setState({
-        formValue: this.entityToFormValue(newProps.<%= camelCase(props.name) %>)
-      })
-    }
-
-    // Did the update attempt complete?
-    if (!newProps.updating && this.state.requesting) {
-      if (newProps.error) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.updating && !this.props.updating) {
+      if (this.props.error) {
         Alert.alert('Error', 'Something went wrong updating the entity', [{ text: 'OK' }])
-        this.setState({
-          success: false,
-          requesting: false
-        })
       } else {
         this.props.getAll<%= props.pluralName %>({ page: 0, sort: 'id,asc', size: 20 })
-        const entityId = newProps.<%= camelCase(props.name) %>.id
+        const entityId = this.props.<%= camelCase(props.name) %>.id
         const alertOptions = [{ text: 'OK' }]
         if (!this.state.formValue.id) {
           alertOptions.push({
@@ -130,72 +120,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             onPress: <%= camelCase(props.name) %>EntityDetailScreen.bind(this, { entityId })
           })
         }
-        this.setState({
-          success: true,
-          requesting: false,
-          formValue: { id: null }
-        })
         Navigation.pop(this.props.componentId)
         Alert.alert('Success', 'Entity saved successfully', alertOptions)
       }
     }
-  }
-
-  // convenience methods for customizing the mapping of the entity to/from the form value
-  entityToFormValue = (value) => {
-    if (!value) {
-      return {}
-    }
-    return {
-      id: value.id || null,
-      <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
-      <%_ }) _%>
-      <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
-      <%_ if (props.entityConfig.dto === 'no') { _%>
-        <%_ if (relation.relationshipType === 'many-to-many') { _%>
-      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } else { _%>
-      <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } _%>
-      <%_ } else if (props.entityConfig.dto === 'mapstruct') { _%>
-        <%_ if (relation.relationshipType === 'many-to-many') { _%>
-      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } else { _%>
-      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } _%>
-      <%_ } _%>
-      <%_ }) _%>
-    }
-  }
-  formValueToEntity = (value) => {
-    const entity = {
-      id: value.id || null,
-      <%_ props.entityConfig.fields.forEach((field, index) => { _%>
-      <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.dto === 'mapstruct' && props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
-      <%_ }) _%>
-      <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
-      <%_  if (props.entityConfig.dto === 'mapstruct') { _%>
-        <%_ if (relation.relationshipType === 'many-to-many') { _%>
-      <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } else { _%>
-      <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
-        <%_ } _%>
-      <%_ } _%>
-    <%_ }) _%>
-    }
-    <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
-      <%_ if (props.entityConfig.dto === 'no') { _%>
-        <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))
-        <%_ } else { _%>
-    if (value.<%= relation.otherEntityName %>Id) {
-      entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }
-    }
-        <%_ } _%>
-      <%_ } _%>
-    <%_ }) _%>
-    return entity
   }
 
 <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
@@ -208,14 +136,10 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
 <%_ }) _%>
   submitForm () {
-    this.setState({
-      success: false,
-      requesting: true
-    })
     // call getValue() to get the values of the form
     const <%= camelCase(props.name) %> = this.form.getValue()
     if (<%= camelCase(props.name) %>) { // if validation fails, value will be null
-      this.props.update<%= props.name %>(this.formValueToEntity(<%= camelCase(props.name) %>))
+      this.props.update<%= props.name %>(formValueToEntity(<%= camelCase(props.name) %>))
     }
   }
 
@@ -226,6 +150,13 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   }
 
   render () {
+    if (this.props.fetching) {
+      return (
+        <View>
+          <Text>Loading...</Text>
+        </View>
+      )
+    }
     return (
       <KeyboardAwareScrollView>
         <ScrollView style={styles.container} testID='entityScrollView'>
@@ -245,6 +176,62 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       </KeyboardAwareScrollView>
     )
   }
+}
+// convenience methods for customizing the mapping of the entity to/from the form value
+const entityToFormValue = (value) => {
+  if (!value) {
+    return {}
+  }
+  return {
+    id: value.id || null,
+    <%_ props.entityConfig.fields.forEach((field, index) => { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
+    <%_ }) _%>
+    <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ if (props.entityConfig.dto === 'no') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } else if (props.entityConfig.dto === 'mapstruct') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } _%>
+    <%_ }) _%>
+  }
+}
+const formValueToEntity = (value) => {
+  const entity = {
+    id: value.id || null,
+    <%_ props.entityConfig.fields.forEach((field, index) => { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  props.entityConfig.dto === 'mapstruct' && props.entityConfig.ownerSideRelationships.length || index !== props.entityConfig.fields.length - 1 ? ',' : '' %>
+    <%_ }) _%>
+    <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_  if (props.entityConfig.dto === 'mapstruct') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== props.entityConfig.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  }
+  <%_ props.entityConfig.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ if (props.entityConfig.dto === 'no') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+  entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))
+      <%_ } else { _%>
+  if (value.<%= relation.otherEntityName %>Id) {
+    entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }
+  }
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  return entity
 }
 
 const mapStateToProps = (state) => {

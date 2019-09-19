@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ScrollView, Text } from 'react-native'
+import { Alert, ScrollView, Text, View } from 'react-native'
 import { connect } from 'react-redux'
 import { Navigation } from 'react-native-navigation'
 import { <%= camelCase(props.name) %>EntityEditScreen } from '../../../navigation/layouts'
@@ -15,32 +15,16 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
   constructor (props) {
     super(props)
     Navigation.events().bindComponent(this)
-    this.state = {
-      entityId: props.data.entityId,
-      <%= camelCase(props.name) %>: {},
-      deleting: false
-    }
-  }
-
-  componentWillMount () {
     this.props.get<%= props.name %>(this.props.data.entityId)
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.<%= camelCase(props.name) %>) {
-      this.setState({ <%= camelCase(props.name) %>: newProps.<%= camelCase(props.name) %> })
-    }
-
-    if (this.state.deleting && newProps.deleting === false) {
-      if (!newProps.errorDeleting) {
+  componentDidUpdate (prevProps) {
+    if (prevProps.deleting && !this.props.deleting) {
+      if (this.props.errorDeleting) {
+        Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
+      } else {
         this.props.getAll<%= props.pluralName %>()
         Navigation.pop(this.props.componentId)
-      } else {
-        Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
-        this.setState({
-          success: false,
-          requesting: false
-        })
       }
     }
   }
@@ -54,9 +38,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
         {
           text: 'OK',
           onPress: () => {
-            this.setState({ deleting: true }, () => {
-              this.props.delete<%= props.name %>(this.props.data.entityId)
-            })
+            this.props.delete<%= props.name %>(this.props.data.entityId)
           }
         }
       ],
@@ -65,19 +47,22 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
   }
 
   render () {
+    if (!this.props.<%= camelCase(props.name) %>) {
+      return <View><Text>Loading...</Text></View>
+    }
     return (
       <ScrollView style={styles.container}>
-        <Text>ID: {this.state.<%= camelCase(props.name) %>.id}</Text>
+        <Text>ID: {this.props.<%= camelCase(props.name) %>.id}</Text>
         <%_ props.entityConfig.fields.forEach(function (field) { _%>
         <%_ if (field.fieldType === 'LocalDate') { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.props.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
         <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.props.<%= camelCase(props.name) %>.<%= field.fieldName %>)}</Text>
         <%_ } else { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.state.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.props.<%= camelCase(props.name) %>.<%= field.fieldName %>}</Text>
         <%_ } _%>
         <%_ }) _%>
-        <RoundedButton text='Edit' onPress={<%= camelCase(props.name) %>EntityEditScreen.bind(this, { entityId: this.state.<%= camelCase(props.name) %>.id })} />
+        <RoundedButton text='Edit' onPress={<%= camelCase(props.name) %>EntityEditScreen.bind(this, { entityId: this.props.<%= camelCase(props.name) %>.id })} />
         <RoundedButton text='Delete' onPress={this.confirmDelete} />
       </ScrollView>
     )
