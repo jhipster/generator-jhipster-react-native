@@ -138,12 +138,11 @@ class <%= props.name %>EntityScreen extends React.PureComponent {
     })
   }
 
-
   componentDidUpdate(prevProps, prevState){
     if (this.props.<%= camelCase(props.pluralName) %> && prevProps.<%= camelCase(props.pluralName) %> !== this.props.<%= camelCase(props.pluralName) %>) {
       this.setState({
-        done: newProps.<%= camelCase(props.pluralName) %>.length < this.state.size,
-        dataObjects: [...this.state.dataObjects, ...newProps.<%= camelCase(props.pluralName) %>]
+        done: this.props.<%= camelCase(props.pluralName) %>.length < this.state.size,
+        dataObjects: [...this.state.dataObjects, ...this.props.<%= camelCase(props.pluralName) %>]
       })
     }
   }
