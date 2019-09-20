@@ -13,7 +13,11 @@ export function * getAccount (api) {
     yield put(AccountActions.accountSuccess(response.data))
   } else {
     console.tron.log('Account - FAIL')
-    yield put(AccountActions.accountFailure('WRONG'))
+    yield put(
+      AccountActions.accountFailure(
+        (response.data && response.data.detail) || 'Failed to get account',
+      ),
+    )
   }
 }
 
@@ -29,6 +33,10 @@ export function * updateAccount (api, action) {
     yield put(AccountActions.accountUpdateSuccess())
   } else {
     console.tron.log('AccountUpdate - FAIL')
-    yield put(AccountActions.accountUpdateFailure('WRONG'))
+    yield put(
+      AccountActions.accountUpdateFailure(
+        (response.data && response.data.detail) || 'Failed to update account',
+      ),
+    )
   }
 }
