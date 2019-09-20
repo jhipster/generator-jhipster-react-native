@@ -50,7 +50,7 @@ export function * login (api) {
       yield put(LoginActions.loginFailure('Login failed'))
     }
   } else {
-    yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Could not connect to OAuth2 Provider'))
+    yield put(LoginActions.loginFailure((authInfo.data && authInfo.data.detail) || 'Could not connect to OAuth2 Provider'))
   }
 }
 

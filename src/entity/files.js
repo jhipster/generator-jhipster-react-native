@@ -416,6 +416,7 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
   // todo run prettier on
   const filesToRunPrettierOn = [
     { target: 'app/shared/services/api.js' },
+    { target: 'app/shared/services/fixture-api.js' },
     { target: 'app/shared/sagas/index.js' },
     { target: 'app/shared/reducers/index.js' },
     { target: 'app/navigation/layouts.js' },
