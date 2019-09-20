@@ -2,7 +2,7 @@
 
 # start the backend
 cd ../${SYSTEM_JOBNAME}-backend
-nohup ./mvnw &
+nohup ./mvnw -ntp &
 
 # wait for the backend to start
 # see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh

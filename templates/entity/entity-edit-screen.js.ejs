@@ -90,7 +90,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     }
     if (props.data && props.data.entityId) {
       this.state.isNewEntity = false
-      this.props.getFoo(props.data.entityId)
+      this.props.get<%= props.name %>(props.data.entityId)
     }
   <%_ props.entityConfig.ownerSideRelationships.forEach((relation) => { _%>
     this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()

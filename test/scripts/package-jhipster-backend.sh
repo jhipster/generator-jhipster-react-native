@@ -10,4 +10,4 @@ ls -al
 git status
 
 # package the app into a WAR
-./mvnw clean package -Pprod -DskipTests
+./mvnw clean package -Pprod -DskipTests -ntp
