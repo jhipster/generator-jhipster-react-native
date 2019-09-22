@@ -31,6 +31,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
  - iOS apps require [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) to be installed
+    - Verify `pod` installation with `pod install`
  - Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
 To generate an app, run the following command:

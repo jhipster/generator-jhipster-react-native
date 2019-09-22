@@ -12,7 +12,7 @@ You can pass flags for each of the options.
 | `--skip-git`             |                                | Skips git init                                 |
 | `--skip-commit-hook`     |                                | Skips `lint-staged` initialization             |
 | `--react-native-version` | 0.60.0                         | Install specific React Native version          |
-| `--yarn                ` |                                | Uses yarn in place of npm when generating      |
+| `--npm                 ` |                                | Uses npm in place of yarn when generating      |
 
 #### JDL App Generation
 
