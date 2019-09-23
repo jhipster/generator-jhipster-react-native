@@ -1,4 +1,4 @@
-const Utils = require('./utils')
+const Utils = require('../utils')
 
 describe('Settings Screen Tests', () => {
   before(async () => {

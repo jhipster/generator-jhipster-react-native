@@ -1,4 +1,4 @@
-const Utils = require('./utils')
+const Utils = require('../utils')
 
 describe('Login Screen Tests', () => {
   beforeEach(async () => {
@@ -16,7 +16,7 @@ describe('Login Screen Tests', () => {
     await element(by.id('loginScreenUsername')).replaceText('invalid')
     await element(by.id('loginScreenPassword')).replaceText('invalid')
     await element(by.id('loginScreenLoginButton')).tap()
-    await expect(element(by.text('Invalid login'))).toBeVisible()
+    await expect(element(by.text('Bad credentials'))).toBeVisible()
     await element(by.text('OK')).tap()
     await element(by.id('loginScreenCancelButton')).tap()
   })

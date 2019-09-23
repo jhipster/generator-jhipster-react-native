@@ -58,13 +58,11 @@ module.exports = async function (context, props, jhipsterConfig) {
     })
     // remove account files if oauth is used
     if (props.authType === 'oauth2') {
-      await filesystem.remove(`${process.cwd()}/e2e/login-screen.spec.js`)
-      await filesystem.remove(`${process.cwd()}/e2e/settings-screen.spec.js`)
-      await filesystem.remove(`${process.cwd()}/e2e/change-password-screen.spec.js`)
+      await filesystem.remove(`${process.cwd()}/e2e/account`)
     }
     // remove websocket ChatScreen test if unused
     if (!props.websockets) {
-      await filesystem.remove(`${process.cwd()}/e2e/chat-screen.spec.js`)
+      await filesystem.remove(`${process.cwd()}/e2e/websockets`)
     }
   }
   spinner.stop()
