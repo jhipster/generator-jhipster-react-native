@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 
 # start the backend
 cd ../${SYSTEM_JOBNAME}-backend
