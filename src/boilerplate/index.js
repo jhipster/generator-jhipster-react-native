@@ -114,16 +114,15 @@ async function install (context) {
   props.skipCommitHook = parameters.options['skip-commit-hook']
 
   // is the npm flag present, or is yarn not available?
-  const useNpm = JSON.parse(parameters.options.npm) || !Boolean(system.which('yarn'))
+  const useNpm = Boolean(parameters.options.npm) || !Boolean(system.which('yarn'))
   print.info(`Using ${useNpm ? 'npm' : 'yarn'} as the package manager`)
   props.useNpm = useNpm
 
+  props.disableInsight = Boolean(props.disableInsight)
   // very hacky but correctly handles both strings and booleans and converts to boolean
+  // needed because it can be true or false, but if not provided it's prompted
   props.detox = JSON.parse(props.detox)
-  props.disableInsight = JSON.parse(props.disableInsight)
-  console.log(props)
-  console.log(JSON.stringify(props))
-  console.log(JSON.stringify(parameters.options))
+
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
     name,
