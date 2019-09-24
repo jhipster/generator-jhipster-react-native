@@ -21,7 +21,8 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "apisauce": "1.0.4",
+    "@react-native-community/async-storage": "1.6.1",
+    "apisauce": "1.1.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.15",
@@ -30,10 +31,10 @@
     "ramda": "0.26.1",
     "react-native-vector-icons": "6.6.0",
     "react-native-keyboard-aware-scroll-view": "0.9.1",
-    "react-redux": "7.1.0",
+    "react-redux": "7.1.1",
     "redux": "4.0.4",
-    "redux-persist": "5.10.0",
-    "redux-saga": "1.0.5",
+    "redux-persist": "6.0.0",
+    "redux-saga": "1.1.1",
     "reduxsauce": "1.1.0",
     "react-native-navigation": "3.2.0",
     "seamless-immutable": "7.1.4",
@@ -48,20 +49,20 @@
     "tcomb-form-native": "0.6.20"
   },
   "devDependencies": {
-    "@storybook/addons": "5.1.11",
-    "@storybook/react-native": "5.1.11",
-    "@storybook/theming": "5.1.11",
-    "@babel/core": "7.5.5",
+    "@storybook/addons": "5.2.1",
+    "@storybook/react-native": "5.2.1",
+    "@storybook/theming": "5.2.1",
+    "@babel/core": "7.6.2",
     "babel-core": "7.0.0-bridge.0",
     "babel-preset-env": "1.7.0",
-    "buffer": "5.4.0",
+    "buffer": "5.4.3",
     "enzyme": "3.10.0",
     "enzyme-adapter-react-16": "1.14.0",
     "ignite-jhipster": "<%= props.packageVersion %>",
     "jest": "24.9.0",
     "@react-native-community/eslint-config": "0.0.5",
     <%_ if (!props.skipCommitHook) { _%>
-    "lint-staged": "9.2.3",
+    "lint-staged": "9.3.0",
     <%_ } _%>
     <%_ if (props.authType === 'oauth2') { _%>
     "react-native-app-auth": "4.4.0",
@@ -73,10 +74,10 @@
     "mockery": "2.1.0",
     "react-dom": "16.8.6",
     "react-test-renderer": "16.8.6",
-    "reactotron-react-native": "3.6.5",
-    "reactotron-redux": "3.1.1",
+    "reactotron-react-native": "4.4.0",
+    "reactotron-redux": "3.1.2",
     "reactotron-redux-saga": "4.2.2",
-    "patch-package": "6.1.2",
+    "patch-package": "6.2.0",
     "rimraf": "3.0.0"
   },
   <%_ if (!props.skipCommitHook) { _%>

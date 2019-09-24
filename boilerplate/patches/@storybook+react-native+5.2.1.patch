@@ -1,0 +1,189 @@
+diff --git a/node_modules/@storybook/react-native/dist/preview/index.d.ts b/node_modules/@storybook/react-native/dist/preview/index.d.ts
+index 69b49d9..f249a04 100644
+--- a/node_modules/@storybook/react-native/dist/preview/index.d.ts
++++ b/node_modules/@storybook/react-native/dist/preview/index.d.ts
+@@ -1,8 +1,13 @@
+ import React from 'react';
+ import { StoryStore, ClientApi } from '@storybook/client-api';
+ import { EmotionProps } from './components/Shared/theme';
++interface AsyncStorage {
++    getItem: <T>(key: string) => Promise<T>;
++    setItem: <T>(key: string, value: T) => Promise<void>;
++}
+ export declare type Params = {
+     onDeviceUI: boolean;
++    asyncStorage: AsyncStorage;
+     resetStorybook: boolean;
+     disableWebsockets: boolean;
+     query: string;
+@@ -22,6 +27,7 @@ export default class Preview {
+     _addons: any;
+     _decorators: any[];
+     _asyncStorageStoryId: string;
++    _asyncStorage: AsyncStorage;
+     constructor();
+     api: () => ClientApi;
+     configure: (loadStories: () => void, module: any) => void;
+@@ -88,3 +94,4 @@ export default class Preview {
+     _selectStory(story: any): void;
+     _checkStory(storyId: string): import("@storybook/client-api/dist/types").StoreItem;
+ }
++export {};
+diff --git a/node_modules/@storybook/react-native/dist/preview/index.js b/node_modules/@storybook/react-native/dist/preview/index.js
+index b96bb1c..45c001d 100644
+--- a/node_modules/@storybook/react-native/dist/preview/index.js
++++ b/node_modules/@storybook/react-native/dist/preview/index.js
+@@ -37,8 +37,6 @@ require("regenerator-runtime/runtime");
+ 
+ var _react = _interopRequireDefault(require("react"));
+ 
+-var _reactNative = require("react-native");
+-
+ var _emotionTheming = require("emotion-theming");
+ 
+ var _rnHostDetect = _interopRequireDefault(require("rn-host-detect"));
+@@ -98,6 +96,7 @@ function () {
+     this._addons = void 0;
+     this._decorators = void 0;
+     this._asyncStorageStoryId = void 0;
++    this._asyncStorage = void 0;
+ 
+     this.api = function () {
+       return _this._clientApi;
+@@ -117,6 +116,11 @@ function () {
+       var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+       var webUrl = null;
+       var channel = null;
++
++      if (params.asyncStorage) {
++        _this._asyncStorage = params.asyncStorage;
++      }
++
+       var onDeviceUI = params.onDeviceUI !== false;
+       var initialSelection = params.initialSelection,
+           shouldPersistSelection = params.shouldPersistSelection;
+@@ -259,7 +263,8 @@ function () {
+         _asyncToGenerator(
+         /*#__PURE__*/
+         regeneratorRuntime.mark(function _callee2() {
+-          var story, value, stories;
++          var story, _value, stories;
++
+           return regeneratorRuntime.wrap(function _callee2$(_context2) {
+             while (1) {
+               switch (_context2.prev = _context2.next) {
+@@ -282,25 +287,25 @@ function () {
+                   }
+ 
+                   _context2.prev = 6;
+-                  value = _this._asyncStorageStoryId;
++                  _value = _this._asyncStorageStoryId;
+ 
+-                  if (value) {
++                  if (!(!_value && _this._asyncStorage)) {
+                     _context2.next = 15;
+                     break;
+                   }
+ 
+                   _context2.t0 = JSON;
+                   _context2.next = 12;
+-                  return _reactNative.AsyncStorage.getItem(STORAGE_KEY);
++                  return _this._asyncStorage.getItem(STORAGE_KEY);
+ 
+                 case 12:
+                   _context2.t1 = _context2.sent;
+-                  value = _context2.t0.parse.call(_context2.t0, _context2.t1);
+-                  _this._asyncStorageStoryId = value;
++                  _value = _context2.t0.parse.call(_context2.t0, _context2.t1);
++                  _this._asyncStorageStoryId = _value;
+ 
+                 case 15:
+-                  if (_this._checkStory(value)) {
+-                    story = value;
++                  if (_this._checkStory(_value)) {
++                    story = _value;
+                   }
+ 
+                   _context2.next = 20;
+@@ -374,9 +379,8 @@ function () {
+       var storyId = _ref3.storyId;
+ 
+       if (storyId) {
+-        try {
+-          _reactNative.AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storyId));
+-        } catch (e) {//
++        if (this._asyncStorage) {
++          this._asyncStorage.setItem(STORAGE_KEY, JSON.stringify(storyId))["catch"](function () {});
+         }
+ 
+         var story = this._getStory(storyId);
+diff --git a/node_modules/@storybook/react-native/src/preview/index.tsx b/node_modules/@storybook/react-native/src/preview/index.tsx
+index 88bec55..eda1077 100644
+--- a/node_modules/@storybook/react-native/src/preview/index.tsx
++++ b/node_modules/@storybook/react-native/src/preview/index.tsx
+@@ -1,6 +1,5 @@
+ /* eslint-disable no-underscore-dangle */
+ import React from 'react';
+-import { AsyncStorage } from 'react-native';
+ import { ThemeProvider } from 'emotion-theming';
+ // @ts-ignore
+ import getHost from 'rn-host-detect';
+@@ -16,8 +15,14 @@ import { theme, EmotionProps } from './components/Shared/theme';
+ 
+ const STORAGE_KEY = 'lastOpenedStory';
+ 
++interface AsyncStorage {
++  getItem: <T>(key: string) => Promise<T>;
++  setItem: <T>(key: string, value: T) => Promise<void>;
++}
++
+ export type Params = {
+   onDeviceUI: boolean;
++  asyncStorage: AsyncStorage;
+   resetStorybook: boolean;
+   disableWebsockets: boolean;
+   query: string;
+@@ -43,6 +48,8 @@ export default class Preview {
+ 
+   _asyncStorageStoryId: string;
+ 
++  _asyncStorage: AsyncStorage;
++
+   constructor() {
+     this._addons = {};
+     this._decorators = [];
+@@ -66,6 +73,10 @@ export default class Preview {
+     let webUrl: string = null;
+     let channel: Channel = null;
+ 
++    if (params.asyncStorage) {
++      this._asyncStorage = params.asyncStorage;
++    }
++
+     const onDeviceUI = params.onDeviceUI !== false;
+     const { initialSelection, shouldPersistSelection } = params;
+ 
+@@ -166,8 +177,8 @@ export default class Preview {
+     } else if (shouldPersistSelection) {
+       try {
+         let value = this._asyncStorageStoryId;
+-        if (!value) {
+-          value = JSON.parse(await AsyncStorage.getItem(STORAGE_KEY));
++        if (!value && this._asyncStorage) {
++          value = JSON.parse(await this._asyncStorage.getItem<string>(STORAGE_KEY));
+           this._asyncStorageStoryId = value;
+         }
+ 
+@@ -197,10 +208,8 @@ export default class Preview {
+ 
+   _selectStoryEvent({ storyId }: { storyId: string }) {
+     if (storyId) {
+-      try {
+-        AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(storyId));
+-      } catch (e) {
+-        //
++      if (this._asyncStorage) {
++        this._asyncStorage.setItem(STORAGE_KEY, JSON.stringify(storyId)).catch(() => {});
+       }
+ 
+       const story = this._getStory(storyId);
