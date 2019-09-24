@@ -5,8 +5,9 @@ git version
 java -version
 node -v
 npm -v
-docker version
-docker-compose version
+# not currently installed
+#docker version
+#docker-compose version
 pwd
 ignite doctor
 env
