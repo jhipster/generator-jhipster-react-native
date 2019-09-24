@@ -51,6 +51,10 @@ module.exports = async function (context, props, jhipsterConfig) {
     overwrite: true,
     matching: '!*.ejs'
   })
+  await filesystem.copy(`${__dirname}/../../boilerplate/patches`, `${process.cwd()}/patches`, {
+    overwrite: true,
+    matching: '!*.ejs'
+  })
   if (props.detox) {
     await filesystem.copy(`${__dirname}/../../boilerplate/e2e`, `${process.cwd()}/e2e`, {
       overwrite: true,

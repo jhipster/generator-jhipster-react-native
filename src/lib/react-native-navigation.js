@@ -27,15 +27,6 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
 
-  // related to https://github.com/gcanti/tcomb-form-native/pull/560
-  const rnnPatch = [
-    { template: 'patches/tcomb-form-native+0.6.20.patch', target: `patches/tcomb-form-native+0.6.20.patch` }
-  ]
-  await copyBatch(context, rnnPatch, props, {
-    quiet: true,
-    directory: `${__dirname}/../../boilerplate`
-  })
-
   spinner.succeed('set up react-native-navigation for iOS/Android')
   await updateIosFiles(context, props)
   await updateAndroidFiles(context, props)

@@ -15,7 +15,7 @@ module.exports = async function (generator, igniteContext) {
 
   const name = generator.name
   const searchEngine = generator.igniteConfig.searchEngine
-  const detox = generator.igniteConfig.detox || parameters.options.detox
+  const detox = generator.igniteConfig.detox || (parameters.options.detox && parameters.options.detox !== "false")
   const props = {
     name: pluralize.singular(name),
     searchEngine,
