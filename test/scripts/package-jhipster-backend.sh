@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -e
 
 # switch to the directory the backend was generated in

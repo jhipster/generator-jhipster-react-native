@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 git version
 java -version

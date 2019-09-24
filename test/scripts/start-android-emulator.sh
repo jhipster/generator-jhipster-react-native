@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-27;google_apis;x86'
 
