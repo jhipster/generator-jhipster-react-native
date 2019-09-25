@@ -1,7 +1,7 @@
 const { pathOr, is } = require('ramda')
 
 // the default React Native version for this boilerplate
-const REACT_NATIVE_VERSION = '0.60.5'
+const REACT_NATIVE_VERSION = '0.61.0'
 // https://github.com/react-native-community/react-native-releases/blob/master/CHANGELOG.md
 
 // where the version lives under gluegun
