@@ -2,7 +2,7 @@ jobs:
 - job: Test
   pool:
   # note: both ios and android emulator is only available on mac-os on azure pipelines
-    vmImage: 'macOS-10.13'
+    vmImage: 'macOS-10.14'
   variables:
     SCRIPT_DIR: $BUILD_REPOSITORY_LOCALPATH/test/scripts
     JHI_AUTH_TYPE: jwt
@@ -51,12 +51,12 @@ jobs:
     displayName: 'TOOLS: update NPM'
   - script: $(SCRIPT_DIR)/install-node-dependencies.sh
     displayName: 'TOOLS: install node dependencies'
+  - script: $(SCRIPT_DIR)/install-detox.sh
+    displayName: 'TOOLS: installing Detox and its dependencies'
   - script: $(SCRIPT_DIR)/display-tools.sh
     displayName: 'TOOLS: display tools'
   - script: $(SCRIPT_DIR)/copy-jdl-file.sh
     displayName: 'SETUP: copy the JDL file for the backend and app'
-  - script: $(SCRIPT_DIR)/install-detox.sh
-    displayName: 'TOOLS: installing detox CLI '
   - script: npm ci && npm link
     displayName: 'TOOLS: npm install and link in ignite-jhipster'
   - script: $(SCRIPT_DIR)/generate-jhipster-backend.sh

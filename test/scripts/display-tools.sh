@@ -10,4 +10,5 @@ npm -v
 #docker-compose version
 pwd
 ignite doctor
+applesimutils --list
 env

@@ -95,7 +95,7 @@ test('login failure path', () => {
   // Attempt to login and fail
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   // Send the error
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad Credentials')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad credentials')))
   <%_ } _%>
 })
 <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>

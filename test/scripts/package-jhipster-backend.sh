@@ -9,4 +9,5 @@ ls -al
 git status
 
 # package the app into a WAR
-./mvnw clean package -Pprod -DskipTests -ntp
+# this is currently unused, todo: test with backend in prod mode
+# ./mvnw clean package -Pprod -DskipTests -ntp
