@@ -95,6 +95,10 @@ module.exports = async function (context, props, jhipsterConfig) {
       target: 'app/navigation/layouts.js'
     },
     {
+      template: 'app/modules/home/learn-more-links.component.js.ejs',
+      target: 'app/modules/home/learn-more-links.component.js'
+    },
+    {
       template: 'app/modules/login/login-screen.js.ejs',
       target: 'app/modules/login/login-screen.js'
     },

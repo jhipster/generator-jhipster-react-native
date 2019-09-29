@@ -1,7 +1,9 @@
 import React from 'react'
 import { ScrollView, Text, Image, View } from 'react-native'
+import { DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen'
 import { Navigation } from 'react-native-navigation'
 
+import LearnMoreLinks from './learn-more-links.component.js'
 import { Images } from '../../shared/themes'
 import styles from './launch-screen.styles'
 
@@ -36,22 +38,47 @@ export default class LaunchScreen extends React.Component {
     this.showSideMenu()
   }
 
-  render () {
+  render() {
     return (
-      <View style={styles.mainContainer} testID='launchScreen'>
-        <Image source={Images.background} style={styles.backgroundImage} resizeMode='stretch' />
-        <ScrollView style={styles.container}>
+      <View style={styles.mainContainer} testID="launchScreen">
+        <Image source={Images.background} style={styles.backgroundImage} resizeMode="stretch" />
+        <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
           <View style={styles.centered}>
             <Image source={Images.logoJhipster} style={styles.logo} />
+            <Text style={styles.welcomeText}>{'Welcome to your Ignite JHipster app.'}</Text>
           </View>
-
-          <View style={styles.section} >
-            <Image source={Images.ready} />
-            <Text style={styles.sectionText}>
-              {'Welcome to your Ignite JHipster app.'}
-            </Text>
+          <View style={styles.hairline} />
+          {/* <Header /> */}
+          {global.HermesInternal == null ? null : (
+            <View style={styles.engine}>
+              <Text style={styles.footer}>Engine: Hermes</Text>
+            </View>
+          )}
+          <View style={styles.body}>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Step One</Text>
+              <Text style={styles.sectionDescription}>
+                Edit <Text style={styles.highlight}>app/modules/home/launch-screen.js</Text> to
+                change this screen and then come back to see your edits.
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>See Your Changes</Text>
+              <Text style={styles.sectionDescription}>
+                <ReloadInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Debug</Text>
+              <Text style={styles.sectionDescription}>
+                <DebugInstructions />
+              </Text>
+            </View>
+            <View style={styles.sectionContainer}>
+              <Text style={styles.sectionTitle}>Learn More</Text>
+            </View>
+            <LearnMoreLinks />
           </View>
-
         </ScrollView>
       </View>
     )
