@@ -68,7 +68,7 @@
     "react-native-app-auth": "4.4.0",
     <%_ } _%>
     <%_ if (props.detox) { _%>
-    "detox": "14.0.2",
+    "detox": "14.3.4",
     "mocha": "6.2.0",
     <%_ } _%>
     "mockery": "2.1.0",
@@ -109,7 +109,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!react-native|tcomb-form-native)"
+      "node_modules/(?!(@react-native-community|tcomb-form-native|react-native))"
     ],
     "coveragePathIgnorePatterns": [
       "app/shared/services/api.js",

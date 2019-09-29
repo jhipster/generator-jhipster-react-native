@@ -19,7 +19,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
    - [Fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
    - [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
    - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
-   - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/docs/introduction/BeginnerTutorial.html) - State management
+   - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
  - [Advanced Usage](docs/advanced-usage.md)
 
 ## Getting Started
