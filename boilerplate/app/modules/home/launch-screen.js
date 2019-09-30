@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Text, Image, View } from 'react-native'
+import { ScrollView, Text, Image, View, Platform } from 'react-native'
 import { DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen'
 import { Navigation } from 'react-native-navigation'
 
@@ -55,6 +55,14 @@ export default class LaunchScreen extends React.Component {
             </View>
           )}
           <View style={styles.body}>
+            {Platform.OS === 'ios' ? null : (
+              <View style={styles.sectionContainer}>
+                <Text style={styles.sectionTitle}>Step Zero</Text>
+                <Text style={styles.sectionDescription}>
+                  Run <Text style={styles.highlight}>adb reverse tcp:8080 tcp:8080</Text> to be able to connect to your JHipster backend (Android only).
+                </Text>
+              </View>
+            )}
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
