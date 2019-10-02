@@ -29,12 +29,15 @@
     "lint": "eslint ./src ./test ./*.js --ext js",
     "test": "jest --runInBand",
     "watch": "jest --runInBand --watch",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write \"src/**/*.js\" \"test/**/*.js\"",
     "coverage": "jest --runInBand --coverage",
     "shipit": "np"
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "eslint": "6.5.1",
+    "lint-staged": "9.3.0",
     "jest": "24.9.0",
     "np": "5.1.0",
     "tempy": "0.3.0"
@@ -53,6 +56,13 @@
     "testPathIgnorePatterns": [
       "node_modules/",
       "boilerplate/"
+    ]
+  },
+  "lint-staged": {
+    "{,app/**/,test/**/}*.{js}": [
+      "prettier --write",
+      "eslint --fix --ext .js",
+      "git add"
     ]
   }
 }
