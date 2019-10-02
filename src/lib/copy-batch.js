@@ -17,5 +17,5 @@ const copyBatch = async (context, files, props, copyBatchOptions) => {
 }
 
 module.exports = {
-  copyBatch
+  copyBatch,
 }

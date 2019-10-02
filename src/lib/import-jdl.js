@@ -31,11 +31,11 @@ const importJDL = (jdlFiles, prodDatabaseType, applicationType, baseName, print)
     applicationType: applicationType,
     applicationName: baseName,
     // generatorVersion: generatorVersion,
-    forceNoFiltering: false
+    forceNoFiltering: false,
   })
   let importState = {
     exportedEntities: [],
-    exportedApplications: []
+    exportedApplications: [],
   }
   try {
     importState = jdlImporter.import()
@@ -54,5 +54,5 @@ const importJDL = (jdlFiles, prodDatabaseType, applicationType, baseName, print)
 }
 
 module.exports = {
-  importJDL
+  importJDL,
 }

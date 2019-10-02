@@ -18,7 +18,7 @@ const pkg = require('../../package')
  * @param {*} context - The gluegun context.
  * @returns {boolean}
  */
-const isAndroidInstalled = function (context) {
+const isAndroidInstalled = function(context) {
   const androidHome = process.env['ANDROID_HOME']
   const hasAndroidEnv = !context.strings.isBlank(androidHome)
   const hasAndroid = hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'
@@ -31,29 +31,18 @@ const isAndroidInstalled = function (context) {
  *
  * @param {any} context - The gluegun context.
  */
-async function install (context) {
-  const {
-    filesystem,
-    parameters,
-    ignite,
-    reactNative,
-    print,
-    system,
-    prompt,
-    template
-  } = context
+async function install(context) {
+  const { filesystem, parameters, ignite, reactNative, print, system, prompt, template } = context
 
-  const perfStart = (new Date()).getTime()
+  const perfStart = new Date().getTime()
 
   const name = parameters.first
-  const spinner = print
-    .spin(`Generating a React Native client for JHipster apps`)
-    .succeed()
+  const spinner = print.spin(`Generating a React Native client for JHipster apps`).succeed()
 
   const props = {
     jhipsterDirectory: parameters.options['jh-dir'] || '',
     detox: parameters.options.detox,
-    disableInsight: parameters.options['disable-insight'] || false
+    disableInsight: parameters.options['disable-insight'] || false,
   }
   let jhipsterConfig
   let jhipsterDirectory
@@ -71,7 +60,7 @@ async function install (context) {
     await rimraf.sync('.jhipster')
     jhipsterConfig = results.exportedApplications[0]
     jhipsterDirectory = ''
-  // if the user is passing in a directory
+    // if the user is passing in a directory
   } else if (props.jhipsterDirectory) {
     if (!fs.existsSync(`../${props.jhipsterDirectory}/.yo-rc.json`)) {
       print.error(`No JHipster configuration file found at ${props.jhipsterDirectory}/.yo-rc.json`)
@@ -81,7 +70,7 @@ async function install (context) {
     const pathPrefix = props.jhipsterDirectory.startsWith('/') ? '' : '../'
     jhipsterConfig = await fs.readJson(`${pathPrefix}${props.jhipsterDirectory}/.yo-rc.json`)
     jhipsterDirectory = props.jhipsterDirectory
-  // the user didn't pass in JDL or a path, prompt them for a path
+    // the user didn't pass in JDL or a path, prompt them for a path
   } else {
     // prompt the user until an JHipster configuration file is found
     while (true) {
@@ -103,7 +92,7 @@ async function install (context) {
   }
 
   if (!props.disableInsight && Insight.insight.optOut === undefined) {
-    Insight.insight.optOut = !((await prompt.ask(prompts.insight)).insight)
+    Insight.insight.optOut = !(await prompt.ask(prompts.insight)).insight
   }
 
   if (!props.detox && props.detox !== false) {
@@ -128,7 +117,7 @@ async function install (context) {
   const rnInstall = await reactNative.install({
     name,
     version: getReactNativeVersion(context),
-    useNpm: useNpm
+    useNpm: useNpm,
   })
   if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
 
@@ -149,12 +138,12 @@ async function install (context) {
   /**
    * Merge the package.json from our template into the one provided from react-native init.
    */
-  async function mergePackageJsons () {
+  async function mergePackageJsons() {
     // transform our package.json incase we need to replace variables
     const rawJson = await template.generate({
       directory: `${ignite.ignitePluginPath()}/boilerplate`,
       template: 'package.json.ejs',
-      props: props
+      props: props,
     })
     const newPackageJson = JSON.parse(rawJson)
 
@@ -163,19 +152,10 @@ async function install (context) {
 
     // deep merge, lol
     const newPackage = pipe(
-      assoc(
-        'dependencies',
-        merge(currentPackage.dependencies, newPackageJson.dependencies)
-      ),
-      assoc(
-        'devDependencies',
-        merge(currentPackage.devDependencies, newPackageJson.devDependencies)
-      ),
+      assoc('dependencies', merge(currentPackage.dependencies, newPackageJson.dependencies)),
+      assoc('devDependencies', merge(currentPackage.devDependencies, newPackageJson.devDependencies)),
       assoc('scripts', merge(currentPackage.scripts, newPackageJson.scripts)),
-      merge(
-        __,
-        omit(['dependencies', 'devDependencies', 'scripts'], newPackageJson)
-      )
+      merge(__, omit(['dependencies', 'devDependencies', 'scripts'], newPackageJson)),
     )(currentPackage)
 
     // write this out
@@ -242,14 +222,12 @@ async function install (context) {
   // patch test scheme to not build for running
   // https://github.com/react-native-community/cli/issues/462 (issue)
   // https://github.com/facebook/react-native/issues/4210 (workaround)
-  await ignite.patchInFile(`ios/${name}.xcodeproj/xcshareddata/xcschemes/${name}.xcscheme`,
-    {
-      replace: `buildForRunning = "YES"
+  await ignite.patchInFile(`ios/${name}.xcodeproj/xcshareddata/xcschemes/${name}.xcscheme`, {
+    replace: `buildForRunning = "YES"
             buildForProfiling = "NO"`,
-      insert: `buildForRunning = "NO"
-            buildForProfiling = "NO"`
-    }
-  )
+    insert: `buildForRunning = "NO"
+            buildForProfiling = "NO"`,
+  })
 
   // if JDL was passed to generate the app, generate any entities
   if (parameters.options.jdl) {
@@ -262,7 +240,7 @@ async function install (context) {
   // install any missing dependencies
   await system.run(`${useNpm ? 'npm' : 'yarn'} run prettier`, { stdio: 'ignore' })
 
-  const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
+  const perfDuration = parseInt((new Date().getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${print.colors.yellow(name)} in ${perfDuration}s`)
 
   Insight.trackAppOptions(context, props)
@@ -280,7 +258,9 @@ async function install (context) {
     if (showCocoapodsInstructions) {
       print.info(print.colors.blue(`Cocoapods not found, please install Cocooapods and run 'pod install' from your app's ios directory.`))
     }
-    print.info('For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md')
+    print.info(
+      'For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md',
+    )
     print.info('')
   }
   print.info('To run in iOS:')
@@ -290,7 +270,11 @@ async function install (context) {
   if (isAndroidInstalled(context)) {
     print.info('To run in Android:')
   } else {
-    print.info(`To run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.bold('react-native run-android')} successfully until you have. Then:`)
+    print.info(
+      `To run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.bold(
+        'react-native run-android',
+      )} successfully until you have. Then:`,
+    )
   }
   print.info(print.colors.bold(`  cd ${name}`))
   print.info(print.colors.bold('  react-native run-android'))
@@ -300,11 +284,13 @@ async function install (context) {
   print.info(print.colors.bold('  ignite generate'))
   print.info('')
   if (useNpm && context.parameters.options.boilerplate !== 'ignite-jhipster' && context.parameters.options.boilerplate !== 'jhipster') {
-    print.warning('NOTE: Using local ignite-jhipster, removing `.git` folder from `node_modules/ignite-jhipster` to prevent issues with `npm i`')
+    print.warning(
+      'NOTE: Using local ignite-jhipster, removing `.git` folder from `node_modules/ignite-jhipster` to prevent issues with `npm i`',
+    )
     await rimraf.sync('../node_modules/ignite-jhipster/.git')
   }
 }
 
 module.exports = {
-  install
+  install,
 }

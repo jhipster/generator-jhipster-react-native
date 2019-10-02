@@ -4,7 +4,7 @@ const pkg = require('../../package.json')
 const insight = new Insight({
   // Google Analytics tracking code
   trackingCode: 'UA-57259414-5',
-  pkg
+  pkg,
 })
 
 /**
@@ -56,5 +56,5 @@ module.exports = {
   insight,
   askForOptOut,
   trackAppOptions,
-  trackGenerator
+  trackGenerator,
 }

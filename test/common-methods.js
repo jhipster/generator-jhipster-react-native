@@ -18,12 +18,14 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
   await execa('cp', [`${testFolder}/.jhipster/FieldTestEntity.json`, 'backend/.jhipster/FieldTestEntity.json'])
 
   const generationLog = await execa('ignite', [
-    'new', APP,
+    'new',
+    APP,
     '--jh-dir=backend',
     '--skip-git',
     '--disable-insight',
     '--detox=false',
-    '--boilerplate', BOILERPLATE
+    '--boilerplate',
+    BOILERPLATE,
   ])
   console.log(generationLog.stdout)
   process.chdir(APP)
@@ -61,5 +63,5 @@ module.exports = {
   copyFilesAndGenerateApp,
   lintBoilerplate,
   generateEntities,
-  runTests
+  runTests,
 }

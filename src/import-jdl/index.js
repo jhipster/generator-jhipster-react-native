@@ -5,8 +5,8 @@ const generateFiles = require('../entity/files')
 
 module.exports = {
   description: 'Imports a JHipster JDL file and generates the entities within the file.',
-  run: async function (context) {
-  // grab some features
+  run: async function(context) {
+    // grab some features
     const { ignite, parameters, print, strings } = context
     const { isBlank } = strings
     this.igniteConfig = ignite.loadIgniteConfig()
@@ -53,7 +53,7 @@ module.exports = {
         this.name = entityNames[i]
         print.success(`Generating ${this.name}`)
         await generateFiles(this, context)
-      // await system.spawn(`ignite g entity ${entityNames[i]}`, { stdio: 'inherit' })
+        // await system.spawn(`ignite g entity ${entityNames[i]}`, { stdio: 'inherit' })
       }
 
       print.success(`JDL successfully imported!`)
@@ -64,5 +64,5 @@ module.exports = {
       }
     }
     Insight.trackGenerator(context, 'import-jdl')
-  }
+  },
 }

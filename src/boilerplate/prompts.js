@@ -9,13 +9,13 @@ module.exports = {
     type: 'input',
     store: true,
     default: 'backend',
-    validate: function (resp) {
+    validate: function(resp) {
       if (resp === '' || resp === undefined) {
         console.log('Path is required')
         return false
       }
       return true
-    }
+    },
   },
   // i18n: {
   //   name: 'i18n',
@@ -26,11 +26,11 @@ module.exports = {
   detox: {
     name: 'detox',
     message: 'Do you want to enable end-to-end tests with Detox?',
-    type: 'confirm'
+    type: 'confirm',
   },
   insight: {
     name: 'insight',
     message: 'May IgniteJHipster anonymously report usage statistics to improve the tool over time?',
-    type: 'confirm'
-  }
+    type: 'confirm',
+  },
 }

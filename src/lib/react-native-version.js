@@ -27,5 +27,5 @@ const getReactNativeVersion = (context = {}) => {
 
 module.exports = {
   REACT_NATIVE_VERSION,
-  getReactNativeVersion
+  getReactNativeVersion,
 }

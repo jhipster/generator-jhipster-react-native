@@ -3,9 +3,7 @@ const { copyBatch } = require('../lib/copy-batch')
 
 const patchReactNativeNavigation = async (context = {}, props) => {
   // REACT_NATIVE_NAVIGATION_VERSION
-  const {
-    print
-  } = context
+  const { print } = context
 
   const spinner = print.spin('installing and linking react-native-navigation')
   spinner.start()
@@ -16,15 +14,24 @@ const patchReactNativeNavigation = async (context = {}, props) => {
 
   const navigationFiles = [
     { template: 'AppDelegate.m.ejs', target: `ios/${props.name}/AppDelegate.m` },
-    { template: 'MainActivity.java.ejs', target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainActivity.java` },
-    { template: 'MainApplication.java.ejs', target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainApplication.java` }
+    {
+      template: 'MainActivity.java.ejs',
+      target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainActivity.java`,
+    },
+    {
+      template: 'MainApplication.java.ejs',
+      target: `android/app/src/main/java/com/${props.name.toLowerCase()}/MainApplication.java`,
+    },
   ]
   if (props.authType === 'oauth2') {
-    navigationFiles.push({ template: 'AppDelegate.h.ejs', target: `ios/${props.name}/AppDelegate.h` })
+    navigationFiles.push({
+      template: 'AppDelegate.h.ejs',
+      target: `ios/${props.name}/AppDelegate.h`,
+    })
   }
   await copyBatch(context, navigationFiles, props, {
     quiet: true,
-    directory: `${__dirname}/../../templates/react-native-navigation/`
+    directory: `${__dirname}/../../templates/react-native-navigation/`,
   })
 
   await updateIosFiles(context, props)
@@ -48,16 +55,16 @@ const updateIosFiles = async (context, props) => {
 				<string>${props.name.toLowerCase()}</string>
 			</array>
 		</dict>
-	</array>`
+	</array>`,
   })
   /* eslint-enable */
 }
 
-const updateAndroidFiles = async (context) => {
+const updateAndroidFiles = async context => {
   // settings.gradle
   await patchInFile(context, `${process.cwd()}/android/settings.gradle`, {
     after: `include ':app'`,
-    insert: `include ':react-native-navigation'\nproject(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/lib/android/app/')`
+    insert: `include ':react-native-navigation'\nproject(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/lib/android/app/')`,
   })
 
   // build.gradle
@@ -65,14 +72,14 @@ const updateAndroidFiles = async (context) => {
     before: `mavenLocal()`,
     insert: `        google()
         mavenCentral()
-        maven { url 'https://jitpack.io' }`
+        maven { url 'https://jitpack.io' }`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     after: `repositories {`,
     insert: `        google()
         mavenLocal()
-        mavenCentral()`
+        mavenCentral()`,
   })
 
   // react-native-init uses a later version so this is not currently needed
@@ -83,13 +90,13 @@ const updateAndroidFiles = async (context) => {
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     replace: `minSdkVersion = 16`,
-    insert: `minSdkVersion = 19`
+    insert: `minSdkVersion = 19`,
   })
 
   // app/build.gradle
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
     after: `versionCode 1`,
-    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"`
+    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
@@ -97,7 +104,7 @@ const updateAndroidFiles = async (context) => {
     insert: `    compileOptions {
       sourceCompatibility JavaVersion.VERSION_1_8
       targetCompatibility JavaVersion.VERSION_1_8
-    }`
+    }`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
@@ -109,16 +116,16 @@ const updateAndroidFiles = async (context) => {
               details.useVersion "\${rootProject.ext.supportLibVersion}"
           }
       }
-  }`
+  }`,
   })
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
     after: `dependencies {`,
     insert: `
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation project(':react-native-navigation')`
+    implementation project(':react-native-navigation')`,
   })
 }
 
 module.exports = {
-  patchReactNativeNavigation
+  patchReactNativeNavigation,
 }

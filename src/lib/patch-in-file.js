@@ -9,5 +9,5 @@ const patchInFile = async (context, filePath, params) => {
 }
 
 module.exports = {
-  patchInFile
+  patchInFile,
 }

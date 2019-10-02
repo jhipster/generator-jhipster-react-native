@@ -4,7 +4,7 @@ const semver = require('semver')
 /**
  * The files portion of the entity generator
  */
-module.exports = async function (context, props, jhipsterConfig) {
+module.exports = async function(context, props, jhipsterConfig) {
   const { filesystem, print, strings } = context
   const { camelCase, upperFirst } = strings
   const { copyBatch } = require('../lib/copy-batch')
@@ -41,24 +41,24 @@ module.exports = async function (context, props, jhipsterConfig) {
   spinner.start()
   await filesystem.copy(`${__dirname}/../../boilerplate/app`, `${process.cwd()}/app`, {
     overwrite: true,
-    matching: '!*.ejs'
+    matching: '!*.ejs',
   })
   await filesystem.copy(`${__dirname}/../../boilerplate/test`, `${process.cwd()}/test`, {
     overwrite: true,
-    matching: '!*.ejs'
+    matching: '!*.ejs',
   })
   await filesystem.copy(`${__dirname}/../../boilerplate/storybook`, `${process.cwd()}/storybook`, {
     overwrite: true,
-    matching: '!*.ejs'
+    matching: '!*.ejs',
   })
   await filesystem.copy(`${__dirname}/../../boilerplate/patches`, `${process.cwd()}/patches`, {
     overwrite: true,
-    matching: '!*.ejs'
+    matching: '!*.ejs',
   })
   if (props.detox) {
     await filesystem.copy(`${__dirname}/../../boilerplate/e2e`, `${process.cwd()}/e2e`, {
       overwrite: true,
-      matching: '!*.ejs'
+      matching: '!*.ejs',
     })
     // remove account files if oauth is used
     if (props.authType === 'oauth2') {
@@ -84,101 +84,101 @@ module.exports = async function (context, props, jhipsterConfig) {
     { template: '.env.example', target: '.env.example' },
     {
       template: 'app/config/app-config.js.ejs',
-      target: 'app/config/app-config.js'
+      target: 'app/config/app-config.js',
     },
     {
       template: 'app/navigation/drawer/drawer-content.js.ejs',
-      target: 'app/navigation/drawer/drawer-content.js'
+      target: 'app/navigation/drawer/drawer-content.js',
     },
     {
       template: 'app/navigation/layouts.js.ejs',
-      target: 'app/navigation/layouts.js'
+      target: 'app/navigation/layouts.js',
     },
     {
       template: 'app/modules/home/learn-more-links.component.js.ejs',
-      target: 'app/modules/home/learn-more-links.component.js'
+      target: 'app/modules/home/learn-more-links.component.js',
     },
     {
       template: 'app/modules/login/login-screen.js.ejs',
-      target: 'app/modules/login/login-screen.js'
+      target: 'app/modules/login/login-screen.js',
     },
     {
       template: 'app/modules/account/register/register-screen.js.ejs',
-      target: 'app/modules/account/register/register-screen.js'
+      target: 'app/modules/account/register/register-screen.js',
     },
     {
       template: 'app/shared/services/api.js.ejs',
-      target: 'app/shared/services/api.js'
+      target: 'app/shared/services/api.js',
     },
     {
       template: 'app/modules/login/login.reducer.js.ejs',
-      target: 'app/modules/login/login.reducer.js'
+      target: 'app/modules/login/login.reducer.js',
     },
     {
       template: 'test/spec/modules/login/login.reducer.spec.js.ejs',
-      target: 'test/spec/modules/login/login.reducer.spec.js'
+      target: 'test/spec/modules/login/login.reducer.spec.js',
     },
     {
       template: 'app/modules/login/login.sagas.js.ejs',
-      target: 'app/modules/login/login.sagas.js'
+      target: 'app/modules/login/login.sagas.js',
     },
     {
       template: 'test/spec/modules/login/login.sagas.spec.js.ejs',
-      target: 'test/spec/modules/login/login.sagas.spec.js'
+      target: 'test/spec/modules/login/login.sagas.spec.js',
     },
     {
       template: 'app/shared/services/fixture-api.js.ejs',
-      target: 'app/shared/services/fixture-api.js'
+      target: 'app/shared/services/fixture-api.js',
     },
     {
       template: 'app/shared/fixtures/login.json.ejs',
-      target: 'app/shared/fixtures/login.json'
+      target: 'app/shared/fixtures/login.json',
     },
     {
       template: 'app/shared/sagas/index.js.ejs',
-      target: 'app/shared/sagas/index.js'
+      target: 'app/shared/sagas/index.js',
     },
     {
       template: 'app/shared/sagas/call-api.saga.js.ejs',
-      target: 'app/shared/sagas/call-api.saga.js'
+      target: 'app/shared/sagas/call-api.saga.js',
     },
     {
       template: 'app/shared/sagas/startup.saga.js.ejs',
-      target: 'app/shared/sagas/startup.saga.js'
+      target: 'app/shared/sagas/startup.saga.js',
     },
     {
       template: 'test/spec/shared/sagas/startup.saga.spec.js.ejs',
-      target: 'test/spec/shared/sagas/startup.saga.spec.js'
+      target: 'test/spec/shared/sagas/startup.saga.spec.js',
     },
     {
       template: 'test/setup.js.ejs',
-      target: 'test/setup.js'
+      target: 'test/setup.js',
     },
     {
       template: 'app/shared/reducers/create-store.js.ejs',
-      target: 'app/shared/reducers/create-store.js'
+      target: 'app/shared/reducers/create-store.js',
     },
     {
       template: 'fastlane/Appfile.ejs',
-      target: 'fastlane/Appfile'
+      target: 'fastlane/Appfile',
     },
     {
       template: 'fastlane/Fastfile.ejs',
-      target: 'fastlane/Fastfile'
+      target: 'fastlane/Fastfile',
     },
     {
       template: 'fastlane/Matchfile.ejs',
-      target: 'fastlane/Matchfile'
+      target: 'fastlane/Matchfile',
     },
     {
       template: '../templates/Podfile.ejs',
-      target: `ios/Podfile`
-    }
+      target: `ios/Podfile`,
+    },
   ]
 
   await copyBatch(context, templates, props, {
     quiet: true,
-    directory: `${__dirname}/../../boilerplate`
+    directory: `${__dirname}/../../boilerplate`,
   })
 
   /**
@@ -189,28 +189,36 @@ module.exports = async function (context, props, jhipsterConfig) {
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
       const oauth2Files = []
       if (!isMonolith) {
-        oauth2Files.push({ template: 'OAuth2SsoConfiguration.java.ejs', target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java` })
+        oauth2Files.push({
+          template: 'OAuth2SsoConfiguration.java.ejs',
+          target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java`,
+        })
       }
       await copyBatch(context, oauth2Files, props, {
         quiet: true,
-        directory: `${__dirname}/../../templates/jhipster/oauth2`
+        directory: `${__dirname}/../../templates/jhipster/oauth2`,
       })
       const keycloakConfigFile = 'src/main/docker/realm-config/jhipster-realm.json'
       if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`)) {
-        await patchInFile(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`,
-          {
-            replace: `"dev.localhost.ionic:*"`,
-            insert: `"dev.localhost.ionic:*", "${props.name.toLowerCase()}://*"`
-          }
-        )
+        await patchInFile(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`, {
+          replace: `"dev.localhost.ionic:*"`,
+          insert: `"dev.localhost.ionic:*", "${props.name.toLowerCase()}://*"`,
+        })
       }
       const securityConfigFile = 'SecurityConfiguration'
-      if (isMonolith && fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`)) {
-        await patchInFile(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
+      if (
+        isMonolith &&
+        fs.existsSync(
+          `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
+        )
+      ) {
+        await patchInFile(
+          context,
+          `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/${securityConfigFile}.java`,
           {
             replace: '.antMatchers("/api/**").authenticated()',
-            insert: '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()'
-          }
+            insert: '.antMatchers("/api/auth-info").permitAll()\n            .antMatchers("/api/**").authenticated()',
+          },
         )
       }
     }
@@ -257,8 +265,16 @@ module.exports = async function (context, props, jhipsterConfig) {
     // })
 
     // copy the WebsocketConfiguration.java to the jhipsterDirectory
-    if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`)) {
-      await patchInFile(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`, { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' })
+    if (
+      fs.existsSync(
+        `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`,
+      )
+    ) {
+      await patchInFile(
+        context,
+        `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/WebsocketConfiguration.java`,
+        { replace: '"/websocket/tracker"', insert: '"/websocket/tracker", "/websocket/chat"' },
+      )
     }
     spinner.stop()
   } else {

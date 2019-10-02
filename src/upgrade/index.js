@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 
 module.exports = {
   description: 'Upgrades an existing IgniteJHipster project to the latest boilerplate code.',
-  run: async function (context) {
+  run: async function(context) {
     // grab some features
     const { ignite, print } = context
 
@@ -19,7 +19,7 @@ module.exports = {
       searchEngine: this.igniteConfig.searchEngine,
       websockets: this.igniteConfig.websockets,
       detox: this.igniteConfig.detox,
-      jhipsterDirectory: this.igniteConfig.jhipsterDirectory
+      jhipsterDirectory: this.igniteConfig.jhipsterDirectory,
     }
 
     const jhipsterConfig = await fs.readJson('.jhipster/yo-rc.json')
@@ -27,5 +27,5 @@ module.exports = {
 
     Insight.trackGenerator(context, 'upgrade')
     print.success(`Application successfully upgraded!`)
-  }
+  },
 }
