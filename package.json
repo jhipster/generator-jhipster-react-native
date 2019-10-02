@@ -49,10 +49,10 @@
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",
-    "eslint": "6.2.2",
+    "eslint": "6.5.1",
     "jest": "24.9.0",
-    "np": "5.0.3",
     "standard": "13.1.0",
+    "np": "5.1.0",
     "tempy": "0.3.0"
   },
   "dependencies": {
