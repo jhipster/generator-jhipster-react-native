@@ -5,7 +5,7 @@
  *
  * @param {any} context - The gluegun context.
  */
-async function add (context) {
+async function add (context) { // eslint-disable-line no-unused-vars
   // await screenExamples.add(context)
 }
 
@@ -14,7 +14,7 @@ async function add (context) {
  *
  * @param {any} context - The gluegun context.
  */
-async function remove (context) {
+async function remove (context) { // eslint-disable-line no-unused-vars
   // await screenExamples.remove(context)
 }
 

@@ -1,5 +1,5 @@
 const boilerplate = require('../boilerplate')
 
-test('boilerplate interface', async () => {
+test('boilerplate interface', () => {
   expect(typeof boilerplate.install).toBe('function')
 })

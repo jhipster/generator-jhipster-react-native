@@ -27,9 +27,9 @@ const patchReactNativeNavigation = async (context = {}, props) => {
     directory: `${__dirname}/../../templates/react-native-navigation/`
   })
 
-  spinner.succeed('set up react-native-navigation for iOS/Android')
   await updateIosFiles(context, props)
-  await updateAndroidFiles(context, props)
+  await updateAndroidFiles(context)
+  spinner.succeed('set up react-native-navigation for iOS/Android')
 }
 const updateIosFiles = async (context, props) => {
   /*eslint-disable */
@@ -53,7 +53,7 @@ const updateIosFiles = async (context, props) => {
   /* eslint-enable */
 }
 
-const updateAndroidFiles = async (context, props) => {
+const updateAndroidFiles = async (context) => {
   // settings.gradle
   await patchInFile(context, `${process.cwd()}/android/settings.gradle`, {
     after: `include ':app'`,

@@ -107,14 +107,15 @@ async function install (context) {
   }
 
   if (!props.detox && props.detox !== false) {
-    props.detox = (await prompt.ask(prompts.detox)).detox
+    const detoxPromptResponse = await prompt.ask(prompts.detox)
+    props.detox = detoxPromptResponse.detox
   }
 
   props.skipGit = parameters.options['skip-git']
   props.skipCommitHook = parameters.options['skip-commit-hook']
 
   // is the npm flag present, or is yarn not available?
-  const useNpm = Boolean(parameters.options.npm) || !Boolean(system.which('yarn'))
+  const useNpm = Boolean(parameters.options.npm) || !system.which('yarn')
   print.info(`Using ${useNpm ? 'npm' : 'yarn'} as the package manager`)
   props.useNpm = useNpm
 

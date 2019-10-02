@@ -87,7 +87,6 @@ module.exports = async function (generator, igniteContext) {
       const jhipsterVersion = jhipsterConfig['generator-jhipster'].jhipsterVersion
       if (jhipsterVersion && semver.lt(jhipsterVersion, '5.9.0')) {
         props.microservicePath = `${entityConfig.microserviceName}/`
-      } else {
       }
     } catch (e) {
       print.warning(`Couldn't find JHipster version, generating v6 microservice routes`)

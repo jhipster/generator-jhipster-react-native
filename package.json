@@ -26,32 +26,16 @@
     "url": "https://github.com/ruddell/ignite-jhipster"
   },
   "scripts": {
-    "lint": "standard",
+    "lint": "eslint ./src ./test ./*.js --ext js",
     "test": "jest --runInBand",
     "watch": "jest --runInBand --watch",
     "coverage": "jest --runInBand --coverage",
     "shipit": "np"
   },
-  "standard": {
-    "parser": "babel-eslint",
-    "globals": [
-      "__DEV__",
-      "describe",
-      "expect",
-      "test",
-      "jasmine",
-      "beforeAll",
-      "afterAll"
-    ],
-    "ignore": [
-      "boilerplate/"
-    ]
-  },
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "eslint": "6.5.1",
     "jest": "24.9.0",
-    "standard": "13.1.0",
     "np": "5.1.0",
     "tempy": "0.3.0"
   },
