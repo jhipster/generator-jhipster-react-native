@@ -113,6 +113,17 @@ async function install(context) {
   // needed because it can be true or false, but if not provided it's prompted
   props.detox = JSON.parse(props.detox)
 
+  // check for cocoapods
+  if (process.platform === 'darwin') {
+    // if cocoapods is installed, install the oauth dependencies
+    const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
+    if (podVersionCommandResult.status !== 0) {
+      print.error('Cocoapods is required for Ignite JHipster when generating on a Mac')
+      print.info('Please see https://guides.cocoapods.org/using/getting-started.html')
+      process.exit(1)
+    }
+  }
+
   // attempt to install React Native or die trying
   const rnInstall = await reactNative.install({
     name,
