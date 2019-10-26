@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
-  "version": "3.3.0",
+  "version": "3.3.1",
   "files": [
     "boilerplate",
     "commands",
@@ -37,8 +37,8 @@
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "eslint": "6.5.1",
-    "lint-staged": "9.3.0",
     "jest": "24.9.0",
+    "lint-staged": "9.3.0",
     "np": "5.1.0",
     "tempy": "0.3.0"
   },
