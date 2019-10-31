@@ -17,5 +17,5 @@ about: Create a report to help us improve
 <!-- If your bug relates to entities, please include your JDL file or the entity JSON that will reproduce the issue  -->
 
 **Versions (please complete the following information):**
- - Ignite JHipster Version: 
+ - Ignite JHipster Version:
  - `ignite doctor` output:
