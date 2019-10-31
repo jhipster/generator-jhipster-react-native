@@ -25,7 +25,7 @@ ignite generate import-jdl <jdl-filename>
 ignite generate upgrade
 ```
 
-- Upgrades your generated app to the latest template code.  Make sure to upgrade `ignite-jhipster` in your `package.json` first.
+- Upgrades your generated app to the latest template code. Make sure to upgrade `ignite-jhipster` in your `package.json` first.
 - It's recommended to use `git` and branches to merge changes into your code.
-  - The command below will keep all of your changes while merging any updates.  If there are conflicts, you will need to manually merge the changes.
+  - The command below will keep all of your changes while merging any updates. If there are conflicts, you will need to manually merge the changes.
   - `git merge -s recursive -Xours <branch name>`

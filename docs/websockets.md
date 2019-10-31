@@ -1,6 +1,6 @@
 ## Websockets
 
-A websockets example is present under the "Chat" menu item in the DrawerContent.  To enable this in your JHipster backend, Ignite JHipster made the following changes to your JHipster app's WebsocketConfiguration.java:
+A websockets example is present under the "Chat" menu item in the DrawerContent. To enable this in your JHipster backend, Ignite JHipster made the following changes to your JHipster app's WebsocketConfiguration.java:
 
 ```text
 src/main/java/.../config/WebsocketConfiguration.java

@@ -30,7 +30,7 @@
     "test": "jest --runInBand",
     "watch": "jest --runInBand --watch",
     "precommit": "lint-staged",
-    "prettier": "prettier --write \"src/**/*.js\" \"test/**/*.js\"",
+    "prettier": "prettier --write \"src/**/*.js\" \"test/**/*.js\"  \"**/*.md\"",
     "coverage": "jest --runInBand --coverage",
     "shipit": "np"
   },
@@ -62,6 +62,10 @@
     "{,app/**/,test/**/}*.{js}": [
       "prettier --write",
       "eslint --fix --ext .js",
+      "git add"
+    ],
+    "{,**/}*.{md}": [
+      "prettier --write",
       "git add"
     ]
   }

@@ -4,15 +4,15 @@
 
 You can pass flags for each of the options.
 
-| Flag                     | Possible Values                | Action                                         |
-| ------------------------ | ------------------------------ | ---------------------------------------------- |
-| `--jh-dir`               | backend, ../backend            | The JHipster app's directory                   |
-| `--jdl`                  | app.jdl                        | Pass a JDL file in place of an app directory   |
-| `--detox`                | true, false                    | Enables Detox E2E tests                        |
-| `--skip-git`             |                                | Skips git init                                 |
-| `--skip-commit-hook`     |                                | Skips `lint-staged` initialization             |
-| `--react-native-version` | 0.60.0                         | Install specific React Native version          |
-| `--npm`                  |                                | Uses npm in place of yarn when generating      |
+| Flag                     | Possible Values     | Action                                       |
+| ------------------------ | ------------------- | -------------------------------------------- |
+| `--jh-dir`               | backend, ../backend | The JHipster app's directory                 |
+| `--jdl`                  | app.jdl             | Pass a JDL file in place of an app directory |
+| `--detox`                | true, false         | Enables Detox E2E tests                      |
+| `--skip-git`             |                     | Skips git init                               |
+| `--skip-commit-hook`     |                     | Skips `lint-staged` initialization           |
+| `--react-native-version` | 0.60.0              | Install specific React Native version        |
+| `--npm`                  |                     | Uses npm in place of yarn when generating    |
 
 ### JDL App Generation
 

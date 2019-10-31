@@ -59,7 +59,7 @@ After generating, you can use the [entity generator, JDL importer, and other com
 #### Notes for Android
 
 - When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
-- When building the Android app manually, prepend `app:` to the command (due to React Native Navigation).  For example: `./gradlew app:bundleRelease`
+- When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
 
 [npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
 [npm-url]: https://npmjs.org/package/ignite-jhipster
