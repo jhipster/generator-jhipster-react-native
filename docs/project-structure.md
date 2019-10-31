@@ -5,6 +5,7 @@ The project structure is as close to JHipster's React client as possible.
 `index.js` is the entrypoint of the app.  It bootstraps React Native Navigation and sends the user to the launch screen.
 
 ## app
+
 Your `app` folder is where most of the files are found in an Ignite JHipster.
 Let's walk through them in more detail. Start with the `config` folder and work your way down the walkthrough in order.
 
@@ -18,10 +19,11 @@ Initialize and configure things here.
 * `redux-persist.js` - configures Redux Persist
 
 ### modules
+
 #### account
 
 Contains files for handling registration, password management, and user settings.
- 
+
 #### chat (websockets only)
 
 * `chat-screen.js` - shows live chat messages from other users
