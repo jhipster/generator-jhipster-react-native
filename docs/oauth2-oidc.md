@@ -1,6 +1,6 @@
 ## OAuth2 OIDC
 
-For a full walkthrough of generating and configuring OAuth2 with Ignite JHipster, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [Youtube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
+For a full walkthrough of generating and configuring OAuth2 with Ignite JHipster, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [YouTube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
 
 
 ### Backend Generated Files

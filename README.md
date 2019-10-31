@@ -5,7 +5,7 @@
 
 A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.  
 
-Check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en) or the [presentation at JHipster Conf on Youtube](https://youtu.be/QZMAH2q6ViI).
+Check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en) or the [presentation at JHipster Conf on YouTube](https://youtu.be/QZMAH2q6ViI).
 
 ## Docs
  - [Getting Started](README.md#getting-started)
@@ -16,7 +16,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
    - [Websockets](docs/websockets.md)
  - React Native Integrations
    - [Storybook](docs/storybook.md) - Develop UI components in isolation
-   - [Fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
+   - [fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
    - [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
    - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
    - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
@@ -30,7 +30,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
  - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
     - Install with `npm install -g ignite-cli`
     - Verify version with `ignite --version`
- - Mac users require [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) to be installed
+ - Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
     - Verify `pod` installation with `pod install`
  - Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
 
