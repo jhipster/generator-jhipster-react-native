@@ -113,12 +113,12 @@ async function install(context) {
   // needed because it can be true or false, but if not provided it's prompted
   props.detox = JSON.parse(props.detox)
 
-  // check for cocoapods
+  // check for CocoaPods
   if (process.platform === 'darwin') {
-    // if cocoapods is installed, install the oauth dependencies
+    // if CocoaPods is installed, install the oauth dependencies
     const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
     if (podVersionCommandResult.status !== 0) {
-      print.error('Cocoapods is required for Ignite JHipster when generating on a Mac')
+      print.error('CocoaPods is required for Ignite JHipster when generating on a Mac')
       print.info('Please see https://guides.cocoapods.org/using/getting-started.html')
       process.exit(1)
     }
@@ -267,7 +267,7 @@ async function install(context) {
   if (props.authType === 'oauth2') {
     print.info(print.colors.bold(`Before iOS apps can be run, there are steps that must be complete manually`))
     if (showCocoapodsInstructions) {
-      print.info(print.colors.blue(`Cocoapods not found, please install Cocooapods and run 'pod install' from your app's ios directory.`))
+      print.info(print.colors.blue(`CocoaPods not found, please install CocooaPods and run 'pod install' from your app's ios directory.`))
     }
     print.info(
       'For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md',
