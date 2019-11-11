@@ -221,8 +221,14 @@ async function install(context) {
     const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
     if (podVersionCommandResult.status === 0) {
       spinner.text = `▸ running pod install`
-      await system.run('cd ios && pod install && cd ..', { stdio: 'ignore' })
-      spinner.succeed(`pod install succeeded`)
+      try {
+        await system.run('cd ios && pod install && cd ..', { stdio: 'ignore' })
+        spinner.succeed(`pod install succeeded`)
+      } catch (e) {
+        spinner.stopAndPersist({ symbol: '🚨', text: 'pod install failed, please try again manually:' })
+        print.info(`cd ios && pod install && cd ..`)
+        print.error(e)
+      }
     } else {
       showCocoapodsInstructions = true
     }
