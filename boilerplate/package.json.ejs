@@ -122,13 +122,13 @@
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= props.name %>.app",
         "build": "xcodebuild -workspace ios/<%= props.name %>.xcworkspace -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone X"
+        "name": "iPhone 11"
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= props.name %>.app",
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/<%= props.name %>.xcworkspace -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
-        "name": "iPhone X"
+        "name": "iPhone 11"
       }
     },
     "test-runner": "mocha"
