@@ -25,7 +25,7 @@ describe('Login Screen Tests', () => {
     await Utils.loginAsUser()
     await expect(element(by.id('launchScreen'))).toBeVisible()
     await element(by.id('menuButton')).tap()
-    await expect(element(by.id('logoutDrawerButton'))).toBeVisible()
+    await expect(element(by.id('logoutDrawerButton'))).toExist()
   })
 
   it('should log out successfully', async () => {
