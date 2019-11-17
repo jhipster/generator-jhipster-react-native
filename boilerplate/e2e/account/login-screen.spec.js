@@ -32,6 +32,6 @@ describe('Login Screen Tests', () => {
     await element(by.id('menuButton')).tap()
     await element(by.id('logoutDrawerButton')).tap()
     await element(by.id('menuButton')).tap()
-    await expect(element(by.id('loginDrawerButton'))).toBeVisible()
+    await expect(element(by.id('loginDrawerButton'))).toExist()
   })
 })
