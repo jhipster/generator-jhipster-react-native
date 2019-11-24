@@ -17,7 +17,7 @@ Contains information identifying your app.
 
 #### Fastfile
 
-fastlane uses a "lane" concept, which is basically a function. A lane contains logic for building and uploading your app to the app stores. The generated Fastfile contains two lanes, one for each platform (iOS and Android).
+fastlane uses a "lane" concept, which is similar to a function or method. A lane contains logic for building and uploading your app to the app stores. The generated Fastfile contains two lanes, one for each platform (iOS and Android).
 
 #### Matchfile
 

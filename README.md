@@ -36,7 +36,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
   - Verify version with `ignite --version`
 - Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
   - Verify `pod` installation with `pod install`
-- Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging super simple and comes preconfigured
+- Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging much easier and comes pre-configured
 
 To generate an app, run the following command:
 

@@ -11,9 +11,9 @@ Let's walk through them in more detail. Start with the `config` folder and work 
 
 ### config
 
-Initialize and configure things here.
+Initialize and configure things in this folder.
 
-- `app-config.js` - simple React Native configuration here, contains the JHipster API url and app URL scheme
+- `app-config.js` - configuration for your React Native app, contains the JHipster API url and app URL scheme
 - `debug-config.js` - define how you want your debug environment to act
 - `reactotron-config.js` - configures [Reactotron](https://github.com/infinitered/reactotron) in your project.
 - `redux-persist.js` - configures Redux Persist

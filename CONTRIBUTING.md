@@ -10,7 +10,7 @@ git remote add upstream https://github.com/ruddell/ignite-jhipster.git
 
 ### Generating an App
 
-Generating an app using your local `ignite-jhipster` boilerplate is similar to normal, just pass the directory as a flag like:
+Generating an app using your local `ignite-jhipster` boilerplate is similar to normal.  Pass the boilerplate directory as a flag like:
 
 ```sh
 ignite new SampleApp -b /full/path/to/your/ignite-jhipster
