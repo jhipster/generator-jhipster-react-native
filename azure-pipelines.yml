@@ -47,8 +47,6 @@ jobs:
     inputs:
       versionSpec: '10.x'
     displayName: 'TOOLS: install Node.js'
-  - script: npm install -g npm
-    displayName: 'TOOLS: update NPM'
   - script: $(SCRIPT_DIR)/install-node-dependencies.sh
     displayName: 'TOOLS: install node dependencies'
   - script: $(SCRIPT_DIR)/install-detox.sh
