@@ -31,26 +31,24 @@
     "watch": "jest --runInBand --watch",
     "precommit": "lint-staged",
     "prettier": "prettier --write \"src/**/*.js\" \"test/**/*.js\"  \"**/*.md\"",
-    "coverage": "jest --runInBand --coverage",
-    "shipit": "np"
+    "coverage": "jest --runInBand --coverage"
   },
   "devDependencies": {
-    "babel-eslint": "10.0.3",
-    "eslint": "6.5.1",
-    "jest": "24.9.0",
-    "lint-staged": "9.3.0",
-    "np": "5.1.0",
-    "tempy": "0.3.0"
+    "babel-eslint": "10.1.0",
+    "eslint": "6.8.0",
+    "jest": "25.1.0",
+    "lint-staged": "10.0.8",
+    "tempy": "0.5.0"
   },
   "dependencies": {
     "fs-extra": "8.1.0",
     "insight": "0.10.3",
     "jhipster-core": "4.3.0",
     "pluralize": "8.0.0",
-    "prettier": "1.18.2",
-    "ramda": "0.26.1",
-    "rimraf": "3.0.0",
-    "semver": "6.3.0"
+    "prettier": "1.19.1",
+    "ramda": "0.27.0",
+    "rimraf": "3.0.2",
+    "semver": "7.1.3"
   },
   "jest": {
     "testPathIgnorePatterns": [
@@ -61,12 +59,10 @@
   "lint-staged": {
     "{,app/**/,test/**/}*.{js}": [
       "prettier --write",
-      "eslint --fix --ext .js",
-      "git add"
+      "eslint --fix --ext .js"
     ],
     "{,**/}*.{md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }
