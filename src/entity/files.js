@@ -426,7 +426,7 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
     insert: entityScreenImport,
   })
 
-  // todo run prettier on
+  // run prettier on generated files
   const filesToRunPrettierOn = [
     { target: 'app/shared/services/api.js' },
     { target: 'app/shared/services/fixture-api.js' },
@@ -434,6 +434,8 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
     { target: 'app/shared/reducers/index.js' },
     { target: 'app/navigation/layouts.js' },
     { target: 'app/modules/entities/entities-screen.js' },
+    ...entityFiles
   ]
+
   await prettierTransformBatch(filesToRunPrettierOn)
 }
