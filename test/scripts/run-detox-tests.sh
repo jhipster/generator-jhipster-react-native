@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # start the backend
-cd ../${SYSTEM_JOBNAME}-backend
+cd ../${JHI_IGNITE_APP_NAME}-backend
 nohup ./mvnw -ntp &
 
 # wait for the backend to start
