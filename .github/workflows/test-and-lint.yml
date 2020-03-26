@@ -1,0 +1,33 @@
+name: TestAndLint
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ${{ matrix.os }}
+    if: "!github.event.head_commit || !contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [12.16.1]
+        os: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+        # for running pipelines locally with `act`
+        env:
+          RUNNER_TEMP: "/tmp/"
+      - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
+        shell: bash
+      - name: Config git variables
+        env:
+          JHI_SCRIPTS: ./test/scripts
+        run: $JHI_SCRIPTS/git-config.sh
+        shell: bash
+      - name: npm ci
+        run: npm ci
+      - name: lint
+        run: npm run lint
+      - name: test
+        run: npm run coverage

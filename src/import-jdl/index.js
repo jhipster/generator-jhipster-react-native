@@ -47,7 +47,6 @@ module.exports = {
         }
       }
 
-      print.success(entityNames)
       // generate update entities
       for (let i = 0; i < entityNames.length; i++) {
         this.name = entityNames[i]
