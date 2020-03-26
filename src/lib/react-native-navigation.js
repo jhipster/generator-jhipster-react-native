@@ -62,11 +62,6 @@ const updateIosFiles = async (context, props) => {
 
 const updateAndroidFiles = async (context) => {
   // settings.gradle
-  await patchInFile(context, `${process.cwd()}/android/settings.gradle`, {
-    after: `include ':app'`,
-    insert: `include ':react-native-navigation'\nproject(':react-native-navigation').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-navigation/lib/android/app/')`,
-  })
-
   // build.gradle
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     before: `mavenLocal()`,
@@ -76,27 +71,26 @@ const updateAndroidFiles = async (context) => {
   })
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
+    replace: `classpath("com.android.tools.build:gradle:3.4.2")`,
+    insert: `classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
+        classpath 'com.android.tools.build:gradle:3.5.3'`,
+  })
+
+  await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     after: `repositories {`,
     insert: `        google()
         mavenLocal()
         mavenCentral()`,
   })
 
-  // react-native-init uses a later version so this is not currently needed
-  // await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
-  //   replace: `buildToolsVersion = "26.0.3"`,
-  //   insert: `buildToolsVersion = "28.0.3"`
-  // })
-
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     replace: `minSdkVersion = 16`,
     insert: `minSdkVersion = 19`,
   })
 
-  // app/build.gradle
-  await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
-    after: `versionCode 1`,
-    insert: `        missingDimensionStrategy "RNN.reactNativeVersion", "reactNative60"`,
+  await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
+    after: `  ext {`,
+    insert: `        RNNKotlinVersion = "1.3.61"\n        RNNKotlinStdlib = "kotlin-stdlib-jdk8"`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
@@ -117,12 +111,6 @@ const updateAndroidFiles = async (context) => {
           }
       }
   }`,
-  })
-  await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
-    after: `dependencies {`,
-    insert: `
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation project(':react-native-navigation')`,
   })
 }
 
