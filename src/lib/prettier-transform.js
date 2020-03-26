@@ -31,7 +31,7 @@ const defaultOptions = {
   // jsx and tsx rules:
   jsxBracketSameLine: false,
 }
-const prettierTransform = async file => {
+const prettierTransform = async (file) => {
   if (!file.target.endsWith('.js')) return
   /* resolve from the projects config */
   let options = await prettier.resolveConfig(file.target)
@@ -45,8 +45,8 @@ const prettierTransform = async file => {
   fs.writeFileSync(file.target, Buffer.from(data))
 }
 
-const prettierTransformBatch = async files => {
-  await Promise.all(files.map(file => prettierTransform(file)))
+const prettierTransformBatch = async (files) => {
+  await Promise.all(files.map((file) => prettierTransform(file)))
 }
 
 module.exports = {

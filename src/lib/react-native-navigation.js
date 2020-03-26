@@ -60,7 +60,7 @@ const updateIosFiles = async (context, props) => {
   /* eslint-enable */
 }
 
-const updateAndroidFiles = async context => {
+const updateAndroidFiles = async (context) => {
   // settings.gradle
   await patchInFile(context, `${process.cwd()}/android/settings.gradle`, {
     after: `include ':app'`,

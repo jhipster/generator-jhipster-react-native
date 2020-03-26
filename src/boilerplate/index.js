@@ -18,7 +18,7 @@ const pkg = require('../../package')
  * @param {*} context - The gluegun context.
  * @returns {boolean}
  */
-const isAndroidInstalled = function(context) {
+const isAndroidInstalled = function (context) {
   const androidHome = process.env['ANDROID_HOME']
   const hasAndroidEnv = !context.strings.isBlank(androidHome)
   const hasAndroid = hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'

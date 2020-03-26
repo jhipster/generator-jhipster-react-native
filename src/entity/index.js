@@ -4,7 +4,7 @@ const generateFiles = require('./files')
 const prompts = require('./prompts')
 module.exports = {
   description: 'Generates an entity component, redux, saga, api, listings, styles, and optional tests.',
-  run: async function(context) {
+  run: async function (context) {
     // grab some features
     const { ignite, parameters, print, prompt, strings } = context
     const { pascalCase, isBlank } = strings

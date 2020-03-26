@@ -5,7 +5,7 @@ const generateFiles = require('../entity/files')
 
 module.exports = {
   description: 'Imports a JHipster JDL file and generates the entities within the file.',
-  run: async function(context) {
+  run: async function (context) {
     // grab some features
     const { ignite, parameters, print, strings } = context
     const { isBlank } = strings
@@ -33,15 +33,15 @@ module.exports = {
       const importState = importJDL(jdlFiles, prodDatabaseType, applicationType, baseName, print)
       let entityNames = []
       if (importState.exportedEntities.length > 0) {
-        entityNames = importState.exportedEntities.map(exportedEntity => exportedEntity.name)
+        entityNames = importState.exportedEntities.map((exportedEntity) => exportedEntity.name)
         print.info(`Found entities: ${entityNames.join(', ')}.`)
       } else {
         print.info('No change in entity configurations, no entities were updated.')
         if (parameters.options.regenerate) {
           print.info('Regenerate Flag - regenerating all entities')
           fs.readdirSync('.jhipster')
-            .filter(file => file !== 'yo-rc.json')
-            .forEach(file => {
+            .filter((file) => file !== 'yo-rc.json')
+            .forEach((file) => {
               entityNames.push(file.split('.')[0])
             })
         }

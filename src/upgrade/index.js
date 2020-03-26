@@ -5,7 +5,7 @@ const fs = require('fs-extra')
 
 module.exports = {
   description: 'Upgrades an existing IgniteJHipster project to the latest boilerplate code.',
-  run: async function(context) {
+  run: async function (context) {
     // grab some features
     const { ignite, print } = context
 
