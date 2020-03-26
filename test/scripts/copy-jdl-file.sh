@@ -14,4 +14,4 @@ ENTITY_JDL="entities${DTO_SUFFIX}.jdl"
 echo "Using JDL files: ${APP_JDL} ${ENTITY_JDL}"
 
 # combine the app and entity JDL file
-cat ${BUILD_REPOSITORY_LOCALPATH}/test/jdl/${APP_JDL} ${BUILD_REPOSITORY_LOCALPATH}/test/jdl/${ENTITY_JDL} >> ../${SYSTEM_JOBNAME}.jdl
+cat ${GITHUB_WORKSPACE}/test/jdl/${APP_JDL} ${GITHUB_WORKSPACE}/test/jdl/${ENTITY_JDL} >> ../${JHI_IGNITE_APP_NAME}.jdl
