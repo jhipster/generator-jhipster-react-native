@@ -2,7 +2,7 @@
  * The files portion of the entity generator
  */
 
-module.exports = async function(generator, igniteContext) {
+module.exports = async function (generator, igniteContext) {
   const semver = require('semver')
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
@@ -33,7 +33,7 @@ module.exports = async function(generator, igniteContext) {
   let entityContainsLocalDate = false
   // load the entity config into memory
   const entityConfig = await fs.readJson(localEntityFilePath)
-  entityConfig.fields.forEach(field => {
+  entityConfig.fields.forEach((field) => {
     field.fieldIsEnum = ![
       'String',
       'Integer',
@@ -58,7 +58,7 @@ module.exports = async function(generator, igniteContext) {
   // these lists are to prevent double imports when there are multiple relations between the same entity
   const alreadyIncludedEntities = []
   const uniqueEntityRelationships = []
-  entityConfig.relationships.forEach(relation => {
+  entityConfig.relationships.forEach((relation) => {
     if (relation.relationshipType === 'many-to-one') {
       relation.ownerSide = true
     }
@@ -70,8 +70,8 @@ module.exports = async function(generator, igniteContext) {
     }
   })
 
-  entityConfig.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide)
-  entityConfig.ownerSideRelationships = entityConfig.relationships.filter(relation => relation.ownerSide)
+  entityConfig.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter((relation) => relation.ownerSide)
+  entityConfig.ownerSideRelationships = entityConfig.relationships.filter((relation) => relation.ownerSide)
 
   props.entityConfig = entityConfig
   props.entityContainsDate = entityContainsDate
@@ -434,7 +434,7 @@ export const ${camelCase(props.name)}EntityEditScreen = data =>
     { target: 'app/shared/reducers/index.js' },
     { target: 'app/navigation/layouts.js' },
     { target: 'app/modules/entities/entities-screen.js' },
-    ...entityFiles
+    ...entityFiles,
   ]
 
   await prettierTransformBatch(filesToRunPrettierOn)

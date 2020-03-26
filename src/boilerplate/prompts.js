@@ -9,7 +9,7 @@ module.exports = {
     type: 'input',
     store: true,
     default: 'backend',
-    validate: function(resp) {
+    validate: function (resp) {
       if (resp === '' || resp === undefined) {
         console.log('Path is required')
         return false

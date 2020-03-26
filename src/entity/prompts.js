@@ -9,7 +9,7 @@ const entityPrompts = [
     type: 'input',
     store: true,
     default: '../',
-    validate: function(resp) {
+    validate: function (resp) {
       if (resp === '' || resp === undefined) {
         console.log('Path is required')
         return false

@@ -4,7 +4,7 @@ const semver = require('semver')
 /**
  * The files portion of the entity generator
  */
-module.exports = async function(context, props, jhipsterConfig) {
+module.exports = async function (context, props, jhipsterConfig) {
   const { filesystem, print, strings } = context
   const { camelCase, upperFirst } = strings
   const { copyBatch } = require('../lib/copy-batch')

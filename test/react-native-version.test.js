@@ -10,7 +10,7 @@ const DEFAULT = boilerplate.REACT_NATIVE_VERSION
  * @param {*} reactNativeVersion The React Native version to use.
  * @return {string} The version number we should be using.
  */
-const mock = reactNativeVersion =>
+const mock = (reactNativeVersion) =>
   get({
     parameters: {
       options: {
