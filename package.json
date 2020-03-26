@@ -27,18 +27,18 @@
   },
   "scripts": {
     "lint": "eslint ./src ./test ./*.js --ext js",
-    "test": "jest --runInBand",
-    "watch": "jest --runInBand --watch",
+    "test": "jest test/*.js --runInBand",
+    "watch": "jest test/*.js --runInBand --watch",
     "precommit": "lint-staged",
     "prettier": "prettier --write \"src/**/*.js\" \"test/**/*.js\"  \"**/*.md\"",
-    "coverage": "jest --runInBand --coverage"
+    "coverage": "jest test/*.js --runInBand --coverage"
   },
   "devDependencies": {
     "babel-eslint": "10.1.0",
     "eslint": "6.8.0",
+    "eslint-config-prettier": "6.10.1",
     "jest": "25.1.0",
-    "lint-staged": "10.0.8",
-    "tempy": "0.5.0"
+    "lint-staged": "10.0.8"
   },
   "dependencies": {
     "fs-extra": "8.1.0",

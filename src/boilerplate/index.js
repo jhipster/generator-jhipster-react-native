@@ -1,5 +1,5 @@
 const prompts = require('./prompts')
-const { merge, pipe, assoc, omit, __ } = require('ramda')
+const { mergeDeepRight, pipe, assoc, omit, __ } = require('ramda')
 const { getReactNativeVersion } = require('../lib/react-native-version')
 const { patchReactNativeNavigation } = require('../lib/react-native-navigation')
 const Insight = require('../lib/insight')
@@ -161,12 +161,12 @@ async function install(context) {
     // read in the react-native created package.json
     const currentPackage = filesystem.read('package.json', 'json')
 
-    // deep merge, lol
+    // deep merge
     const newPackage = pipe(
-      assoc('dependencies', merge(currentPackage.dependencies, newPackageJson.dependencies)),
-      assoc('devDependencies', merge(currentPackage.devDependencies, newPackageJson.devDependencies)),
-      assoc('scripts', merge(currentPackage.scripts, newPackageJson.scripts)),
-      merge(__, omit(['dependencies', 'devDependencies', 'scripts'], newPackageJson)),
+      assoc('dependencies', mergeDeepRight(currentPackage.dependencies, newPackageJson.dependencies)),
+      assoc('devDependencies', mergeDeepRight(currentPackage.devDependencies, newPackageJson.devDependencies)),
+      assoc('scripts', mergeDeepRight(currentPackage.scripts, newPackageJson.scripts)),
+      mergeDeepRight(__, omit(['dependencies', 'devDependencies', 'scripts'], newPackageJson)),
     )(currentPackage)
 
     // write this out

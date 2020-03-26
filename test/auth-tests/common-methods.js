@@ -1,14 +1,13 @@
 const execa = require('execa')
-const tempy = require('tempy')
 
 const APP = 'IntegrationApp'
-const BOILERPLATE = `${__dirname}/..`
-const testFolder = `${__dirname}`
+const BOILERPLATE = `${__dirname}/../..`
+const testFolder = `${__dirname}/..`
 
 const copyFilesAndGenerateApp = async (authType, useDto) => {
   // creates a new temp directory
-  process.chdir(tempy.directory())
-  console.log('Generating app...')
+  process.chdir('/tmp')
+  console.log('Generating App...')
 
   // create a dummy jhipster backend
   await execa('mkdir', ['backend'])
@@ -17,7 +16,7 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
   await execa('cp', [`${testFolder}/jdl/entities${useDto ? '-dto' : ''}.jdl`, 'backend/backend.jdl'])
   await execa('cp', [`${testFolder}/.jhipster/FieldTestEntity.json`, 'backend/.jhipster/FieldTestEntity.json'])
 
-  const generationLog = await execa('ignite', [
+  const generationProcess = execa('ignite', [
     'new',
     APP,
     '--jh-dir=backend',
@@ -27,12 +26,14 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
     '--boilerplate',
     BOILERPLATE,
   ])
-  console.log(generationLog.stdout)
+  generationProcess.stdout.pipe(process.stdout)
+  await generationProcess
   process.chdir(APP)
 }
 
 const generateEntities = async () => {
-  const linkingLog = await execa('yarn', ['link', 'ignite-jhipster'])
+  console.log('Linking local ignite-jhipster')
+  const linkingLog = await execa('npm', ['link', 'ignite-jhipster'])
   console.log(linkingLog.stdout)
   console.log('Generating entities...')
   await execa('ignite', ['g', 'entity', 'FieldTestEntity', '--jh-dir=../backend'])
@@ -46,7 +47,7 @@ const generateEntities = async () => {
 }
 
 const lintBoilerplate = async () => {
-  console.log('Linting app')
+  console.log('Linting App')
   const lint = await execa('npm', ['-s', 'run', 'lint'])
   expect(lint.stderr).toBe('')
 }
