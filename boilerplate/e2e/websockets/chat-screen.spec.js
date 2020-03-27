@@ -6,7 +6,7 @@ describe('Chat Screen Tests', () => {
     await Utils.loginAsUser()
   })
   after(async () => {
-    await element(by.type('_UIBackButtonContainerView')).tap()
+    await Utils.goBack()
     await Utils.logout()
   })
 

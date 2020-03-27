@@ -72,6 +72,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             config: {
               format: date => jsDateToLocalDate(date)
             },
+            <%_ } else if (field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') { _%>
+            mode: 'date',
             <%_ } _%>
             <%_ if (nextFieldName) { _%>
             returnKeyType: 'next',
@@ -158,8 +160,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       )
     }
     return (
-      <KeyboardAwareScrollView>
-        <ScrollView style={styles.container} testID='entityScrollView'>
+      <View style={styles.container}>
+        <KeyboardAwareScrollView  testID='entityScrollView'>
           <Form
             ref={c => {
               this.form = c
@@ -169,11 +171,11 @@ class <%= props.name %>EntityEditScreen extends React.Component {
             value={this.state.formValue}
             onChange={this.formChange}
           />
-          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
+        </KeyboardAwareScrollView>
+        <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
             <Text style={styles.buttonText}>Save</Text>
-          </TouchableHighlight>
-        </ScrollView>
-      </KeyboardAwareScrollView>
+        </TouchableHighlight>
+      </View>
     )
   }
 }
