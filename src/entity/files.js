@@ -357,6 +357,7 @@ export const ${camelCase(props.name)}EntityScreen = () =>
               id: 'createButton',
               text: 'Create',
               color: Colors.snow,
+              testID: '${camelCase(props.name)}CreateButton'
             },
           ],
         },

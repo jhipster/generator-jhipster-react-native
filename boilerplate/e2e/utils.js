@@ -17,8 +17,16 @@ const logout = async () => {
   await element(by.id('logoutDrawerButton')).tap()
 }
 
+const goBack = async () => {
+  if (device.getPlatform() === 'ios') {
+    await Utils.goBack();
+  } else {
+    await device.pressBack();
+  }
+}
 module.exports = {
   navigateToLoginScreen,
   loginAsUser,
+  goBack,
   logout
 }

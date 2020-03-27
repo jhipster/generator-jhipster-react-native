@@ -6,8 +6,8 @@ describe('<%= props.name %> Screen Tests', () => {
     await Utils.loginAsUser()
   })
   after(async () => {
-    await element(by.type('_UIBackButtonContainerView')).tap()
-    await element(by.type('_UIBackButtonContainerView')).tap()
+    await Utils.goBack()
+    await Utils.goBack()
     await Utils.logout()
   })
 
@@ -27,7 +27,7 @@ describe('<%= props.name %> Screen Tests', () => {
     await expect(element(by.id('<%= camelCase(props.name) %>Screen'))).toBeVisible()
     await expect(element(by.text('Create'))).toBeVisible()
     // create
-    await element(by.text('Create').and(by.type('UIButtonLabel'))).tap()
+    await element(by.id('<%= camelCase(props.name) %>CreateButton')).tap()
     <%_ props.entityConfig.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
@@ -46,7 +46,6 @@ describe('<%= props.name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
       <%_ } _%>
     <%_ }) _%>
-    await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down')
     await element(by.id('submitButton')).tap()
     await element(by.text('View')).tap()
     <%_ props.entityConfig.fields.forEach((field, index) => {
@@ -87,7 +86,6 @@ describe('<%= props.name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
     <%_ } _%>
     <%_ }) _%>
-    await waitFor(element(by.id('submitButton'))).toBeVisible().whileElement(by.id('entityScrollView')).scroll(50, 'down')
     await element(by.id('submitButton')).tap()
     await element(by.text('OK')).tap()
     <%_ props.entityConfig.fields.forEach((field, index) => {
