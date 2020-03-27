@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+#set -e
 
 git version
 java -version
@@ -10,5 +10,10 @@ npm -v
 #docker-compose version
 pwd
 ignite doctor
-applesimutils --list
+
+if [ "$PLATFORM" = "ios" ]; then
+  applesimutils --list
+else
+  echo $ANDROID_HOME
+fi
 env

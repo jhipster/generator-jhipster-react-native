@@ -33,4 +33,8 @@ if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
 fi
 
 # run the detox tests
-detox test --configuration ios.sim.release
+if [ "$PLATFORM" = "ios" ]; then
+  detox test --configuration ios.sim.release
+else
+  detox test --configuration android.emu.release
+fi
