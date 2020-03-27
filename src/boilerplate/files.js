@@ -19,6 +19,7 @@ module.exports = async function (context, props, jhipsterConfig) {
     props.uaaBaseUrl = jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase()
   }
 
+  props.androidPackageName = props.name.toLowerCase()
   // used for JHipster templates
   props.packageName = jhipsterConfig['generator-jhipster'].packageName
   props.packageFolder = jhipsterConfig['generator-jhipster'].packageFolder
@@ -68,6 +69,43 @@ module.exports = async function (context, props, jhipsterConfig) {
     if (!props.websockets) {
       await filesystem.remove(`${process.cwd()}/e2e/websockets`)
     }
+
+    // patch files for android detox
+    await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
+      after: `dependencies {`,
+      insert: `    androidTestImplementation(project(path: ":detox"))`,
+    })
+    await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
+      after: `versionName "1.0"`,
+      insert: `
+        testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'`,
+    })
+
+    await patchInFile(context, `${process.cwd()}/android/settings.gradle`, {
+      after: `include ':app'`,
+      insert: `
+include ':detox'
+project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules/detox/android/detox')`,
+    })
+
+    await patchInFile(context, `${process.cwd()}/android/app/src/main/AndroidManifest.xml`, {
+      after: `android:allowBackup="false"`,
+      insert: `      android:usesCleartextTraffic="true"`,
+    })
+
+    await fs.mkdirp(`${process.cwd()}/android/app/src/androidTest/java/com/${props.androidPackageName}`)
+    const detoxFiles = [
+      {
+        template: 'DetoxTest.java.ejs',
+        target: `${process.cwd()}/android/app/src/androidTest/java/com/${props.androidPackageName}/DetoxTest.java`,
+      }
+    ]
+    await copyBatch(context, detoxFiles, props, {
+      quiet: true,
+      directory: `${__dirname}/../../templates/detox/`,
+    })
+
   }
   spinner.stop()
 

@@ -130,6 +130,18 @@
         "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/<%= props.name %>.xcworkspace -UseNewBuildSystem=NO -scheme <%= props.name %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "name": "iPhone 11"
+      },
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew app:assembleDebug app:assembleAndroidTest -DtestBuildType=debug",
+        "type": "android.emulator",
+        "name": "Nexus_5X_API_28_x86"
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew app:assembleRelease app:assembleAndroidTest -DtestBuildType=release",
+        "type": "android.emulator",
+        "name": "Nexus_5X_API_28_x86"
       }
     },
     "test-runner": "mocha"
