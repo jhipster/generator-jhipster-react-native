@@ -7,7 +7,7 @@ module.exports = {
   description: 'Upgrades an existing IgniteJHipster project to the latest boilerplate code.',
   run: async function (context) {
     // grab some features
-    const { ignite, print } = context
+    const { ignite, print, system, parameters } = context
 
     // load the ignite config and set the default jhipster directory
     this.igniteConfig = ignite.loadIgniteConfig()
@@ -24,6 +24,10 @@ module.exports = {
 
     const jhipsterConfig = await fs.readJson('.jhipster/yo-rc.json')
     await generateFiles(context, props, jhipsterConfig)
+
+    // run prettier to pass lint on generation
+    const useNpm = Boolean(parameters.options.npm) || !system.which('yarn')
+    await system.run(`${useNpm ? 'npm' : 'yarn'} run prettier`, { stdio: 'ignore' })
 
     Insight.trackGenerator(context, 'upgrade')
     print.success(`Application successfully upgraded!`)

@@ -161,7 +161,7 @@ class <%= props.name %>EntityEditScreen extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView  testID='entityScrollView'>
+        <KeyboardAwareScrollView  testID='<%= camelCase(props.name) %>EditScrollView'>
           <Form
             ref={c => {
               this.form = c

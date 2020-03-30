@@ -5,6 +5,7 @@ import { Metrics, ApplicationStyles, Colors } from '../../shared/themes/'
 export default StyleSheet.create({
   ...ApplicationStyles.screen,
   welcomeText: {
+    textAlign: 'center',
     fontSize: 20,
     color: Colors.snow,
     fontWeight: '600',
