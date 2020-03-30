@@ -36,5 +36,10 @@ fi
 if [ "$PLATFORM" = "ios" ]; then
   detox test --configuration ios.sim.release
 else
+  bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release
+  DETOX_EXIT_CODE=$?
+  echo "Detox Exit Code: ${DETOX_EXIT_CODE}"
+  bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/stop-android-emulator.sh
+  exit $DETOX_EXIT_CODE
 fi
