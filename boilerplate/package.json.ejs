@@ -66,7 +66,7 @@
     "react-native-app-auth": "4.4.0",
     <%_ } _%>
     <%_ if (props.detox) { _%>
-    "detox": "16.0.1",
+    "detox": "16.0.2",
     "mocha": "7.1.1",
     <%_ } _%>
     "mockery": "2.1.0",
@@ -135,13 +135,17 @@
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "cd android && ./gradlew app:assembleDebug app:assembleAndroidTest -DtestBuildType=debug",
         "type": "android.emulator",
-        "name": "Nexus_5X_API_28_x86"
+        "device": {
+          "avdName": "Nexus_6_API_29"
+        }
       },
       "android.emu.release": {
         "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
         "build": "cd android && ./gradlew app:assembleRelease app:assembleAndroidTest -DtestBuildType=release",
         "type": "android.emulator",
-        "name": "Nexus_5X_API_28_x86"
+        "device": {
+          "avdName": "Nexus_6_API_29"
+        }
       }
     },
     "test-runner": "mocha"

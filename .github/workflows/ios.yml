@@ -4,7 +4,7 @@ jobs:
   generate:
     name: e2e-${{ matrix.app_type }}
     runs-on: macos-10.15
-    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
+    if: "false"
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -73,14 +73,14 @@ jobs:
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
         shell: bash
-      - run: $SCRIPT_DIR/copy-jdl-file.sh
-        name: 'SETUP: copy the JDL file for the backend and app'
-        shell: bash
       - run: npm ci && npm link
         name: 'TOOLS: npm install and link in ignite-jhipster'
         shell: bash
+      - run: $SCRIPT_DIR/copy-jdl-file.sh
+        name: 'SETUP: copy the JDL file for the backend and app'
+        shell: bash
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
-        name: 'PACKAGING: generate jhipster backend'
+        name: 'GENERATING: generate jhipster backend'
         shell: bash
       - run: $SCRIPT_DIR/generate-ignite-jhipster-app.sh
         name: 'GENERATING: generate ignite-jhipster app'

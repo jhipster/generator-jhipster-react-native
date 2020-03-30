@@ -1,10 +1,9 @@
-name: iOS-E2E
+name: Android-E2E
 on: [push, pull_request]
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}
-    container: android
-    runs-on: ubuntu-latest
+    runs-on: macos-10.15
 #    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]')"
     timeout-minutes: 60
     strategy:
@@ -38,9 +37,6 @@ jobs:
       SCRIPT_DIR: ./test/scripts
       PLATFORM: android
     steps:
-      - run: echo $ANDROID_HOME
-      - run: echo $ANDROID_SDK_HOME
-      - run: env | grep ANDROID
       - uses: actions/checkout@v2
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
         shell: bash
@@ -50,17 +46,20 @@ jobs:
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
         shell: bash
+      - run: $SCRIPT_DIR/install-detox.sh || $SCRIPT_DIR/install-detox.sh
+        name: 'TOOLS: installing Detox and its dependencies'
+        shell: bash
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
-        shell: bash
-      - run: $SCRIPT_DIR/copy-jdl-file.sh
-        name: 'SETUP: copy the JDL file for the backend and app'
         shell: bash
       - run: npm ci && npm link
         name: 'TOOLS: npm install and link in ignite-jhipster'
         shell: bash
+      - run: $SCRIPT_DIR/copy-jdl-file.sh
+        name: 'SETUP: copy the JDL file for the backend and app'
+        shell: bash
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
-        name: 'PACKAGING: generate jhipster backend'
+        name: 'GENERATING: generate jhipster backend'
         shell: bash
       - run: $SCRIPT_DIR/generate-ignite-jhipster-app.sh
         name: 'GENERATING: generate ignite-jhipster app'
@@ -68,9 +67,6 @@ jobs:
       - run: $SCRIPT_DIR/package-ignite-jhipster-app.sh
         name: 'PACKAGING: package ignite-jhipster app for detox'
         shell: bash
-##        todo upload APK and zip of JHipster backend
-##      - name: Upload APK
-##        uses: actions/upload-artifact@v1
-##        with:
-##          name: app
-##          path: app/build/outputs/apk/debug/app-debug.apk
+      - run: $SCRIPT_DIR/run-detox-tests.sh
+        name: 'TESTING: run detox tests'
+        shell: bash
