@@ -15,7 +15,7 @@ import styles from './entities-screen.styles'
 class EntitiesScreen extends React.Component {
   render () {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} testID="entityScreenScrollList">
         <Text style={styles.centerText}>JHipster Entities will appear below</Text>
         {/* ignite-jhipster-entity-screen-needle */}
       </ScrollView>

@@ -24,9 +24,15 @@ const goBack = async () => {
     await device.pressBack();
   }
 }
+
+const scrollTo = async (fieldId, listId) => {
+  await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(50, 'down', 0, 0)
+}
+
 module.exports = {
   navigateToLoginScreen,
   loginAsUser,
   goBack,
-  logout
+  logout,
+  scrollTo,
 }

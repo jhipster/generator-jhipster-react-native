@@ -51,7 +51,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
       return <View><Text>Loading...</Text></View>
     }
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} testID="<%= camelCase(props.name) %>DetailScrollView">
         <Text>ID: {this.props.<%= camelCase(props.name) %>.id}</Text>
         <%_ props.entityConfig.fields.forEach(function (field) { _%>
         <%_ if (field.fieldType === 'LocalDate') { _%>

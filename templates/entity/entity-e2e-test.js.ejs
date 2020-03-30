@@ -20,6 +20,7 @@ describe('<%= props.name %> Screen Tests', () => {
     await expect(element(by.id('launchScreen'))).toBeVisible()
     await element(by.id('menuButton')).tap()
     await element(by.id('entitiesDrawerButton')).tap()
+    await Utils.scrollTo('<%= camelCase(props.name) %>EntityScreenButton', 'entityScreenScrollList')
     await element(by.id('<%= camelCase(props.name) %>EntityScreenButton')).tap()
   }
 
@@ -40,7 +41,11 @@ describe('<%= props.name %> Screen Tests', () => {
       } else if (field.fieldIsEnum) {
         tcombFieldType = field.fieldType
       }
-      if (tcombFieldType === 'String') { _%>
+    _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCase(props.name) %>EditScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data')
       <%_ } else if (tcombFieldType === 'Number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
@@ -60,7 +65,11 @@ describe('<%= props.name %> Screen Tests', () => {
       } else if (field.fieldIsEnum) {
         tcombFieldType = field.fieldType
       }
-    if (tcombFieldType === 'String') { _%>
+    _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>', '<%= camelCase(props.name) %>DetailScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data')
     <%_ } else if (tcombFieldType === 'Number') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 123')
@@ -80,7 +89,11 @@ describe('<%= props.name %> Screen Tests', () => {
       } else if (field.fieldIsEnum) {
         tcombFieldType = field.fieldType
       }
-    if (tcombFieldType === 'String') { _%>
+      _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCase(props.name) %>EditScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
     <%_ } else if (tcombFieldType === 'Number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
