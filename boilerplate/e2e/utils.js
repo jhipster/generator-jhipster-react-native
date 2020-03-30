@@ -19,14 +19,14 @@ const logout = async () => {
 
 const goBack = async () => {
   if (device.getPlatform() === 'ios') {
-    await Utils.goBack();
+    await element(by.type('_UIBackButtonContainerView')).tap()
   } else {
     await device.pressBack();
   }
 }
 
 const scrollTo = async (fieldId, listId) => {
-  await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(50, 'down', 0, 0)
+  await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(50, 'down', 0.01, 0.01)
 }
 
 module.exports = {

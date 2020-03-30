@@ -9,6 +9,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     flex: 1
   },
+  button: {
+    flex: 1
+  },
   row: {
     backgroundColor: Colors.fire,
     marginVertical: 1,
@@ -33,8 +36,6 @@ export default StyleSheet.create({
   },
   list: {
     flex: 1
-    // todo replace with flex styling
-    // height: Metrics.screenHeight - ((Platform.OS === 'ios') ? 110 : 130)
   },
   listContent: {
     left: 0,

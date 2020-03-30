@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+set -x;
 
 # switch to the directory containing the jhipster app folder
 cd ../
