@@ -15,7 +15,6 @@ class ChatScreen extends React.PureComponent {
     super(props)
     this.state = {
       message: '',
-      dataObjects: props.chat
     }
   }
 
@@ -28,7 +27,7 @@ class ChatScreen extends React.PureComponent {
     )
   }
 
-  componentWillMount () {
+  componentDidMount () {
     WebsocketService.connect()
     WebsocketService.subscribeToChat()
   }
@@ -37,14 +36,8 @@ class ChatScreen extends React.PureComponent {
     WebsocketService.disconnect()
   }
 
-  componentWillReceiveProps (newProps) {
-    if (newProps.chat) {
-      this.setState({
-        dataObjects: newProps.chat
-      }, () => {
-        this.refs['chatList'].scrollToEnd()
-      })
-    }
+  componentDidUpdate(prevProps) {
+    this.chatList.scrollToEnd()
   }
 
   updateMessage = (message) => {
@@ -71,10 +64,12 @@ class ChatScreen extends React.PureComponent {
       <View style={styles.container} testID='chatScreen'>
         <KeyboardAwareScrollView style={styles.scrollView} scrollEnabled={false}>
           <FlatList
-            ref='chatList'
+            ref={(c) => {
+              this.chatList = c
+            }}
             style={styles.list}
             contentContainerStyle={styles.listContent}
-            data={this.state.dataObjects}
+            data={this.props.chat}
             renderItem={this.renderRow}
             keyExtractor={this.keyExtractor}
             initialNumToRender={this.oneScreensWorth}
@@ -82,7 +77,9 @@ class ChatScreen extends React.PureComponent {
           />
           <View style={styles.inputContainer}>
             <TextInput
-              ref='messageText'
+              ref={(c) => {
+                this.messageText = c
+              }}
               placeholder='Type a message...'
               placeholderTextColor={Colors.snow}
               underlineColorAndroid='transparent'
@@ -96,7 +93,7 @@ class ChatScreen extends React.PureComponent {
               selectionColor={Colors.snow}
               testID='chatScreenInput'
             />
-            <RoundedButton style={{ flex: 1 }} onPress={this.sendMessage} text={'Send'} testID='chatScreenSendButton' />
+            <RoundedButton style={styles.button} onPress={this.sendMessage} text={'Send'} testID='chatScreenSendButton' />
           </View>
         </KeyboardAwareScrollView>
       </View>

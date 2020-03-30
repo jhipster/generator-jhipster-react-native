@@ -8,7 +8,6 @@ import { processWebsocketMessage } from './websocket.sagas'
 const webstomp = require('stompjs')
 
 let em
-let accessToken
 let connection = createConnection()
 let alreadyConnectedOnce = false
 let connected = false
@@ -64,9 +63,8 @@ function connect () {
   if (!alreadyConnectedOnce) {
     if (connectedPromise === null) connection = createConnection()
     var url = AppConfig.apiUrl + 'websocket/chat'
-    if (accessToken) {
-      token = accessToken
-      url += '?access_token=' + accessToken
+    if (token) {
+      url += '?access_token=' + token
     }
     socket = new SockJS(url)
     stompClient = webstomp.over(socket)
@@ -121,8 +119,9 @@ function onMessage (subscription, fullMessage) {
   let msg = null
   try {
     msg = JSON.parse(fullMessage.body)
-  } catch (fullMessage) {
+  } catch (e) {
     console.tron.error(`Error parsing : ${fullMessage}`)
+    console.tron.error(e)
   }
   if (msg) {
     return em({ subscription, msg })
@@ -134,8 +133,8 @@ function getToken () {
   return token
 }
 
-function setToken (token) {
-  accessToken = token
+function setToken (jwtToken) {
+  token = jwtToken
   if (connected) {
     disconnect()
     connect()
@@ -150,8 +149,8 @@ function getWsSessionId () {
   return wsSessionId
 }
 
-function setWsSessionId (socket) {
-  const splitUrl = socket._transport.url.split('/')
+function setWsSessionId (socketObject) {
+  const splitUrl = socketObject._transport.url.split('/')
   wsSessionId = splitUrl[5]
   console.tron.log(`Set WS Session ID to ${wsSessionId}`)
 }
