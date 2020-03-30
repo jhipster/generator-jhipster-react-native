@@ -1,5 +1,9 @@
 name: TestAndLint
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   lint:
     runs-on: ${{ matrix.os }}
