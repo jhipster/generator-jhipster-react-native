@@ -1,8 +1,10 @@
 # Ignite JHipster
 
-[![NPM version][npm-image]][npm-url] [![Build Status][semaphore-image]][semaphore-url] [![Azure Pipelines Status][azure-pipelines-image]][azure-pipelines-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM version](https://img.shields.io/npm/v/ignite-jhipster.svg)](https://npmjs.org/package/ignite-jhipster)
+![iOS-E2E](https://github.com/ruddell/ignite-jhipster/workflows/iOS-E2E/badge.svg?branch=master)
+![Android-E2E](https://github.com/ruddell/ignite-jhipster/workflows/Android-E2E/badge.svg?branch=master)
 
-[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](https://github.com/ruddell/ignite-jhipster)
+![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)
 
 A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
@@ -61,11 +63,3 @@ After generating, you can use the [entity generator, JDL importer, and other com
 - When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
 - When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
 
-[npm-image]: https://img.shields.io/npm/v/ignite-jhipster.svg
-[npm-url]: https://npmjs.org/package/ignite-jhipster
-[semaphore-image]: https://semaphoreci.com/api/v1/ruddell/ignite-jhipster/branches/master/shields_badge.svg
-[semaphore-url]: https://semaphoreci.com/ruddell/ignite-jhipster
-[daviddm-image]: https://david-dm.org/ruddell/ignite-jhipster.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/ruddell/ignite-jhipster
-[azure-pipelines-image]: https://dev.azure.com/Ruddell/Ignite%20JHipster/_apis/build/status/ruddell.ignite-jhipster?branchName=master
-[azure-pipelines-url]: https://dev.azure.com/Ruddell/Ignite%20JHipster/_build?definitionId=1
