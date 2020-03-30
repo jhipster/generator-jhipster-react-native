@@ -1,5 +1,9 @@
 name: iOS-E2E
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}

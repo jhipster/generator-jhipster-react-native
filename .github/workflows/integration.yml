@@ -1,5 +1,9 @@
 name: AuthIntegration
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   generate:
     name: ${{ matrix.auth_type }}
