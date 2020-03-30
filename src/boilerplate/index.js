@@ -216,7 +216,7 @@ async function install(context) {
   spinner.start()
   let showCocoapodsInstructions = false
   // if it's a mac
-  if (process.platform === 'darwin') {
+  if (process.platform === 'darwin' && !parameters.options.skipPodInstall) {
     // if cocoapods is installed, install the oauth dependencies
     const podVersionCommandResult = await system.spawn('pod --version', { stdio: 'ignore' })
     if (podVersionCommandResult.status === 0) {
