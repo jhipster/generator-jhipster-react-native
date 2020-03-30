@@ -208,10 +208,6 @@ project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules
       template: 'fastlane/Matchfile.ejs',
       target: 'fastlane/Matchfile',
     },
-    {
-      template: '../templates/Podfile.ejs',
-      target: `ios/Podfile`,
-    },
   ]
 
   await copyBatch(context, templates, props, {
