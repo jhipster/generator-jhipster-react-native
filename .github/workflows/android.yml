@@ -15,14 +15,10 @@ jobs:
       matrix:
         node_version: [12.16.1]
         app_type:
-          - JwtApp
           - SessionDtoApp
           - OauthApp
           - JwtWebsocketsApp
         include:
-          - app_type: JwtApp
-            auth_type: jwt
-            jhi_dto: false
           - app_type: SessionDtoApp
             auth_type: session
             jhi_dto: true
@@ -31,7 +27,7 @@ jobs:
             jhi_dto: false
           - app_type: JwtWebsocketsApp
             auth_type: jwt
-            jhi_dto: false
+            jhi_dto: true
             jhi_websockets: true
     env:
       JHI_IGNITE_APP_NAME: ${{ matrix.app_type }}
