@@ -2,7 +2,21 @@
 
 # start the backend
 cd ../${JHI_IGNITE_APP_NAME}-backend
-nohup ./mvnw -ntp &
+
+# set backend memory limits
+MAVEN_OPTS="-Xmx512m -Xms256m"
+
+# disable sql logging
+sed -i.back "s~show-sql: true~show-sql: false~g" src/main/resources/config/application-dev.yml
+
+# start jhipster backend with logging off
+LOGGING_LEVEL_ROOT=OFF \
+  LOGGING_LEVEL_ORG_ZALANDO=OFF \
+  LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF \
+  LOGGING_LEVEL_IO_GITHUB_JHIPSTER=OFF \
+  LOGGING_LEVEL_COM_MYCOMPANY_MYAPP=OFF  \
+  nohup \
+  ./mvnw -ntp &
 
 # wait for the backend to start
 # see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh
