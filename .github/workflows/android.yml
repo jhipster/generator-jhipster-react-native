@@ -36,10 +36,21 @@ jobs:
       JHI_WEBSOCKETS: ${{ matrix.jhi_websockets }}
       SCRIPT_DIR: ./test/scripts
       PLATFORM: android
+      CP_HOME_DIR: ~/.cocoapods
     steps:
       - uses: actions/checkout@v2
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
         shell: bash
+      - uses: actions/setup-node@v1
+        with:
+            node-version: ${{ matrix.node_version }}
+      - name: Cache Cocoapods
+        uses: actions/cache@v1
+        with:
+          path: ~/.cocoapods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
       - name: Config git variables
         run: $SCRIPT_DIR/git-config.sh
         shell: bash
