@@ -17,7 +17,7 @@ jobs:
         app_type:
           - SessionDtoApp
           - OauthApp
-          - JwtWebsocketsApp
+          # - JwtWebsocketsApp
         include:
           - app_type: SessionDtoApp
             auth_type: session
@@ -25,10 +25,10 @@ jobs:
           - app_type: OauthApp
             auth_type: oauth2
             jhi_dto: false
-          - app_type: JwtWebsocketsApp
-            auth_type: jwt
-            jhi_dto: true
-            jhi_websockets: true
+          # - app_type: JwtWebsocketsApp
+          #   auth_type: jwt
+          #   jhi_dto: true
+          #   jhi_websockets: true
     env:
       JHI_IGNITE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
