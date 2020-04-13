@@ -1,7 +1,7 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
 <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
-import CookieManager from 'react-native-cookies'
+import CookieManager from '@react-native-community/cookies'
 <%_ } _%>
 
 import AppConfig from '../../config/app-config'

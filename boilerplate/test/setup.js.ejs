@@ -13,7 +13,7 @@ jest
     return { Navigation: { showModal: jest.fn((url) => { return [] }) } }
   })
 <%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
-  .mock('react-native-cookies', () => {
+  .mock('@react-native-community/cookies', () => {
     return { get: jest.fn((url) => { return [] }), clearAll: jest.fn((url) => { return [] }) }
   })
 <%_ } _%>

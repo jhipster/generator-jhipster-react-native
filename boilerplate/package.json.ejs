@@ -21,7 +21,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@react-native-community/async-storage": "1.8.1",
+    "@react-native-community/async-storage": "1.9.0",
     "apisauce": "1.1.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
@@ -36,10 +36,10 @@
     "redux-persist": "6.0.0",
     "redux-saga": "1.1.3",
     "reduxsauce": "1.1.2",
-    "react-native-navigation": "6.3.2",
+    "react-native-navigation": "6.4.0",
     "seamless-immutable": "7.1.4",
     <%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
-    "react-native-cookies": "3.3.0",
+    "@react-native-community/cookies": "2.0.8",
     <%_ } _%>
     <%_ if (props.websockets) { _%>
     "stompjs": "2.3.3",
@@ -49,33 +49,33 @@
     "tcomb-form-native": "0.6.20"
   },
   "devDependencies": {
-    "@storybook/addons": "5.3.17",
-    "@storybook/react-native": "5.3.17",
-    "@storybook/theming": "5.3.17",
+    "@storybook/addons": "5.3.18",
+    "@storybook/react-native": "5.3.18",
+    "@storybook/theming": "5.3.18",
     "babel-preset-env": "1.7.0",
     "buffer": "5.5.0",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.2",
     "eslint-config-prettier": "6.10.1",
-    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-prettier": "3.1.3",
     "ignite-jhipster": "<%= props.packageVersion %>",
     <%_ if (!props.skipCommitHook) { _%>
-    "lint-staged": "10.0.9",
+    "lint-staged": "10.1.3",
     <%_ } _%>
     <%_ if (props.authType === 'oauth2') { _%>
     "react-native-app-auth": "5.1.1",
     <%_ } _%>
     <%_ if (props.detox) { _%>
-    "detox": "16.0.2",
+    "detox": "16.2.0",
     "mocha": "7.1.1",
     <%_ } _%>
     "mockery": "2.1.0",
     "react-dom": "16.8.6",
-    "prettier": "2.0.2",
+    "prettier": "2.0.4",
     "reactotron-react-native": "5.0.0",
     "reactotron-redux": "3.1.3",
     "reactotron-redux-saga": "4.2.3",
-    "patch-package": "6.2.1",
+    "patch-package": "6.2.2",
     "rimraf": "3.0.2"
   },
   <%_ if (!props.skipCommitHook) { _%>

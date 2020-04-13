@@ -4,7 +4,7 @@ import { Platform } from 'react-native'
 import { authorize } from 'react-native-app-auth'
 <%_ } _%>
 <%_ if (props.authType === 'oauth2') { _%>
-import CookieManager from 'react-native-cookies'
+import CookieManager from '@react-native-community/cookies'
 <%_ } _%>
 
 import LoginActions from './login.reducer'
