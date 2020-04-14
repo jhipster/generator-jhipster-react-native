@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ScrollView, Text, TouchableHighlight, View } from 'react-native'
+import { Alert, Text, TouchableHighlight, View } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
@@ -113,8 +113,9 @@ class <%= props.name %>EntityEditScreen extends React.Component {
       if (this.props.error) {
         Alert.alert('Error', 'Something went wrong updating the entity', [{ text: 'OK' }])
       } else {
-        this.props.getAll<%= props.pluralName %>({ page: 0, sort: 'id,asc', size: 20 })
         const entityId = this.props.<%= camelCase(props.name) %>.id
+        this.props.reset()
+        this.props.get<%= props.name %>(entityId)
         const alertOptions = [{ text: 'OK' }]
         if (!this.state.formValue.id) {
           alertOptions.push({
@@ -255,7 +256,8 @@ const mapDispatchToProps = (dispatch) => {
     <%_ }) _%>
     get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id)),
     getAll<%= props.pluralName %>: (options) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest(options)),
-    update<%= props.name %>: (<%= camelCase(props.name) %>) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateRequest(<%= camelCase(props.name) %>))
+    update<%= props.name %>: (<%= camelCase(props.name) %>) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>UpdateRequest(<%= camelCase(props.name) %>)),
+    reset: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Reset()),
   }
 }
 

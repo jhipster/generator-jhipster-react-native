@@ -41,11 +41,22 @@ test('success retrieving a <%= camelCase(props.name) %>', () => {
 })
 
 test('success retrieving a list of <%= camelCase(props.name) %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= camelCase(props.name) %>AllSuccess([{ id: 1 }, { id: 2 }]))
+  const state = reducer(
+    INITIAL_STATE,
+    <%_ if (props.entityConfig.pagination === 'no') { _%>
+    Actions.<%= camelCase(props.name) %>AllSuccess([{ id: 1 }, { id: 2 }]),
+    <%_ } else { _%>
+    Actions.<%= camelCase(props.name) %>AllSuccess([{ id: 1 }, { id: 2 }], { link: '</?page=1>; rel="last",</?page=0>; rel="first"', 'x-total-count': 5}),
+    <%_ } _%>
+  )
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toBe(null)
   expect(state.<%= camelCase(props.pluralName) %>).toEqual([{ id: 1 }, { id: 2 }])
+  <%_ if (props.entityConfig.pagination !== 'no') { _%>
+  expect(state.links).toEqual({ first: 0, last: 1 })
+  expect(state.totalItems).toEqual(5)
+  <%_ } _%>
 })
 
 test('success updating a <%= camelCase(props.name) %>', () => {

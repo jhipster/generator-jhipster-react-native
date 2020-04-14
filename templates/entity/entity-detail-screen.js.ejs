@@ -23,7 +23,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
       if (this.props.errorDeleting) {
         Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
       } else {
-        this.props.getAll<%= props.pluralName %>()
+        this.props.reset<%= props.pluralName %>()
         Navigation.pop(this.props.componentId)
       }
     }
@@ -47,8 +47,12 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
   }
 
   render () {
-    if (!this.props.<%= camelCase(props.name) %>) {
-      return <View><Text>Loading...</Text></View>
+    if (!this.props.<%= camelCase(props.name) %> || this.props.fetching) {
+      return (
+        <View style={styles.loading}>
+          <Text style={styles.loading}>Loading...</Text>
+        </View>
+      )
     }
     return (
       <ScrollView style={styles.container} testID="<%= camelCase(props.name) %>DetailScrollView">
@@ -72,6 +76,7 @@ class <%= props.name %>EntityDetailScreen extends React.Component {
 const mapStateToProps = (state) => {
   return {
     <%= camelCase(props.name) %>: state.<%= camelCase(props.pluralName) %>.<%= camelCase(props.name) %>,
+    fetching: state.<%= camelCase(props.pluralName) %>.fetchingOne,
     deleting: state.<%= camelCase(props.pluralName) %>.deleting,
     errorDeleting: state.<%= camelCase(props.pluralName) %>.errorDeleting
   }
@@ -81,7 +86,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     get<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Request(id)),
     getAll<%= props.pluralName %>: (options) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>AllRequest(options)),
-    delete<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteRequest(id))
+    delete<%= props.name %>: (id) => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>DeleteRequest(id)),
+    reset<%= props.pluralName %>: () => dispatch(<%= props.name %>Actions.<%= camelCase(props.name) %>Reset()),
   }
 }
 

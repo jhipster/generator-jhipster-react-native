@@ -102,21 +102,21 @@ module.exports = async function (generator, igniteContext) {
 
   // REDUX AND SAGA SECTION
   let apiMethods = `
-  const get${props.name} = ${camelCase(props.name)}Id => api.get('${props.microservicePath}api/${kebabCase(
+  const get${props.name} = (${camelCase(props.name)}Id) => api.get('${props.microservicePath}api/${kebabCase(
     props.pluralName,
   )}/' + ${camelCase(props.name)}Id)
-  const get${props.pluralName} = options => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}', options)
-  const create${props.name} = ${camelCase(props.name)} => api.post('${props.microservicePath}api/${kebabCase(
+  const get${props.pluralName} = (options) => api.get('${props.microservicePath}api/${kebabCase(props.pluralName)}', options)
+  const create${props.name} = (${camelCase(props.name)}) => api.post('${props.microservicePath}api/${kebabCase(
     props.pluralName,
   )}', ${camelCase(props.name)})
-  const update${props.name} = ${camelCase(props.name)} => api.put('${props.microservicePath}api/${kebabCase(
+  const update${props.name} = (${camelCase(props.name)}) => api.put('${props.microservicePath}api/${kebabCase(
     props.pluralName,
   )}', ${camelCase(props.name)})
-  const delete${props.name} = ${camelCase(props.name)}Id => api.delete('${props.microservicePath}api/${kebabCase(
+  const delete${props.name} = (${camelCase(props.name)}Id) => api.delete('${props.microservicePath}api/${kebabCase(
     props.pluralName,
   )}/' + ${camelCase(props.name)}Id)`
 
-  let fixtureApiMethods = `  update${props.name}: ${camelCase(props.name)} => {
+  let fixtureApiMethods = `  update${props.name}: (${camelCase(props.name)}) => {
     return {
       ok: true,
       data: require('../../shared/fixtures/update-${props.name.toLowerCase()}.json'),
@@ -128,13 +128,13 @@ module.exports = async function (generator, igniteContext) {
       data: require('../../shared/fixtures/get-${props.pluralName.toLowerCase()}.json'),
     }
   },
-  get${props.name}: ${camelCase(props.name)}Id => {
+  get${props.name}: (${camelCase(props.name)}Id) => {
     return {
       ok: true,
       data: require('../../shared/fixtures/get-${props.name.toLowerCase()}.json'),
     }
   },
-  delete${props.name}: ${camelCase(props.name)}Id => {
+  delete${props.name}: (${camelCase(props.name)}Id) => {
     return {
       ok: true,
     }
@@ -357,7 +357,7 @@ export const ${camelCase(props.name)}EntityScreen = () =>
               id: 'createButton',
               text: 'Create',
               color: Colors.snow,
-              testID: '${camelCase(props.name)}CreateButton'
+              testID: '${camelCase(props.name)}CreateButton',
             },
           ],
         },
@@ -366,7 +366,7 @@ export const ${camelCase(props.name)}EntityScreen = () =>
   })`
 
   const navigationMethodDetail = `
-export const ${camelCase(props.name)}EntityDetailScreen = data =>
+export const ${camelCase(props.name)}EntityDetailScreen = (data) =>
   Navigation.push('center', {
     component: {
       name: ${upperSnakeCaseNameDetail},
@@ -384,7 +384,7 @@ export const ${camelCase(props.name)}EntityDetailScreen = data =>
     },
   })`
   const navigationMethodEdit = `
-export const ${camelCase(props.name)}EntityEditScreen = data =>
+export const ${camelCase(props.name)}EntityEditScreen = (data) =>
   Navigation.push('center', {
     component: {
       name: ${upperSnakeCaseNameEdit},

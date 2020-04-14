@@ -44,7 +44,13 @@ const ApplicationStyles = {
       ...Fonts.style.h2,
       fontSize: 14,
       color: Colors.text
-    }
+    },
+    loading: {
+      flex: 1,
+      ...Fonts.style.h5,
+      alignItems: 'center',
+      textAlign: 'center',
+    },
   },
   darkLabelContainer: {
     padding: Metrics.smallMargin,

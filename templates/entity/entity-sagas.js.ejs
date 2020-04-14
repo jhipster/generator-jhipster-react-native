@@ -30,7 +30,7 @@ export function * get<%= props.pluralName %> (api, action) {
 
   // success?
   if (response.ok) {
-    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(response.data))
+    yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllSuccess(response.data, response.headers))
   } else {
     yield put(<%= props.name %>Actions.<%= camelCase(props.name) %>AllFailure(response.data))
   }

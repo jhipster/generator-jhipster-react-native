@@ -1,5 +1,9 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
+<%_ if (props.entityConfig.pagination !== 'no') { _%>
+import { loadMoreDataWhenScrolled } from '../../../shared/util/pagination-utils'
+import { parseHeaderForLinks } from '../../../shared/util/url-utils'
+<%_ } _%>
 
 /* ------------- Types and Action Creators ------------- */
 
@@ -13,7 +17,7 @@ const { Types, Creators } = createActions({
   <%= camelCase(props.name) %>DeleteRequest: ['<%= camelCase(props.name) %>Id'],
 
   <%= camelCase(props.name) %>Success: ['<%= camelCase(props.name) %>'],
-  <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.pluralName) %>'],
+  <%= camelCase(props.name) %>AllSuccess: ['<%= camelCase(props.pluralName) %>', 'headers'],
   <%= camelCase(props.name) %>UpdateSuccess: ['<%= camelCase(props.name) %>'],
   <%_ if (props.searchEngine) { _%>
   <%= camelCase(props.name) %>SearchSuccess: ['<%= camelCase(props.pluralName) %>'],
@@ -26,7 +30,9 @@ const { Types, Creators } = createActions({
   <%_ if (props.searchEngine) { _%>
   <%= camelCase(props.name) %>SearchFailure: ['error'],
   <%_ } _%>
-  <%= camelCase(props.name) %>DeleteFailure: ['error']
+  <%= camelCase(props.name) %>DeleteFailure: ['error'],
+
+  <%= camelCase(props.name) %>Reset: []
 })
 
 export const <%= props.name %>Types = Types
@@ -50,7 +56,11 @@ export const INITIAL_STATE = Immutable({
   <%_ if (props.searchEngine) { _%>
   errorSearching: null,
   <%_ } _%>
-  errorDeleting: null
+  errorDeleting: null,
+  <%_ if (props.entityConfig.pagination !== 'no') { _%>
+  links: { next: 0 },
+  totalItems: 0,
+  <%_ } _%>
 })
 
 /* ------------- Reducers ------------- */
@@ -59,6 +69,7 @@ export const INITIAL_STATE = Immutable({
 export const request = (state) =>
   state.merge({
     fetchingOne: true,
+    errorOne: false,
     <%= camelCase(props.name) %>: null
   })
 
@@ -66,7 +77,7 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    <%= camelCase(props.pluralName) %>: []
+    errorAll: false,
   })
 
 // request to update from an api
@@ -98,11 +109,20 @@ export const success = (state, action) => {
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { <%= camelCase(props.pluralName) %> } = action
+  const { <%= camelCase(props.pluralName) %><%_ if (props.entityConfig.pagination !== 'no') { _%>, headers<%_ } _%> } = action
+  <%_ if (props.entityConfig.pagination !== 'no') { _%>
+  const links = parseHeaderForLinks(headers.link)
+  <%_ } _%>
   return state.merge({
     fetchingAll: false,
     errorAll: null,
+    <%_ if (props.entityConfig.pagination !== 'no') { _%>
+    links,
+    totalItems: parseInt(headers['x-total-count'], 10),
+    <%= camelCase(props.pluralName) %>: loadMoreDataWhenScrolled(state.<%= camelCase(props.pluralName) %>, <%= camelCase(props.pluralName) %>, links),
+    <%_ } else { _%>
     <%= camelCase(props.pluralName) %>
+    <%_ } _%>
   })
 }
 // successful api update
@@ -182,6 +202,8 @@ export const searchFailure = (state, action) => {
 }
 <%_ } _%>
 
+export const reset = (state) => INITIAL_STATE
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -207,5 +229,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   <%_ if (props.searchEngine) { _%>
   [Types.<%= snakeCase(props.name).toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
   <%_ } _%>
-  [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_FAILURE]: deleteFailure
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
+  [Types.<%= snakeCase(props.name).toUpperCase() %>_RESET]: reset
 })
