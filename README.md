@@ -1,10 +1,11 @@
 # Ignite JHipster
+[![NPM version](https://badge.fury.io/js/ignite-jhipster.svg)](https://npmjs.org/package/ignite-jhipster)
+[![iOS-E2E](https://github.com/ruddell/ignite-jhipster/workflows/iOS-E2E/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AiOS-E2E)
+[![Android-E2E](https://github.com/ruddell/ignite-jhipster/workflows/Android-E2E/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AAndroid-E2E)
+[![App](https://github.com/ruddell/ignite-jhipster/workflows/App/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AApp)
+[![Generator](https://github.com/ruddell/ignite-jhipster/workflows/Generator/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AGenerator)
 
-[![NPM version](https://img.shields.io/npm/v/ignite-jhipster.svg)](https://npmjs.org/package/ignite-jhipster)
-![iOS-E2E](https://github.com/ruddell/ignite-jhipster/workflows/iOS-E2E/badge.svg?branch=master)
-![Android-E2E](https://github.com/ruddell/ignite-jhipster/workflows/Android-E2E/badge.svg?branch=master)
-
-![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)
+[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](#)
 
 A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 

@@ -1,11 +1,12 @@
-name: TestAndLint
+name: App
 on:
   push:
     branches:
       - master
   pull_request:
 jobs:
-  lint:
+  generate:
+    name: ${{ matrix.auth_type }}
     runs-on: ${{ matrix.os }}
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 20
@@ -14,6 +15,7 @@ jobs:
       matrix:
         node_version: [12.16.1]
         os: [ubuntu-latest]
+        auth_type: [jwt, uaa, oauth2, session]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -29,9 +31,9 @@ jobs:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
         shell: bash
-      - name: npm ci
-        run: npm ci
-      - name: lint
-        run: npm run lint
-      - name: test
-        run: npm run coverage
+      - run: npm install -g ignite-cli
+      - run: npm link
+      - name: Gen/lint app
+        run: npx jest test/auth-tests/${JHI_AUTH_TYPE}-integration.test.js
+        env:
+          JHI_AUTH_TYPE: ${{ matrix.auth_type }}
