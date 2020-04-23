@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Text, TouchableHighlight, View } from 'react-native'
+import { ActivityIndicator, Alert, Text, TouchableHighlight, View } from 'react-native'
 import { connect } from 'react-redux'
 import <%= props.name %>Actions from './<%= props.kebabName %>.reducer'
 <%_ props.entityConfig.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCase(props.name)).forEach((relation) => { _%>
@@ -155,8 +155,8 @@ class <%= props.name %>EntityEditScreen extends React.Component {
   render () {
     if (this.props.fetching) {
       return (
-        <View>
-          <Text>Loading...</Text>
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
         </View>
       )
     }
