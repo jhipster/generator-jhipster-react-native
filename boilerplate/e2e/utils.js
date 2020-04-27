@@ -1,3 +1,6 @@
+const username = process.env.E2E_USERNAME || 'user';
+const password = process.env.E2E_PASSWORD || 'user';
+
 const navigateToLoginScreen = async () => {
   await expect(element(by.id('launchScreen'))).toBeVisible()
   await element(by.id('menuButton')).tap()
@@ -7,8 +10,8 @@ const navigateToLoginScreen = async () => {
 
 const loginAsUser = async () => {
   await navigateToLoginScreen()
-  await element(by.id('loginScreenUsername')).replaceText('user')
-  await element(by.id('loginScreenPassword')).replaceText('user')
+  await element(by.id('loginScreenUsername')).replaceText(username)
+  await element(by.id('loginScreenPassword')).replaceText(password)
   await element(by.id('loginScreenLoginButton')).tap()
 }
 

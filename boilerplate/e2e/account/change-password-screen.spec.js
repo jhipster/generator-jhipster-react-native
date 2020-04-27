@@ -1,6 +1,9 @@
 const Utils = require('../utils')
 
 describe('Change Password Screen Tests', () => {
+  const username = process.env.E2E_USERNAME || 'user';
+  const password = process.env.E2E_PASSWORD || 'user';
+
   before(async () => {
     await device.reloadReactNative()
     await Utils.loginAsUser()
@@ -35,10 +38,10 @@ describe('Change Password Screen Tests', () => {
   })
 
   it('should display a popup on change password success', async () => {
-    await changePassword('user', 'new-password')
+    await changePassword(password, 'new-password')
     await expect(element(by.text('Password changed'))).toBeVisible()
     await element(by.text('OK')).tap()
-    await changePassword('new-password', 'user')
+    await changePassword('new-password', password)
     await expect(element(by.text('Password changed'))).toBeVisible()
     await element(by.text('OK')).tap()
   })
