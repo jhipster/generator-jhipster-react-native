@@ -1,6 +1,6 @@
 # <%= props.name %>
 
-- React Native app generated with [Ignite Jhipster](https://github.com/ruddell/ignite-jhipster). See the Ignite JHipster docs for more details regarding this boilerplate.
+- React Native app generated with [Ignite JHipster](https://github.com/ruddell/ignite-jhipster). See the Ignite JHipster docs for more details regarding this boilerplate.
 
 ## :arrow_up: How to Setup
 
@@ -16,7 +16,7 @@
 2. Run Build for either OS
 
 - for iOS
-  - run `react-native run-ios`
+  - run `npx react-native run-ios`
 - for Android
-  - Run Genymotion
-  - run `react-native run-android`
+  - Start an Android Emulator
+  - run `npx react-native run-android`

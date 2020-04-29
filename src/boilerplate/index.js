@@ -272,19 +272,19 @@ async function install(context) {
   }
   print.info('To run in iOS:')
   print.info(print.colors.bold(`  cd ${name}`))
-  print.info(print.colors.bold('  react-native run-ios'))
+  print.info(print.colors.bold('  npx react-native run-ios'))
   print.info('')
   if (isAndroidInstalled(context)) {
     print.info('To run in Android:')
   } else {
     print.info(
-      `To run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${print.colors.bold(
-        'react-native run-android',
+      `To run in Android, make sure you've followed the latest react-native setup instructions at https://reactnative.dev/docs/environment-setup before using ignite.\nYou won't be able to run ${print.colors.bold(
+        'npx react-native run-android',
       )} successfully until you have. Then:`,
     )
   }
   print.info(print.colors.bold(`  cd ${name}`))
-  print.info(print.colors.bold('  react-native run-android'))
+  print.info(print.colors.bold('  npx react-native run-android'))
   print.info('')
   print.info('To see what JHipster generators are available:')
   print.info(print.colors.bold(`  cd ${name}`))

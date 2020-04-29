@@ -33,7 +33,7 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
 
 - Node v8+
   - Verify version with `node -v`
-- [React Native CLI setup](https://facebook.github.io/react-native/docs/getting-started.html#content)
+- [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
 - [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
   - Install with `npm install -g ignite-cli`
   - Verify version with `ignite --version`
@@ -63,4 +63,3 @@ After generating, you can use the [entity generator, JDL importer, and other com
 
 - When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
 - When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
-
