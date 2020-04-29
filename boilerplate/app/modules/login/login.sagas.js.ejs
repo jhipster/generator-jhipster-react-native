@@ -51,6 +51,9 @@ export function * login (api) {
     }
   } else {
     yield put(LoginActions.loginFailure((authInfo.data && authInfo.data.detail) || 'Could not connect to OAuth2 Provider'))
+    if (!authInfo.data) {
+      alert('Failed to fetch Auth Provider information from the backend API.')
+    }
   }
 }
 
