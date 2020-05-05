@@ -221,17 +221,6 @@ project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules
   if (props.authType === 'oauth2') {
     const isMonolith = jhipsterConfig['generator-jhipster'].applicationType === 'monolith'
     if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}`)) {
-      const oauth2Files = []
-      if (!isMonolith) {
-        oauth2Files.push({
-          template: 'OAuth2SsoConfiguration.java.ejs',
-          target: `${jhipsterPathPrefix}${props.jhipsterDirectory}/src/main/java/${props.packageFolder}/config/OAuth2SsoConfiguration.java`,
-        })
-      }
-      await copyBatch(context, oauth2Files, props, {
-        quiet: true,
-        directory: `${__dirname}/../../templates/jhipster/oauth2`,
-      })
       const keycloakConfigFile = 'src/main/docker/realm-config/jhipster-realm.json'
       if (fs.existsSync(`${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`)) {
         await patchInFile(context, `${jhipsterPathPrefix}${props.jhipsterDirectory}/${keycloakConfigFile}`, {
