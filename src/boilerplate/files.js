@@ -99,13 +99,12 @@ project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules
       {
         template: 'DetoxTest.java.ejs',
         target: `${process.cwd()}/android/app/src/androidTest/java/com/${props.androidPackageName}/DetoxTest.java`,
-      }
+      },
     ]
     await copyBatch(context, detoxFiles, props, {
       quiet: true,
       directory: `${__dirname}/../../templates/detox/`,
     })
-
   }
   spinner.stop()
 

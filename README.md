@@ -1,4 +1,5 @@
 # Ignite JHipster
+
 [![NPM version](https://badge.fury.io/js/ignite-jhipster.svg)](https://npmjs.org/package/ignite-jhipster)
 [![iOS-E2E](https://github.com/ruddell/ignite-jhipster/workflows/iOS-E2E/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AiOS-E2E)
 [![Android-E2E](https://github.com/ruddell/ignite-jhipster/workflows/Android-E2E/badge.svg?branch=master)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AAndroid-E2E)

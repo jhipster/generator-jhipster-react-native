@@ -35,16 +35,49 @@ module.exports = {
       if (importState.exportedEntities.length > 0) {
         entityNames = importState.exportedEntities.map((exportedEntity) => exportedEntity.name)
         print.info(`Found entities: ${entityNames.join(', ')}.`)
+        // save entity config into json manually
+        try {
+          fs.mkdirpSync('.jhipster')
+          importState.exportedEntities.forEach((exportedEntity) => {
+            const name = exportedEntity.name
+            fs.writeJsonSync(`.jhipster/${name}.json`, exportedEntity, { spaces: 2 })
+          })
+        } catch (e) {
+          print.error(e)
+        }
       } else {
         print.info('No change in entity configurations, no entities were updated.')
-        if (parameters.options.regenerate) {
-          print.info('Regenerate Flag - regenerating all entities')
-          fs.readdirSync('.jhipster')
-            .filter((file) => file !== 'yo-rc.json')
-            .forEach((file) => {
-              entityNames.push(file.split('.')[0])
-            })
-        }
+      }
+
+      // regenerate all entities if the regenerate flag was sent
+      if (parameters.options.regenerate) {
+        print.info('Regenerate Flag - regenerating all entities')
+        fs.readdirSync('.jhipster')
+          .filter((file) => file !== 'yo-rc.json')
+          .forEach((file) => {
+            entityNames.push(file.split('.')[0])
+          })
+      }
+
+      // if the JDL contained multiple applications or any deployments, delete the created directories and .yo-rc.json files
+      if (importState.exportedDeployments.length > 0 || importState.exportedApplications.length > 1) {
+        print.warning('Application/Deployment Folders generated, removing those folders')
+        const applicationNames = importState.exportedApplications.map(
+          (exportedApplication) => exportedApplication['generator-jhipster'].baseName,
+        )
+        const deployments = importState.exportedDeployments.map(
+          (exportedDeployment) => exportedDeployment['generator-jhipster'].deploymentType,
+        )
+        applicationNames.concat(deployments).forEach((folder) => {
+          try {
+            fs.removeSync(`${folder}/.yo-rc.json`)
+            fs.rmdirSync(folder)
+          } catch (e) {
+            print.warning(`Issue cleaning up folder: ${folder}`)
+            // calling rmdir so it won't delete the folder if it contains any other files
+            print.warning(`${e}`)
+          }
+        })
       }
 
       // generate update entities

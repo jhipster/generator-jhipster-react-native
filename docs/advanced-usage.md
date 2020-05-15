@@ -24,4 +24,4 @@ ignite new JhipsterApp -b --jdl=jwt-mono.jdl --detox=true --skip-git
 
 This will generate the full React Native project and import any entities present in the JDL.
 
-**Note:** Ignite JHipster only supports JDL files containing a single application config.
+**Note:** Ignite JHipster only supports generating apps from JDL files containing a single application config.

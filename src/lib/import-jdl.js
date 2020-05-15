@@ -32,10 +32,13 @@ const importJDL = (jdlFiles, prodDatabaseType, applicationType, baseName, print)
     applicationName: baseName,
     // generatorVersion: generatorVersion,
     forceNoFiltering: false,
+    skipYoRcGeneration: true,
+    skipEntityFilesGeneration: true,
   })
   let importState = {
     exportedEntities: [],
     exportedApplications: [],
+    exportedDeployments: [],
   }
   try {
     importState = jdlImporter.import()

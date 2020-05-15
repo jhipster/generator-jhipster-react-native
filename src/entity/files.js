@@ -3,14 +3,13 @@
  */
 
 module.exports = async function (generator, igniteContext) {
-  const semver = require('semver')
   const pluralize = require('pluralize')
   const fs = require('fs-extra')
   const { patchInFile } = require('../lib/patch-in-file')
   const { prettierTransformBatch } = require('../lib/prettier-transform')
   const { getEntityFormField, getRelationshipFormField } = require('../lib/entity-helpers')
   const { copyBatch } = require('../lib/copy-batch')
-  const { strings, parameters, print } = igniteContext
+  const { strings, parameters } = igniteContext
   const { kebabCase, pascalCase, snakeCase, upperCase, camelCase, isBlank, upperFirst } = strings // eslint-disable-line
 
   const name = generator.name
@@ -81,16 +80,6 @@ module.exports = async function (generator, igniteContext) {
   // if a microservice name is available, set the path prefix in the API paths
   if (Object.prototype.hasOwnProperty.call(entityConfig, 'microserviceName')) {
     props.microservicePath = `services/${entityConfig.microserviceName}/`
-    // check if it's an older JHipster version which does not use the 'services' prefix for microservice
-    try {
-      const jhipsterConfig = await fs.readJson(`ignite/yo-rc.json`)
-      const jhipsterVersion = jhipsterConfig['generator-jhipster'].jhipsterVersion
-      if (jhipsterVersion && semver.lt(jhipsterVersion, '5.9.0')) {
-        props.microservicePath = `${entityConfig.microserviceName}/`
-      }
-    } catch (e) {
-      print.warning(`Couldn't find JHipster version, generating v6 microservice routes`)
-    }
   }
 
   const apiFilePath = `${process.cwd()}/app/shared/services/api.js`
