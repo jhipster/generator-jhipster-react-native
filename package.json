@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "repository": "ruddell/ignite-jhipster",
   "homepage": "https://github.com/ruddell/ignite-jhipster",
-  "version": "3.5.3",
+  "version": "3.5.4",
   "files": [
     "boilerplate",
     "commands",
