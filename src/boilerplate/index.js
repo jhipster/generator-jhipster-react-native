@@ -37,6 +37,7 @@ async function install(context) {
   const perfStart = new Date().getTime()
 
   const name = parameters.first
+  print.spin(`Using Ignite JHipster v${pkg.version}`).succeed()
   const spinner = print.spin(`Generating a React Native client for JHipster apps`).succeed()
 
   const props = {
