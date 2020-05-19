@@ -6,6 +6,7 @@ You can pass flags for each of the options.
 
 | Flag                     | Possible Values     | Action                                       |
 | ------------------------ | ------------------- | -------------------------------------------- |
+| `--debug`                |                     | Show debug logs during generation                 |
 | `--jh-dir`               | backend, ../backend | The JHipster app's directory                 |
 | `--jdl`                  | app.jdl             | Pass a JDL file in place of an app directory |
 | `--detox`                | true, false         | Enables Detox E2E tests                      |

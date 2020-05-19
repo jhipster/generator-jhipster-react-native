@@ -134,7 +134,10 @@ async function install(context) {
     version: getReactNativeVersion(context),
     useNpm: useNpm,
   })
-  if (rnInstall.exitCode > 0) process.exit(rnInstall.exitCode)
+  if (rnInstall.exitCode > 0) {
+    print.error('Please try again with the --debug flag for a more verbose error')
+    process.exit(rnInstall.exitCode)
+  }
 
   // remove the __tests__ directory that come with React Native
   filesystem.remove('__tests__')
@@ -189,8 +192,6 @@ async function install(context) {
     await system.run(useNpm ? 'npm i' : 'yarn', { stdio: 'ignore' })
     spinner.succeed(`dependencies installed`)
   }
-  // pass long the debug flag if we're running in that mode
-  // const debugFlag = parameters.options.debug ? '--debug' : ''
 
   /**
    * Append to files
