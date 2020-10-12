@@ -12,5 +12,5 @@ The default JHipster websockets configuration requires users to authenticate bef
 
 For a more advanced websockets example, see the [tracker.service.ts][1] and [ActivityService.java][2] in the generated JHipster webapp.
 
-[1]: https://github.com/jhipster/jhipster-sample-app-websocket/blob/master/src/main/webapp/app/core/tracker/tracker.service.ts
-[2]: https://github.com/jhipster/jhipster-sample-app-websocket/blob/master/src/main/java/io/github/jhipster/sample/web/websocket/ActivityService.java
+[1]: https://github.com/jhipster/jhipster-sample-app-websocket/blob/main/src/main/webapp/app/core/tracker/tracker.service.ts
+[2]: https://github.com/jhipster/jhipster-sample-app-websocket/blob/main/src/main/java/io/github/jhipster/sample/web/websocket/ActivityService.java

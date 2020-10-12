@@ -2,7 +2,7 @@ name: iOS-E2E
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 jobs:
   generate:

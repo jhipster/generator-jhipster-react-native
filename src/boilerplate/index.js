@@ -263,7 +263,7 @@ async function install(context) {
   print.info('🍽 Time to get cooking!')
   print.info('')
   if (props.websockets) {
-    print.info('To enable the websockets example, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/websockets.md')
+    print.info('To enable the websockets example, see https://github.com/ruddell/ignite-jhipster/blob/main/docs/websockets.md')
     print.info('')
   }
   if (props.authType === 'oauth2') {
@@ -272,7 +272,7 @@ async function install(context) {
       print.info(print.colors.blue(`CocoaPods not found, please install CocooaPods and run 'pod install' from your app's ios directory.`))
     }
     print.info(
-      'For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/master/docs/oauth2-oidc.md',
+      'For more info on configuring OAuth2 OIDC Login, see https://github.com/ruddell/ignite-jhipster/blob/main/docs/oauth2-oidc.md',
     )
     print.info('')
   }
