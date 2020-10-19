@@ -24,7 +24,7 @@
 const replacePackageJsonVersions = async (context, packageJsonWithTemplatedVersions, packageJsonWithVersionsFile) => {
   try {
     const fs = require('fs-extra')
-    const packageJsonWithVersions = await fs.readJSON(packageJsonWithVersionsFile);
+    const packageJsonWithVersions = await fs.readJSON(packageJsonWithVersionsFile)
     const replace = section => {
       if (packageJsonWithTemplatedVersions[section]) {
         Object.entries(packageJsonWithTemplatedVersions[section]).forEach(([dependency, dependencyReference]) => {
@@ -33,21 +33,21 @@ const replacePackageJsonVersions = async (context, packageJsonWithTemplatedVersi
               keyToReplaceAtSource,
               sectionAtSource = section,
               dependencyAtSource = dependency,
-            ] = dependencyReference.split('#');
-            if (keyToReplaceAtSource !== 'REPLACE_WITH_VERSION') return;
+            ] = dependencyReference.split('#')
+            if (keyToReplaceAtSource !== 'REPLACE_WITH_VERSION') return
             if (!packageJsonWithVersions[sectionAtSource] || !packageJsonWithVersions[sectionAtSource][dependencyAtSource]) {
               throw new Error(
                 `Error setting ${dependencyAtSource} version, not found at ${sectionAtSource}.${dependencyAtSource}`
-              );
+              )
             }
-            packageJsonWithTemplatedVersions[section][dependency] = packageJsonWithVersions[sectionAtSource][dependencyAtSource];
+            packageJsonWithTemplatedVersions[section][dependency] = packageJsonWithVersions[sectionAtSource][dependencyAtSource]
           }
-        });
+        })
       }
-    };
-    replace('dependencies');
-    replace('devDependencies');
-    return packageJsonWithTemplatedVersions;
+    }
+    replace('dependencies')
+    replace('devDependencies')
+    return packageJsonWithTemplatedVersions
   } catch (err) {
     console.error(err)
     process.exit(1)
