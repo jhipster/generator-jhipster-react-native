@@ -39,7 +39,7 @@
     "detox": "16.2.0",
     "mocha": "7.1.1",
     "mockery": "2.1.0",
-    "react-dom": "16.8.6",
+    "react-dom": "16.14.0",
     "prettier": "2.0.4",
     "reactotron-react-native": "5.0.0",
     "reactotron-redux": "3.1.3",
