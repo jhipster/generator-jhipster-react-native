@@ -5,7 +5,7 @@
     "apisauce": "1.1.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
-    "lodash": "4.17.15",
+    "lodash": "4.17.20",
     "prop-types": "15.7.2",
     "querystringify": "2.1.1",
     "ramda": "0.27.0",
