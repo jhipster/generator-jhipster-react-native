@@ -1,6 +1,7 @@
 const prompts = require('./prompts')
 const { mergeDeepRight, pipe, assoc, omit, __ } = require('ramda')
 const { getReactNativeVersion } = require('../lib/react-native-version')
+const { replacePackageJsonVersions } = require('../lib/merge-package-json')
 const { patchReactNativeNavigation } = require('../lib/react-native-navigation')
 const Insight = require('../lib/insight')
 const generateFiles = require('./files')
@@ -158,13 +159,16 @@ async function install(context) {
    * Merge the package.json from our template into the one provided from react-native init.
    */
   async function mergePackageJsons() {
-    // transform our package.json incase we need to replace variables
+    // transform our package.json, using raw JSON to replace versions, and add dependencies from the React Native template
     const rawJson = await template.generate({
       directory: `${ignite.ignitePluginPath()}/boilerplate`,
       template: 'package.json.ejs',
       props: props,
     })
-    const newPackageJson = JSON.parse(rawJson)
+    // replace version in the package.json.ejs template from the source file (package.json)
+    let newPackageJson = JSON.parse(rawJson)
+    newPackageJson = await replacePackageJsonVersions(context, newPackageJson, `${ignite.ignitePluginPath()}/boilerplate/package.json`)
+    newPackageJson.devDependencies['ignite-jhipster'] = props.packageVersion
 
     // read in the react-native created package.json
     const currentPackage = filesystem.read('package.json', 'json')
