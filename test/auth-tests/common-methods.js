@@ -10,8 +10,8 @@ const copyFilesAndGenerateApp = async (authType, useDto) => {
   console.log('Generating App...')
 
   // create a dummy jhipster backend
-  await execa('mkdir', ['backend'])
-  await execa('mkdir', ['backend/.jhipster'])
+  await execa('mkdir', ['-p', 'backend'])
+  await execa('mkdir', ['-p', 'backend/.jhipster'])
   await execa('cp', [`${testFolder}/.jhipster/${authType}-yo-rc.json`, 'backend/.yo-rc.json'])
   await execa('cp', [`${testFolder}/jdl/entities${useDto ? '-dto' : ''}.jdl`, 'backend/backend.jdl'])
   await execa('cp', [`${testFolder}/.jhipster/FieldTestEntity.json`, 'backend/.jhipster/FieldTestEntity.json'])
@@ -57,7 +57,7 @@ const runTests = async () => {
   const tests = await execa('npm', ['-s', 'run', 'test', '--', '-u'])
   console.log('Tests Complete')
   console.log(tests.stdout)
-  expect(tests.stderr).not.toMatch(/failed/)
+  expect(tests.stderr).not.toMatch(/failed,/)
 }
 
 module.exports = {

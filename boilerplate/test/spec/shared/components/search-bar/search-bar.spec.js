@@ -18,6 +18,6 @@ test('onSearch', () => {
   const wrapperPress = shallow(<SearchBar onSearch={onSearch} onCancel={onCancel} searchTerm={searchTerm} />)
 
   // checks that the methods use the right handlers
-  expect(wrapperPress.find('TextInput').prop('onChangeText')).toBe(onSearch) // uses the right handler
-  expect(JSON.stringify(wrapperPress.find('TextInput').prop('onSubmitEditing'))).toEqual(JSON.stringify(onSubmitEditing))
+  expect(wrapperPress.findWhere((node) => node.prop('testID') === 'searchTextInput').prop('onChangeText')).toBe(onSearch) // uses the right handler
+  expect(JSON.stringify(wrapperPress.findWhere((node) => node.prop('testID') === 'searchTextInput').prop('onSubmitEditing'))).toEqual(JSON.stringify(onSubmitEditing))
 })

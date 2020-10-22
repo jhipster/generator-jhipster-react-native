@@ -100,7 +100,7 @@ const updateAndroidFiles = async (context) => {
   // settings.gradle
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     after: `dependencies {`,
-    insert: `        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion")"`,
+    insert: `        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion")`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
