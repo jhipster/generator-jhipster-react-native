@@ -313,21 +313,21 @@ module.exports = async function (generator, igniteContext) {
     insert: navigationDeclarationEdit,
   })
 
+  const getNavCase = (SCREEN_NAME, component) => `      case ${SCREEN_NAME}:
+        registerComponentWithRedux(${SCREEN_NAME}, ${component})
+        break`
   // add entity screens to navigation
-  const navigationScreen = `  Navigation.registerComponentWithRedux(${upperSnakeCaseName}, () => ${props.name}EntityScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreen,
+    insert: getNavCase(upperSnakeCaseName, `${props.name}EntityScreen`),
   })
-  const navigationScreenDetail = `  Navigation.registerComponentWithRedux(${upperSnakeCaseNameDetail}, () => ${props.name}EntityDetailScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreenDetail,
+    insert: getNavCase(upperSnakeCaseNameDetail, `${props.name}EntityDetailScreen`),
   })
-  const navigationScreenEdit = `  Navigation.registerComponentWithRedux(${upperSnakeCaseNameEdit}, () => ${props.name}EntityEditScreen, Provider, store)`
   await patchInFile(igniteContext, navigationRouterFilePath, {
     before: 'ignite-jhipster-navigation-registration-needle',
-    insert: navigationScreenEdit,
+    insert: getNavCase(upperSnakeCaseNameEdit, `${props.name}EntityEditScreen`),
   })
 
   const navigationMethodMain = `

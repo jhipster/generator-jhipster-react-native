@@ -1,6 +1,6 @@
 import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
 <%_ if (props.authType === 'oauth2') { _%>
-import { Platform } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import { authorize } from 'react-native-app-auth'
 <%_ } _%>
 <%_ if (props.authType === 'oauth2') { _%>
@@ -52,7 +52,7 @@ export function * login (api) {
   } else {
     yield put(LoginActions.loginFailure((authInfo.data && authInfo.data.detail) || 'Could not connect to OAuth2 Provider'))
     if (!authInfo.data) {
-      alert('Failed to fetch Auth Provider information from the backend API.')
+      Alert.alert('Failed to fetch Auth Provider information from the backend API.')
     }
   }
 }
