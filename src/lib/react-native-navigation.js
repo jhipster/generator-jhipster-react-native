@@ -123,7 +123,9 @@ const updateAndroidFiles = async (context) => {
 
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
     before: `dependencies {`,
-    insert: `configurations.all {
+    insert: `
+    implementation 'androidx.multidex:multidex:2.0.1'
+    configurations.all {
       resolutionStrategy.eachDependency { DependencyResolveDetails details ->
           def requested = details.requested
           if (requested.group == 'com.android.support' && (requested.name != 'multidex' && requested.name != 'multidex-instrumentation')) {
