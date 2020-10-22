@@ -209,6 +209,10 @@ project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules
     },
   ]
 
+  if (props.detox) {
+    templates.push({ template: '.detoxrc.json', target: '.detoxrc.json' })
+  }
+
   await copyBatch(context, templates, props, {
     quiet: true,
     directory: `${__dirname}/../../boilerplate`,

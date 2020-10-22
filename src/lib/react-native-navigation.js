@@ -35,7 +35,7 @@ const patchReactNativeNavigation = async (context = {}, props) => {
   })
 
   await updateIosFiles(context, props)
-  await updateAndroidFiles(context)
+  await updateAndroidFiles(context, props)
   spinner.succeed('set up react-native-navigation for iOS/Android')
 }
 const updateIosFiles = async (context, props) => {
@@ -58,29 +58,49 @@ const updateIosFiles = async (context, props) => {
 	</array>`,
   })
   /* eslint-enable */
+
+  await patchInFile(context, `${process.cwd()}/ios/Podfile`, {
+    replace: `platform :ios, '10.0'`,
+    insert: `platform :ios, '11.0'`,
+  })
+
+  // fix pod versions
+  await patchInFile(context, `${process.cwd()}/ios/Podfile`, {
+    before: `flipper_post_install`,
+    insert: `    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      end
+    end
+`,
+  })
+
+  for (let i = 0; i < 4; i++) {
+    // align IPHONEOS_DEPLOYMENT_TARGET
+    await patchInFile(context, `${process.cwd()}/ios/${props.name}.xcodeproj/project.pbxproj`, {
+      replace: `IPHONEOS_DEPLOYMENT_TARGET = 10.0;`,
+      insert: `IPHONEOS_DEPLOYMENT_TARGET = 11.0;`,
+      force: true
+    })
+  }
+
+
+  // disable flipper
+  await patchInFile(context, `${process.cwd()}/ios/Podfile`, {
+    replace: `use_flipper!`,
+    insert: `# use_flipper!`,
+  })
+  await patchInFile(context, `${process.cwd()}/ios/Podfile`, {
+    replace: `flipper_post_install`,
+    insert: `# flipper_post_install`,
+  })
 }
 
 const updateAndroidFiles = async (context) => {
   // settings.gradle
-  // build.gradle
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
-    before: `mavenLocal()`,
-    insert: `        google()
-        mavenCentral()
-        maven { url 'https://jitpack.io' }`,
-  })
-
-  await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
-    replace: `classpath("com.android.tools.build:gradle:3.4.2")`,
-    insert: `classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61"
-        classpath 'com.android.tools.build:gradle:3.5.3'`,
-  })
-
-  await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
-    after: `repositories {`,
-    insert: `        google()
-        mavenLocal()
-        mavenCentral()`,
+    after: `dependencies {`,
+    insert: `        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion")"`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
@@ -90,7 +110,7 @@ const updateAndroidFiles = async (context) => {
 
   await patchInFile(context, `${process.cwd()}/android/build.gradle`, {
     after: `  ext {`,
-    insert: `        RNNKotlinVersion = "1.3.61"\n        RNNKotlinStdlib = "kotlin-stdlib-jdk8"`,
+    insert: `        RNNKotlinVersion = "1.3.61"`,
   })
 
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {

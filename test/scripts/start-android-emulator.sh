@@ -9,9 +9,4 @@ echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n Nexus_6_API_29 -k '
 
 nohup $ANDROID_HOME/emulator/emulator -avd Nexus_6_API_29 -no-snapshot -memory 3072 > /dev/null 2>&1 & $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
 
-# disable animations
-$ANDROID_HOME/platform-tools/adb shell settings put global window_animation_scale 0.0
-$ANDROID_HOME/platform-tools/adb shell settings put global transition_animation_scale 0.0
-$ANDROID_HOME/platform-tools/adb shell settings put global animator_duration_scale 0.0
-
 echo "Emulator started"
