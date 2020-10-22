@@ -124,7 +124,6 @@ const updateAndroidFiles = async (context) => {
   await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
     before: `dependencies {`,
     insert: `
-    implementation 'androidx.multidex:multidex:2.0.1'
     configurations.all {
       resolutionStrategy.eachDependency { DependencyResolveDetails details ->
           def requested = details.requested
@@ -133,6 +132,14 @@ const updateAndroidFiles = async (context) => {
           }
       }
   }`,
+  })
+  await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
+    after: `dependencies {`,
+    insert: `    implementation 'androidx.multidex:multidex:2.0.1'`,
+  })
+  await patchInFile(context, `${process.cwd()}/android/app/build.gradle`, {
+    after: `versionCode 1`,
+    insert: `        multiDexEnabled true`,
   })
 }
 

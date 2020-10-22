@@ -23,7 +23,7 @@ jest
   })
 <%_ } _%>
   .mock('react-native-vector-icons/FontAwesome', () => 'Icon')
-  // related to 
+  // related to https://github.com/rt2zz/redux-persist/issues/1243
   .mock("redux-persist/lib/createPersistoid", () =>
     jest.fn(() => ({
         update: jest.fn(),
