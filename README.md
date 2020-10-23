@@ -1,66 +1,101 @@
-# Ignite JHipster
+# generator-jhipster-react-native
 
-[![NPM version](https://badge.fury.io/js/ignite-jhipster.svg)](https://npmjs.org/package/ignite-jhipster)
-[![iOS-E2E](https://github.com/ruddell/ignite-jhipster/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AiOS-E2E)
-[![Android-E2E](https://github.com/ruddell/ignite-jhipster/workflows/Android-E2E/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AAndroid-E2E)
-[![App](https://github.com/ruddell/ignite-jhipster/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AApp)
-[![Generator](https://github.com/ruddell/ignite-jhipster/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AGenerator)
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](#)
+> JHipster blueprint, React Native Blueprint for existing JHipster Apps
 
-A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
+# Introduction
 
-Check out the [Sample Application for Android](https://play.google.com/store/apps/details?id=com.jwtapp&hl=en) or the [presentation at JHipster Conf on YouTube](https://youtu.be/QZMAH2q6ViI).
+This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used in a JHipster application.
 
-## Docs
+# Prerequisites
 
-- [Getting Started](README.md#getting-started)
-- [Generators](docs/generators.md)
-- [Project Structure](docs/project-structure.md)
-- JHipster Integrations
-  - [OAuth2 OIDC Login](docs/oauth2-oidc.md)
-  - [Websockets](docs/websockets.md)
-- React Native Integrations
-  - [Storybook](docs/storybook.md) - Develop UI components in isolation
-  - [fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
-  - [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
-  - [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
-  - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
-- [Advanced Usage](docs/advanced-usage.md)
+As this is a [JHipster](https://www.jhipster.tech/) blueprint, we expect you have JHipster and its related tools already installed:
 
-## Getting Started
+-   [Installing JHipster](https://www.jhipster.tech/installation/)
 
-### Requirements
+# Installation
 
-- Node v8+
-  - Verify version with `node -v`
-- [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
-- [ignite-cli](https://github.com/infinitered/ignite) v3.x installed
-  - Install with `npm install -g ignite-cli@3`
-  - Verify version with `ignite --version`
-- Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
-  - Verify `pod` installation with `pod install`
-- Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging much easier and comes pre-configured
+## With NPM
 
-To generate an app, run the following command:
+To install this blueprint:
 
-```sh
-ignite new SampleApp --boilerplate ignite-jhipster
+```bash
+npm install -g generator-jhipster-react-native
 ```
 
-Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for both iOS and Android).
+To update this blueprint:
 
-After generating, you can use the [entity generator, JDL importer, and other commands](docs/generators.md).
+```bash
+npm update -g generator-jhipster-react-native
+```
 
-### Configuration
+## With Yarn
 
-`app/config/app-config.js` contains several important variables:
+To install this blueprint:
 
-- `apiUrl`: Your JHipster app's API url
-- `appUrlScheme`: Your app's URL scheme for deep-linking, this is also configured for iOS (Info.plist) and Android (AndroidManifest.xml) separately.
-- `uaaBaseUrl`: (UAA only) If you use a `uaaBasePath` other than `uaa`, configure this variable
+```bash
+yarn global add generator-jhipster-react-native
+```
 
-#### Notes for Android
+To update this blueprint:
 
-- When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
-- When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
+```bash
+yarn global upgrade generator-jhipster-react-native
+```
+
+# Usage
+
+To use this blueprint, run the below command
+
+```bash
+jhipster --blueprint react-native
+```
+
+## Running local Blueprint version for development
+
+During development of blueprint, please note the below steps. They are very important.
+
+1. Link your blueprint globally
+
+Note: If you do not want to link the blueprint(step 3) to each project being created, use NPM instead of Yarn as yeoman doesn't seem to fetch globally linked Yarn modules. On the other hand, this means you have to use NPM in all the below steps as well.
+
+```bash
+cd generator-jhipster-react-native
+npm link
+```
+
+2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the master branch or your own custom fork)
+
+You could also use Yarn for this if you prefer
+
+```bash
+cd generator-jhipster
+npm link
+
+cd generator-jhipster-react-native
+npm link generator-jhipster
+```
+
+3. Create a new folder for the app to be generated and link JHipster and your blueprint there
+
+```bash
+mkdir my-app && cd my-app
+
+npm link generator-jhipster-react-native
+npm link generator-jhipster (Optional: Needed only if you are using a non-released JHipster version)
+
+jhipster -d --blueprint react-native
+
+```
+
+# License
+
+Apache-2.0 © [Jon Ruddell](https://jruddell.com/)
+
+[npm-image]: https://img.shields.io/npm/v/generator-jhipster-react-native.svg
+[npm-url]: https://npmjs.org/package/generator-jhipster-react-native
+[travis-image]: https://travis-ci.org/ruddell/generator-jhipster-react-native.svg?branch=master
+[travis-url]: https://travis-ci.org/ruddell/generator-jhipster-react-native
+[daviddm-image]: https://david-dm.org/ruddell/generator-jhipster-react-native.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/ruddell/generator-jhipster-react-native
