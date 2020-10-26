@@ -6,7 +6,7 @@
 [![App](https://github.com/ruddell/ignite-jhipster/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AApp)
 [![Generator](https://github.com/ruddell/ignite-jhipster/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/ignite-jhipster/actions?query=workflow%3AGenerator)
 
-[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/main/images/ignite-jhipster/logo-150h.png)](#)
+[![Logo](https://raw.githubusercontent.com/ruddell/ruddell.github.io/master/images/ignite-jhipster/logo-150h.png)](#)
 
 A React Native boilerplate for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
