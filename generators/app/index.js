@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const AppGenerator = require('generator-jhipster/generators/app');
+const utils = require('./utils');
 
 module.exports = class extends AppGenerator {
     constructor(args, opts) {
@@ -16,6 +17,7 @@ module.exports = class extends AppGenerator {
     }
 
     get initializing() {
+        utils.printJHipsterLogo(this);
         /**
          * Any method beginning with _ can be reused from the superclass `AppGenerator`
          *
@@ -58,7 +60,9 @@ module.exports = class extends AppGenerator {
 
     get prompting() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._prompting();
+        console.warn('App not implemented for React Native');
+        return {};
+        // return super._prompting();
     }
 
     get configuring() {
@@ -83,6 +87,7 @@ module.exports = class extends AppGenerator {
 
     get end() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._end();
+        return process.exit(0);
+        // return super._end();
     }
 };

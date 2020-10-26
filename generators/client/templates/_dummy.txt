@@ -1,2 +1,0 @@
-hello react-native!
-It's dummy.txt
