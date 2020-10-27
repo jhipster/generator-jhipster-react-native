@@ -1,0 +1,15 @@
+{
+  "id" : 3,
+  "login" : "admin",
+  "firstName" : "Administrator",
+  "lastName" : "Administrator",
+  "email" : "admin@localhost",
+  "imageUrl" : "",
+  "activated" : true,
+  "langKey" : "en",
+  "createdBy" : "system",
+  "createdDate" : "2017-09-07T18:40:18.677Z",
+  "lastModifiedBy" : "system",
+  "lastModifiedDate" : null,
+  "authorities" : [ "ROLE_USER", "ROLE_ADMIN" ]
+}

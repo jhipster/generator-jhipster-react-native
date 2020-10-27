@@ -1,0 +1,132 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.109.0"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    @username = "your-apple-id-email@gmail.com"
+  end
+
+#  desc "Runs all the tests"
+#  lane :test do
+#    scan
+#  end
+
+  desc "Submit a new Beta Build"
+  desc "This will also make sure the profile is up to date"
+  lane :build do |options|
+
+    # Disabled changelog
+    # answer = UI.select("Would you like to add a Changelog?", ["Yes", "No"])
+    answer = "NO"
+    changelog = ask('Type Changelog message:') if answer == "Yes"
+
+    # Do application testing here
+    # Very personal process
+
+    # always get latest certificates/provisioning profiles
+    match(type: 'appstore', readonly: true)
+
+    # Change build number
+    increment_build_number(
+      xcodeproj: "./ios/<%= props.name %>.xcodeproj"
+    )
+
+    gym(
+      scheme: "<%= props.name %>",
+      workspace: "./ios/<%= props.name %>.xcworkspace"
+    )
+
+    pilot(username: @username, skip_waiting_for_build_processing: true)
+
+    # Print reminder of testers
+    # sh "fastlane pilot list -u #{@username}"
+
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # # This block is called, only if the executed lane was successful
+    #
+    # slack(
+    #   message: "App successfully released",
+    #   channel: "#myAppChannel"
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+platform :android do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+  end
+
+  def increment_version_code(gradle_build: 'android/app/build.gradle')
+    sh %Q{cd ../ && echo "$(awk '{sub(/versionCode [[:digit:]]+$/,"versionCode "$2+1)}1' #{gradle_build})" > #{gradle_build} && cd -}
+  end
+
+  desc "Submit a new Beta Build"
+  lane :build do |options|
+    gradle(task: 'clean', project_dir: "android/")
+
+    increment_version_code gradle_build: 'android/app/build.gradle'
+
+    # Build the release version of the Android App
+    gradle(
+      task: "app:bundle",
+      build_type: "Release",
+      project_dir: "android/"
+    )
+
+    supply(
+      track: "beta",
+      aab: "android/app/build/outputs/bundle/release/app.aab"
+    )
+
+  end
+
+  # You can define as many lanes as you want
+
+  after_all do |lane|
+    # # This block is called, only if the executed lane was successful
+    #
+    # slack(
+    #   message: "App successfully released",
+    #   channel: "#myAppChannel"
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+
+# fastlane reports which actions are used
+# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer
