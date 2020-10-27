@@ -1,0 +1,125 @@
+import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
+<%_ if (props.authType === 'oauth2') { _%>
+import { Alert, Platform } from 'react-native'
+import { authorize } from 'react-native-app-auth'
+<%_ } _%>
+<%_ if (props.authType === 'oauth2') { _%>
+import CookieManager from '@react-native-community/cookies'
+<%_ } _%>
+
+import LoginActions from './login.reducer'
+import AccountActions from '../../shared/reducers/account.reducer'
+<%_ if (props.websockets) { _%>
+import WebsocketService from '../../shared/websockets/websocket.service'
+<%_ } _%>
+<%_ if (props.authType === 'oauth2') { _%>
+import AppConfig from '../../config/app-config'
+<%_ } _%>
+
+<%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
+export const selectAuthToken = (state) => state.login.authToken
+<%_ } _%>
+// attempts to login
+<%_ if (props.authType === 'oauth2') { _%>
+export function * login (api) {
+  // get the oauth issuer information from the backend
+  const authInfo = yield call(api.getOauthInfo)
+  if (authInfo.ok) {
+    const { issuer, clientId } = authInfo.data
+    const config = {
+      issuer,
+      clientId,
+      scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'],
+      redirectUrl: `${AppConfig.appUrlScheme}://authorize`
+    }
+    if (__DEV__ && Platform.OS === 'android') {
+      // this allows connections to a keycloak instance using http:// in dev
+      config.dangerouslyAllowInsecureHttpRequests = true
+    }
+    try {
+      // result includes accessToken, accessTokenExpirationDate and refreshToken
+      const authorizeResult = yield authorize(config)
+      const { accessToken } = authorizeResult
+      yield call(api.setAuthToken, accessToken)
+      yield put(LoginActions.loginSuccess(accessToken))
+      yield put(AccountActions.accountRequest())
+      yield put({ type: 'RELOGIN_OK' })
+    } catch (error) {
+      console.tron.log(error)
+      <%_ // todo get expected error format _%>
+      yield put(LoginActions.loginFailure('Login failed'))
+    }
+  } else {
+    yield put(LoginActions.loginFailure((authInfo.data && authInfo.data.detail) || 'Could not connect to OAuth2 Provider'))
+    if (!authInfo.data) {
+      Alert.alert('Failed to fetch Auth Provider information from the backend API.')
+    }
+  }
+}
+
+<%_ } else { _%>
+export function * login (api, { username, password }) {
+  <%_ if (props.authType === 'session') { _%>
+    <%_ if (props.oldSessionAuthParameters) { _%>
+  const authObj = 'j_username=' + username + '&j_password=' + password + '&remember-me=true'
+    <%_ } else { _%>
+  const authObj = 'username=' + username + '&password=' + password + '&remember-me=true'
+    <%_ }_%>
+  <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
+  const authObj = {
+    username: username,
+    password: password,
+    rememberMe: true
+  }
+  <%_ } _%>
+
+  const response = yield call(api.login, authObj)
+
+  // success?
+  if (response.ok) {
+    <%_ if (props.authType === 'jwt') { _%>
+    yield call(api.setAuthToken, response.data.id_token)
+    yield put(LoginActions.loginSuccess(response.data.id_token))
+    <%_} else if (props.authType === 'session') { _%>
+    yield put(LoginActions.loginSuccess(response.data))
+    <%_} else if (props.authType === 'uaa') { _%>
+    yield put(LoginActions.loginSuccess(response.data))
+    <%_ } _%>
+    yield put(AccountActions.accountRequest())
+    <%_ if (props.websockets) { _%>
+    WebsocketService.setToken(response.data.id_token)
+    <%_ } _%>
+    yield put({ type: 'RELOGIN_OK' })
+  } else {
+    yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad credentials'))
+  }
+}
+<%_ } _%>
+// attempts to logout
+export function * logout (api) {
+  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+  yield call(api.logout)
+  <%_ } else if (props.authType === 'jwt') { _%>
+  yield call(api.removeAuthToken)
+  <%_ } else if (props.authType === 'oauth2') { _%>
+  yield CookieManager.clearAll()
+  yield call(api.removeAuthToken)
+  <%_ } _%>
+  yield put(AccountActions.accountRequest())
+  yield put(LoginActions.logoutSuccess())
+  yield put({ type: 'RELOGIN_ABORT' })
+}
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+// loads the login
+export function * loginLoad (api) {
+  const authToken = yield select(selectAuthToken)
+  // only set the token if we have it
+  if (authToken) {
+    yield call(api.setAuthToken, authToken)
+    <%_ if (props.websockets) { _%>
+    WebsocketService.setToken(authToken)
+    <%_ } _%>
+  }
+  yield put(LoginActions.loginLoadSuccess())
+}
+<%_ } _%>

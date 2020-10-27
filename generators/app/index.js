@@ -1,7 +1,11 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const AppGenerator = require('generator-jhipster/generators/app');
+const path = require('path');
+const shelljs = require('shelljs');
 const utils = require('./utils');
+const patch = require('./patch-in-file');
+const files = require('./files');
 
 module.exports = class extends AppGenerator {
     constructor(args, opts) {
@@ -59,13 +63,42 @@ module.exports = class extends AppGenerator {
     }
 
     get prompting() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        console.warn('App not implemented for React Native');
-        return {};
-        // return super._prompting();
+        // const done = this.async();
+        // const prompts = [
+        //     {
+        //         type: 'input',
+        //         name: 'appName',
+        //         message: 'What do you want to name your React Native application?',
+        //         default: 'RnApp',
+        //     },
+        //     {
+        //         type: 'input',
+        //         name: 'directoryPath',
+        //         message: 'Enter the directory where your JHipster app is located:',
+        //         default: 'backend',
+        //         validate: input => {
+        //             const path = this.destinationPath(input);
+        //             if (shelljs.test('-d', path)) {
+        //                 const appsFolders = utils.getAppFolder.call(this, input);
+        //                 if (appsFolders.length === 0) {
+        //                     return `No application found in ${path}`;
+        //                 }
+        //                 return true;
+        //             }
+        //             return `${path} is not a directory or doesn't exist`;
+        //         },
+        //     },
+        // ];
+        // this.prompt(prompts).then(props => {
+        //     this.ionicAppName = props.appName;
+        //     this.directoryPath = path.resolve(props.directoryPath);
+        //     done();
+        // });
+        return super._prompting();
     }
 
     get configuring() {
+        console.warn('Configuring...');
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._configuring();
     }
@@ -76,16 +109,21 @@ module.exports = class extends AppGenerator {
     }
 
     get writing() {
+        console.warn('Writing...');
+        // utils.generateReactNativeApp(this);
         // Here we are not overriding this phase and hence its being handled by JHipster
+        files.writeFiles.call(this);
         return super._writing();
     }
 
     get install() {
+        console.warn('Installing...');
         // Here we are not overriding this phase and hence its being handled by JHipster
         return super._install();
     }
 
     get end() {
+        console.warn('Done!');
         // Here we are not overriding this phase and hence its being handled by JHipster
         return process.exit(0);
         // return super._end();

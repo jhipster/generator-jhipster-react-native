@@ -1,0 +1,47 @@
+diff --git a/node_modules/tcomb-form-native/lib/components.js b/node_modules/tcomb-form-native/lib/components.js
+index 1cb5b5e..a508af7 100644
+--- a/node_modules/tcomb-form-native/lib/components.js
++++ b/node_modules/tcomb-form-native/lib/components.js
+@@ -81,11 +81,11 @@ class Component extends React.Component {
+     return should;
+   }
+ 
+-  componentWillReceiveProps(props) {
+-    if (props.type !== this.props.type) {
++  componentDidUpdate(prevProps) {
++    if (this.props.type !== prevProps.type) {
+       this.typeInfo = getTypeInfo(props.type);
+     }
+-    this.setState({ value: this.getTransformer().format(props.value) });
++    this.setState({ value: this.getTransformer().format(this.props.value) });
+   }
+ 
+   onChange(value) {
+@@ -592,11 +592,11 @@ export class List extends Component {
+     this.state.keys = this.state.value.map(() => props.ctx.uidGenerator.next());
+   }
+ 
+-  componentWillReceiveProps(props) {
+-    if (props.type !== this.props.type) {
++  componentDidUpdate(prevProps) {
++    if (this.props.type !== prevProps.type) {
+       this.typeInfo = getTypeInfo(props.type);
+     }
+-    const value = this.getTransformer().format(props.value);
++    const value = this.getTransformer().format(this.props.value)
+     this.setState({
+       value,
+       keys: toSameLength(value, this.state.keys, props.ctx.uidGenerator)
+diff --git a/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js b/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
+index 56385d1..488b6e9 100644
+--- a/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
++++ b/node_modules/tcomb-form-native/lib/templates/bootstrap/select.ios.js
+@@ -107,7 +107,7 @@ class CollapsiblePickerIOS extends React.Component {
+           ]}
+           onPress={this.togglePicker}
+         >
+-          <Text style={pickerValue}>{selectedOption.text}</Text>
++          <Text style={pickerValue}>{selectedOption ? selectedOption.text : ""}</Text>
+         </TouchableOpacity>
+         <Animated.View
+           style={{ height: this.state.height, overflow: "hidden" }}
