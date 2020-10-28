@@ -61,7 +61,8 @@ module.exports = class extends EntityGenerator {
 
     get prompting() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._prompting();
+        // return super._prompting();
+        return {};
     }
 
     get configuring() {

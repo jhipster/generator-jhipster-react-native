@@ -26,11 +26,7 @@ test('login success path', () => {
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
   <%_} else { _%>
   <%_ if (props.authType === 'session') { _%>
-    <%_ if (props.oldSessionAuthParameters) { _%>
-  const authObj = 'j_username=user&j_password=user&remember-me=true'
-    <%_ } else { _%>
   const authObj = 'username=user&password=user&remember-me=true'
-    <%_ }_%>
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
     username: 'user',
@@ -77,11 +73,7 @@ test('login failure path', () => {
   expect(step(response)).toEqual(put(LoginActions.loginFailure('Could not connect to OAuth2 Provider')))
   <%_} else { _%>
   <%_ if (props.authType === 'session') { _%>
-    <%_ if (props.oldSessionAuthParameters) { _%>
-  const authObj = 'j_username=user&j_password=user2&remember-me=true'
-    <%_ } else { _%>
   const authObj = 'username=user&password=user2&remember-me=true'
-    <%_ }_%>
   <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
   const authObj = {
     username: 'user',
