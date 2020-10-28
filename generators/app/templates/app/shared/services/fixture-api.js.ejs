@@ -47,11 +47,7 @@ export default {
   <%_ if (props.authType !== 'oauth2') { _%>
   login: (authObj) => {
     <%_ if (props.authType === 'session') { _%>
-      <%_ if (props.oldSessionAuthParameters) { _%>
-    if (authObj === 'j_username=user&j_password=user&remember-me=true') {
-      <%_ } else { _%>
     if (authObj === 'username=user&password=user&remember-me=true') {
-      <%_ }_%>
     <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
     <%_ } _%>

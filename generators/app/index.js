@@ -5,7 +5,7 @@ const path = require('path');
 const shelljs = require('shelljs');
 const utils = require('./utils');
 const patch = require('./patch-in-file');
-const files = require('./files');
+const writeFiles = require('./files').writeFiles;
 
 module.exports = class extends AppGenerator {
     constructor(args, opts) {
@@ -59,7 +59,8 @@ module.exports = class extends AppGenerator {
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._initializing();
+        // return super._initializing();
+        return {};
     }
 
     get prompting() {
@@ -94,38 +95,55 @@ module.exports = class extends AppGenerator {
         //     this.directoryPath = path.resolve(props.directoryPath);
         //     done();
         // });
-        return super._prompting();
+        // return super._prompting();
+        return {};
     }
 
     get configuring() {
         console.warn('Configuring...');
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
+        // return super._configuring();
+        return {};
     }
 
     get default() {
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._default();
+        // return super._default();
+        return {};
     }
 
     get writing() {
-        console.warn('Writing...');
-        // utils.generateReactNativeApp(this);
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        files.writeFiles.call(this);
-        return super._writing();
+        return {
+            generateReactNativeApp() {
+                console.log('Generating React Native app...');
+                // utils.generateReactNativeApp(this);
+                console.log('React Native app generated!');
+            },
+            writeFiles() {
+                console.log('Copying Boilerplate Files...');
+                writeFiles.call(this);
+                console.log('Boilerplate Files Copied!');
+            },
+        };
     }
 
     get install() {
-        console.warn('Installing...');
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._install();
+        const gitInit = super._install().initGitRepo.bind(this);
+        return {
+            npmInstall() {
+                // todo
+            },
+            podInstall() {
+                // todo
+            },
+            gitInit,
+        };
     }
 
     get end() {
-        console.warn('Done!');
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return process.exit(0);
-        // return super._end();
+        const gitCommit = super._end().gitCommit.bind(this);
+        return {
+            gitCommit,
+        };
     }
 };
