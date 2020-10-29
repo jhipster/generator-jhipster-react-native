@@ -12,12 +12,12 @@ jest
   .mock('react-native-navigation', () => {
     return { Navigation: { showModal: jest.fn((url) => { return [] }) } }
   })
-<%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
+<%_ if (authType === 'session' || authType === 'uaa' || authType === 'oauth2') { _%>
   .mock('@react-native-community/cookies', () => {
     return { get: jest.fn((url) => { return [] }), clearAll: jest.fn((url) => { return [] }) }
   })
 <%_ } _%>
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (authType === 'oauth2') { _%>
   .mock('react-native-app-auth', () => {
     return { authorize: jest.fn(() => { return {} }) }
   })

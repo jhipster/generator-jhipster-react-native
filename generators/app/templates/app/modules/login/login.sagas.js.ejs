@@ -1,26 +1,26 @@
-import { call, put<% if (props.authType === 'oauth2' || props.authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
-<%_ if (props.authType === 'oauth2') { _%>
+import { call, put<% if (authType === 'oauth2' || authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
+<%_ if (authType === 'oauth2') { _%>
 import { Alert, Platform } from 'react-native'
 import { authorize } from 'react-native-app-auth'
 <%_ } _%>
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (authType === 'oauth2') { _%>
 import CookieManager from '@react-native-community/cookies'
 <%_ } _%>
 
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
-<%_ if (props.websockets) { _%>
+<%_ if (websockets) { _%>
 import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (authType === 'oauth2') { _%>
 import AppConfig from '../../config/app-config'
 <%_ } _%>
 
-<%_ if (props.authType === 'oauth2' || props.authType === 'jwt') { _%>
+<%_ if (authType === 'oauth2' || authType === 'jwt') { _%>
 export const selectAuthToken = (state) => state.login.authToken
 <%_ } _%>
 // attempts to login
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (authType === 'oauth2') { _%>
 export function * login (api) {
   // get the oauth issuer information from the backend
   const authInfo = yield call(api.getOauthInfo)
@@ -59,9 +59,9 @@ export function * login (api) {
 
 <%_ } else { _%>
 export function * login (api, { username, password }) {
-  <%_ if (props.authType === 'session') { _%>
+  <%_ if (authType === 'session') { _%>
   const authObj = 'username=' + username + '&password=' + password + '&remember-me=true'
-  <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
+  <%_ } else if (authType === 'jwt' || authType === 'uaa') { _%>
   const authObj = {
     username: username,
     password: password,
@@ -73,16 +73,16 @@ export function * login (api, { username, password }) {
 
   // success?
   if (response.ok) {
-    <%_ if (props.authType === 'jwt') { _%>
+    <%_ if (authType === 'jwt') { _%>
     yield call(api.setAuthToken, response.data.id_token)
     yield put(LoginActions.loginSuccess(response.data.id_token))
-    <%_} else if (props.authType === 'session') { _%>
+    <%_} else if (authType === 'session') { _%>
     yield put(LoginActions.loginSuccess(response.data))
-    <%_} else if (props.authType === 'uaa') { _%>
+    <%_} else if (authType === 'uaa') { _%>
     yield put(LoginActions.loginSuccess(response.data))
     <%_ } _%>
     yield put(AccountActions.accountRequest())
-    <%_ if (props.websockets) { _%>
+    <%_ if (websockets) { _%>
     WebsocketService.setToken(response.data.id_token)
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
@@ -93,11 +93,11 @@ export function * login (api, { username, password }) {
 <%_ } _%>
 // attempts to logout
 export function * logout (api) {
-  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+  <%_ if (authType === 'session' || authType === 'uaa') { _%>
   yield call(api.logout)
-  <%_ } else if (props.authType === 'jwt') { _%>
+  <%_ } else if (authType === 'jwt') { _%>
   yield call(api.removeAuthToken)
-  <%_ } else if (props.authType === 'oauth2') { _%>
+  <%_ } else if (authType === 'oauth2') { _%>
   yield CookieManager.clearAll()
   yield call(api.removeAuthToken)
   <%_ } _%>
@@ -105,14 +105,14 @@ export function * logout (api) {
   yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
-<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+<%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
 // loads the login
 export function * loginLoad (api) {
   const authToken = yield select(selectAuthToken)
   // only set the token if we have it
   if (authToken) {
     yield call(api.setAuthToken, authToken)
-    <%_ if (props.websockets) { _%>
+    <%_ if (websockets) { _%>
     WebsocketService.setToken(authToken)
     <%_ } _%>
   }

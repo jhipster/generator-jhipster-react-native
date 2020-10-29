@@ -29,7 +29,7 @@ export default {
     }
   },
   // auth fixtures
-  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+  <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
   setAuthToken: () => {
 
   },
@@ -37,18 +37,18 @@ export default {
 
   },
   <%_ } _%>
-  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+  <%_ if (authType === 'session' || authType === 'uaa') { _%>
   logout: () => {
     return {
       ok: true
     }
   },
   <%_ } _%>
-  <%_ if (props.authType !== 'oauth2') { _%>
+  <%_ if (authType !== 'oauth2') { _%>
   login: (authObj) => {
-    <%_ if (props.authType === 'session') { _%>
+    <%_ if (authType === 'session') { _%>
     if (authObj === 'username=user&password=user&remember-me=true') {
-    <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
+    <%_ } else if (authType === 'jwt' || authType === 'uaa') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
     <%_ } _%>
       return {

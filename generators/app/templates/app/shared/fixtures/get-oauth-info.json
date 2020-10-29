@@ -1,4 +1,0 @@
-{
-  "issuer": "http://localhost:9080/auth/realms/jhipster",
-  "clientId": "web_app"
-}

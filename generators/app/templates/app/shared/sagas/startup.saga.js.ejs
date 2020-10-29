@@ -1,6 +1,6 @@
 import { put } from 'redux-saga/effects'
 import AppStateActions from '../reducers/app-state.reducer'
-<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+<%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
 import LoginActions from '../../modules/login/login.reducer'
 <%_ } _%>
 import AccountActions from '../reducers/account.reducer'
@@ -30,7 +30,7 @@ export function * startup (action) {
     })
   }
 
-  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+  <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
   yield put(LoginActions.loginLoad())
   <%_ } _%>
   yield put(AccountActions.accountRequest())
