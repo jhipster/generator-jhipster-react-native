@@ -24,10 +24,11 @@
         "no-plusplus": "off",
         "no-unused-expressions": [2, { "allowShortCircuit": true, "allowTernary": true }],
         "prefer-destructuring": "off",
-
         "no-multi-assign": "off",
         "no-param-reassign": "off",
-        "no-shadow": "off"
+        "no-shadow": "off",
+        // remove later
+        "no-console": "off"
     },
     "overrides": [
         {
