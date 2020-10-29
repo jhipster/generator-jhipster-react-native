@@ -43,12 +43,12 @@ platform :ios do
 
     # Change build number
     increment_build_number(
-      xcodeproj: "./ios/<%= props.name %>.xcodeproj"
+      xcodeproj: "./ios/<%= reactNativeAppName %>.xcodeproj"
     )
 
     gym(
-      scheme: "<%= props.name %>",
-      workspace: "./ios/<%= props.name %>.xcworkspace"
+      scheme: "<%= reactNativeAppName %>",
+      workspace: "./ios/<%= reactNativeAppName %>.xcworkspace"
     )
 
     pilot(username: @username, skip_waiting_for_build_processing: true)

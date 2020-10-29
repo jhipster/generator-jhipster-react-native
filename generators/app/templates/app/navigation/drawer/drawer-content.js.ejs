@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ScrollView, Image, BackHandler } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
-import { <% if (props.authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (props.websockets) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
+import { <% if (authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (websockets) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
 import { connect } from 'react-redux'
 
 import styles from './drawer-content.styles'
@@ -36,13 +36,13 @@ class DrawerContent extends Component {
 
   handlePressLogin = () => {
     this.hideSideMenu()
-    <%_ if (props.authType === 'oauth2') { _%>
+    <%_ if (authType === 'oauth2') { _%>
     this.props.login()
     <%_ } else { _%>
     loginScreen()
     <%_ } _%>
   }
-  <%_ if (props.authType !== 'oauth2') { _%>
+  <%_ if (authType !== 'oauth2') { _%>
   handlePressRegister = () => {
     this.hideSideMenu()
     registerScreen()
@@ -64,7 +64,7 @@ class DrawerContent extends Component {
     this.hideSideMenu()
     entitiesScreen()
   }
-  <%_ if (props.websockets) { _%>
+  <%_ if (websockets) { _%>
   handlePressChat = () => {
     this.hideSideMenu()
     chatScreen()
@@ -84,16 +84,16 @@ class DrawerContent extends Component {
       <ScrollView style={styles.container}>
         <Image testID='drawerLogo' source={Images.logoJhipster} style={styles.logo} />
         {!this.props.loggedIn && (<DrawerButton testID='loginDrawerButton' text='Login' onPress={this.handlePressLogin} />)}
-        <%_ if (props.authType !== 'oauth2') { _%>
+        <%_ if (authType !== 'oauth2') { _%>
         {!this.props.loggedIn && (<DrawerButton testID='registerDrawerButton' text='Register' onPress={this.handlePressRegister} />)}
         {!this.props.loggedIn && (<DrawerButton testID='forgotPasswordDrawerButton' text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
         <%_ } _%>
 
         {this.props.loggedIn && (<DrawerButton testID='entitiesDrawerButton' text='Entities' onPress={this.handlePressEntities} />)}
-        <%_ if (props.websockets) { _%>
+        <%_ if (websockets) { _%>
         {this.props.loggedIn && (<DrawerButton testID='chatDrawerButton' text='Chat' onPress={this.handlePressChat} />)}
         <%_ } _%>
-        <%_ if (props.authType !== 'oauth2') { _%>
+        <%_ if (authType !== 'oauth2') { _%>
         {this.props.loggedIn && (<DrawerButton testID='settingsDrawerButton' text='Settings' onPress={this.handlePressSettings} />)}
         {this.props.loggedIn && (<DrawerButton testID='changePasswordDrawerButton' text='Change Password' onPress={this.handlePressChangePassword} />)}
         <%_ } _%>
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ if (props.authType === 'oauth2') { _%>
+    <%_ if (authType === 'oauth2') { _%>
     login: () => dispatch(LoginActions.loginRequest()),
     <%_ } _%>
     logout: () => dispatch(LoginActions.logoutRequest())

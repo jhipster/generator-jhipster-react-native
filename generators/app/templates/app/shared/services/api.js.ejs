@@ -1,6 +1,6 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
-<%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+<%_ if (authType === 'session' || authType === 'uaa') { _%>
 import CookieManager from '@react-native-community/cookies'
 <%_ } _%>
 
@@ -24,7 +24,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
     // 10 second timeout...
     timeout: 10000
   })
-  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+  <%_ if (authType === 'session' || authType === 'uaa') { _%>
   api.addAsyncRequestTransform(request => async (request) => {
     const cookies = await CookieManager.get(baseURL)
     if (cookies['XSRF-TOKEN']) {
@@ -48,28 +48,28 @@ const create = (baseURL = AppConfig.apiUrl) => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
+  <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.deleteHeader('Authorization')
   <%_ } _%>
-  <%_ if (props.authType === 'oauth2') { _%>
+  <%_ if (authType === 'oauth2') { _%>
   const getOauthInfo = () => api.get('api/auth-info')
   const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
-  <%_ } else if (props.authType === 'session') { _%>
+  <%_ } else if (authType === 'session') { _%>
   const login = (userAuth) => api.post('api/authentication', userAuth, { headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json, text/plain, */*' } })
   const logout = () => api.post('api/logout')
-  <%_ } else if (props.authType === 'jwt') { _%>
+  <%_ } else if (authType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
-  <%_ } else if (props.authType === 'uaa') { _%>
+  <%_ } else if (authType === 'uaa') { _%>
   const login = (userAuth) => api.post('auth/login', userAuth)
   const logout = () => api.post('auth/logout')
   <%_ } _%>
-  const register = (user) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/register', user)
-  const forgotPassword = (data) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset-password/init', data, { headers: { 'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*' } })
+  const register = (user) => api.post(<% if (authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/register', user)
+  const forgotPassword = (data) => api.post(<% if (authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/reset-password/init', data, { headers: { 'Content-Type': 'text/plain', 'Accept': 'application/json, text/plain, */*' } })
 
-  const getAccount = () => api.get(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account')
-  const updateAccount = (account) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account', account)
-  const changePassword = (currentPassword, newPassword) => api.post(<% if (props.authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/change-password', { currentPassword, newPassword }, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' } })
+  const getAccount = () => api.get(<% if (authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account')
+  const updateAccount = (account) => api.post(<% if (authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account', account)
+  const changePassword = (currentPassword, newPassword) => api.post(<% if (authType === 'uaa') { %>AppConfig.uaaBaseUrl + <% } %>'api/account/change-password', { currentPassword, newPassword }, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' } })
 
   const getUser = (userId) => api.get('api/users/' + userId)
   const getUsers = (options) => api.get('api/users', options)
@@ -98,13 +98,13 @@ const create = (baseURL = AppConfig.apiUrl) => {
     getUser,
     deleteUser,
     // ignite-jhipster-api-export-needle
-    <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
+    <%_ if (authType === 'session' || authType === 'uaa') { _%>
     logout,
     <%_ } else { _%>
     setAuthToken,
     removeAuthToken,
     <%_ } _%>
-    <%_ if (props.authType === 'oauth2') { _%>
+    <%_ if (authType === 'oauth2') { _%>
     getOauthInfo,
     getOauthIssuerInfo,
     <%_ } else { _%>

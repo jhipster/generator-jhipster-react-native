@@ -13,7 +13,7 @@ import React from 'react'
 import { Colors } from '../../shared/themes/'
 
 const links = [
-  <%_ if (props.authType === 'oauth2') { _%>
+  <%_ if (authType === 'oauth2') { _%>
   {
     id: 0,
     title: 'OAuth2 Login Config',
@@ -63,7 +63,7 @@ const links = [
     link: 'https://github.com/ruddell/ignite-jhipster/blob/main/docs/storybook.md',
     description: 'How to use Storybook with React Native.',
   },
-  <%_ if (props.websockets) { _%>
+  <%_ if (websockets) { _%>
   {
     id: 8,
     title: 'Websockets Demo',
