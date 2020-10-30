@@ -1,0 +1,94 @@
+import React from 'react'
+import { ActivityIndicator, Alert, ScrollView, Text, View } from 'react-native'
+import { connect } from 'react-redux'
+import { Navigation } from 'react-native-navigation'
+import { <%= camelCaseName %>EntityEditScreen } from '../../../navigation/layouts'
+<%_ if (entityContainsLocalDate) { _%>
+import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
+<%_ } _%>
+
+import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
+import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
+import styles from './<%= kebabCaseName %>-entity-detail-screen-style'
+
+class <%= name %>EntityDetailScreen extends React.Component {
+  constructor (props) {
+    super(props)
+    Navigation.events().bindComponent(this)
+    this.props.get<%= name %>(this.props.data.entityId)
+  }
+
+  componentDidUpdate (prevProps) {
+    if (prevProps.deleting && !this.props.deleting) {
+      if (this.props.errorDeleting) {
+        Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
+      } else {
+        this.props.reset<%= pluralName %>()
+        Navigation.pop(this.props.componentId)
+      }
+    }
+  }
+
+  confirmDelete = () => {
+    Alert.alert(
+      'Delete <%= name %>?',
+      'Are you sure you want to delete the <%= name %>?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'OK',
+          onPress: () => {
+            this.props.delete<%= name %>(this.props.data.entityId)
+          }
+        }
+      ],
+      { cancelable: false }
+    )
+  }
+
+  render () {
+    if (!this.props.<%= camelCaseName %> || this.props.fetching) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      )
+    }
+    return (
+      <ScrollView style={styles.container} testID="<%= camelCaseName %>DetailScrollView">
+        <Text>ID: {this.props.<%= camelCaseName %>.id}</Text>
+        <%_ entityInfo.fields.forEach(function (field) { _%>
+        <%_ if (field.fieldType === 'LocalDate') { _%>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+        <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+        <%_ } else { _%>
+        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
+        <%_ } _%>
+        <%_ }) _%>
+        <RoundedButton text='Edit' onPress={<%= camelCaseName %>EntityEditScreen.bind(this, { entityId: this.props.<%= camelCaseName %>.id })} />
+        <RoundedButton text='Delete' onPress={this.confirmDelete} />
+      </ScrollView>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
+    fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
+    deleting: state.<%= camelCaseNamePlural %>.deleting,
+    errorDeleting: state.<%= camelCaseNamePlural %>.errorDeleting
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>Request(id)),
+    getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options)),
+    delete<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>DeleteRequest(id)),
+    reset<%= pluralName %>: () => dispatch(<%= name %>Actions.<%= camelCaseName %>Reset()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityDetailScreen)

@@ -39,7 +39,7 @@ const insertInFile = (filePath, findPattern, content, insertAfter = true) => {
  *
  */
 function patchInFile(file, opts) {
-    console.warn(`USING DEPRECATED PATCH METHOD on ${file}`);
+    // console.warn(`USING DEPRECATED PATCH METHOD on ${file}`);
     try {
         if (!fs.exists(file)) return;
         const data = fs.read(file, 'utf8');

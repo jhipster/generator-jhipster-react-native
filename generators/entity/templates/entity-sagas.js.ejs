@@ -1,0 +1,100 @@
+import { call, put } from 'redux-saga/effects'
+import { callApi } from '../../../shared/sagas/call-api.saga'
+import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
+<%_ if (entityContainsLocalDate) { _%>
+import { localDateToJsDate } from '../../../shared/util/date-transforms'
+<%_ } _%>
+
+export function * get<%= name %> (api, action) {
+  const { <%= camelCaseName %>Id } = action
+  // make the call to the api
+  const apiCall = call(api.get<%= name %>, <%= camelCaseName %>Id)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    <%_ if (entityContainsDate) { _%>
+    response.data = mapDateFields(response.data)
+    <%_ } _%>
+    yield put(<%= name %>Actions.<%= camelCaseName %>Success(response.data))
+  } else {
+    yield put(<%= name %>Actions.<%= camelCaseName %>Failure(response.data))
+  }
+}
+
+export function * get<%= pluralName %> (api, action) {
+  const { options } = action
+  // make the call to the api
+  const apiCall = call(api.get<%= pluralName %>, options)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= name %>Actions.<%= camelCaseName %>AllSuccess(response.data, response.headers))
+  } else {
+    yield put(<%= name %>Actions.<%= camelCaseName %>AllFailure(response.data))
+  }
+}
+
+export function * update<%= name %> (api, action) {
+  const { <%= camelCaseName %> } = action
+  // make the call to the api
+  const idIsNotNull = !!<%= camelCaseName %>.id
+  const apiCall = call(idIsNotNull ? api.update<%= name %> : api.create<%= name %>, <%= camelCaseName %>)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    <%_ if (entityContainsDate) { _%>
+    response.data = mapDateFields(response.data)
+    <%_ } _%>
+    yield put(<%= name %>Actions.<%= camelCaseName %>UpdateSuccess(response.data))
+  } else {
+    yield put(<%= name %>Actions.<%= camelCaseName %>UpdateFailure(response.data))
+  }
+}
+
+<%_ if (searchEngine) { _%>
+export function * search<%= pluralName %> (api, action) {
+  const { query } = action
+  // make the call to the api
+  const apiCall = call(api.search<%= pluralName %>, query)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= name %>Actions.<%= camelCaseName %>SearchSuccess(response.data))
+  } else {
+    yield put(<%= name %>Actions.<%= camelCaseName %>SearchFailure(response.data))
+  }
+}
+<%_ } _%>
+export function * delete<%= name %> (api, action) {
+  const { <%= camelCaseName %>Id } = action
+  // make the call to the api
+  const apiCall = call(api.delete<%= name %>, <%= camelCaseName %>Id)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= name %>Actions.<%= camelCaseName %>DeleteSuccess())
+  } else {
+    yield put(<%= name %>Actions.<%= camelCaseName %>DeleteFailure(response.data))
+  }
+}
+<%_ if (entityContainsDate) { _%>
+function mapDateFields (data) {
+<%_ entityInfo.fields.forEach(function (field) { _%>
+<%_ if (field.fieldType === 'LocalDate') { _%>
+  if (data.<%= field.fieldName %>) {
+    data.<%= field.fieldName %> = localDateToJsDate(data.<%= field.fieldName %>)
+  }
+<%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
+  if (data.<%= field.fieldName %>) {
+    data.<%= field.fieldName %> = new Date(data.<%= field.fieldName %>)
+  }
+<%_ } _%>
+<%_ }) _%>
+  return data
+}
+<%_ } _%>
