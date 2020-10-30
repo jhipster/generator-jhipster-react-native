@@ -1,0 +1,264 @@
+import React from 'react'
+import { ActivityIndicator, Alert, Text, TouchableHighlight, View } from 'react-native'
+import { connect } from 'react-redux'
+import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
+<%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
+<%_ if (relation.otherEntityName === 'user') { _%>
+import UserActions from '../../../shared/reducers/user.reducer'
+<%_ } else { _%>
+import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase(relation.otherEntityName) %>/<%= kebabCase(relation.otherEntityName) %>.reducer'
+<%_ } _%>
+<%_ }) _%>
+import { Navigation } from 'react-native-navigation'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+<%_ if (entityContainsLocalDate) { _%>
+import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
+<%_ } _%>
+import { <%= camelCaseName %>EntityDetailScreen } from '../../../navigation/layouts'
+
+import t from 'tcomb-form-native'
+
+import styles from './<%= kebabCaseName %>-entity-edit-screen-style'
+
+let Form = t.form.Form
+<%_ entityInfo.fields.forEach((field) => {
+  if (field.fieldIsEnum) { _%>
+const <%= field.fieldType %> = t.enums({
+<%_
+    const enumValues = field.fieldValues.split(',')
+    enumValues.forEach((enumValue, index) => {
+_%>
+  <%= enumValue %>: '<%= enumValue %>'<%= index !== enumValues.length -1 ? ',' : '' %>
+<%_ }) //end of value loop _%>
+})
+<%_ } // end of if statement
+}) // end of field loop _%>
+
+class <%= name %>EntityEditScreen extends React.Component {
+  constructor (props) {
+    super(props)
+    Navigation.events().bindComponent(this)
+    this.state = {
+      formModel: t.struct({
+        id: t.maybe(t.Number),
+        <%_ entityInfo.fields.forEach((field, index) => { _%>
+        <%= props.getEntityFormField(field, index, entityInfo.fields.length, entityInfo.ownerSideRelationships.length) %>
+        <%_ }) _%>
+        <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+        <%= props.getRelationshipFormField(relation, index, entityInfo.ownerSideRelationships.length, props) %>
+        <%_ }) _%>
+      }),
+      formValue: { id: null },
+      formOptions: {
+        fields: {
+          id: {
+            hidden: true
+          },
+          <%_ entityInfo.ownerSideRelationships.forEach((relation) => { _%>
+          <%= relation.otherEntityName %>Id: {
+            testID: '<%= relation.otherEntityName %>IdInput',
+            label: '<%= pascalCase(relation.relationshipName) %>'
+          },
+          <%_ }) _%>
+          <%_ entityInfo.fields.forEach((field, index) => {
+              let nextFieldName = null
+              if (index !== entityInfo.fields.length - 1) {
+                nextFieldName = entityInfo.fields[index + 1].fieldName
+              }
+            _%>
+          <%= field.fieldName %>: {
+            <%_ if (field.fieldType === 'LocalDate') { _%>
+            mode: 'date',
+            config: {
+              format: date => jsDateToLocalDate(date)
+            },
+            <%_ } else if (field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') { _%>
+            mode: 'date',
+            <%_ } _%>
+            <%_ if (nextFieldName) { _%>
+            returnKeyType: 'next',
+            onSubmitEditing: () => this.form.getComponent('<%= nextFieldName %>').refs.input.focus(),
+            <%_ } else if (entityInfo.ownerSideRelationships.length === 0) { _%>
+            returnKeyType: 'done',
+            onSubmitEditing: () => this.submitForm(),
+          <%_ } _%>
+            testID: '<%= field.fieldName %>Input'
+          }<%= (index === entityInfo.fields.length - 1) ? '' : ',' %>
+          <%_ }) // end entity field loop _%>
+        }
+      },
+      <%= camelCaseName %>: {},
+      isNewEntity: true
+    }
+    if (props.data && props.data.entityId) {
+      this.state.isNewEntity = false
+      this.props.get<%= name %>(props.data.entityId)
+    }
+  <%_ entityInfo.ownerSideRelationships.forEach((relation) => { _%>
+    this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
+  <%_ }) _%>
+
+    this.submitForm = this.submitForm.bind(this)
+    this.formChange = this.formChange.bind(this)
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState){
+    if (nextProps.<%= camelCaseName %> !== prevState.<%= camelCaseName %> && !prevState.isNewEntity) {
+      return { formValue: entityToFormValue(nextProps.<%= camelCaseName %>), <%= camelCaseName %>: nextProps.<%= camelCaseName %> }
+    }
+    return null
+  }
+  componentDidUpdate (prevProps) {
+    if (prevProps.updating && !this.props.updating) {
+      if (this.props.error) {
+        Alert.alert('Error', 'Something went wrong updating the entity', [{ text: 'OK' }])
+      } else {
+        const entityId = this.props.<%= camelCaseName %>.id
+        this.props.reset()
+        this.props.get<%= name %>(entityId)
+        const alertOptions = [{ text: 'OK' }]
+        if (!this.state.formValue.id) {
+          alertOptions.push({
+            text: 'View',
+            onPress: <%= camelCaseName %>EntityDetailScreen.bind(this, { entityId })
+          })
+        }
+        Navigation.pop(this.props.componentId)
+        Alert.alert('Success', 'Entity saved successfully', alertOptions)
+      }
+    }
+  }
+
+<%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+  get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
+    const <%= camelCase(relation.otherEntityNamePlural) %> = {}
+    this.props.<%= camelCase(relation.otherEntityNamePlural) %>.forEach(<%= camelCase(relation.otherEntityName) %> => {
+      <%= camelCase(relation.otherEntityNamePlural) %>[<%= camelCase(relation.otherEntityName) %>.id] = <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %> ? <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= camelCase(relation.otherEntityName) %>.id.toString()
+    })
+    return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
+  }
+<%_ }) _%>
+  submitForm () {
+    // call getValue() to get the values of the form
+    const <%= camelCaseName %> = this.form.getValue()
+    if (<%= camelCaseName %>) { // if validation fails, value will be null
+      this.props.update<%= name %>(formValueToEntity(<%= camelCaseName %>))
+    }
+  }
+
+  formChange (newValue) {
+    this.setState({
+      formValue: newValue
+    })
+  }
+
+  render () {
+    if (this.props.fetching) {
+      return (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </View>
+      )
+    }
+    return (
+      <View style={styles.container}>
+        <KeyboardAwareScrollView  testID='<%= camelCaseName %>EditScrollView'>
+          <Form
+            ref={c => {
+              this.form = c
+            }}
+            type={this.state.formModel}
+            options={this.state.formOptions}
+            value={this.state.formValue}
+            onChange={this.formChange}
+          />
+        </KeyboardAwareScrollView>
+        <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
+            <Text style={styles.buttonText}>Save</Text>
+        </TouchableHighlight>
+      </View>
+    )
+  }
+}
+// convenience methods for customizing the mapping of the entity to/from the form value
+const entityToFormValue = (value) => {
+  if (!value) {
+    return {}
+  }
+  return {
+    id: value.id || null,
+    <%_ entityInfo.fields.forEach((field, index) => { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  entityInfo.ownerSideRelationships.length || index !== entityInfo.fields.length - 1 ? ',' : '' %>
+    <%_ }) _%>
+    <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ if (entityInfo.dto === 'no') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } else if (entityInfo.dto === 'mapstruct') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id }))<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } _%>
+    <%_ }) _%>
+  }
+}
+const formValueToEntity = (value) => {
+  const entity = {
+    id: value.id || null,
+    <%_ entityInfo.fields.forEach((field, index) => { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> || null<%=  entityInfo.dto === 'mapstruct' && entityInfo.ownerSideRelationships.length || index !== entityInfo.fields.length - 1 ? ',' : '' %>
+    <%_ }) _%>
+    <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_  if (entityInfo.dto === 'mapstruct') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } else { _%>
+    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null<%= index !== entityInfo.ownerSideRelationships.length - 1 ? ',' : '' %>
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  }
+  <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ if (entityInfo.dto === 'no') { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+  entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))
+      <%_ } else { _%>
+  if (value.<%= relation.otherEntityName %>Id) {
+    entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }
+  }
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  return entity
+}
+
+const mapStateToProps = (state) => {
+  return {
+    <%_ entityInfo.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    <%= camelCase(relation.otherEntityNamePlural) %>: state.<%= camelCase(relation.otherEntityNamePlural) %>.<%= camelCase(relation.otherEntityNamePlural) %> || [],
+    <%_ }) _%>
+    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
+    fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
+    updating: state.<%= camelCaseNamePlural %>.updating,
+    error: state.<%= camelCaseNamePlural %>.errorUpdating
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    <%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
+    getAll<%= pascalCase(relation.otherEntityNamePlural) %>: (options) => dispatch(<%= pascalCase(relation.otherEntityName) %>Actions.<%= camelCase(relation.otherEntityName) %>AllRequest(options)),
+    <%_ }) _%>
+    get<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>Request(id)),
+    getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options)),
+    update<%= name %>: (<%= camelCaseName %>) => dispatch(<%= name %>Actions.<%= camelCaseName %>UpdateRequest(<%= camelCaseName %>)),
+    reset: () => dispatch(<%= name %>Actions.<%= camelCaseName %>Reset()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityEditScreen)

@@ -1,6 +1,11 @@
-/* eslint-disable consistent-return */
+const pluralize = require('pluralize');
 const chalk = require('chalk');
+const fs = require('fs-extra');
 const EntityGenerator = require('generator-jhipster/generators/entity');
+const { askForBackendJson } = require('./prompts');
+const { patchApi } = require('./lib/patch-api');
+const { writeFiles } = require('./files');
+const { patchNavigation } = require('./lib/patch-navigation');
 
 module.exports = class extends EntityGenerator {
     constructor(args, opts) {
@@ -13,9 +18,8 @@ module.exports = class extends EntityGenerator {
         }
 
         this.configOptions = jhContext.configOptions || {};
-
         // This sets up options for this sub generator and is being reused from JHipster
-        jhContext.setupEntityOptions(this, jhContext, this);
+        jhContext._setupEntityOptions(this, jhContext, this);
     }
 
     get initializing() {
@@ -56,28 +60,105 @@ module.exports = class extends EntityGenerator {
          * ```
          */
         // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._initializing();
+        // return super._initializing();
+        return {};
     }
 
     get prompting() {
         // Here we are not overriding this phase and hence its being handled by JHipster
         // return super._prompting();
-        return {};
+        return {
+            askForBackendJson: askForBackendJson.bind(this),
+        };
+    }
+
+    _setUpVariables() {
+        this.searchEngine = this.config.get('searchEngine');
+
+        this.name = this.options.name;
+        this.pluralName = pluralize(this.name);
+        this.camelCaseName = this._.camelCase(this.name);
+        this.camelCaseNamePlural = pluralize(this.camelCaseName);
+        this.kebabCaseName = this._.kebabCase(this.name);
+        this.kebabCaseNamePlural = this._.kebabCase(this.pluralName);
+        this.snakeCaseName = this._.snakeCase(this.name);
+
+        // todo remove - used in relationships
+        this.camelCase = this._.camelCase;
+        this.kebabCase = this._.kebabCase;
+        // this.pacalCase = this._.pacalCase;
+
+        // load entity JSON from config file
+        this.entityInfo = this.entityJSON;
+
+        this.entityContainsDate = false;
+        this.entityContainsLocalDate = false;
+
+        this.entityInfo.fields.forEach(field => {
+            field.fieldIsEnum = ![
+                'String',
+                'Integer',
+                'Long',
+                'Float',
+                'Double',
+                'BigDecimal',
+                'LocalDate',
+                'Instant',
+                'ZonedDateTime',
+                'Boolean',
+                'byte[]',
+                'ByteBuffer',
+            ].includes(field.fieldType);
+            if (field.fieldType === 'LocalDate') {
+                this.entityContainsLocalDate = true;
+            }
+            if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') {
+                this.entityContainsDate = true;
+            }
+        });
+        // these lists are to prevent double imports when there are multiple relations between the same entity
+        const alreadyIncludedEntities = [];
+        const uniqueEntityRelationships = [];
+        this.entityInfo.relationships.forEach(relation => {
+            if (relation.relationshipType === 'many-to-one') {
+                relation.ownerSide = true;
+            }
+            relation.otherEntityNamePlural = pluralize.plural(relation.otherEntityName);
+            relation.relationshipNamePlural = pluralize.plural(relation.relationshipName);
+            if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
+                alreadyIncludedEntities.push(relation.otherEntityName);
+                uniqueEntityRelationships.push(relation);
+            }
+        });
+
+        this.entityInfo.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide);
+        this.entityInfo.ownerSideRelationships = this.entityInfo.relationships.filter(relation => relation.ownerSide);
+
+        // todo this
+        this.microservicePath = '';
+        // if a microservice name is available, set the path prefix in the API paths
+        if (Object.prototype.hasOwnProperty.call(this.entityInfo, 'microserviceName')) {
+            this.microservicePath = `services/${this.entityInfo.microserviceName}/`;
+        }
     }
 
     get configuring() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._configuring();
+        return {
+            setUpVariables: this._setUpVariables,
+        };
     }
 
     get default() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._default();
+        return {};
     }
 
     get writing() {
-        // Here we are not overriding this phase and hence its being handled by JHipster
-        return super._writing();
+        const name = 'Foo';
+        return {
+            writeFiles: writeFiles.bind(this),
+            patchNavigation: patchNavigation.bind(this, name),
+            patchApi: patchApi.bind(this, name),
+        };
     }
 
     get install() {

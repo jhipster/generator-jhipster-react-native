@@ -1,0 +1,234 @@
+import { createReducer, createActions } from 'reduxsauce'
+import Immutable from 'seamless-immutable'
+<%_ if (entityInfo.pagination !== 'no') { _%>
+import { loadMoreDataWhenScrolled } from '../../../shared/util/pagination-utils'
+import { parseHeaderForLinks } from '../../../shared/util/url-utils'
+<%_ } _%>
+
+/* ------------- Types and Action Creators ------------- */
+
+const { Types, Creators } = createActions({
+  <%= camelCaseName %>Request: ['<%= camelCaseName %>Id'],
+  <%= camelCaseName %>AllRequest: ['options'],
+  <%= camelCaseName %>UpdateRequest: ['<%= camelCaseName %>'],
+  <%_ if (searchEngine) { _%>
+  <%= camelCaseName %>SearchRequest: ['query'],
+  <%_ } _%>
+  <%= camelCaseName %>DeleteRequest: ['<%= camelCaseName %>Id'],
+
+  <%= camelCaseName %>Success: ['<%= camelCaseName %>'],
+  <%= camelCaseName %>AllSuccess: ['<%= camelCaseNamePlural %>', 'headers'],
+  <%= camelCaseName %>UpdateSuccess: ['<%= camelCaseName %>'],
+  <%_ if (searchEngine) { _%>
+  <%= camelCaseName %>SearchSuccess: ['<%= camelCaseNamePlural %>'],
+  <%_ } _%>
+  <%= camelCaseName %>DeleteSuccess: [],
+
+  <%= camelCaseName %>Failure: ['error'],
+  <%= camelCaseName %>AllFailure: ['error'],
+  <%= camelCaseName %>UpdateFailure: ['error'],
+  <%_ if (searchEngine) { _%>
+  <%= camelCaseName %>SearchFailure: ['error'],
+  <%_ } _%>
+  <%= camelCaseName %>DeleteFailure: ['error'],
+
+  <%= camelCaseName %>Reset: []
+})
+
+export const <%= name %>Types = Types
+export default Creators
+
+/* ------------- Initial State ------------- */
+
+export const INITIAL_STATE = Immutable({
+  fetchingOne: null,
+  fetchingAll: null,
+  updating: null,
+  <%_ if (searchEngine) { _%>
+  searching: null,
+  <%_ } _%>
+  deleting: null,
+  <%= camelCaseName %>: null,
+  <%= camelCaseNamePlural %>: [],
+  errorOne: null,
+  errorAll: null,
+  errorUpdating: null,
+  <%_ if (searchEngine) { _%>
+  errorSearching: null,
+  <%_ } _%>
+  errorDeleting: null,
+  <%_ if (entityInfo.pagination !== 'no') { _%>
+  links: { next: 0 },
+  totalItems: 0,
+  <%_ } _%>
+})
+
+/* ------------- Reducers ------------- */
+
+// request the data from an api
+export const request = (state) =>
+  state.merge({
+    fetchingOne: true,
+    errorOne: false,
+    <%= camelCaseName %>: null
+  })
+
+// request the data from an api
+export const allRequest = (state) =>
+  state.merge({
+    fetchingAll: true,
+    errorAll: false,
+  })
+
+// request to update from an api
+export const updateRequest = (state) =>
+  state.merge({
+    updating: true
+  })
+<%_ if (searchEngine) { _%>
+// request to search from an api
+export const searchRequest = (state) =>
+  state.merge({
+    searching: true
+  })
+<%_ } _%>
+// request to delete from an api
+export const deleteRequest = (state) =>
+  state.merge({
+    deleting: true
+  })
+
+// successful api lookup for single entity
+export const success = (state, action) => {
+  const { <%= camelCaseName %> } = action
+  return state.merge({
+    fetchingOne: false,
+    errorOne: null,
+    <%= camelCaseName %>
+  })
+}
+// successful api lookup for all entities
+export const allSuccess = (state, action) => {
+  const { <%= camelCaseNamePlural %><%_ if (entityInfo.pagination !== 'no') { _%>, headers<%_ } _%> } = action
+  <%_ if (entityInfo.pagination !== 'no') { _%>
+  const links = parseHeaderForLinks(headers.link)
+  <%_ } _%>
+  return state.merge({
+    fetchingAll: false,
+    errorAll: null,
+    <%_ if (entityInfo.pagination !== 'no') { _%>
+    links,
+    totalItems: parseInt(headers['x-total-count'], 10),
+    <%= camelCaseNamePlural %>: loadMoreDataWhenScrolled(state.<%= camelCaseNamePlural %>, <%= camelCaseNamePlural %>, links),
+    <%_ } else { _%>
+    <%= camelCaseNamePlural %>
+    <%_ } _%>
+  })
+}
+// successful api update
+export const updateSuccess = (state, action) => {
+  const { <%= camelCaseName %> } = action
+  return state.merge({
+    updating: false,
+    errorUpdating: null,
+    <%= camelCaseName %>
+  })
+}
+<%_ if (searchEngine) { _%>
+// successful api search
+export const searchSuccess = (state, action) => {
+  const { <%= camelCaseNamePlural %> } = action
+  return state.merge({
+    searching: false,
+    errorSearching: null,
+    <%= camelCaseNamePlural %>
+  })
+}
+<%_ } _%>
+// successful api delete
+export const deleteSuccess = (state) => {
+  return state.merge({
+    deleting: false,
+    errorDeleting: null,
+    <%= camelCaseName %>: null
+  })
+}
+
+// Something went wrong fetching a single entity.
+export const failure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    fetchingOne: false,
+    errorOne: error,
+    <%= camelCaseName %>: null
+  })
+}
+// Something went wrong fetching all entities.
+export const allFailure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    fetchingAll: false,
+    errorAll: error,
+    <%= camelCaseNamePlural %>: []
+  })
+}
+// Something went wrong updating.
+export const updateFailure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    updating: false,
+    errorUpdating: error,
+    <%= camelCaseName %>: state.<%= camelCaseName %>
+  })
+}
+// Something went wrong deleting.
+export const deleteFailure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    deleting: false,
+    errorDeleting: error,
+    <%= camelCaseName %>: state.<%= camelCaseName %>
+  })
+}
+<%_ if (searchEngine) { _%>
+// Something went wrong searching the entities.
+export const searchFailure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    searching: false,
+    errorSearching: error,
+    <%= camelCaseNamePlural %>: []
+  })
+}
+<%_ } _%>
+
+export const reset = (state) => INITIAL_STATE
+
+/* ------------- Hookup Reducers To Types ------------- */
+
+export const reducer = createReducer(INITIAL_STATE, {
+  [Types.<%= snakeCaseName.toUpperCase() %>_REQUEST]: request,
+  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_REQUEST]: allRequest,
+  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
+  <%_ if (searchEngine) { _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
+  <%_ } _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
+
+  [Types.<%= snakeCaseName.toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
+  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
+  <%_ if (searchEngine) { _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
+  <%_ } _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
+
+  [Types.<%= snakeCaseName.toUpperCase() %>_FAILURE]: failure,
+  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_FAILURE]: allFailure,
+  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
+  <%_ if (searchEngine) { _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
+  <%_ } _%>
+  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
+  [Types.<%= snakeCaseName.toUpperCase() %>_RESET]: reset
+})

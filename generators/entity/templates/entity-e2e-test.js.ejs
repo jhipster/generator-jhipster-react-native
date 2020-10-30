@@ -1,0 +1,127 @@
+const Utils = require('../utils')
+
+describe('<%= name %> Screen Tests', () => {
+  before(async () => {
+    await device.reloadReactNative()
+    await Utils.loginAsUser()
+  })
+  after(async () => {
+    await Utils.goBack()
+    await Utils.goBack()
+    await Utils.logout()
+  })
+
+  beforeEach(async () => {
+    await device.reloadReactNative()
+    await navigateTo<%= name %>Screen()
+  })
+
+  const navigateTo<%= name %>Screen = async () => {
+    await expect(element(by.id('launchScreen'))).toBeVisible()
+    await element(by.id('menuButton')).tap()
+    await element(by.id('entitiesDrawerButton')).tap()
+    await Utils.scrollTo('<%= camelCaseName %>EntityScreenButton', 'entityScreenScrollList')
+    await element(by.id('<%= camelCaseName %>EntityScreenButton')).tap()
+  }
+
+  it('should allow you to create an entity', async () => {
+    await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
+    await expect(element(by.text('Create'))).toBeVisible()
+    // create
+    await element(by.id('<%= camelCaseName %>CreateButton')).tap()
+    <%_ entityInfo.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCaseName %>EditScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data')
+      <%_ } else if (tcombFieldType === 'Number') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
+      <%_ } _%>
+    <%_ }) _%>
+    await element(by.id('submitButton')).tap()
+    await element(by.text('View')).tap()
+    <%_ entityInfo.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>', '<%= camelCaseName %>DetailScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 123')
+    <%_ } _%>
+    <%_ }) _%>
+    // update
+    await element(by.text('EDIT')).tap()
+    <%_ entityInfo.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+      _%>
+    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCaseName %>EditScrollView')
+    <%_ } _%>
+    <%_ if (tcombFieldType === 'String') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
+    <%_ } _%>
+    <%_ }) _%>
+    await element(by.id('submitButton')).tap()
+    await element(by.text('OK')).tap()
+    <%_ entityInfo.fields.forEach((field, index) => {
+      let tcombFieldType = 'String'
+      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
+        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
+        tcombFieldType = 'Number'
+      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
+        tcombFieldType = 'Date'
+      } else if (field.fieldType === 'Boolean') {
+        tcombFieldType = 'Boolean'
+      } else if (field.fieldIsEnum) {
+        tcombFieldType = field.fieldType
+      }
+    if (tcombFieldType === 'String') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data-2')
+    <%_ } else if (tcombFieldType === 'Number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 1234')
+    <%_ } _%>
+    <%_ }) _%>
+    // delete
+    await element(by.text('DELETE')).tap()
+    await element(by.text('OK')).tap()
+    await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
+  })
+})
