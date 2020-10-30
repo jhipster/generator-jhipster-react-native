@@ -26,15 +26,6 @@ project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules
             after: 'android:allowBackup="false"',
             insert: '      android:usesCleartextTraffic="true"',
         });
-
-        fs.mkdirp(`android/app/src/androidTest/java/com/${this.androidPackageName}`);
-        const detoxFiles = [
-            {
-                template: 'android/DetoxTest.java',
-                target: `android/app/src/androidTest/java/com/${this.androidPackageName}/DetoxTest.java`,
-            },
-        ];
-        detoxFiles.forEach(f => this.template(f.template, f.target, this));
     }
 }
 module.exports = {

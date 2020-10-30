@@ -66,20 +66,29 @@ module.exports = class extends AppGenerator {
     }
 
     _setUpVariables() {
-        const configFilePath = `${this.directoryPath}/.yo-rc.json`;
-        const jhipsterConfig = fs.readJSONSync(configFilePath);
+        let jhipsterConfig;
+        if (this.options.fromJdl) {
+            console.log('App from JDL');
+            jhipsterConfig = this.config.getAll();
+            // todo defaults for this?
+            this.reactNativeAppName = this._.upperFirst(this._.camelCase(jhipsterConfig.baseName))
+            this.detox = true;
+        } else {
+            const configFilePath = `${this.directoryPath}/.yo-rc.json`;
+            jhipsterConfig = fs.readJSONSync(configFilePath)['generator-jhipster'];
+        }
 
-        this.authType = jhipsterConfig['generator-jhipster'].authenticationType;
-        this.websocket = jhipsterConfig['generator-jhipster'].websocket || false;
-        this.searchEngine = jhipsterConfig['generator-jhipster'].searchEngine || false;
-        this.applicationType = jhipsterConfig['generator-jhipster'].applicationType;
-        this.uaaBaseName = this.authType === 'uaa' ? jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase() : '';
+        this.authType = jhipsterConfig.authenticationType;
+        this.websocket = jhipsterConfig.websocket || false;
+        this.searchEngine = jhipsterConfig.searchEngine || false;
+        this.applicationType = jhipsterConfig.applicationType;
+        this.uaaBaseName = this.authType === 'uaa' ? jhipsterConfig.uaaBaseName.toLowerCase() : '';
         this.useNpm = true;
         this.skipCommitHook = false;
         this.packageVersion = packagejs.version;
         this.androidPackageName = this.reactNativeAppName.toLowerCase();
         // used for JHipster templates
-        this.packageFolder = jhipsterConfig['generator-jhipster'].packageFolder;
+        this.packageFolder = jhipsterConfig.packageFolder;
 
         this.config.set({
             reactNative: {
@@ -89,7 +98,7 @@ module.exports = class extends AppGenerator {
                 backend: this.directoryPath,
                 version: this.packageVersion,
             },
-            ...jhipsterConfig['generator-jhipster'],
+            ...jhipsterConfig,
         });
     }
 
