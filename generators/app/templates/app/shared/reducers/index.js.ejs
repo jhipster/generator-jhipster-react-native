@@ -10,6 +10,9 @@ export const reducers = combineReducers({
   appState: require('./app-state.reducer').reducer,
   users: require('./user.reducer').reducer,
   // ignite-jhipster-redux-store-import-needle
+  <%_ if (websocket) { _%>
+  chat: require('../../modules/chat/chat.reducer').reducer,
+  <%_ } _%>
   account: require('./account.reducer').reducer,
   login: require('../../modules/login/login.reducer').reducer,
   register: require('../../modules/account/register/register.reducer').reducer,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ScrollView, Image, BackHandler } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 
-import { <% if (authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (websockets) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
+import { <% if (authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (websocket) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
 import { connect } from 'react-redux'
 
 import styles from './drawer-content.styles'
@@ -64,7 +64,7 @@ class DrawerContent extends Component {
     this.hideSideMenu()
     entitiesScreen()
   }
-  <%_ if (websockets) { _%>
+  <%_ if (websocket) { _%>
   handlePressChat = () => {
     this.hideSideMenu()
     chatScreen()
@@ -90,7 +90,7 @@ class DrawerContent extends Component {
         <%_ } _%>
 
         {this.props.loggedIn && (<DrawerButton testID='entitiesDrawerButton' text='Entities' onPress={this.handlePressEntities} />)}
-        <%_ if (websockets) { _%>
+        <%_ if (websocket) { _%>
         {this.props.loggedIn && (<DrawerButton testID='chatDrawerButton' text='Chat' onPress={this.handlePressChat} />)}
         <%_ } _%>
         <%_ if (authType !== 'oauth2') { _%>

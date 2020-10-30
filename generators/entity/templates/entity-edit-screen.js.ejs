@@ -42,10 +42,10 @@ class <%= name %>EntityEditScreen extends React.Component {
       formModel: t.struct({
         id: t.maybe(t.Number),
         <%_ entityInfo.fields.forEach((field, index) => { _%>
-        <%= props.getEntityFormField(field, index, entityInfo.fields.length, entityInfo.ownerSideRelationships.length) %>
+        <%= getEntityFormField(field, index, entityInfo.fields.length, entityInfo.ownerSideRelationships.length) %>
         <%_ }) _%>
         <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
-        <%= props.getRelationshipFormField(relation, index, entityInfo.ownerSideRelationships.length, props) %>
+        <%= getRelationshipFormField(relation, index, entityInfo.ownerSideRelationships.length, props) %>
         <%_ }) _%>
       }),
       formValue: { id: null },
