@@ -37,6 +37,7 @@ function askForBackendJson() {
 
     const prompts = [
         {
+            when: !this.options.fromJdl,
             type: 'input',
             name: 'backendPath',
             message: "Enter the path to your app's root directory:",
@@ -71,9 +72,10 @@ function askForBackendJson() {
             context.useConfigurationFile = true;
 
             context.entityJSON = this.fs.readJSON(context.fromPath);
-            context.appJSON = this.fs.readJSON(context.appConfigFromPath);
-
             this.entityStorage.set(context.entityJSON);
+        } else if (this.options.fromJdl) {
+            this.log(chalk.green(`Importing entity ${context.name} from JDL!`));
+            context.entityJSON = this.entityStorage.getAll();
         }
         done();
     });

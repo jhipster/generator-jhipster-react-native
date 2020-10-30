@@ -6,6 +6,7 @@ const { askForBackendJson } = require('./prompts');
 const { patchApi } = require('./lib/patch-api');
 const { writeFiles } = require('./files');
 const { patchNavigation } = require('./lib/patch-navigation');
+const { getEntityFormField, getRelationshipFormField } = require('./lib/entity-helpers');
 
 module.exports = class extends EntityGenerator {
     constructor(args, opts) {
@@ -86,11 +87,14 @@ module.exports = class extends EntityGenerator {
         // todo remove - used in relationships
         this.camelCase = this._.camelCase;
         this.kebabCase = this._.kebabCase;
-        // this.pacalCase = this._.pacalCase;
+        this.upperFirst = this._.upperFirst;
+        this.pascalCase = str => this._.upperFirst(this._.camelCase(str));
+
+        this.getEntityFormField = getEntityFormField;
+        this.getRelationshipFormField = getRelationshipFormField;
 
         // load entity JSON from config file
-        this.entityInfo = this.entityJSON;
-
+        this.entityInfo = this.context.entityJSON;
         this.entityContainsDate = false;
         this.entityContainsLocalDate = false;
 

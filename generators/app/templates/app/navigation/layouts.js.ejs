@@ -18,7 +18,7 @@ import ForgotPasswordScreen from '../modules/account/password-reset/forgot-passw
 import ChangePasswordScreen from '../modules/account/password/change-password-screen'
 import EntitiesScreen from '../modules/entities/entities-screen'
 import StorybookScreen from '../../storybook'
-<%_ if (websockets) { _%>
+<%_ if (websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
 // ignite-jhipster-navigation-import-needle
@@ -32,7 +32,7 @@ export const LAUNCH_SCREEN = 'nav.LaunchScreen'
 export const DRAWER_CONTENT = 'nav.DrawerContent'
 export const ENTITIES_SCREEN = 'nav.EntitiesScreen'
 export const STORYBOOK_SCREEN = 'nav.StorybookScreen'
-<%_ if (websockets) { _%>
+<%_ if (websocket) { _%>
 export const CHAT_SCREEN = 'nav.ChatScreen'
 <%_ } _%>
 // ignite-jhipster-navigation-declaration-needle
@@ -153,7 +153,7 @@ function registerScreensLazily() {
       case ENTITIES_SCREEN:
         registerComponentWithRedux(ENTITIES_SCREEN, EntitiesScreen)
         break
-<%_ if (websockets) { _%>
+<%_ if (websocket) { _%>
       case CHAT_SCREEN:
         registerComponentWithRedux(CHAT_SCREEN, ChatScreen)
         break
@@ -300,7 +300,7 @@ export const storybookScreen = () => {
     }
   })
 }
-<%_ if (websockets) { _%>
+<%_ if (websocket) { _%>
 export const chatScreen = () => Navigation.push('center', {
   component: {
     name: CHAT_SCREEN,

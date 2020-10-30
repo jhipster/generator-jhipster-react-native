@@ -148,7 +148,7 @@ const files = {
     ],
     websockets: [
         {
-            condition: generator => generator.websockets,
+            condition: generator => generator.websocket,
             templates: [
                 'app/modules/chat/chat-screen.js',
                 'app/modules/chat/chat-screen.styles.js',
@@ -181,7 +181,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.detox === true && generator.websockets,
+            condition: generator => generator.detox === true && generator.websocket,
             templates: ['e2e/websockets/chat-screen.spec.js'],
         },
     ],

@@ -70,7 +70,7 @@ module.exports = class extends AppGenerator {
         const jhipsterConfig = fs.readJSONSync(configFilePath);
 
         this.authType = jhipsterConfig['generator-jhipster'].authenticationType;
-        this.websockets = jhipsterConfig['generator-jhipster'].websocket || false;
+        this.websocket = jhipsterConfig['generator-jhipster'].websocket || false;
         this.searchEngine = jhipsterConfig['generator-jhipster'].searchEngine || false;
         this.applicationType = jhipsterConfig['generator-jhipster'].applicationType;
         this.uaaBaseName = this.authType === 'uaa' ? jhipsterConfig['generator-jhipster'].uaaBaseName.toLowerCase() : '';
@@ -82,15 +82,14 @@ module.exports = class extends AppGenerator {
         this.packageFolder = jhipsterConfig['generator-jhipster'].packageFolder;
 
         this.config.set({
-            reactNativeAppName: this.reactNativeAppName,
-            authType: this.authType,
-            websockets: this.websockets,
-            searchEngine: this.searchEngine,
-            applicationType: this.applicationType,
-            detox: this.detox,
-            useNpm: this.useNpm,
-            backend: this.directoryPath,
-            uaaBaseName: this.uaaBaseName,
+            reactNative: {
+                reactNativeAppName: this.reactNativeAppName,
+                detox: this.detox,
+                useNpm: this.useNpm,
+                backend: this.directoryPath,
+                version: this.packageVersion,
+            },
+            ...jhipsterConfig['generator-jhipster'],
         });
     }
 
