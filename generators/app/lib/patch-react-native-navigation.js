@@ -1,19 +1,6 @@
 const { patchInFile } = require('./patch-in-file');
 
 function patchReactNativeNavigation() {
-    const navigationFiles = [
-        { template: 'ios/AppDelegate.m.ejs', target: `ios/${this.reactNativeAppName}/AppDelegate.m` },
-        {
-            template: 'android/MainActivity.java.ejs',
-            target: `android/app/src/main/java/com/${this.reactNativeAppName.toLowerCase()}/MainActivity.java`,
-        },
-        {
-            template: 'android/MainApplication.java.ejs',
-            target: `android/app/src/main/java/com/${this.reactNativeAppName.toLowerCase()}/MainApplication.java`,
-        },
-    ];
-    navigationFiles.forEach(f => this.template(f.template, f.target, this));
-
     // update iOS Files
     patchInFile(`ios/${this.reactNativeAppName}/Info.plist`, {
         before: '<key>CFBundleDisplayName</key>',

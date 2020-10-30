@@ -27,14 +27,6 @@ function patchOauth() {
           appAuthRedirectScheme: '${this.reactNativeAppName.toLowerCase()}'
         ]`,
         });
-
-        const oauthNativeFiles = [
-            {
-                template: 'ios/AppDelegate.h.ejs',
-                target: `ios/${this.reactNativeAppName}/AppDelegate.h`,
-            },
-        ];
-        oauthNativeFiles.forEach(f => this.template(f.template, f.target, this));
     }
 }
 

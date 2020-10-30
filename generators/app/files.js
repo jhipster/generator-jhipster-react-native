@@ -161,16 +161,42 @@ const files = {
             ],
         },
     ],
+    navigation: [
+        { file: 'ios/AppDelegate.m', renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.m` },
+        {
+            file: 'android/MainActivity.java',
+            renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainActivity.java`,
+        },
+        {
+            file: 'android/MainApplication.java',
+            renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainApplication.java`,
+        },
+    ],
     oauth: [
         {
             condition: generator => generator.authType === 'oauth2',
-            templates: ['app/shared/fixtures/get-oauth-info.json'],
+            templates: [
+                'app/shared/fixtures/get-oauth-info.json',
+                {
+                    file: 'ios/AppDelegate.h',
+                    renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.h`,
+                },
+            ],
         },
     ],
     detox: [
         {
             condition: generator => generator.detox === true,
-            templates: ['.detoxrc.json', 'e2e/init.js', 'e2e/launch-screen.spec.js', 'e2e/utils.js'],
+            templates: [
+                '.detoxrc.json',
+                'e2e/init.js',
+                'e2e/launch-screen.spec.js',
+                'e2e/utils.js',
+                {
+                    file: 'android/DetoxTest.java',
+                    renameTo: generator => `android/app/src/androidTest/java/com/${generator.androidPackageName}/DetoxTest.java`,
+                },
+            ],
         },
         {
             condition: generator => generator.detox === true && generator.authType !== 'oauth2',
