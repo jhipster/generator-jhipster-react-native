@@ -18,6 +18,11 @@ function createEarlyFiles() {
 **/* force`;
     fs.writeFile('.yo-resolve', yoResolve);
 }
+
+function removeYoResolve() {
+    fs.remove('.yo-resolve');
+}
 module.exports = {
     createEarlyFiles,
+    removeYoResolve,
 };

@@ -114,7 +114,6 @@ module.exports = class extends AppGenerator {
             patchWebsockets: patchWebsockets.bind(this),
             patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
             appendGitIgnore: appendGitIgnore.bind(this),
-            removeYoResolve,
         };
     }
 
@@ -122,6 +121,7 @@ module.exports = class extends AppGenerator {
         // remove condition after JHipster v7
         const gitInit = super._install().initGitRepo ? super._install().initGitRepo.bind(this) : super._writing().initGitRepo.bind(this);
         return {
+            removeYoResolve,
             npmInstall() {
                 // todo
             },
