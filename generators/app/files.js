@@ -162,14 +162,19 @@ const files = {
         },
     ],
     navigation: [
-        { file: 'ios/AppDelegate.m', renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.m` },
         {
-            file: 'android/MainActivity.java',
-            renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainActivity.java`,
-        },
-        {
-            file: 'android/MainApplication.java',
-            renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainApplication.java`,
+            templates: [
+                { file: 'ios/AppDelegate.m', renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.m` },
+                {
+                    file: 'android/MainActivity.java',
+                    renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainActivity.java`,
+                },
+                {
+                    file: 'android/MainApplication.java',
+                    renameTo: generator =>
+                        `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainApplication.java`,
+                },
+            ],
         },
     ],
     oauth: [
