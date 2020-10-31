@@ -114,6 +114,10 @@ module.exports = class extends AppGenerator {
             patchWebsockets: patchWebsockets.bind(this),
             patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
             appendGitIgnore: appendGitIgnore.bind(this),
+            composeEntities() {
+                if (!this.withEntities) return;
+                this.composeWithJHipster('entities', { skipInstall: true }, true);
+            },
         };
     }
 
