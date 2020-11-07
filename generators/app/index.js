@@ -1,6 +1,8 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
+const path = require('path');
 const AppGenerator = require('generator-jhipster/generators/app');
+const utils = require('generator-jhipster/generators/utils');
 const fs = require('fs-extra');
 const { printJHipsterLogo } = require('./lib/print-jhipster-logo');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
@@ -71,7 +73,7 @@ module.exports = class extends AppGenerator {
             console.log('App from JDL');
             jhipsterConfig = this.config.getAll();
             // todo defaults for this?
-            this.reactNativeAppName = this._.upperFirst(this._.camelCase(jhipsterConfig.baseName))
+            this.reactNativeAppName = this._.upperFirst(this._.camelCase(jhipsterConfig.baseName));
             this.detox = true;
         } else {
             const configFilePath = `${this.directoryPath}/.yo-rc.json`;
@@ -108,12 +110,48 @@ module.exports = class extends AppGenerator {
             setUpVariables: this._setUpVariables,
             createEarlyFiles,
             generateReactNativeApp: generateReactNativeApp.bind(this),
+            mergeRnPackageJson() {
+                const done = this.async();
+                // get react-native generated package.json
+                const rnPackageJson = fs.readJSONSync('package.json');
+                // get templated package.json
+                const _this = this;
+                utils.renderContent('package.json.ejs', _this, _this, {}, templatedPackageJsonAsString => {
+                    const mergedPackageJson = JSON.parse(templatedPackageJsonAsString);
+                    // todo merge the two and save
+                    const keys = ['scripts', 'dependencies', 'devDependencies'];
+                    // loop through the keys
+                    keys.forEach(packageJsonSectionKey => {
+                        // get the section of the package.json from the react-native package
+                        const packageJsonSection = rnPackageJson[packageJsonSectionKey];
+                        this.debug(`Updating package.json section: ${packageJsonSectionKey}`);
+                        // loop through the keys in the package.json section
+                        Object.keys(packageJsonSection).forEach(key => {
+                            this.debug(`Checking for: ${packageJsonSectionKey}.${key}`);
+                            // if the templated package.json does not have the key, add it to the merged package.json
+                            // if the templated package.json has the key, it means we overwrote that section in the template
+                            if (!Object.prototype.hasOwnProperty.call(mergedPackageJson[packageJsonSectionKey], key)) {
+                                this.debug(`Adding ${key}: ${packageJsonSection[key]} to ${packageJsonSectionKey} from RN package.json`);
+                                mergedPackageJson[packageJsonSectionKey][key] = packageJsonSection[key];
+                            }
+                        });
+                    });
+
+                    fs.writeJsonSync('package.json', mergedPackageJson);
+                    this.debug("package.json merged with React Native's package.json");
+                    done();
+                });
+            },
             writeFiles: writeFiles.bind(this),
             patchOauth: patchOauth.bind(this),
             patchDetox: patchDetox.bind(this),
             patchWebsockets: patchWebsockets.bind(this),
             patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
             appendGitIgnore: appendGitIgnore.bind(this),
+            replacePackageJsonVersions() {
+                this.debug('Replacing Package.json Versions');
+                this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));
+            },
             composeEntities() {
                 if (!this.withEntities) return;
                 this.composeWithJHipster('entities', { skipInstall: true }, true);

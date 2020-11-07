@@ -119,7 +119,6 @@ const files = {
                 'app/shared/util/pagination-utils.js',
                 'app/shared/util/snake-to-camel-case.js',
                 'app/shared/util/url-utils.js',
-                'package.json',
                 'patches/README.md',
                 'patches/tcomb-form-native+0.6.20.patch',
                 'storybook/addons.js',
