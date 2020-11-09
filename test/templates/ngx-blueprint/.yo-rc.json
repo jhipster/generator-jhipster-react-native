@@ -1,48 +1,47 @@
 {
-    "generator-jhipster-react-native": {
-        "promptValues": {
-            "packageName": "com.mycompany.myapp"
-        },
-        "applicationType": "monolith",
-        "baseName": "jhipsterBlueprint",
-        "packageName": "com.mycompany.myapp",
-        "packageFolder": "com/mycompany/myapp",
-        "serverPort": "8080",
+    "generator-jhipster": {
         "authenticationType": "jwt",
         "cacheProvider": "ehcache",
-        "enableHibernateCache": true,
-        "websocket": false,
+        "clientFramework": "angularX",
+        "serverPort": "8080",
+        "serviceDiscoveryType": false,
+        "skipUserManagement": false,
+        "baseName": "mono",
+        "buildTool": "maven",
         "databaseType": "sql",
         "devDatabaseType": "h2Disk",
+        "enableHibernateCache": true,
+        "enableSwaggerCodegen": false,
+        "enableTranslation": true,
+        "jhiPrefix": "jhi",
+        "languages": ["en"],
+        "messageBroker": false,
+        "nativeLanguage": "en",
         "prodDatabaseType": "mysql",
         "searchEngine": false,
-        "messageBroker": false,
-        "serviceDiscoveryType": false,
-        "buildTool": "maven",
-        "enableSwaggerCodegen": false,
-        "jwtSecretKey": "147e04cf224f52908a60d7a2902e19e0648d0a8c52503b4624f1708478dd29ba2885a9bb823c85873a76b27964a90e22f1e8",
-        "clientFramework": "angularX",
-        "useSass": false,
-        "clientPackageManager": "npm"
-    },
-    "generator-jhipster": {
-        "promptValues": {
-            "nativeLanguage": "en"
-        },
+        "skipClient": false,
+        "testFrameworks": [],
+        "websocket": false,
         "applicationType": "monolith",
-        "baseName": "jhipsterBlueprint",
-        "testFrameworks": [
-            "gatling",
-            "protractor"
-        ],
-        "jhiPrefix": "jhi",
-        "enableTranslation": true,
+        "blueprints": [],
         "clientPackageManager": "npm",
-        "nativeLanguage": "en",
-        "languages": [
-            "en",
-            "fr"
-        ],
-        "blueprint": "generator-jhipster-react-native"
+        "clientTheme": "none",
+        "clientThemeVariant": "primary",
+        "creationTimestamp": 1604601028779,
+        "dtoSuffix": "DTO",
+        "jhipsterVersion": "6.10.4",
+        "jwtSecretKey": "N2NhMzI3YzdmNmM5YjRmNDBkZWE4N2Y2ODFmYjU0MjVhYzBmYzM0MmM2MjU2ZDFiMTU4NWNiZmVmMTU4MTViM2IyMzZkNWQxNzc5NDk2YTRhMjYyNWVhZTcxNTVmOTRkY2QyOTIwZmYyODA3MDUzMGEyMDljMjA2ZWUyMTE1YjE=",
+        "otherModules": [],
+        "packageName": "com.mycompany.myapp",
+        "packageFolder": "com/mycompany/myapp",
+        "reactive": false,
+        "skipServer": false,
+        "entities": [],
+        "reactNative": {
+            "reactNativeAppName": "Mono",
+            "detox": false,
+            "useNpm": true,
+            "version": "0.0.0"
+        }
     }
 }

@@ -60,11 +60,6 @@ module.exports = class extends AppGenerator {
             setUpVariables: setupVariables.bind(this),
             createEarlyFiles,
             generateReactNativeApp: generateReactNativeApp.bind(this),
-            test: () => {
-                console.log(__dirname);
-                console.log(process.cwd());
-                // console.log(current working dir);
-            },
             mergeRnPackageJson: mergeReactNativePackageJson.bind(this),
             writeFiles: writeFiles.bind(this),
             patchOauth: patchOauth.bind(this),
