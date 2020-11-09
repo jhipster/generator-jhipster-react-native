@@ -1,4 +1,3 @@
-const fs = require('fs-extra');
 const { patchInFile } = require('./patch-in-file');
 
 function patchDetox() {

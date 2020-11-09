@@ -38,7 +38,7 @@ module.exports = class extends EntitiesGenerator {
     }
 
     get composing() {
-        const composeEachEntity = this._composing().composeEachEntity
+        const composeEachEntity = this._composing().composeEachEntity;
         return {
             composeEachEntity,
         };
