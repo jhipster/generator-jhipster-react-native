@@ -16,7 +16,7 @@
     "redux-persist": "6.0.0",
     "redux-saga": "1.1.3",
     "reduxsauce": "1.2.0",
-    "react-native-navigation": "7.2.0",
+    "react-native-navigation": "7.3.0",
     "seamless-immutable": "7.1.4",
     "@react-native-community/cookies": "4.0.1",
     "stompjs": "2.3.3",
