@@ -45,7 +45,7 @@ jobs:
         with:
             node-version: ${{ matrix.node_version }}
       - name: Cache Cocoapods
-        uses: actions/cache@v2.1.2
+        uses: actions/cache@v2.1.3
         with:
           path: ~/.cocoapods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
