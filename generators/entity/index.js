@@ -1,6 +1,5 @@
 const pluralize = require('pluralize');
 const chalk = require('chalk');
-const fs = require('fs-extra');
 const EntityGenerator = require('generator-jhipster/generators/entity');
 const { askForBackendJson } = require('./prompts');
 const { patchApi } = require('./lib/patch-api');

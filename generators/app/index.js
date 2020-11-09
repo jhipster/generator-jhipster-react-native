@@ -3,7 +3,6 @@ const chalk = require('chalk');
 const path = require('path');
 const AppGenerator = require('generator-jhipster/generators/app');
 const utils = require('generator-jhipster/generators/utils');
-const fs = require('fs-extra');
 const { printJHipsterLogo } = require('./lib/print-jhipster-logo');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
@@ -77,7 +76,7 @@ module.exports = class extends AppGenerator {
             this.detox = true;
         } else {
             const configFilePath = `${this.directoryPath}/.yo-rc.json`;
-            jhipsterConfig = fs.readJSONSync(configFilePath)['generator-jhipster'];
+            jhipsterConfig = this.fs.readJSON(configFilePath)['generator-jhipster'];
         }
 
         this.authType = jhipsterConfig.authenticationType;
@@ -113,7 +112,7 @@ module.exports = class extends AppGenerator {
             mergeRnPackageJson() {
                 const done = this.async();
                 // get react-native generated package.json
-                const rnPackageJson = fs.readJSONSync('package.json');
+                const rnPackageJson = this.fs.readJSON('package.json');
                 // get templated package.json
                 const _this = this;
                 utils.renderContent('package.json.ejs', _this, _this, {}, templatedPackageJsonAsString => {
@@ -137,7 +136,7 @@ module.exports = class extends AppGenerator {
                         });
                     });
 
-                    fs.writeJsonSync('package.json', mergedPackageJson);
+                    this.fs.writeJSON('package.json', mergedPackageJson);
                     this.debug("package.json merged with React Native's package.json");
                     done();
                 });

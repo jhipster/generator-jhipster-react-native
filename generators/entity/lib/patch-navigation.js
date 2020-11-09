@@ -3,7 +3,6 @@ const pluralize = require('pluralize');
 const { patchInFile } = require('../../app/lib/patch-in-file');
 
 function patchNavigation(name) {
-
     const upperSnakeCaseName = this._.upperCase(this._.snakeCase(`${name}EntityScreen`)).replace(/ /g, '_');
     const upperSnakeCaseNameEdit = this._.upperCase(this._.snakeCase(`${name}EntityEditScreen`)).replace(/ /g, '_');
     const upperSnakeCaseNameDetail = this._.upperCase(this._.snakeCase(`${name}EntityDetailScreen`)).replace(/ /g, '_');

@@ -4,19 +4,23 @@ const files = {
             templates: [
                 {
                     file: 'entity-detail-screen.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen.js`,
                 },
                 {
                     file: 'entity-detail-screen-style.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen-style.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen-style.js`,
                 },
                 {
                     file: 'entity-edit-screen.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen.js`,
                 },
                 {
                     file: 'entity-edit-screen-style.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen-style.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen-style.js`,
                 },
                 {
                     file: 'entity-flatlist.js',
@@ -24,7 +28,8 @@ const files = {
                 },
                 {
                     file: 'entity-flatlist-style.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-screen-style.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-screen-style.js`,
                 },
                 {
                     file: 'entity-reducer.js',
@@ -32,7 +37,8 @@ const files = {
                 },
                 {
                     file: 'entity-reducer.spec.js',
-                    renameTo: generator => `test/spec/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.reducer.spec.js`,
+                    renameTo: generator =>
+                        `test/spec/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.reducer.spec.js`,
                 },
                 {
                     file: 'entity-sagas.js',
@@ -53,7 +59,10 @@ const files = {
                     file: 'fixtures/entity-get-all.json',
                     renameTo: generator => `app/shared/fixtures/get-${generator.pluralName.toLowerCase()}.json`,
                 },
-                { file: 'fixtures/entity-update.json', renameTo: generator => `app/shared/fixtures/update-${generator.name.toLowerCase()}.json` },
+                {
+                    file: 'fixtures/entity-update.json',
+                    renameTo: generator => `app/shared/fixtures/update-${generator.name.toLowerCase()}.json`,
+                },
             ],
         },
         {
