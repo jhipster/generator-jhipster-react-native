@@ -1,5 +1,3 @@
-const pluralize = require('pluralize');
-
 const { patchInFile } = require('../../app/lib/patch-in-file');
 
 function patchNavigation(name) {

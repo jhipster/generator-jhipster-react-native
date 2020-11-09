@@ -38,6 +38,7 @@ const getRelationshipFormField = (relation, index, total, props) => {
             index !== total - 1 ? ',' : ''
         }`;
     }
+    return '';
 };
 
 module.exports = {
