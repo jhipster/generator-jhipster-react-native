@@ -44,7 +44,7 @@ module.exports = class extends AppGenerator {
     get prompting() {
         return {
             askNamePrompt,
-            askBackendPrompt,
+            askBackendPrompt: askBackendPrompt.bind(this),
             askDetoxPrompt,
         };
     }

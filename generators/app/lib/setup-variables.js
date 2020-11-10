@@ -1,8 +1,9 @@
 const packagejs = require('../../../package.json');
 
 function loadVariables() {
-    if (this.existingProject) {
-        const jhipsterConfig = this.config.getAll();
+    const jhipsterConfig = this.config.getAll();
+    if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'baseName')) {
+        this.existingProject = true;
         if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'reactNative')) {
             this.reactNativeAppName = jhipsterConfig.reactNative.reactNativeAppName;
             this.detox = jhipsterConfig.reactNative.detox;
@@ -22,8 +23,6 @@ function setupVariables() {
     } else {
         const configFilePath = `${this.directoryPath}/.yo-rc.json`;
         this.debug(`Fetching config file from ${configFilePath}`);
-        console.log(this.meta);
-        console.log(configFilePath);
         try {
             jhipsterConfig = this.fs.readJSON(configFilePath)['generator-jhipster'];
         } catch (e) {

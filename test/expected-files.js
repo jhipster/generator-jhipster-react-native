@@ -148,7 +148,7 @@ const expectedFiles = {
         'e2e/init.js',
         'e2e/launch-screen.spec.js',
         'e2e/utils.js',
-        'android/app/src/androidTest/java/com/mono/DetoxTest.java',
+        'android/app/src/androidTest/java/com/rnapp/DetoxTest.java',
     ],
     detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
     detoxAndNotOauth: [
