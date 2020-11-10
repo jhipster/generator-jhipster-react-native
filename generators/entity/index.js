@@ -34,6 +34,7 @@ module.exports = class extends EntityGenerator {
 
     _setUpVariables() {
         this.searchEngine = this.config.get('searchEngine');
+        this.detox = this.config.get('reactNative').detox;
 
         this.name = this.options.name;
         this.pluralName = pluralize(this.name);
