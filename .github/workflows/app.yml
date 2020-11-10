@@ -18,7 +18,7 @@ jobs:
         auth_type: [jwt, uaa, oauth2, session]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.4
+      - uses: actions/setup-node@v2.1.2
         with:
           node-version: ${{ matrix.node_version }}
         # for running pipelines locally with `act`
@@ -31,7 +31,7 @@ jobs:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
         shell: bash
-      - run: npm install -g ignite-cli@3
+      - run: npm install -g ignite-cli
       - run: npm link
       - name: Gen/lint app
         run: npx jest test/auth-tests/${JHI_AUTH_TYPE}-integration.test.js
