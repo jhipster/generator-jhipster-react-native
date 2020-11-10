@@ -1,5 +1,5 @@
 const { printJHipsterLogo } = require('./print-jhipster-logo');
-const { setupVariables } = require('./setup-variables');
+const { loadVariables, setupVariables } = require('./setup-variables');
 const { mergeReactNativePackageJson } = require('./merge-react-native-package-json');
 const { removeYoResolve, createEarlyFiles } = require('./pre-write');
 const { generateReactNativeApp } = require('./react-native-init');
@@ -11,6 +11,7 @@ const { patchOauth } = require('./patch-oauth');
 
 module.exports = {
     printJHipsterLogo,
+    loadVariables,
     setupVariables,
     mergeReactNativePackageJson,
     removeYoResolve,

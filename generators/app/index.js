@@ -6,6 +6,7 @@ const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts')
 const { writeFiles } = require('./files');
 const {
     printJHipsterLogo,
+    loadVariables,
     setupVariables,
     mergeReactNativePackageJson,
     removeYoResolve,
@@ -35,7 +36,9 @@ module.exports = class extends AppGenerator {
 
     get initializing() {
         printJHipsterLogo(this);
-        return {};
+        return {
+            loadVariables: loadVariables.bind(this),
+        };
     }
 
     get prompting() {

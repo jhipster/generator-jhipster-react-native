@@ -22,7 +22,7 @@ function checkForApp(input) {
 }
 
 function askNamePrompt(meta) {
-    if (!meta && this.existingProject) return;
+    // if (!meta) return;
 
     const prompts = [
         {
@@ -33,7 +33,7 @@ function askNamePrompt(meta) {
         },
     ];
 
-    if (meta) return prompts; // eslint-disable-line consistent-return
+    // if (meta) return prompts; // eslint-disable-line consistent-return
 
     const done = this.async();
 
@@ -44,7 +44,7 @@ function askNamePrompt(meta) {
     });
 }
 function askDetoxPrompt(meta) {
-    if (!meta && this.existingProject) return;
+    // if (!meta) return;
     const prompts = [
         {
             type: 'confirm',
@@ -53,7 +53,7 @@ function askDetoxPrompt(meta) {
             default: false,
         },
     ];
-    if (meta) return prompts; // eslint-disable-line consistent-return
+    // if (meta) return prompts; // eslint-disable-line consistent-return
 
     const done = this.async();
 
@@ -64,7 +64,7 @@ function askDetoxPrompt(meta) {
     });
 }
 function askBackendPrompt(meta) {
-    if (!meta && this.existingProject) return;
+    // if (!meta) return;
     const prompts = [
         {
             type: 'input',
@@ -74,7 +74,7 @@ function askBackendPrompt(meta) {
             validate: checkForApp.bind(this),
         },
     ];
-    if (meta) return prompts; // eslint-disable-line consistent-return
+    // if (meta) return prompts; // eslint-disable-line consistent-return
 
     const done = this.async();
 
