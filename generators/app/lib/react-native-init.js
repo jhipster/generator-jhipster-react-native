@@ -4,8 +4,10 @@ const fs = require('fs-extra');
 
 function generateReactNativeApp() {
     const name = 'TestApp';
-    console.log(chalk.white("Running 'npx react-native init'"));
-    spawn.sync('npx', ['react-native', 'init', '--version', '0.63.3', '--skip-install', name], { stdio: 'inherit' });
+    console.log(chalk.green("Running 'npx react-native init', will take a minute..."));
+    spawn.sync('npx', ['react-native', 'init', '--version', '0.63.3', '--skip-install', name], {
+        stdio: this.debug ? 'inherit' : 'ignore',
+    });
 
     // collapse generated RN folder into parent folder
     const rnFiles = [
