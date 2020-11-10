@@ -65,6 +65,7 @@ function askDetoxPrompt(meta) {
 }
 function askBackendPrompt(meta) {
     // if (!meta) return;
+    if (this.existingProject) return;
     const prompts = [
         {
             type: 'input',
