@@ -148,7 +148,7 @@ const expectedFiles = {
         'e2e/init.js',
         'e2e/launch-screen.spec.js',
         'e2e/utils.js',
-        // `android/app/src/androidTest/java/com/${androidPackageName}/DetoxTest.java`,
+        'android/app/src/androidTest/java/com/mono/DetoxTest.java',
     ],
     detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
     detoxAndNotOauth: [
@@ -167,6 +167,23 @@ const expectedFiles = {
         'test/spec/shared/websockets/websocket.sagas.spec.js',
         'test/spec/modules/chat/chat.reducer.spec.js',
     ],
+    entity: [
+        'app/modules/entities/foo/foo-entity-detail-screen.js',
+        'app/modules/entities/foo/foo-entity-detail-screen-style.js',
+        'app/modules/entities/foo/foo-entity-edit-screen.js',
+        'app/modules/entities/foo/foo-entity-edit-screen-style.js',
+        'app/modules/entities/foo/foo-entity-screen.js',
+        'app/modules/entities/foo/foo-entity-screen-style.js',
+        'app/modules/entities/foo/foo.reducer.js',
+        'test/spec/modules/entities/foo/foo.reducer.spec.js',
+        'app/modules/entities/foo/foo.sagas.js',
+        'test/spec/modules/entities/foo/foo.sagas.spec.js',
+        'app/shared/fixtures/get-foo.json',
+        'app/shared/fixtures/get-foos.json',
+        'app/shared/fixtures/update-foo.json',
+    ],
+    entitySearchEngine: ['app/shared/fixtures/search-foos.json'],
+    entityDetox: ['e2e/entities/foo.spec.js'],
 };
 
 module.exports = expectedFiles;
