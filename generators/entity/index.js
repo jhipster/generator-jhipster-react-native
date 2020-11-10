@@ -34,7 +34,14 @@ module.exports = class extends EntityGenerator {
 
     _setUpVariables() {
         this.searchEngine = this.config.get('searchEngine');
-        this.detox = this.config.get('reactNative').detox;
+
+        const reactNativeConfig = this.config.get('reactNative');
+        if (reactNativeConfig) {
+            this.detox = reactNativeConfig.detox;
+        } else {
+            this.info('Defaulting to false for Detox');
+            this.detox = false;
+        }
 
         this.name = this.options.name;
         this.pluralName = pluralize(this.name);
