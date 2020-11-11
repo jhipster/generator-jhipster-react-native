@@ -58,8 +58,8 @@ module.exports = class extends EntityGenerator {
         this.upperFirst = this._.upperFirst;
         this.pascalCase = str => this._.upperFirst(this._.camelCase(str));
 
-        this.getEntityFormField = getEntityFormField;
-        this.getRelationshipFormField = getRelationshipFormField;
+        this.getEntityFormField = getEntityFormField.bind(this);
+        this.getRelationshipFormField = getRelationshipFormField.bind(this);
 
         // load entity JSON from config file
         this.entityInfo = this.context.entityJSON;

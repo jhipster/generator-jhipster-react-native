@@ -45,7 +45,7 @@ class <%= name %>EntityEditScreen extends React.Component {
         <%= getEntityFormField(field, index, entityInfo.fields.length, entityInfo.ownerSideRelationships.length) %>
         <%_ }) _%>
         <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
-        <%= getRelationshipFormField(relation, index, entityInfo.ownerSideRelationships.length, props) %>
+        <%= getRelationshipFormField(relation, index, entityInfo.ownerSideRelationships.length, this) %>
         <%_ }) _%>
       }),
       formValue: { id: null },
