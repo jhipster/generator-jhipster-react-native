@@ -31,7 +31,5 @@ jobs:
         shell: bash
       - name: npm ci
         run: npm ci
-      - name: lint
-        run: npm run lint
-      - name: test
-        run: npm run coverage
+      - name: lint and test
+        run: npm run test

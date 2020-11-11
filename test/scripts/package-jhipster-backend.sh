@@ -2,10 +2,10 @@
 set -e
 
 # switch to the directory the backend was generated in
-cd ../${JHI_IGNITE_APP_NAME}-backend
+cd ../backend
 ls -al
 
-# show files modified by ignite-jhipster
+# show files modified by jhipster-react-native
 git status
 
 # package the app into a WAR

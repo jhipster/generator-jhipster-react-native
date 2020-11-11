@@ -23,6 +23,10 @@ function checkForApp(input) {
 
 function askNamePrompt(meta) {
     // if (!meta) return;
+    if (this.options.defaults) {
+        this.reactNativeAppName = 'RnApp';
+        return;
+    }
 
     const prompts = [
         {
@@ -44,6 +48,10 @@ function askNamePrompt(meta) {
     });
 }
 function askDetoxPrompt(meta) {
+    if (this.options.defaults) {
+        this.detox = true;
+        return;
+    }
     // if (!meta) return;
     const prompts = [
         {
@@ -66,6 +74,12 @@ function askDetoxPrompt(meta) {
 function askBackendPrompt(meta) {
     // if (!meta) return;
     if (this.existingProject) return;
+
+    if (this.options.defaults) {
+        this.directoryPath = path.resolve('../backend');
+        return;
+    }
+
     const prompts = [
         {
             type: 'input',

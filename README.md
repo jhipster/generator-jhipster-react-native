@@ -49,7 +49,7 @@ yarn global upgrade generator-jhipster-react-native
 To use this blueprint, run the below command
 
 ```bash
-jhipster --blueprint react-native
+jhipster --blueprints react-native
 ```
 
 ## Running local Blueprint version for development
@@ -85,7 +85,7 @@ mkdir my-app && cd my-app
 npm link generator-jhipster-react-native
 npm link generator-jhipster (Optional: Needed only if you are using a non-released JHipster version)
 
-jhipster -d --blueprint react-native
+jhipster -d --blueprints react-native
 
 ```
 
