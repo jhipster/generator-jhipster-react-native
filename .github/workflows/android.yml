@@ -64,7 +64,7 @@ jobs:
         name: 'TOOLS: display tools'
         shell: bash
       - run: npm link
-        name: 'TOOLS: npm install and link in ignite-jhipster'
+        name: 'TOOLS: npm install and link in generator-jhipster-react-native'
         shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
@@ -73,10 +73,10 @@ jobs:
         name: 'GENERATING: generate jhipster backend'
         shell: bash
       - run: $SCRIPT_DIR/generate-react-native-app.sh
-        name: 'GENERATING: generate ignite-jhipster app'
+        name: 'GENERATING: generate react-native app'
         shell: bash
       - run: $SCRIPT_DIR/package-react-native-app.sh
-        name: 'PACKAGING: package ignite-jhipster app for detox'
+        name: 'PACKAGING: package react-native app for detox'
         shell: bash
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'

@@ -21,7 +21,7 @@ import StorybookScreen from '../../storybook'
 <%_ if (websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
-// ignite-jhipster-navigation-import-needle
+// jhipster-react-native-navigation-import-needle
 
 export const LOGIN_SCREEN = 'nav.LoginScreen'
 export const REGISTER_SCREEN = 'nav.RegisterScreen'
@@ -35,7 +35,7 @@ export const STORYBOOK_SCREEN = 'nav.StorybookScreen'
 <%_ if (websocket) { _%>
 export const CHAT_SCREEN = 'nav.ChatScreen'
 <%_ } _%>
-// ignite-jhipster-navigation-declaration-needle
+// jhipster-react-native-navigation-declaration-needle
 
 const store = createStore()
 
@@ -158,7 +158,7 @@ function registerScreensLazily() {
         registerComponentWithRedux(CHAT_SCREEN, ChatScreen)
         break
 <%_ } _%>
-      // ignite-jhipster-navigation-registration-needle
+      // jhipster-react-native-navigation-registration-needle
       default:
         break
     }
@@ -315,4 +315,4 @@ export const chatScreen = () => Navigation.push('center', {
   }
 })
 <%_ } _%>
-// ignite-jhipster-navigation-method-needle
+// jhipster-react-native-navigation-method-needle

@@ -76,7 +76,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const createUser = (user) => api.post('api/users', user)
   const updateUser = (user) => api.put('api/users', user)
   const deleteUser = (userId) => api.delete('api/users/' + userId)
-  // ignite-jhipster-api-method-needle
+  // jhipster-react-native-api-method-needle
 
   // ------
   // STEP 3
@@ -97,7 +97,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
     getUsers,
     getUser,
     deleteUser,
-    // ignite-jhipster-api-export-needle
+    // jhipster-react-native-api-export-needle
     <%_ if (authType === 'session' || authType === 'uaa') { _%>
     logout,
     <%_ } else { _%>
