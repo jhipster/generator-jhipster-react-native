@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # start the backend
-cd ../${JHI_IGNITE_APP_NAME}-backend
+cd ../backend
 
 # set backend memory limits
 MAVEN_OPTS="-Xmx512m -Xms256m"
@@ -39,7 +39,7 @@ if [ "$status" -ne 0 ]; then
     return 1
 fi
 
-cd ../${JHI_IGNITE_APP_NAME}
+cd ../${JHI_REACT_NATIVE_APP_NAME}
 
 # if oauth, only run the launch screen since you need to authenticate for entities (todo: mock auth for entities)
 if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then

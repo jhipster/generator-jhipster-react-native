@@ -30,7 +30,7 @@ jobs:
           #   jhi_dto: true
           #   jhi_websockets: true
     env:
-      JHI_IGNITE_APP_NAME: ${{ matrix.app_type }}
+      JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
       JHI_DTO: ${{ matrix.jhi_dto }}
       JHI_WEBSOCKETS: ${{ matrix.jhi_websockets }}
@@ -72,10 +72,10 @@ jobs:
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
         name: 'GENERATING: generate jhipster backend'
         shell: bash
-      - run: $SCRIPT_DIR/generate-ignite-jhipster-app.sh
+      - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate ignite-jhipster app'
         shell: bash
-      - run: $SCRIPT_DIR/package-ignite-jhipster-app.sh
+      - run: $SCRIPT_DIR/package-react-native-app.sh
         name: 'PACKAGING: package ignite-jhipster app for detox'
         shell: bash
       - run: $SCRIPT_DIR/run-detox-tests.sh

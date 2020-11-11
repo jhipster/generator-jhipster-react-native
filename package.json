@@ -7,25 +7,42 @@
         "jhipster-blueprint"
     ],
     "homepage": "https://github.com/ruddell/generator-jhipster-react-native",
+    "bugs": {
+        "url": "https://github.com/ruddell/generator-jhipster-react-native/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ruddell/generator-jhipster-react-native.git"
+    },
+    "license": "Apache-2.0",
     "author": {
         "name": "Jon Ruddell",
         "email": "jonathan.ruddell@gmail.com",
         "url": "https://jruddell.com/"
     },
+    "main": "generators/app/index.js",
     "files": [
         "generators"
     ],
-    "main": "generators/app/index.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ruddell/generator-jhipster-react-native.git"
+    "scripts": {
+        "jsdoc": "jsdoc --configure jsdoc-conf.json",
+        "lint": "eslint .",
+        "lint-fix": "npm run lint -- --fix",
+        "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
+        "release": "git push && git push --tags && npm publish",
+        "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
+        "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
+        "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
+        "pretest": "npm run lint",
+        "test": "npm run test:unit -- test/*.spec.js",
+        "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
     },
     "dependencies": {
         "chalk": "4.1.0",
         "cross-spawn": "^7.0.3",
         "fs-extra": "9.0.1",
         "fs-jetpack": "^4.0.0",
-        "generator-jhipster": "https://github.com/jhipster/generator-jhipster.git#master",
+        "generator-jhipster": "git://github.com/jhipster/generator-jhipster.git#f0031a0e2d207b1af083e6f02daad103b401c60b",
         "lint-staged": "^10.4.2",
         "pluralize": "^8.0.0",
         "shelljs": "^0.8.4"
@@ -44,22 +61,5 @@
         "sinon": "9.2.0",
         "yeoman-assert": "3.1.1",
         "yeoman-test": "3.0.0"
-    },
-    "scripts": {
-        "lint": "eslint .",
-        "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
-        "lint-fix": "npm run lint -- --fix",
-        "pretest": "npm run lint",
-        "test": "npm run test:unit -- test/*.spec.js",
-        "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec",
-        "jsdoc": "jsdoc --configure jsdoc-conf.json",
-        "release": "git push && git push --tags && npm publish",
-        "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
-        "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
-        "release:major": "npm version major -a -m \"Update to %s\" && npm run release"
-    },
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/ruddell/generator-jhipster-react-native/issues"
     }
 }

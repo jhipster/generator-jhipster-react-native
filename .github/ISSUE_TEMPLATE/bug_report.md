@@ -21,5 +21,5 @@ about: Create a report to help us improve
 
 **Versions (please complete the following information):**
 
-- Ignite JHipster Version:
-- `ignite doctor` output:
+-   Ignite JHipster Version:
+-   `ignite doctor` output:

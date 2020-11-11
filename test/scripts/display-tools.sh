@@ -9,7 +9,6 @@ npm -v
 #docker version
 #docker-compose version
 pwd
-ignite doctor
 
 if [ "$PLATFORM" = "ios" ]; then
   applesimutils --list

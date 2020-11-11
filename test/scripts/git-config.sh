@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-git config --global user.name "Ignite JHipster Github Pipelines"
-git config --global user.email "ignite-jhipster@localhost"
+git config --global user.name "JHipster React Native Github Pipelines"
+git config --global user.email "jhipster-react-native@localhost"
