@@ -7,7 +7,7 @@ mkdir ../backend
 cd ../backend
 ls -al
 # generate the app
-jhipster import-jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl --force --skip-checks --skip-commit-hook --from-cli --force-insight --skip-install
+jhipster import-jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl --force --skip-checks --skip-commit-hook --from-cli --no-insight --skip-install
 # list files
 ls -al
 # display jhipster info
