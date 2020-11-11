@@ -1,12 +1,16 @@
-# generator-jhipster-react-native
+# JHipster React Native - UNDER DEVELOPMENT
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
+[![iOS-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AiOS-E2E)
+[![Android-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/Android-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AAndroid-E2E)
+[![Generator](https://github.com/ruddell/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
 
-> JHipster blueprint, React Native Blueprint for existing JHipster Apps
+
+> React Native Blueprint for existing JHipster Apps - UNDER DEVELOPMENT
 
 # Introduction
 
-This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used in a JHipster application.
+This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used with an existing JHipster backend.
 
 # Prerequisites
 
@@ -16,31 +20,21 @@ As this is a [JHipster](https://www.jhipster.tech/) blueprint, we expect you hav
 
 # Installation
 
-## With NPM
+## With NPM/Yarn
 
 To install this blueprint:
 
 ```bash
 npm install -g generator-jhipster-react-native
-```
 
-To update this blueprint:
-
-```bash
-npm update -g generator-jhipster-react-native
-```
-
-## With Yarn
-
-To install this blueprint:
-
-```bash
 yarn global add generator-jhipster-react-native
 ```
 
 To update this blueprint:
 
 ```bash
+npm update -g generator-jhipster-react-native
+
 yarn global upgrade generator-jhipster-react-native
 ```
 
