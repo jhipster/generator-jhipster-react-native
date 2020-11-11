@@ -63,7 +63,7 @@ jobs:
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
         shell: bash
-      - run: npm link
+      - run: npm i && npm link
         name: 'TOOLS: npm install and link in generator-jhipster-react-native'
         shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
