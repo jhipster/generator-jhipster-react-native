@@ -9,7 +9,7 @@ import ReduxPersist from '../../config/redux-persist'
 export const reducers = combineReducers({
   appState: require('./app-state.reducer').reducer,
   users: require('./user.reducer').reducer,
-  // ignite-jhipster-redux-store-import-needle
+  // jhipster-react-native-redux-store-import-needle
   <%_ if (websocket) { _%>
   chat: require('../../modules/chat/chat.reducer').reducer,
   <%_ } _%>

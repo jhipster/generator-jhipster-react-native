@@ -12,7 +12,7 @@ import { RegisterTypes } from '../../modules/account/register/register.reducer'
 import { ForgotPasswordTypes } from '../../modules/account/password-reset/forgot-password.reducer'
 import { ChangePasswordTypes } from '../../modules/account/password/change-password.reducer'
 import { UserTypes } from '../../shared/reducers/user.reducer'
-// ignite-jhipster-saga-redux-import-needle
+// jhipster-react-native-saga-redux-import-needle
 
 /* ------------- Sagas ------------- */
 
@@ -23,7 +23,7 @@ import { forgotPassword } from '../../modules/account/password-reset/forgot-pass
 import { changePassword } from '../../modules/account/password/change-password.sagas'
 import { getAccount, updateAccount } from '../../shared/sagas/account.sagas'
 import { getUser, getUsers, updateUser, deleteUser } from '../../shared/sagas/user.sagas'
-// ignite-jhipster-saga-method-import-needle
+// jhipster-react-native-saga-method-import-needle
 
 /* ------------- API ------------- */
 
@@ -47,7 +47,7 @@ export default function * root () {
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
     takeLatest(ChangePasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
-    // ignite-jhipster-saga-redux-connect-needle
+    // jhipster-react-native-saga-redux-connect-needle
 
     takeLatest(UserTypes.USER_REQUEST, getUser, api),
     takeLatest(UserTypes.USER_ALL_REQUEST, getUsers, api),
