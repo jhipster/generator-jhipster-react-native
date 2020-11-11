@@ -21,4 +21,4 @@ else
 fi
 
 # list files
-ls -al ${JHI_REACT_NATIVE_APP_NAME}
+ls -al

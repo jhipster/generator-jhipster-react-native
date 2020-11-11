@@ -25,16 +25,16 @@ const getEntityFormField = (field, index, total, numRelationships) => {
     }`;
 };
 
-const getRelationshipFormField = (relation, index, total, props) => {
+const getRelationshipFormField = (relation, index, total, context) => {
     const relationshipType = relation.relationshipType;
     const ownerSide = relation.ownerSide;
     if (relationshipType === 'many-to-one' || (relationshipType === 'one-to-one' && ownerSide === true)) {
-        return `${relation.otherEntityName}Id: this.get${props.pascalCase(relation.otherEntityNamePlural)}()${
+        return `${relation.otherEntityName}Id: this.get${context.pascalCase(relation.otherEntityNamePlural)}()${
             index !== total - 1 ? ',' : ''
         }`;
     }
     if (relationshipType === 'many-to-many' && ownerSide === true) {
-        return `${pluralize(relation.relationshipNamePlural)}: t.list(this.get${props.pascalCase(relation.otherEntityNamePlural)}())${
+        return `${pluralize(relation.relationshipNamePlural)}: t.list(this.get${context.pascalCase(relation.otherEntityNamePlural)}())${
             index !== total - 1 ? ',' : ''
         }`;
     }
