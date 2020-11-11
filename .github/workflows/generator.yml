@@ -29,7 +29,10 @@ jobs:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
         shell: bash
-      - name: npm ci
-        run: npm ci
+#        using npm i instead of npm ci due to installing master of generator-jhipster
+      - name: npm i
+        run: npm i
+#      - name: npm ci
+#        run: npm ci
       - name: lint and test
         run: npm run test
