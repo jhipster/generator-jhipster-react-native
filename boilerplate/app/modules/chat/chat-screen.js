@@ -62,7 +62,7 @@ class ChatScreen extends React.PureComponent {
   render () {
     return (
       <View style={styles.container} testID='chatScreen'>
-        <KeyboardAwareScrollView style={styles.scrollView} scrollEnabled={false}>
+        <KeyboardAwareScrollView style={styles.scrollView} scrollEnabled={false} keyboardShouldPersistTaps={'handled'}>
           <FlatList
             ref={(c) => {
               this.chatList = c

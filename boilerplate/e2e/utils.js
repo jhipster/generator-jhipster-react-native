@@ -13,6 +13,11 @@ const loginAsUser = async () => {
   await element(by.id('loginScreenUsername')).replaceText(username)
   await element(by.id('loginScreenPassword')).replaceText(password)
   await element(by.id('loginScreenLoginButton')).tap()
+  try {
+    await expect(element(by.id('launchScreen'))).toBeVisible()
+  } catch(e) {
+    throw new Error('Logging into the JHipster backend failed, is it started?')
+  }
 }
 
 const logout = async () => {
@@ -21,11 +26,7 @@ const logout = async () => {
 }
 
 const goBack = async () => {
-  if (device.getPlatform() === 'ios') {
-    await element(by.type('_UIBackButtonContainerView')).tap()
-  } else {
-    await device.pressBack();
-  }
+  await element(by.id('backButton')).tap()
 }
 
 const scrollTo = async (fieldId, listId) => {

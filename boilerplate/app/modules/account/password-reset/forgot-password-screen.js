@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
+import { Alert, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { Navigation } from 'react-native-navigation'
@@ -57,21 +57,19 @@ class ForgotPasswordScreen extends React.Component {
 
   render () {
     return (
-      <KeyboardAwareScrollView>
-        <ScrollView style={styles.container}>
-          <Form
-            ref={c => {
-              this.form = c
-            }}
-            type={this.state.formModel}
-            options={this.state.formOptions}
-            value={this.state.formValue}
-            onChange={this.formChange}
-          />
-          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Reset</Text>
-          </TouchableHighlight>
-        </ScrollView>
+      <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
+        <Form
+          ref={c => {
+            this.form = c
+          }}
+          type={this.state.formModel}
+          options={this.state.formOptions}
+          value={this.state.formValue}
+          onChange={this.formChange}
+        />
+        <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Reset</Text>
+        </TouchableHighlight>
       </KeyboardAwareScrollView>
     )
   }

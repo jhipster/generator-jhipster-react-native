@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, ScrollView, Text, TouchableHighlight } from 'react-native'
+import { Alert, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import t from 'tcomb-form-native'
@@ -76,21 +76,19 @@ class ChangePasswordScreen extends React.Component {
 
   render () {
     return (
-      <KeyboardAwareScrollView>
-        <ScrollView style={styles.container}>
-          <Form
-            ref={c => {
-              this.form = c
-            }}
-            type={this.state.formModel}
-            options={this.state.formOptions}
-            value={this.state.formValue}
-            onChange={this.formChange}
-          />
-          <TouchableHighlight testID='changePasswordSubmitButton' style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableHighlight>
-        </ScrollView>
+      <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
+        <Form
+          ref={c => {
+            this.form = c
+          }}
+          type={this.state.formModel}
+          options={this.state.formOptions}
+          value={this.state.formValue}
+          onChange={this.formChange}
+        />
+        <TouchableHighlight testID='changePasswordSubmitButton' style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableHighlight>
       </KeyboardAwareScrollView>
     )
   }
