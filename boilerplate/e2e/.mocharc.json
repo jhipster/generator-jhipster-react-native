@@ -1,4 +1,5 @@
 {
+  "spec": "e2e/**/*.spec.js",
   "timeout": 120000,
   "retries": 3,
   "bail": true
