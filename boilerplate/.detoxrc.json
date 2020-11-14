@@ -29,6 +29,22 @@
       }
     }
   },
+  "artifacts": {
+    "rootDir": ".artifacts",
+    "plugins": {
+      "instruments": { "enabled": false },
+      "log": { "enabled": true },
+      "uiHierarchy": "enabled",
+      "screenshot": {
+        "shouldTakeAutomaticSnapshots": true,
+        "keepOnlyFailedTestsArtifacts": true,
+        "takeWhen": {
+          "testStart": false,
+          "testDone": true
+        }
+      }
+    }
+  },
   "test-runner": "mocha",
   "runner-config": "./e2e/.mocharc.json"
 }
