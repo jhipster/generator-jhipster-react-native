@@ -94,4 +94,4 @@ jobs:
         if: failure()
         with:
           name: detox-failures-${{ matrix.app_type }}
-          path: ${{ github.workspace }}/../${{ matrix.app_type }}/.artifacts/**/*
+          path: /Users/runner/work/ignite-jhipster/${{ matrix.app_type }}/.artifacts/**/*
