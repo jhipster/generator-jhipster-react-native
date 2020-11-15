@@ -1,14 +1,18 @@
+const fse = require('fs-extra');
 const packagejs = require('../../../package.json');
 
 function loadVariables() {
-    const jhipsterConfig = this.config.getAll();
-    if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'baseName')) {
-        this.existingProject = true;
-        if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'reactNative')) {
-            this.reactNativeAppName = jhipsterConfig.reactNative.reactNativeAppName;
-            this.detox = jhipsterConfig.reactNative.detox;
-        } else {
-            this.debug('React Native config not found, will prompt');
+    this.existingProject = fse.existsSync('.yo-rc.json');
+    if (this.existingProject) {
+        const jhipsterConfig = this.config.getAll();
+        if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'baseName')) {
+            this.existingProject = true;
+            if (Object.prototype.hasOwnProperty.call(jhipsterConfig, 'reactNative')) {
+                this.reactNativeAppName = jhipsterConfig.reactNative.reactNativeAppName;
+                this.detox = jhipsterConfig.reactNative.detox;
+            } else {
+                this.debug('React Native config not found, will prompt');
+            }
         }
     }
 }
@@ -36,7 +40,7 @@ function setupVariables() {
     this.applicationType = jhipsterConfig.applicationType;
     this.uaaBaseName = this.authType === 'uaa' ? jhipsterConfig.uaaBaseName.toLowerCase() : '';
     this.useNpm = true;
-    this.skipCommitHook = false;
+    this.skipCommitHook = this.options.skipCommitHook;
     this.packageVersion = packagejs.version;
     this.androidPackageName = this.reactNativeAppName.toLowerCase();
     // used for JHipster templates

@@ -1,10 +1,9 @@
 const utils = require('generator-jhipster/generators/utils');
-const fse = require('fs-extra');
 
 function mergeReactNativePackageJson() {
     const done = this.async();
     // get react-native generated package.json (using fse here to avoid file-not-found from yo's fs)
-    const rnPackageJson = fse.readJsonSync('package.json');
+    const rnPackageJson = this.fs.readJSON('package.json');
     // get templated package.json
     const _this = this;
     utils.renderContent('package.json.ejs', _this, _this, {}, templatedPackageJsonAsString => {

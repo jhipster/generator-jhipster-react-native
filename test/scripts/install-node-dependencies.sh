@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 set -e
 
+# set up main branch of generator-jhipster
 git clone https://github.com/jhipster/generator-jhipster.git ../generator-jhipster
-cd ../generator-jhipster && git checkout 819d07f1ca349ae6f8710f2a3387030a29964982 && npm link
+cd ../generator-jhipster && npm link
+
+# set up main branch of jhipster-bom
+git clone https://github.com/jhipster/jhipster-bom.git ../jhipster-bom
+cd ../jhipster-bom && ./mvnw clean install -Dgpg.skip -ntp -DskipTests
 
 # set yarn network-timeout to 10 minutes
 yarn config set network-timeout 600000

@@ -54,14 +54,14 @@ const files = {
     fixtures: [
         {
             templates: [
-                { file: 'fixtures/entity-get.json', renameTo: generator => `app/shared/fixtures/get-${generator.name.toLowerCase()}.json` },
+                { file: 'fixtures/entity-get.json', renameTo: generator => `app/shared/fixtures/get-${generator.kebabCaseName}.json` },
                 {
                     file: 'fixtures/entity-get-all.json',
-                    renameTo: generator => `app/shared/fixtures/get-${generator.pluralName.toLowerCase()}.json`,
+                    renameTo: generator => `app/shared/fixtures/get-${generator.kebabCaseNamePlural}.json`,
                 },
                 {
                     file: 'fixtures/entity-update.json',
-                    renameTo: generator => `app/shared/fixtures/update-${generator.name.toLowerCase()}.json`,
+                    renameTo: generator => `app/shared/fixtures/update-${generator.kebabCaseName}.json`,
                 },
             ],
         },

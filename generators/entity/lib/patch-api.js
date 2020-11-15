@@ -1,5 +1,3 @@
-const { patchInFile } = require('../../app/lib/patch-in-file');
-
 function patchApi() {
     const apiFilePath = 'app/shared/services/api.js';
     const fixtureApiFilePath = 'app/shared/services/fixture-api.js';
@@ -17,19 +15,19 @@ function patchApi() {
     let fixtureApiMethods = `  update${this.name}: (${this.camelCaseName}) => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/update-${this.name.toLowerCase()}.json'),
+      data: require('../../shared/fixtures/update-${this.kebabCaseName}.json'),
     }
   },
   get${this.pluralName}: () => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get-${this.pluralName.toLowerCase()}.json'),
+      data: require('../../shared/fixtures/get-${this.kebabCaseNamePlural}.json'),
     }
   },
   get${this.name}: (${this.camelCaseName}Id) => {
     return {
       ok: true,
-      data: require('../../shared/fixtures/get-${this.name.toLowerCase()}.json'),
+      data: require('../../shared/fixtures/get-${this.kebabCaseName}.json'),
     }
   },
   delete${this.name}: (${this.camelCaseName}Id) => {
@@ -71,38 +69,38 @@ function patchApi() {
     }
 
     // add methods to api
-    patchInFile(apiFilePath, {
+    this.patchInFile(apiFilePath, {
         before: 'jhipster-react-native-api-method-needle',
         insert: apiMethods,
     });
-    patchInFile(apiFilePath, {
+    this.patchInFile(apiFilePath, {
         before: 'jhipster-react-native-api-export-needle',
         insert: apiMethodsExport,
     });
-    patchInFile(fixtureApiFilePath, {
+    this.patchInFile(fixtureApiFilePath, {
         before: 'jhipster-react-native-api-fixture-needle',
         insert: fixtureApiMethods,
     });
 
     // import redux in redux/index.js
-    patchInFile(reduxIndexFilePath, {
+    this.patchInFile(reduxIndexFilePath, {
         before: 'jhipster-react-native-redux-store-import-needle',
         insert: `  ${this.camelCaseNamePlural}: require('../../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}.reducer').reducer,`,
     });
 
     // import saga/redux in sagas/index.js
-    patchInFile(sagaIndexFilePath, {
+    this.patchInFile(sagaIndexFilePath, {
         before: 'jhipster-react-native-saga-redux-import-needle',
         insert: `import { ${this.name}Types } from '../../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}.reducer'`,
     });
-    patchInFile(sagaIndexFilePath, {
+    this.patchInFile(sagaIndexFilePath, {
         before: 'jhipster-react-native-saga-method-import-needle',
         insert: `import { get${this.name}, get${this.pluralName}, update${this.name}, delete${this.name}${
             this.searchEngine ? `, search${this.pluralName}` : ''
         } } from '../../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}.sagas'`,
     });
 
-    patchInFile(sagaIndexFilePath, {
+    this.patchInFile(sagaIndexFilePath, {
         before: 'jhipster-react-native-saga-redux-connect-needle',
         insert: sagaConnections,
     });

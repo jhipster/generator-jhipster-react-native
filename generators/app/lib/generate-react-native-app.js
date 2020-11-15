@@ -1,27 +1,27 @@
 const chalk = require('chalk');
+const fse = require('fs-extra');
 const spawn = require('cross-spawn');
-const fs = require('fs-extra');
 
 function generateReactNativeApp() {
     const reactNativeVersion = '0.63.3';
-    const name = 'TestApp';
-    console.log(chalk.green("Running 'npx react-native init', will take a minute..."));
+    const name = this.reactNativeAppName;
+    this.info(chalk.green("Running 'npx react-native init', this will take some time..."));
     spawn.sync('npx', ['react-native', 'init', '--version', reactNativeVersion, '--skip-install', name], {
         stdio: this.debug ? 'inherit' : 'ignore',
     });
 
     // collapse generated RN folder into parent folder
     const rnFiles = [
+        // don't copy these
+        // '__tests__',
+        // '.prettierrc.js',
+        // 'app.js',
         '.buckconfig',
         '.eslintrc.js',
         '.flowconfig',
         '.gitattributes',
         '.gitignore',
-        '.prettierrc.js',
         '.watchmanconfig',
-        'App.js',
-        // don't copy this
-        // '__tests__',
         'android',
         'app.json',
         'babel.config.js',
@@ -31,9 +31,9 @@ function generateReactNativeApp() {
         'package.json',
     ];
     rnFiles.forEach(file => {
-        fs.moveSync(`${process.cwd()}/${name}/${file}`, `${process.cwd()}/${file}`, { overwrite: true });
+        this.fs.move(`${process.cwd()}/${name}/${file}`, `${process.cwd()}/${file}`, { overwrite: true });
     });
-    fs.removeSync(`${process.cwd()}/${name}/`);
+    fse.removeSync(`${process.cwd()}/${name}/`);
 }
 
 module.exports = { generateReactNativeApp };

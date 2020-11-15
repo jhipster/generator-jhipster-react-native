@@ -162,7 +162,7 @@ class <%= name %>EntityEditScreen extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView  testID='<%= camelCaseName %>EditScrollView'>
+        <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'} testID='<%= camelCaseName %>EditScrollView'>
           <Form
             ref={c => {
               this.form = c
@@ -172,10 +172,10 @@ class <%= name %>EntityEditScreen extends React.Component {
             value={this.state.formValue}
             onChange={this.formChange}
           />
+          <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
+              <Text style={styles.buttonText}>Save</Text>
+          </TouchableHighlight>
         </KeyboardAwareScrollView>
-        <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
-            <Text style={styles.buttonText}>Save</Text>
-        </TouchableHighlight>
       </View>
     )
   }

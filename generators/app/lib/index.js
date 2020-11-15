@@ -1,8 +1,8 @@
 const { printJHipsterLogo } = require('./print-jhipster-logo');
 const { loadVariables, setupVariables } = require('./setup-variables');
 const { mergeReactNativePackageJson } = require('./merge-react-native-package-json');
-const { removeYoResolve, createEarlyFiles } = require('./pre-write');
-const { generateReactNativeApp } = require('./react-native-init');
+const { createEarlyFiles } = require('./pre-write');
+const { generateReactNativeApp } = require('./generate-react-native-app');
 const { appendGitIgnore } = require('./append-git-ignore');
 const { patchReactNativeNavigation } = require('./patch-react-native-navigation');
 const { patchDetox } = require('./patch-detox');
@@ -14,7 +14,6 @@ module.exports = {
     loadVariables,
     setupVariables,
     mergeReactNativePackageJson,
-    removeYoResolve,
     createEarlyFiles,
     generateReactNativeApp,
     appendGitIgnore,
