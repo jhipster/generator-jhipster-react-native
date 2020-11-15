@@ -5,7 +5,6 @@
 [![Android-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/Android-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AAndroid-E2E)
 [![Generator](https://github.com/ruddell/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
 
-
 > React Native Blueprint for existing JHipster Apps - UNDER DEVELOPMENT
 
 # Introduction

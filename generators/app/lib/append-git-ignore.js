@@ -1,14 +1,12 @@
-const fsjetpack = require('fs-jetpack');
-
 function appendGitIgnore() {
-    fsjetpack.append('.gitignore', 'coverage/');
-    fsjetpack.append('.gitignore', '\n# Misc\n#');
-    fsjetpack.append('.gitignore', '.env\n');
-    fsjetpack.append('.gitignore', 'ios/Index/DataStore\n');
-    fsjetpack.append('.gitignore', 'ios/Carthage\n');
-    fsjetpack.append('.gitignore', 'ios/Pods\n');
-    fsjetpack.append('.gitignore', 'fastlane/report.xml\n');
-    fsjetpack.append('.gitignore', 'android/app/bin\n');
+    this.fs.append('.gitignore', 'coverage/');
+    this.fs.append('.gitignore', '\n# Misc\n#');
+    this.fs.append('.gitignore', '.env\n');
+    this.fs.append('.gitignore', 'ios/Index/DataStore\n');
+    this.fs.append('.gitignore', 'ios/Carthage\n');
+    this.fs.append('.gitignore', 'ios/Pods\n');
+    this.fs.append('.gitignore', 'fastlane/report.xml\n');
+    this.fs.append('.gitignore', 'android/app/bin\n');
 }
 module.exports = {
     appendGitIgnore,

@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const path = require('path');
 const AppGenerator = require('generator-jhipster/generators/app');
+const { patchInFile } = require('./lib/patch-in-file');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
 const {
@@ -9,7 +10,6 @@ const {
     loadVariables,
     setupVariables,
     mergeReactNativePackageJson,
-    removeYoResolve,
     createEarlyFiles,
     generateReactNativeApp,
     appendGitIgnore,
@@ -32,6 +32,7 @@ module.exports = class extends AppGenerator {
         this.configOptions = jhContext.configOptions || {};
         // skips generated annotation from Java files
         this.configOptions.skipGeneratedFlag = true;
+        this.patchInFile = patchInFile.bind(this);
     }
 
     get initializing() {
@@ -85,14 +86,28 @@ module.exports = class extends AppGenerator {
         // remove condition after JHipster v7
         const gitInit = super._install().initGitRepo ? super._install().initGitRepo.bind(this) : super._writing().initGitRepo.bind(this);
         return {
-            removeYoResolve,
+            gitInit,
             npmInstall() {
-                // todo
+                if (!this.options.skipInstall) {
+                    this.spawnCommandSync('npm', ['i']);
+                }
             },
             podInstall() {
-                // todo
+                if (!this.options.skipInstall) {
+                    try {
+                        this.spawnCommandSync('pod', ['install'], { cwd: 'ios' });
+                    } catch (e) {
+                        this.warning('Something went wrong with `pod install`, try it again yourself.');
+                        this.warning('You may need to run `pod repo update` first.');
+                    }
+                }
             },
-            gitInit,
+            prettier() {
+                this.info('Running prettier...');
+                this.spawnCommandSync('npx', ['prettier', '--write', '{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}'], {
+                    stdio: 'ignore',
+                });
+            },
         };
     }
 

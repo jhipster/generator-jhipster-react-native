@@ -1,6 +1,7 @@
 const pluralize = require('pluralize');
 const chalk = require('chalk');
 const EntityGenerator = require('generator-jhipster/generators/entity');
+const { patchInFile } = require('../app/lib/patch-in-file');
 const { askForBackendJson } = require('./prompts');
 const { patchApi } = require('./lib/patch-api');
 const { writeFiles } = require('./files');
@@ -21,6 +22,7 @@ module.exports = class extends EntityGenerator {
         this.configOptions = jhContext.configOptions || {};
         // This sets up options for this sub generator and is being reused from JHipster
         jhContext._setupEntityOptions(this, jhContext, this);
+        this.patchInFile = patchInFile.bind(this);
     }
 
     get initializing() {
@@ -51,6 +53,7 @@ module.exports = class extends EntityGenerator {
         this.kebabCaseName = this._.kebabCase(this.name);
         this.kebabCaseNamePlural = this._.kebabCase(this.pluralName);
         this.snakeCaseName = this._.snakeCase(this.name);
+        this.context.entityNameCapitalized = this._.upperFirst(this.name);
 
         // todo remove - used in relationships
         this.camelCase = this._.camelCase;
@@ -125,11 +128,10 @@ module.exports = class extends EntityGenerator {
     }
 
     get writing() {
-        const name = 'Foo';
         return {
             writeFiles: writeFiles.bind(this),
-            patchNavigation: patchNavigation.bind(this, name),
-            patchApi: patchApi.bind(this, name),
+            patchNavigation: patchNavigation.bind(this, this.context.name),
+            patchApi: patchApi.bind(this, this.context.name),
         };
     }
 

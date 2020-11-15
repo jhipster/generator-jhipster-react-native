@@ -97,3 +97,8 @@ jobs:
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
         shell: bash
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+            name: detox-failures-${{ matrix.app_type }}
+            path: /Users/runner/work/generator-jhipster-react-native/${{ matrix.app_type }}/.artifacts/**/*

@@ -1,5 +1,6 @@
 const fse = require('fs-extra');
 // prettierrc and yo-resolve files are created manually so they apply to the generation process
+
 function createEarlyFiles() {
     // if (this.existingProject) {
     //     return;
@@ -9,7 +10,7 @@ function createEarlyFiles() {
   jsxBracketSameLine: true,
   singleQuote: true,
   trailingComma: 'all',
-  semi: false,
+  semi: true,
   printWidth: 140,
   tabWidth: 2,
   bracketSpacing: true,
@@ -17,17 +18,8 @@ function createEarlyFiles() {
 };
 `;
     fse.writeFile('.prettierrc.js', prettierRc);
-    const yoResolve = `.* force
-**/* force`;
-    fse.writeFile('.yo-resolve', yoResolve);
 }
 
-function removeYoResolve() {
-    // if (!this.existingProject) {
-    //     fse.remove('.yo-resolve');
-    // }
-}
 module.exports = {
     createEarlyFiles,
-    removeYoResolve,
 };

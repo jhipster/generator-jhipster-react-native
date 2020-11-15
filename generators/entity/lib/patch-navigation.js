@@ -1,43 +1,41 @@
-const { patchInFile } = require('../../app/lib/patch-in-file');
-
 function patchNavigation(name) {
     const upperSnakeCaseName = this._.upperCase(this._.snakeCase(`${name}EntityScreen`)).replace(/ /g, '_');
     const upperSnakeCaseNameEdit = this._.upperCase(this._.snakeCase(`${name}EntityEditScreen`)).replace(/ /g, '_');
     const upperSnakeCaseNameDetail = this._.upperCase(this._.snakeCase(`${name}EntityDetailScreen`)).replace(/ /g, '_');
 
-    const entityScreenFilePath = `${process.cwd()}/app/modules/entities/entities-screen.js`;
-    const navigationRouterFilePath = `${process.cwd()}/app/navigation/layouts.js`;
+    const entityScreenFilePath = 'app/modules/entities/entities-screen.js';
+    const navigationRouterFilePath = 'app/navigation/layouts.js';
 
     // import entity screens to navigation
     const navigationImport = `import ${name}EntityScreen from '../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}-entity-screen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-import-needle',
         insert: navigationImport,
     });
     const navigationImportDetail = `import ${name}EntityDetailScreen from '../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}-entity-detail-screen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-import-needle',
         insert: navigationImportDetail,
     });
     const navigationImportEdit = `import ${name}EntityEditScreen from '../modules/entities/${this.kebabCaseName}/${this.kebabCaseName}-entity-edit-screen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-import-needle',
         insert: navigationImportEdit,
     });
 
     // import entity screens to navigation
     const navigationDeclaration = `export const ${upperSnakeCaseName} = 'nav.${name}EntityScreen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-declaration-needle',
         insert: navigationDeclaration,
     });
     const navigationDeclarationDetail = `export const ${upperSnakeCaseNameDetail} = 'nav.${name}EntityDetailScreen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-declaration-needle',
         insert: navigationDeclarationDetail,
     });
     const navigationDeclarationEdit = `export const ${upperSnakeCaseNameEdit} = 'nav.${name}EntityEditScreen'`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-declaration-needle',
         insert: navigationDeclarationEdit,
     });
@@ -46,15 +44,15 @@ function patchNavigation(name) {
         registerComponentWithRedux(${SCREEN_NAME}, ${component})
         break`;
     // add entity screens to navigation
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-registration-needle',
         insert: getNavCase(upperSnakeCaseName, `${name}EntityScreen`),
     });
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-registration-needle',
         insert: getNavCase(upperSnakeCaseNameDetail, `${name}EntityDetailScreen`),
     });
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-registration-needle',
         insert: getNavCase(upperSnakeCaseNameEdit, `${name}EntityEditScreen`),
     });
@@ -119,26 +117,26 @@ export const ${this.camelCaseName}EntityEditScreen = (data) =>
       },
     },
   })`;
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-method-needle',
         insert: navigationMethodMain,
     });
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-method-needle',
         insert: navigationMethodEdit,
     });
-    patchInFile(navigationRouterFilePath, {
+    this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-method-needle',
         insert: navigationMethodDetail,
     });
     // add entity to entities screen
     const entityScreenButton = `        <RoundedButton text="${name}" onPress={${this.camelCaseName}EntityScreen} testID="${this.camelCaseName}EntityScreenButton" />`;
-    patchInFile(entityScreenFilePath, {
+    this.patchInFile(entityScreenFilePath, {
         before: 'jhipster-react-native-entity-screen-needle',
         insert: entityScreenButton,
     });
     const entityScreenImport = `  ${this.camelCaseName}EntityScreen,`;
-    patchInFile(entityScreenFilePath, {
+    this.patchInFile(entityScreenFilePath, {
         before: 'jhipster-react-native-entity-screen-import-needle',
         insert: entityScreenImport,
     });

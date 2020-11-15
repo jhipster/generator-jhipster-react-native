@@ -51,6 +51,8 @@ describe('<%= name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
       <%_ } _%>
     <%_ }) _%>
+    // close the keyboard
+    await element(by.id('<%= camelCaseName %>EditScrollView')).tap()
     await element(by.id('submitButton')).tap()
     await element(by.text('View')).tap()
     <%_ entityInfo.fields.forEach((field, index) => {
@@ -99,6 +101,8 @@ describe('<%= name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
     <%_ } _%>
     <%_ }) _%>
+    // close the keyboard
+    await element(by.id('<%= camelCaseName %>EditScrollView')).tap()
     await element(by.id('submitButton')).tap()
     await element(by.text('OK')).tap()
     <%_ entityInfo.fields.forEach((field, index) => {

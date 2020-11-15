@@ -1,8 +1,6 @@
-const { patchInFile } = require('./patch-in-file');
-
 function patchReactNativeNavigation() {
     // update iOS Files
-    patchInFile(`ios/${this.reactNativeAppName}/Info.plist`, {
+    this.patchInFile(`ios/${this.reactNativeAppName}/Info.plist`, {
         before: '<key>CFBundleDisplayName</key>',
         insert: `
 <key>CFBundleURLTypes</key>
@@ -21,13 +19,13 @@ function patchReactNativeNavigation() {
     });
     /* eslint-enable */
 
-    patchInFile('ios/Podfile', {
+    this.patchInFile('ios/Podfile', {
         replace: "platform :ios, '10.0'",
         insert: "platform :ios, '11.0'",
     });
 
     // fix pod versions
-    patchInFile('ios/Podfile', {
+    this.patchInFile('ios/Podfile', {
         before: 'flipper_post_install',
         insert: `    installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
@@ -39,7 +37,7 @@ function patchReactNativeNavigation() {
 
     for (let i = 0; i < 4; i++) {
         // align IPHONEOS_DEPLOYMENT_TARGET
-        patchInFile(`ios/${this.reactNativeAppName}.xcodeproj/project.pbxproj`, {
+        this.patchInFile(`ios/${this.reactNativeAppName}.xcodeproj/project.pbxproj`, {
             replace: 'IPHONEOS_DEPLOYMENT_TARGET = 10.0;',
             insert: 'IPHONEOS_DEPLOYMENT_TARGET = 11.0;',
             force: true,
@@ -47,33 +45,33 @@ function patchReactNativeNavigation() {
     }
 
     // disable flipper
-    patchInFile('ios/Podfile', {
+    this.patchInFile('ios/Podfile', {
         replace: 'use_flipper!',
         insert: '# use_flipper!',
     });
-    patchInFile('ios/Podfile', {
+    this.patchInFile('ios/Podfile', {
         replace: 'flipper_post_install',
         insert: '# flipper_post_install',
     });
 
     // update Android Files
     // settings.gradle
-    patchInFile('android/build.gradle', {
+    this.patchInFile('android/build.gradle', {
         after: 'dependencies {',
         insert: '        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$RNNKotlinVersion")',
     });
 
-    patchInFile('android/build.gradle', {
+    this.patchInFile('android/build.gradle', {
         replace: 'minSdkVersion = 16',
         insert: 'minSdkVersion = 19',
     });
 
-    patchInFile('android/build.gradle', {
+    this.patchInFile('android/build.gradle', {
         after: '  ext {',
         insert: '        RNNKotlinVersion = "1.3.61"',
     });
 
-    patchInFile('android/app/build.gradle', {
+    this.patchInFile('android/app/build.gradle', {
         before: 'buildTypes {',
         insert: `    compileOptions {
       sourceCompatibility JavaVersion.VERSION_1_8
@@ -81,7 +79,7 @@ function patchReactNativeNavigation() {
     }`,
     });
 
-    patchInFile('android/app/build.gradle', {
+    this.patchInFile('android/app/build.gradle', {
         before: 'dependencies {',
         insert: `
     configurations.all {
@@ -93,11 +91,11 @@ function patchReactNativeNavigation() {
       }
   }`,
     });
-    patchInFile('android/app/build.gradle', {
+    this.patchInFile('android/app/build.gradle', {
         after: 'dependencies {',
         insert: "    implementation 'androidx.multidex:multidex:2.0.1'",
     });
-    patchInFile('android/app/build.gradle', {
+    this.patchInFile('android/app/build.gradle', {
         after: 'versionCode 1',
         insert: '        multiDexEnabled true',
     });

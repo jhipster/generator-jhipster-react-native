@@ -14,7 +14,7 @@
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
     "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
     "lint": "eslint app test index.js --ext .js",
-    "prettier": "prettier --write \"app/**/*.js\" \"test/**/*.js\" index.js",
+    "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\"",
     <%_ if (!skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
@@ -58,7 +58,7 @@
     "enzyme-adapter-react-16": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
-    "generator-jhipster-react-native": "<%= packageVersion %>",
+    <%# todo replace "generator-jhipstertive": "<%= packageVersion %>" -%>
     <%_ if (!skipCommitHook) { _%>
     "lint-staged": "REPLACE_WITH_VERSION",
     <%_ } _%>
