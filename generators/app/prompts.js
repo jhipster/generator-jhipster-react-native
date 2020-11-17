@@ -1,7 +1,7 @@
 const path = require('path');
 const shelljs = require('shelljs');
 
-const { getAppFolder } = require('./lib/get-app-folder');
+const { getAppFolder } = require('../../lib');
 
 module.exports = {
     askNamePrompt,

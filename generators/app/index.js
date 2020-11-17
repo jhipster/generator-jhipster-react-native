@@ -2,7 +2,6 @@
 const chalk = require('chalk');
 const path = require('path');
 const AppGenerator = require('generator-jhipster/generators/app');
-const { patchInFile } = require('./lib/patch-in-file');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
 const {
@@ -17,7 +16,8 @@ const {
     patchDetox,
     patchWebsockets,
     patchOauth,
-} = require('./lib');
+    patchInFile,
+} = require('../../lib');
 
 module.exports = class extends AppGenerator {
     constructor(args, opts) {
