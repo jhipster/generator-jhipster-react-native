@@ -2,12 +2,7 @@
     "name": "generator-jhipster-react-native",
     "version": "4.0.0-alpha.1",
     "description": "React Native Blueprint for existing JHipster Apps",
-    "keywords": [
-        "yeoman-generator",
-        "jhipster-blueprint",
-        "react-native",
-        "jhipster-7"
-    ],
+    "keywords": [],
     "homepage": "https://github.com/ruddell/jhipster-react-native",
     "bugs": {
         "url": "https://github.com/ruddell/jhipster-react-native/issues"
