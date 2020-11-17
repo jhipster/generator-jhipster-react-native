@@ -6,13 +6,13 @@
         "yeoman-generator",
         "jhipster-blueprint"
     ],
-    "homepage": "https://github.com/ruddell/generator-jhipster-react-native",
+    "homepage": "https://github.com/ruddell/jhipster-react-native",
     "bugs": {
-        "url": "https://github.com/ruddell/generator-jhipster-react-native/issues"
+        "url": "https://github.com/ruddell/jhipster-react-native/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/ruddell/generator-jhipster-react-native.git"
+        "url": "git+https://github.com/ruddell/jhipster-react-native.git"
     },
     "license": "Apache-2.0",
     "author": {

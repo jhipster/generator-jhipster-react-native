@@ -64,7 +64,7 @@ jobs:
         name: 'TOOLS: display tools'
         shell: bash
       - run: npm i && npm link
-        name: 'TOOLS: npm install and link in generator-jhipster-react-native'
+        name: 'TOOLS: npm install and link in jhipster-react-native'
         shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
@@ -85,4 +85,4 @@ jobs:
         if: failure()
         with:
             name: detox-failures-${{ matrix.app_type }}
-            path: /Users/runner/work/generator-jhipster-react-native/${{ matrix.app_type }}/.artifacts/**/*
+            path: /Users/runner/work/jhipster-react-native/${{ matrix.app_type }}/.artifacts/**/*
