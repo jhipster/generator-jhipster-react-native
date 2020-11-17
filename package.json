@@ -1,6 +1,6 @@
 {
     "name": "generator-jhipster-react-native",
-    "version": "0.0.0",
+    "version": "4.0.0-alpha.1",
     "description": "React Native Blueprint for existing JHipster Apps",
     "keywords": [
         "yeoman-generator",
@@ -46,10 +46,8 @@
     },
     "dependencies": {
         "chalk": "4.1.0",
-        "cross-spawn": "7.0.3",
         "fs-extra": "9.0.1",
         "generator-jhipster": "git://github.com/jhipster/generator-jhipster.git#819d07f1ca349ae6f8710f2a3387030a29964982",
-        "lint-staged": "10.5.1",
         "pluralize": "8.0.0",
         "shelljs": "0.8.4"
     },
@@ -62,11 +60,11 @@
         "eslint-plugin-import": "2.22.1",
         "eslint-plugin-prettier": "3.1.4",
         "jsdoc": "3.6.6",
+        "lint-staged": "10.5.1",
         "mocha": "8.2.1",
         "np": "7.0.0",
         "prettier": "2.1.2",
         "sinon": "9.2.1",
-        "through2": "^4.0.2",
         "yeoman-assert": "3.1.1",
         "yeoman-test": "3.0.0"
     }

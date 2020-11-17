@@ -1,4 +1,5 @@
-# JHipster React Native - UNDER DEVELOPMENT
+# JHipster React Native
+## Supports JHipster v7+
 
 [![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
 [![iOS-E2E](https://github.com/ruddell/jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AiOS-E2E)
@@ -6,7 +7,7 @@
 [![Generator](https://github.com/ruddell/jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AGenerator)
 [![App](https://github.com/ruddell/jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AApp)
 
-> React Native Blueprint for existing JHipster Apps - UNDER DEVELOPMENT
+> React Native Blueprint for existing JHipster Apps
 
 # Introduction
 
