@@ -2,7 +2,6 @@ name: App Tests
 on:
   push:
     branches:
-      - main
   pull_request:
 jobs:
   generate:
