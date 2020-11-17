@@ -3,7 +3,7 @@ const { loadVariables, setupVariables } = require('./setup-variables');
 const { mergeReactNativePackageJson } = require('./merge-react-native-package-json');
 const { createEarlyFiles } = require('./pre-write');
 const { generateReactNativeApp } = require('./generate-react-native-app');
-const { appendGitIgnore } = require('./append-git-ignore');
+const { appendFiles } = require('./append-files');
 const { patchReactNativeNavigation } = require('./patch-react-native-navigation');
 const { patchDetox } = require('./patch-detox');
 const { patchWebsockets } = require('./patch-websockets');
@@ -16,7 +16,7 @@ module.exports = {
     mergeReactNativePackageJson,
     createEarlyFiles,
     generateReactNativeApp,
-    appendGitIgnore,
+    appendFiles,
     patchReactNativeNavigation,
     patchDetox,
     patchWebsockets,

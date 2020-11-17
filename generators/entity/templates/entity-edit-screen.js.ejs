@@ -162,7 +162,7 @@ class <%= name %>EntityEditScreen extends React.Component {
     }
     return (
       <View style={styles.container}>
-        <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'} testID='<%= camelCaseName %>EditScrollView'>
+        <KeyboardAwareScrollView testID='<%= camelCaseName %>EditScrollView' keyboardShouldPersistTaps={'handled'}>
           <Form
             ref={c => {
               this.form = c

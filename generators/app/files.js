@@ -3,6 +3,7 @@ const files = {
         {
             templates: [
                 '.prettierrc.js',
+                '.prettierignore',
                 '.editorconfig',
                 '.env.example',
                 '.eslintrc.js',

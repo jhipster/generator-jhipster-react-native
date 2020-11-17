@@ -40,9 +40,7 @@ function patchNavigation(name) {
         insert: navigationDeclarationEdit,
     });
 
-    const getNavCase = (SCREEN_NAME, component) => `      case ${SCREEN_NAME}:
-        registerComponentWithRedux(${SCREEN_NAME}, ${component})
-        break`;
+    const getNavCase = (SCREEN_NAME, component) => `registerComponentWithRedux(${SCREEN_NAME}, ${component})`;
     // add entity screens to navigation
     this.patchInFile(navigationRouterFilePath, {
         before: 'jhipster-react-native-navigation-registration-needle',

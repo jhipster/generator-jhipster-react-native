@@ -1,4 +1,6 @@
-function appendGitIgnore() {
+function appendFiles() {
+    this.fs.append('android/gradle.properties', 'org.gradle.jvmargs=-Xmx512m');
+
     this.fs.append('.gitignore', 'coverage/');
     this.fs.append('.gitignore', '\n# Misc\n#');
     this.fs.append('.gitignore', '.env\n');
@@ -7,7 +9,8 @@ function appendGitIgnore() {
     this.fs.append('.gitignore', 'ios/Pods\n');
     this.fs.append('.gitignore', 'fastlane/report.xml\n');
     this.fs.append('.gitignore', 'android/app/bin\n');
+    this.fs.append('.gitignore', '.artifacts\n');
 }
 module.exports = {
-    appendGitIgnore,
+    appendFiles,
 };
