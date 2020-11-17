@@ -1,3 +1,5 @@
+const { closeSoftKeyboard } = require('detox/src/android/espressoapi/ViewActions');
+
 const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
 
@@ -26,11 +28,27 @@ const logout = async () => {
 }
 
 const goBack = async () => {
-  await element(by.id('backButton')).tap()
+  if (device.getPlatform() === 'ios') {
+    await element(by.id('backButton')).tap()
+  } else {
+    await device.pressBack();
+  }
+}
+
+const closeKeyboard = async (componentId = null) => {
+  try {
+    if (device.getPlatform() === 'ios') {
+      await element(by.id(componentId)).tap()
+    } else {
+      await closeSoftKeyboard()
+    }
+  } catch (e) {
+    console.warn(e)
+  }
 }
 
 const scrollTo = async (fieldId, listId) => {
-  await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(50, 'down', 0.01, 0.01)
+  await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(150, 'down', 0.01, 0.01)
 }
 
 module.exports = {
@@ -39,4 +57,5 @@ module.exports = {
   goBack,
   logout,
   scrollTo,
+  closeKeyboard,
 }

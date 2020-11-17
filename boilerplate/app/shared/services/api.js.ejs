@@ -27,8 +27,8 @@ const create = (baseURL = AppConfig.apiUrl) => {
   <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
   api.addAsyncRequestTransform(request => async (request) => {
     const cookies = await CookieManager.get(baseURL)
-    if (cookies['XSRF-TOKEN']) {
-      request.headers['X-XSRF-TOKEN'] = cookies['XSRF-TOKEN']
+    if (cookies['XSRF-TOKEN'] && cookies['XSRF-TOKEN'].value) {
+      request.headers['X-XSRF-TOKEN'] = cookies['XSRF-TOKEN'].value
     }
     return request
   })
