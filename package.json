@@ -33,6 +33,7 @@
         "lint-fix": "npm run lint -- --fix",
         "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
         "release": "np",
+        "precommit": "lint-staged",
         "pretest": "npm run lint",
         "test": "npm run test:unit -- test/*.spec.js",
         "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
