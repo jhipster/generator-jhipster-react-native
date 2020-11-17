@@ -88,6 +88,9 @@ export function * login (api, { username, password }) {
     yield put({ type: 'RELOGIN_OK' })
   } else {
     yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad credentials'))
+    if (!response.data) {
+      Alert.alert('Failed to reach backend API.')
+    }
   }
 }
 <%_ } _%>

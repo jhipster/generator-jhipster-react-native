@@ -26,7 +26,7 @@ jobs:
           - JwtWebsocketsApp
         include:
           - app_type: SessionDtoApp
-            auth_type: jwt
+            auth_type: session
             jhi_dto: true
           - app_type: OauthDtoApp
             auth_type: oauth2

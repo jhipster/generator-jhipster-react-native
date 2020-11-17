@@ -124,45 +124,19 @@ function registerComponentWithRedux(SCREEN_NAME, Component) {
 
 // registers screens (except the launch screen) as lazily loaded
 function registerScreensLazily() {
-  Navigation.setLazyComponentRegistrator((componentName) => {
-    switch (componentName) {
-      case LAUNCH_SCREEN:
-        registerComponentWithRedux(LAUNCH_SCREEN, LaunchScreen)
-        break
-      case STORYBOOK_SCREEN:
-        Navigation.registerComponent(STORYBOOK_SCREEN, () => StorybookScreen)
-        break
-      case LOGIN_SCREEN:
-        registerComponentWithRedux(LOGIN_SCREEN, LoginScreen)
-        break
-      case REGISTER_SCREEN:
-        registerComponentWithRedux(REGISTER_SCREEN, RegisterScreen)
-        break
-      case FORGOT_PASSWORD_SCREEN:
-        registerComponentWithRedux(FORGOT_PASSWORD_SCREEN, ForgotPasswordScreen)
-        break
-      case CHANGE_PASSWORD_SCREEN:
-        registerComponentWithRedux(CHANGE_PASSWORD_SCREEN, ChangePasswordScreen)
-        break
-      case SETTINGS_SCREEN:
-        registerComponentWithRedux(SETTINGS_SCREEN, SettingsScreen)
-        break
-      case DRAWER_CONTENT:
-        registerComponentWithRedux(DRAWER_CONTENT, DrawerContent)
-        break
-      case ENTITIES_SCREEN:
-        registerComponentWithRedux(ENTITIES_SCREEN, EntitiesScreen)
-        break
+  registerComponentWithRedux(LAUNCH_SCREEN, LaunchScreen)
+  Navigation.registerComponent(STORYBOOK_SCREEN, () => StorybookScreen)
+  registerComponentWithRedux(LOGIN_SCREEN, LoginScreen)
+  registerComponentWithRedux(REGISTER_SCREEN, RegisterScreen)
+  registerComponentWithRedux(FORGOT_PASSWORD_SCREEN, ForgotPasswordScreen)
+  registerComponentWithRedux(CHANGE_PASSWORD_SCREEN, ChangePasswordScreen)
+  registerComponentWithRedux(SETTINGS_SCREEN, SettingsScreen)
+  registerComponentWithRedux(DRAWER_CONTENT, DrawerContent)
+  registerComponentWithRedux(ENTITIES_SCREEN, EntitiesScreen)
 <%_ if (websocket) { _%>
-      case CHAT_SCREEN:
-        registerComponentWithRedux(CHAT_SCREEN, ChatScreen)
-        break
+  registerComponentWithRedux(CHAT_SCREEN, ChatScreen)
 <%_ } _%>
-      // jhipster-react-native-navigation-registration-needle
-      default:
-        break
-    }
-  })
+  // jhipster-react-native-navigation-registration-needle
 }
 
 export function registerScreensAndStartApp () {

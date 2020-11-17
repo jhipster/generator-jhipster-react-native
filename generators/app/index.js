@@ -12,7 +12,7 @@ const {
     mergeReactNativePackageJson,
     createEarlyFiles,
     generateReactNativeApp,
-    appendGitIgnore,
+    appendFiles,
     patchReactNativeNavigation,
     patchDetox,
     patchWebsockets,
@@ -70,7 +70,7 @@ module.exports = class extends AppGenerator {
             patchDetox: patchDetox.bind(this),
             patchWebsockets: patchWebsockets.bind(this),
             patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
-            appendGitIgnore: appendGitIgnore.bind(this),
+            appendFiles: appendFiles.bind(this),
             replacePackageJsonVersions() {
                 this.debug('Replacing Package.json Versions');
                 this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));
