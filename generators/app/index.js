@@ -95,10 +95,9 @@ module.exports = class extends AppGenerator {
             podInstall() {
                 if (!this.options.skipInstall) {
                     try {
-                        this.spawnCommandSync('pod', ['install'], { cwd: 'ios' });
+                        this.spawnCommandSync('npx', ['pod-install']);
                     } catch (e) {
-                        this.warning('Something went wrong with `pod install`, try it again yourself.');
-                        this.warning('You may need to run `pod repo update` first.');
+                        this.warning('Something went wrong with `pod install`, please try it again yourself.');
                     }
                 }
             },
