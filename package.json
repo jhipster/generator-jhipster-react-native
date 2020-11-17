@@ -4,7 +4,9 @@
     "description": "React Native Blueprint for existing JHipster Apps",
     "keywords": [
         "yeoman-generator",
-        "jhipster-blueprint"
+        "jhipster-blueprint",
+        "react-native",
+        "jhipster-7"
     ],
     "homepage": "https://github.com/ruddell/jhipster-react-native",
     "bugs": {
@@ -29,13 +31,16 @@
         "lint": "eslint .",
         "lint-fix": "npm run lint -- --fix",
         "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
-        "release": "git push && git push --tags && npm publish",
-        "release:major": "npm version major -a -m \"Update to %s\" && npm run release",
-        "release:minor": "npm version minor -a -m \"Update to %s\" && npm run release",
-        "release:patch": "npm version patch -a -m \"Update to %s\" && npm run release",
+        "release": "np",
         "pretest": "npm run lint",
         "test": "npm run test:unit -- test/*.spec.js",
         "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
+    },
+    "lint-staged": {
+        "{,generators/**/,cli/**/,test/**/}*.{js,json,md}": [
+            "prettier --write",
+            "eslint --fix --ext .js"
+        ]
     },
     "dependencies": {
         "chalk": "4.1.0",
@@ -56,6 +61,7 @@
         "eslint-plugin-prettier": "3.1.4",
         "jsdoc": "3.6.6",
         "mocha": "8.2.1",
+        "np": "7.0.0",
         "prettier": "2.1.2",
         "sinon": "9.2.1",
         "through2": "^4.0.2",

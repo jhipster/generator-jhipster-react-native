@@ -14,7 +14,7 @@ function createEarlyFiles() {
   printWidth: 140,
   tabWidth: 2,
   bracketSpacing: true,
-  useTabs: false
+  useTabs: false,
 };
 `;
     fse.writeFile('.prettierrc.js', prettierRc);
