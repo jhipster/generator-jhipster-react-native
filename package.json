@@ -24,7 +24,8 @@
     },
     "main": "generators/app/index.js",
     "files": [
-        "generators"
+        "generators",
+        "lib"
     ],
     "scripts": {
         "jsdoc": "jsdoc --configure jsdoc-conf.json",
@@ -37,7 +38,7 @@
         "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
     },
     "lint-staged": {
-        "{,generators/**/,cli/**/,test/**/}*.{js,json,md}": [
+        "{,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md}": [
             "prettier --write",
             "eslint --fix --ext .js"
         ]

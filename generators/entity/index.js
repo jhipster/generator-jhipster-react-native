@@ -1,12 +1,9 @@
 const pluralize = require('pluralize');
 const chalk = require('chalk');
 const EntityGenerator = require('generator-jhipster/generators/entity');
-const { patchInFile } = require('../app/lib/patch-in-file');
 const { askForBackendJson } = require('./prompts');
-const { patchApi } = require('./lib/patch-api');
 const { writeFiles } = require('./files');
-const { patchNavigation } = require('./lib/patch-navigation');
-const { getEntityFormField, getRelationshipFormField } = require('./lib/entity-helpers');
+const { patchInFile, patchNavigationForEntity, patchEntityApi, getEntityFormField, getRelationshipFormField } = require('../../lib');
 
 module.exports = class extends EntityGenerator {
     constructor(args, opts) {
@@ -130,8 +127,8 @@ module.exports = class extends EntityGenerator {
     get writing() {
         return {
             writeFiles: writeFiles.bind(this),
-            patchNavigation: patchNavigation.bind(this, this.context.name),
-            patchApi: patchApi.bind(this, this.context.name),
+            patchNavigationForEntity: patchNavigationForEntity.bind(this, this.context.name),
+            patchEntityApi: patchEntityApi.bind(this, this.context.name),
         };
     }
 
