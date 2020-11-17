@@ -1,9 +1,10 @@
 # JHipster React Native - UNDER DEVELOPMENT
 
 [![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
-[![iOS-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AiOS-E2E)
-[![Android-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/Android-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AAndroid-E2E)
-[![Generator](https://github.com/ruddell/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
+[![iOS-E2E](https://github.com/ruddell/jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AiOS-E2E)
+[![Android-E2E](https://github.com/ruddell/jhipster-react-native/workflows/Android-E2E/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AAndroid-E2E)
+[![Generator](https://github.com/ruddell/jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AGenerator)
+[![App](https://github.com/ruddell/jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AApp)
 
 > React Native Blueprint for existing JHipster Apps - UNDER DEVELOPMENT
 
@@ -54,7 +55,7 @@ During development of blueprint, please note the below steps. They are very impo
 Note: If you do not want to link the blueprint(step 3) to each project being created, use NPM instead of Yarn as yeoman doesn't seem to fetch globally linked Yarn modules. On the other hand, this means you have to use NPM in all the below steps as well.
 
 ```bash
-cd generator-jhipster-react-native
+cd jhipster-react-native
 npm link
 ```
 
@@ -66,7 +67,7 @@ You could also use Yarn for this if you prefer
 cd generator-jhipster
 npm link
 
-cd generator-jhipster-react-native
+cd jhipster-react-native
 npm link generator-jhipster
 ```
 
@@ -85,10 +86,3 @@ jhipster -d --blueprints react-native
 # License
 
 Apache-2.0 © [Jon Ruddell](https://jruddell.com/)
-
-[npm-image]: https://img.shields.io/npm/v/generator-jhipster-react-native.svg
-[npm-url]: https://npmjs.org/package/generator-jhipster-react-native
-[travis-image]: https://travis-ci.org/ruddell/generator-jhipster-react-native.svg?branch=master
-[travis-url]: https://travis-ci.org/ruddell/generator-jhipster-react-native
-[daviddm-image]: https://david-dm.org/ruddell/generator-jhipster-react-native.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/ruddell/generator-jhipster-react-native
