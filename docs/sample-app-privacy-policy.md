@@ -1,6 +1,6 @@
 ## Privacy Policy
 
-The developers of Ignite JHipster built the Ignite JHipster Sample App as an open source demo app. This SERVICE is provided by the Ignite JHipster developers at no cost and is intended for use as is.
+The developers of JHipster React Native built the JHipster React Native Sample App as an open source demo app. This SERVICE is provided by the JHipster React Native developers at no cost and is intended for use as is.
 
 This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service.
 

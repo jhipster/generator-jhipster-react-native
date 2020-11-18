@@ -6,7 +6,7 @@ The project structure is as close to JHipster's React client as possible.
 
 ## app
 
-Your `app` folder is where most of the files are found in an Ignite JHipster.
+Your `app` folder is where most of the files are found in a JHipster React Native app.
 Let's walk through them in more detail. Start with the `config` folder and work your way down the walkthrough in order.
 
 ### config
