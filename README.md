@@ -1,5 +1,4 @@
 # JHipster React Native
-## Supports JHipster v7+
 
 [![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
 [![iOS-E2E](https://github.com/ruddell/jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AiOS-E2E)
@@ -7,82 +6,68 @@
 [![Generator](https://github.com/ruddell/jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AGenerator)
 [![App](https://github.com/ruddell/jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/jhipster-react-native/actions?query=workflow%3AApp)
 
-> React Native Blueprint for existing JHipster Apps
+> A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
-# Introduction
+## Docs
 
-This is a [JHipster](https://www.jhipster.tech/) blueprint, that is meant to be used with an existing JHipster backend.
+-   [Getting Started](README.md#getting-started)
+-   [Generators](docs/generators.md)
+-   [Project Structure](docs/project-structure.md)
+-   JHipster Integrations
+    -   [OAuth2 OIDC Login](docs/oauth2-oidc.md)
+    -   [Websockets](docs/websockets.md)
+-   React Native Library Integrations
+    -   [Storybook](docs/storybook.md) - Develop UI components in isolation
+    -   [fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
+    -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
+    -   [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
+    -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
+-   [Advanced Usage](docs/advanced-usage.md)
 
-# Prerequisites
+## Getting Started
 
-As this is a [JHipster](https://www.jhipster.tech/) blueprint, we expect you have JHipster and its related tools already installed:
+### Requirements
 
--   [Installing JHipster](https://www.jhipster.tech/installation/)
+-   Node v12+
+    -   Verify version with `node -v`
+-   [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
+-   [jhipster-react-native](https://github.com/ruddell/jhipster-react-native) installed
+    -   Install with `npm install -g generator-jhipster-react-native`
+-   Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
+    -   Verify `pod` installation with `pod install`
+-   Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging much easier and comes pre-configured
 
-# Installation
+Create a directory for your app:
 
-## With NPM/Yarn
-
-To install this blueprint:
-
-```bash
-npm install -g generator-jhipster-react-native
-
-yarn global add generator-jhipster-react-native
+```sh
+mkdir SampleApp && cd SampleApp
 ```
 
-To update this blueprint:
+To generate an app, run the following command:
 
-```bash
-npm update -g generator-jhipster-react-native
+```sh
+rnhipster
 
-yarn global upgrade generator-jhipster-react-native
-```
-
-# Usage
-
-To use this blueprint, run the below command
-
-```bash
+# Acceptable with JHipster v7+
 jhipster --blueprints react-native
 ```
 
-## Running local Blueprint version for development
+Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for both iOS and Android).
 
-During development of blueprint, please note the below steps. They are very important.
+After generating, you can use the [entity generator and JDL importer](docs/generators.md).
 
-1. Link your blueprint globally
+### Configuration
 
-Note: If you do not want to link the blueprint(step 3) to each project being created, use NPM instead of Yarn as yeoman doesn't seem to fetch globally linked Yarn modules. On the other hand, this means you have to use NPM in all the below steps as well.
+`app/config/app-config.js` contains several important variables:
 
-```bash
-cd jhipster-react-native
-npm link
-```
+-   `apiUrl`: Your JHipster app's API url
+-   `appUrlScheme`: Your app's URL scheme for deep-linking, this is also configured for iOS (Info.plist) and Android (AndroidManifest.xml) separately.
+-   `uaaBaseUrl`: (UAA only) If you use a `uaaBasePath` other than `uaa`, configure this variable
 
-2. Link a development version of JHipster to your blueprint (optional: required only if you want to use a non-released JHipster version, like the master branch or your own custom fork)
+#### Notes for Android
 
-You could also use Yarn for this if you prefer
-
-```bash
-cd generator-jhipster
-npm link
-
-cd jhipster-react-native
-npm link generator-jhipster
-```
-
-3. Create a new folder for the app to be generated and link JHipster and your blueprint there
-
-```bash
-mkdir my-app && cd my-app
-
-npm link generator-jhipster-react-native
-npm link generator-jhipster (Optional: Needed only if you are using a non-released JHipster version)
-
-jhipster -d --blueprints react-native
-
-```
+-   When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
+-   When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
 
 # License
 
