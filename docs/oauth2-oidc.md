@@ -6,8 +6,8 @@ For a full walkthrough of generating and configuring OAuth2 with Ignite JHipster
 
 Ignite JHipster generates several files in your JHipster backend's folder. See the changes in your JHipster app.
 
-- `src/main/docker/realm-config/jhipster-realm.json`
-  - Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
+-   `src/main/docker/realm-config/jhipster-realm.json`
+    -   Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
 
 **Note:** If you generate your Ignite JHipster app from a JDL file, you will need to make these changes manually.
 
