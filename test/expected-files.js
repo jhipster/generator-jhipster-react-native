@@ -184,6 +184,7 @@ const expectedFiles = {
     ],
     entitySearchEngine: ['app/shared/fixtures/search-foos.json'],
     entityDetox: ['e2e/entities/foo.spec.js'],
+    notExpected: ['src'],
 };
 
 module.exports = expectedFiles;

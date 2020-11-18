@@ -37,6 +37,7 @@ describe('Subgenerator app', () => {
             assert.noFile(expectedFiles.detox);
             assert.noFile(expectedFiles.oauth);
             assert.noFile(expectedFiles.websockets);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
     describe('Generates app from prompts', () => {
@@ -73,6 +74,7 @@ describe('Subgenerator app', () => {
             assert.file(expectedFiles.detox);
             assert.noFile(expectedFiles.oauth);
             assert.noFile(expectedFiles.websockets);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
 });
