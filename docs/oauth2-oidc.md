@@ -1,15 +1,15 @@
 ## OAuth2 OIDC
 
-For a full walkthrough of generating and configuring OAuth2 with Ignite JHipster, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [YouTube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
+For a full walkthrough of generating and configuring OAuth2 with JHipster React Native, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [YouTube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
 
 ### Backend Generated Files
 
-Ignite JHipster generates several files in your JHipster backend's folder. See the changes in your JHipster app.
+The blueprint generates several files in your JHipster backend's folder. See the changes in your JHipster app.
 
 -   `src/main/docker/realm-config/jhipster-realm.json`
     -   Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
 
-**Note:** If you generate your Ignite JHipster app from a JDL file, you will need to make these changes manually.
+**Note:** If you generate your JHipster React Native app from a JDL file, you will need to make these changes manually.
 
 ### URL Scheme
 

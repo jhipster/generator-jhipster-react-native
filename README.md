@@ -8,6 +8,8 @@
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
+**Note:** The intial version of this blueprint (v4) generates the same application as [Ignite JHipster v3](https://github.com/ruddell/ignite-jhipster/tree/2d84fb2956fc62d6dea29e07c314838689c55f67)
+
 ## Docs
 
 -   [Getting Started](README.md#getting-started)
