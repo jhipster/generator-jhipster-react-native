@@ -33,6 +33,7 @@ describe('Subgenerator entity', () => {
             assert.file(expectedFiles.entity);
             assert.noFile(expectedFiles.entityDetox);
             assert.noFile(expectedFiles.entitySearchEngine);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
     describe('Generates entity from prompt of backend path', () => {
@@ -67,6 +68,7 @@ describe('Subgenerator entity', () => {
             assert.file(expectedFiles.entity);
             assert.noFile(expectedFiles.entityDetox);
             assert.noFile(expectedFiles.entitySearchEngine);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
     describe('Generates entity from prompt of backend path, with detox files', () => {
@@ -101,6 +103,7 @@ describe('Subgenerator entity', () => {
             assert.file(expectedFiles.entity);
             assert.file(expectedFiles.entityDetox);
             assert.noFile(expectedFiles.entitySearchEngine);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
     describe('Generates entity from prompt of backend path, with search files', () => {
@@ -133,8 +136,9 @@ describe('Subgenerator entity', () => {
 
         it('it generates the expected files', () => {
             assert.file(expectedFiles.entity);
-            assert.noFile(expectedFiles.entityDetox);
             assert.file(expectedFiles.entitySearchEngine);
+            assert.noFile(expectedFiles.entityDetox);
+            assert.noFile(expectedFiles.notExpected);
         });
     });
 });

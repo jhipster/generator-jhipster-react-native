@@ -4,9 +4,6 @@
     "description": "React Native Blueprint for existing JHipster Apps",
     "keywords": [],
     "homepage": "https://github.com/ruddell/jhipster-react-native",
-    "bin": {
-        "rnhipster": "./cli/rnhipster.js"
-    },
     "bugs": {
         "url": "https://github.com/ruddell/jhipster-react-native/issues"
     },
@@ -21,6 +18,9 @@
         "url": "https://jruddell.com/"
     },
     "main": "generators/app/index.js",
+    "bin": {
+        "rnhipster": "./cli/rnhipster.js"
+    },
     "files": [
         "generators",
         "lib",
@@ -30,17 +30,16 @@
         "jsdoc": "jsdoc --configure jsdoc-conf.json",
         "lint": "eslint .",
         "lint-fix": "npm run lint -- --fix",
+        "precommit": "lint-staged",
         "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
         "release": "np",
-        "precommit": "lint-staged",
         "pretest": "npm run lint",
         "test": "npm run test:unit -- test/*.spec.js",
         "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
     },
     "lint-staged": {
         "{,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md}": [
-            "prettier --write",
-            "eslint --fix --ext .js"
+            "prettier --write"
         ]
     },
     "dependencies": {
