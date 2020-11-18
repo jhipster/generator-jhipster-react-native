@@ -4,6 +4,9 @@
     "description": "React Native Blueprint for existing JHipster Apps",
     "keywords": [],
     "homepage": "https://github.com/ruddell/jhipster-react-native",
+    "bin": {
+        "rnhipster": "./cli/rnhipster.js"
+    },
     "bugs": {
         "url": "https://github.com/ruddell/jhipster-react-native/issues"
     },
@@ -20,7 +23,8 @@
     "main": "generators/app/index.js",
     "files": [
         "generators",
-        "lib"
+        "lib",
+        "cli"
     ],
     "scripts": {
         "jsdoc": "jsdoc --configure jsdoc-conf.json",
@@ -44,6 +48,7 @@
         "fs-extra": "9.0.1",
         "generator-jhipster": "git://github.com/jhipster/generator-jhipster.git#819d07f1ca349ae6f8710f2a3387030a29964982",
         "pluralize": "8.0.0",
+        "semver": "7.3.2",
         "shelljs": "0.8.4"
     },
     "devDependencies": {
@@ -62,5 +67,9 @@
         "sinon": "9.2.1",
         "yeoman-assert": "3.1.1",
         "yeoman-test": "3.0.0"
+    },
+    "engines": {
+        "node": ">=12",
+        "npm": ">=6"
     }
 }
