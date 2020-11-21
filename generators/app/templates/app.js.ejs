@@ -1,0 +1,48 @@
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { useReduxDevToolsExtension } from '@react-navigation/devtools';
+import { Provider } from 'react-redux';
+import createStore from './app/shared/reducers';
+
+import DrawerStack, { drawerScreens } from './app/navigation/drawer.stack';
+import { entityScreens } from './app/navigation/entity.stack';
+import { navigationRef, isReadyRef } from './app/navigation/nav-ref.js';
+
+const store = createStore();
+
+const config = { screens: { }};
+
+const mapScreensToConfig = (screens) => {
+  screens.forEach(screen => {
+    config.screens[screen.name] = screen.route;
+  })
+}
+mapScreensToConfig(drawerScreens);
+mapScreensToConfig(entityScreens);
+
+const linking = {
+  prefixes: ['https://<%= reactNativeAppName.toLowerCase() %>.com', '<%= reactNativeAppName.toLowerCase() %>://'],
+  config,
+};
+
+export default function App() {
+  React.useEffect(() => {
+    return () => {
+      isReadyRef.current = false
+    };
+  }, []);
+  useReduxDevToolsExtension(navigationRef);
+  return (
+    <Provider store={store}>
+      <NavigationContainer
+              linking={linking}
+              ref={navigationRef}
+              onReady={() => {
+                isReadyRef.current = true;
+              }}
+      >
+        <DrawerStack />
+      </NavigationContainer>
+    </Provider>
+  );
+}

@@ -16,7 +16,6 @@ module.exports = class extends EntityGenerator {
             this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
         }
 
-        this.configOptions = jhContext.configOptions || {};
         // This sets up options for this sub generator and is being reused from JHipster
         jhContext._setupEntityOptions(this, jhContext, this);
         this.patchInFile = patchInFile.bind(this);

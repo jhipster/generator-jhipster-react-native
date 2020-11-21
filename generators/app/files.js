@@ -9,12 +9,15 @@ const files = {
                 '.eslintrc.js',
                 '.gitattributes',
                 'babel.config.js',
-                'index.js',
+                'app.js',
                 'README.md',
                 // templated files
                 'app/config/app-config.js',
                 'app/navigation/drawer/drawer-content.js',
                 'app/navigation/layouts.js',
+                'app/navigation/entity.stack.js',
+                'app/navigation/drawer.stack.js',
+                'app/navigation/nav-ref.js',
                 'app/modules/home/learn-more-links.component.js',
                 'app/modules/login/login-screen.js',
                 'app/modules/account/register/register-screen.js',
@@ -37,7 +40,6 @@ const files = {
                 // files without special templating
                 'app/config/debug-config.js',
                 'app/config/index.js',
-                'app/config/reactotron-config.js',
                 'app/config/redux-persist.js',
                 'app/modules/account/password-reset/forgot-password-screen.js',
                 'app/modules/account/password-reset/forgot-password-screen.styles.js',
@@ -58,8 +60,6 @@ const files = {
                 'app/modules/home/launch-screen.styles.js',
                 'app/modules/login/login-screen.styles.js',
                 'app/navigation/drawer/drawer-button.js',
-                'app/navigation/drawer/drawer-button.story.js',
-                'app/navigation/drawer/drawer-button.styles.js',
                 'app/navigation/drawer/drawer-content.styles.js',
                 'app/shared/components/alert-message/alert-message.js',
                 'app/shared/components/alert-message/alert-message.story.js',
@@ -79,9 +79,17 @@ const files = {
                 'app/shared/fixtures/get-users.json',
                 'app/shared/fixtures/update-user.json',
                 'app/shared/images/README.md',
-                { file: 'app/shared/images/bars.png', method: 'copy' },
-                { file: 'app/shared/images/bars@2x.png', method: 'copy' },
-                { file: 'app/shared/images/bars@3x.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.android.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.ios.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.android.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.ios.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.android.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.ios.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.android.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png', method: 'copy' },
+                { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png', method: 'copy' },
                 { file: 'app/shared/images/bg.png', method: 'copy' },
                 { file: 'app/shared/images/chevron-left.png', method: 'copy' },
                 { file: 'app/shared/images/chevron-left@2x.png', method: 'copy' },
@@ -120,8 +128,6 @@ const files = {
                 'app/shared/util/pagination-utils.js',
                 'app/shared/util/snake-to-camel-case.js',
                 'app/shared/util/url-utils.js',
-                'patches/README.md',
-                'patches/tcomb-form-native+0.6.20.patch',
                 'storybook/addons.js',
                 'storybook/index.js',
                 'storybook/stories.js',
@@ -161,34 +167,6 @@ const files = {
             ],
         },
     ],
-    navigation: [
-        {
-            templates: [
-                { file: 'ios/AppDelegate.m', renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.m` },
-                {
-                    file: 'android/MainActivity.java',
-                    renameTo: generator => `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainActivity.java`,
-                },
-                {
-                    file: 'android/MainApplication.java',
-                    renameTo: generator =>
-                        `android/app/src/main/java/com/${generator.reactNativeAppName.toLowerCase()}/MainApplication.java`,
-                },
-            ],
-        },
-    ],
-    oauth: [
-        {
-            condition: generator => generator.authType === 'oauth2',
-            templates: [
-                'app/shared/fixtures/get-oauth-info.json',
-                {
-                    file: 'ios/AppDelegate.h',
-                    renameTo: generator => `ios/${generator.reactNativeAppName}/AppDelegate.h`,
-                },
-            ],
-        },
-    ],
     detox: [
         {
             condition: generator => generator.detox === true,
@@ -198,10 +176,6 @@ const files = {
                 'e2e/.mocharc.json',
                 'e2e/launch-screen.spec.js',
                 'e2e/utils.js',
-                {
-                    file: 'android/DetoxTest.java',
-                    renameTo: generator => `android/app/src/androidTest/java/com/${generator.androidPackageName}/DetoxTest.java`,
-                },
             ],
         },
         {

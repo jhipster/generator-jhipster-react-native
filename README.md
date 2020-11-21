@@ -37,7 +37,6 @@
     -   Install with `npm install -g generator-jhipster-react-native`
 -   Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
     -   Verify `pod` installation with `pod install`
--   Not required but highly recommended, [Reactotron](https://github.com/infinitered/reactotron) makes debugging much easier and comes pre-configured
 
 Create a directory for your app:
 

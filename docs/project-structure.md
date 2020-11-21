@@ -2,7 +2,7 @@
 
 The project structure is as close to JHipster's React client as possible.
 
-`index.js` is the entrypoint of the app. It bootstraps React Native Navigation and sends the user to the launch screen.
+`app.js` is the entrypoint of the app. It bootstraps React Native Navigation and sends the user to the launch screen.
 
 ## app
 
@@ -15,7 +15,6 @@ Initialize and configure things in this folder.
 
 -   `app-config.js` - configuration for your React Native app, contains the JHipster API url and app URL scheme
 -   `debug-config.js` - define how you want your debug environment to act
--   `reactotron-config.js` - configures [Reactotron](https://github.com/infinitered/reactotron) in your project.
 -   `redux-persist.js` - configures Redux Persist
 
 ### modules

@@ -2,19 +2,15 @@ import React from 'react'
 import { Alert, Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { Navigation } from 'react-native-navigation'
-import t from 'tcomb-form-native'
 
 import RegisterActions from '../register/register.reducer'
 // Styles
 import styles from './register-screen.styles'
 
-let Form = t.form.Form
-
 class RegisterScreen extends React.Component {
   constructor (props) {
     super(props)
-    Navigation.events().bindComponent(this)
+/*
     this.state = {
       accountModel: t.struct({
         login: t.String,
@@ -51,6 +47,7 @@ class RegisterScreen extends React.Component {
         }
       },
     }
+*/
     this.submitUpdate = this.submitUpdate.bind(this)
     this.accountChange = this.accountChange.bind(this)
   }
@@ -72,7 +69,8 @@ class RegisterScreen extends React.Component {
       if (this.props.error) {
         Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       } else {
-        Navigation.popToRoot(this.props.componentId)
+        // todo go back on success
+        // Navigation.popToRoot(this.props.componentId)
         Alert.alert('Registration Successful', 'Please check your email', [{ text: 'OK' }])
       }
     }
@@ -87,15 +85,15 @@ class RegisterScreen extends React.Component {
   render () {
     return (
       <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps={'handled'}>
-        <Form
-          ref={c => {
-            this.form = c
-          }}
-          type={this.state.accountModel}
-          options={this.state.options}
-          value={this.state.accountValue}
-          onChange={this.accountChange}
-        />
+        {/*<Form*/}
+        {/*  ref={(c) => {*/}
+        {/*    this.form = c;*/}
+        {/*  }}*/}
+        {/*  type={this.state.accountModel}*/}
+        {/*  options={this.state.options}*/}
+        {/*  value={this.state.accountValue}*/}
+        {/*  onChange={this.accountChange}*/}
+        {/*/>*/}
         <TouchableHighlight style={styles.button} onPress={this.submitUpdate} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Register</Text>
         </TouchableHighlight>

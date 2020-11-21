@@ -22,7 +22,17 @@
     "stompjs": "2.3.3",
     "sockjs-client": "1.5.0",
     "net": "1.0.2",
-    "tcomb-form-native": "0.6.20"
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/drawer": "5.11.3",
+    "@react-navigation/stack": "5.12.6",
+    "@react-navigation/native": "5.8.9",
+    "@react-navigation/devtools":"5.1.18",
+    "react-native-gesture-handler": "1.7.0",
+    "react-native-reanimated": "1.13.0",
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "2.10.1",
+    "react-native-web": "0.14.8",
+    "@expo/vector-icons":"10.2.1"
   },
   "devDependencies": {
     "@storybook/addons": "5.3.21",
@@ -41,10 +51,6 @@
     "mockery": "2.1.0",
     "react-dom": "16.13.1",
     "prettier": "2.1.2",
-    "reactotron-react-native": "5.0.0",
-    "reactotron-redux": "3.1.3",
-    "reactotron-redux-saga": "4.2.3",
-    "patch-package": "6.2.2",
     "rimraf": "3.0.2"
   }
 }
