@@ -125,6 +125,7 @@ const files = {
                 'app/shared/themes/index.js',
                 'app/shared/themes/metrics.js',
                 'app/shared/util/date-transforms.js',
+                'app/shared/util/use-did-update-effect.js',
                 'app/shared/util/immutable-persistence-transform.js',
                 'app/shared/util/pagination-utils.js',
                 'app/shared/util/snake-to-camel-case.js',

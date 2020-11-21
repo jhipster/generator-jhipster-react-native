@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Text, TouchableHighlight } from 'react-native'
+import { Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -57,7 +57,7 @@ class RegisterScreen extends React.Component {
     const value = this.form.getValue()
     if (value) { // if validation fails, value will be null
       if (value.password !== value.confirmPassword) {
-        Alert.alert('Error', 'Passwords do not match', [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: 'Passwords do not match' });
         return
       }
       this.props.register(value)
@@ -67,11 +67,11 @@ class RegisterScreen extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.fetching && !this.props.fetching) {
       if (this.props.error) {
-        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: this.props.error });
       } else {
         // todo go back on success
         // Navigation.popToRoot(this.props.componentId)
-        Alert.alert('Registration Successful', 'Please check your email', [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Registration Successful', message: 'Please check your email' });
       }
     }
   }

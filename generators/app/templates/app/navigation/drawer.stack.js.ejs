@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { Text, useWindowDimensions, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { connect } from 'react-redux';
 
 // import screens
 import LaunchScreen from '../modules/home/launch-screen';
@@ -10,50 +11,57 @@ import RegisterScreen from '../modules/account/register/register-screen';
 import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen';
 import ChangePasswordScreen from '../modules/account/password/change-password-screen';
 import EntityStackScreen from './entity.stack.js';
+import StorybookScreen from '../../storybook';
 <%_ if (websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
-import StorybookScreen from '../../storybook';
-
+import DrawerContent from './drawer/drawer-content';
 
 export const drawerScreens = [
   {
     name: 'Home',
     route: 'home',
     component: LaunchScreen,
+    auth: null,
   },
   {
     name: 'Login',
     route: 'login',
     component: LoginScreen,
+    auth: false,
   },
   {
     name: 'Settings',
     route: 'settings',
     component: SettingsScreen,
+    auth: true,
   },
   {
     name: 'Register',
     route: 'register',
     component: RegisterScreen,
+    auth: false,
   },
   {
     name: 'Forgot Password',
     route: 'reset-password',
     component: ForgotPasswordScreen,
+    auth: false,
   },
   {
     name: 'Change Password',
     route: 'change-password',
     component: ChangePasswordScreen,
+    auth: true,
   },
   {
-    name: 'Entity Stack',
+    name: 'Entities',
     route: 'entities',
     component: EntityStackScreen,
     options: {
-      headerShown: false
-    }
+      headerShown: false,
+    },
+    auth: true,
   },
   <%_ if (websocket) { _%>
   {
@@ -66,21 +74,56 @@ export const drawerScreens = [
     name: 'Storybook',
     route: 'storybook',
     component: StorybookScreen,
+    auth: null,
   },
 ];
 
 const Drawer = createDrawerNavigator();
 
-export default function DrawerStack() {
+const getScreens = (props) => {
+  const isAuthed = props.account !== null;
+  if (!props.loaded) {
+    return (
+      <Drawer.Screen
+        name={'Loading'}
+        component={() => (
+          <View>
+            <Text>Loading...</Text>
+          </View>
+        )}
+      />
+    );
+  }
+  return drawerScreens.map((screen, index) => {
+    if (screen.auth === null || screen.auth === undefined) {
+      return <Drawer.Screen name={screen.name} component={screen.component} options={screen.options || {}} key={index} />;
+    } else if (screen.auth === isAuthed) {
+      return <Drawer.Screen name={screen.name} component={screen.component} options={screen.options || {}} key={index} />;
+    }
+    return null;
+  });
+};
+
+function DrawerStack(props) {
   const dimensions = useWindowDimensions();
   return (
     <Drawer.Navigator
-      initialRouteName={drawerScreens[0].name}
+      drawerContent={(p) => <DrawerContent {...p} />}
+      initialRouteName={drawerScreens[1].name}
       drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
-      screenOptions={{headerShown: true}}>
-      {drawerScreens.map((screen, index) => {
-        return <Drawer.Screen name={screen.name} component={screen.component} options={screen.options || {}} key={index} />;
-      })}
+      screenOptions={{ headerShown: true }}>
+      {getScreens(props)}
     </Drawer.Navigator>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.account.account,
+    loaded: state.appState.rehydrationComplete,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerStack);

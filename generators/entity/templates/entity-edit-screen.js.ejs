@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityIndicator, Alert, Text, TouchableHighlight, View } from 'react-native'
+import { ActivityIndicator, Text, TouchableHighlight, View } from 'react-native'
 import { connect } from 'react-redux'
 import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
 <%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
@@ -109,7 +109,7 @@ class <%= name %>EntityEditScreen extends React.Component {
   componentDidUpdate (prevProps) {
     if (prevProps.updating && !this.props.updating) {
       if (this.props.error) {
-        Alert.alert('Error', 'Something went wrong updating the entity', [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: 'Something went wrong updating the entity' });
       } else {
         const entityId = this.props.<%= camelCaseName %>.id
         this.props.reset()
@@ -123,7 +123,7 @@ class <%= name %>EntityEditScreen extends React.Component {
         }
         // todo go back
         // Navigation.pop(this.props.componentId)
-        Alert.alert('Success', 'Entity saved successfully', alertOptions)
+        this.props.navigation.navigate('ModalScreen', { title: 'Success', message: 'Entity saved successfully' });
       }
     }
   }

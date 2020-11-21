@@ -5,7 +5,7 @@ import * as React from 'react';
 import { toggleDrawer } from '../nav-ref';
 
 export const DrawerButton = (props) => {
-  const dimensions = useWindowDimensions();
+  // const dimensions = useWindowDimensions();
   // hide the menu button since it's permanent on large screens
   const largeScreen = false; //dimensions.width >= 768;
   return largeScreen ? null : (
