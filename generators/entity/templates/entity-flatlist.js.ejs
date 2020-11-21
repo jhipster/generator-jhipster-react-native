@@ -1,7 +1,6 @@
 import React from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { Navigation } from 'react-native-navigation'
 import { <%= camelCaseName %>EntityDetailScreen, <%= camelCaseName %>EntityEditScreen } from '../../../navigation/layouts'
 <%_ if (searchEngine) { _%>
 import SearchBar from '../../../shared/components/search-bar/search-bar'
@@ -15,8 +14,6 @@ import AlertMessage from '../../../shared/components/alert-message/alert-message
 class <%= name %>EntityScreen extends React.PureComponent {
   constructor (props) {
     super(props)
-    Navigation.events().bindComponent(this)
-
     this.state = {
       page: 0,
       sort: 'id,asc',
@@ -30,11 +27,12 @@ class <%= name %>EntityScreen extends React.PureComponent {
   navigationButtonPressed ({ buttonId }) {
     <%= camelCaseName %>EntityEditScreen({ entityId: null })
   }
-  componentDidAppear() {
-    this.setState({ page: 0 }, () => {
-      this.handleLoadMore()
-    })
-  }
+//  componentDidAppear() {
+// todo replace this
+//    this.setState({ page: 0 }, () => {
+//      this.handleLoadMore()
+//    })
+//  }
 
   renderRow ({ item }) {
     return (

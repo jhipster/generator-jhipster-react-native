@@ -1,0 +1,86 @@
+import * as React from 'react';
+import { useWindowDimensions } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+// import screens
+import LaunchScreen from '../modules/home/launch-screen';
+import LoginScreen from '../modules/login/login-screen';
+import SettingsScreen from '../modules/account/settings/settings-screen';
+import RegisterScreen from '../modules/account/register/register-screen';
+import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen';
+import ChangePasswordScreen from '../modules/account/password/change-password-screen';
+import EntityStackScreen from './entity.stack.js';
+<%_ if (websocket) { _%>
+import ChatScreen from '../modules/chat/chat-screen'
+<%_ } _%>
+import StorybookScreen from '../../storybook';
+
+
+export const drawerScreens = [
+  {
+    name: 'Home',
+    route: 'home',
+    component: LaunchScreen,
+  },
+  {
+    name: 'Login',
+    route: 'login',
+    component: LoginScreen,
+  },
+  {
+    name: 'Settings',
+    route: 'settings',
+    component: SettingsScreen,
+  },
+  {
+    name: 'Register',
+    route: 'register',
+    component: RegisterScreen,
+  },
+  {
+    name: 'Forgot Password',
+    route: 'reset-password',
+    component: ForgotPasswordScreen,
+  },
+  {
+    name: 'Change Password',
+    route: 'change-password',
+    component: ChangePasswordScreen,
+  },
+  {
+    name: 'Entity Stack',
+    route: 'entities',
+    component: EntityStackScreen,
+    options: {
+      headerShown: false
+    }
+  },
+  <%_ if (websocket) { _%>
+  {
+    name: 'Chat',
+    route: 'chat',
+    component: ChatScreen,
+  },
+  <%_ } _%>
+  {
+    name: 'Storybook',
+    route: 'storybook',
+    component: StorybookScreen,
+  },
+];
+
+const Drawer = createDrawerNavigator();
+
+export default function DrawerStack() {
+  const dimensions = useWindowDimensions();
+  return (
+    <Drawer.Navigator
+      initialRouteName={drawerScreens[0].name}
+      drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
+      screenOptions={{headerShown: true}}>
+      {drawerScreens.map((screen, index) => {
+        return <Drawer.Screen name={screen.name} component={screen.component} options={screen.options || {}} key={index} />;
+      })}
+    </Drawer.Navigator>
+  );
+}

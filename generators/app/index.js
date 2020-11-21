@@ -17,6 +17,7 @@ const {
     patchWebsockets,
     patchOauth,
     patchInFile,
+    patchUriScheme,
 } = require('../../lib');
 
 module.exports = class extends AppGenerator {
@@ -29,9 +30,6 @@ module.exports = class extends AppGenerator {
             this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint react-native')}`);
         }
 
-        this.configOptions = jhContext.configOptions || {};
-        // skips generated annotation from Java files
-        this.configOptions.skipGeneratedFlag = true;
         this.patchInFile = patchInFile.bind(this);
     }
 
@@ -66,6 +64,7 @@ module.exports = class extends AppGenerator {
             generateReactNativeApp: generateReactNativeApp.bind(this),
             mergeRnPackageJson: mergeReactNativePackageJson.bind(this),
             writeFiles: writeFiles.bind(this),
+            patchUriScheme: patchUriScheme.bind(this),
             patchOauth: patchOauth.bind(this),
             patchDetox: patchDetox.bind(this),
             patchWebsockets: patchWebsockets.bind(this),
@@ -90,15 +89,6 @@ module.exports = class extends AppGenerator {
             npmInstall() {
                 if (!this.options.skipInstall) {
                     this.spawnCommandSync('npm', ['i']);
-                }
-            },
-            podInstall() {
-                if (!this.options.skipInstall) {
-                    try {
-                        this.spawnCommandSync('npx', ['pod-install']);
-                    } catch (e) {
-                        this.warning('Something went wrong with `pod install`, please try it again yourself.');
-                    }
                 }
             },
             prettier() {

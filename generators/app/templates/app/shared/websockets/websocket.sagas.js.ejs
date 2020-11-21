@@ -6,7 +6,7 @@ export const selectState = (state, key, subKey) => state[key][subKey]
 
 // processes the websocket message
 export function * processWebsocketMessage ({ subscription, msg }) {
-  console.tron.log(`WS-Saga: ${subscription}`)
+  console.log(`WS-Saga: ${subscription}`)
   switch (subscription) {
     case 'chat':
       const state = yield select(selectState, 'chat', 'chat')
@@ -15,7 +15,7 @@ export function * processWebsocketMessage ({ subscription, msg }) {
       yield put(ChatActions.chatSuccess(chat))
       break
     default:
-      console.tron.log(`Uncaught subscription: ${subscription}`)
-      console.tron.log(`Uncaught message: ${msg}`)
+      console.log(`Uncaught subscription: ${subscription}`)
+      console.log(`Uncaught message: ${msg}`)
   }
 }

@@ -9,18 +9,15 @@ import UserActions from '../../../shared/reducers/user.reducer'
 import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase(relation.otherEntityName) %>/<%= kebabCase(relation.otherEntityName) %>.reducer'
 <%_ } _%>
 <%_ }) _%>
-import { Navigation } from 'react-native-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 <%_ if (entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 import { <%= camelCaseName %>EntityDetailScreen } from '../../../navigation/layouts'
 
-import t from 'tcomb-form-native'
-
 import styles from './<%= kebabCaseName %>-entity-edit-screen-style'
 
-let Form = t.form.Form
+/*
 <%_ entityInfo.fields.forEach((field) => {
   if (field.fieldIsEnum) { _%>
 const <%= field.fieldType %> = t.enums({
@@ -33,11 +30,12 @@ _%>
 })
 <%_ } // end of if statement
 }) // end of field loop _%>
+*/
 
 class <%= name %>EntityEditScreen extends React.Component {
   constructor (props) {
     super(props)
-    Navigation.events().bindComponent(this)
+/*
     this.state = {
       formModel: t.struct({
         id: t.maybe(t.Number),
@@ -97,7 +95,7 @@ class <%= name %>EntityEditScreen extends React.Component {
   <%_ entityInfo.ownerSideRelationships.forEach((relation) => { _%>
     this.props.getAll<%= pascalCase(relation.otherEntityNamePlural) %>()
   <%_ }) _%>
-
+*/
     this.submitForm = this.submitForm.bind(this)
     this.formChange = this.formChange.bind(this)
   }
@@ -123,12 +121,14 @@ class <%= name %>EntityEditScreen extends React.Component {
             onPress: <%= camelCaseName %>EntityDetailScreen.bind(this, { entityId })
           })
         }
-        Navigation.pop(this.props.componentId)
+        // todo go back
+        // Navigation.pop(this.props.componentId)
         Alert.alert('Success', 'Entity saved successfully', alertOptions)
       }
     }
   }
 
+/*
 <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
   get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
     const <%= camelCase(relation.otherEntityNamePlural) %> = {}
@@ -138,6 +138,7 @@ class <%= name %>EntityEditScreen extends React.Component {
     return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
   }
 <%_ }) _%>
+*/
   submitForm () {
     // call getValue() to get the values of the form
     const <%= camelCaseName %> = this.form.getValue()
@@ -163,15 +164,15 @@ class <%= name %>EntityEditScreen extends React.Component {
     return (
       <View style={styles.container}>
         <KeyboardAwareScrollView testID='<%= camelCaseName %>EditScrollView' keyboardShouldPersistTaps={'handled'}>
-          <Form
-            ref={c => {
-              this.form = c
-            }}
-            type={this.state.formModel}
-            options={this.state.formOptions}
-            value={this.state.formValue}
-            onChange={this.formChange}
-          />
+          {/*<Form*/}
+          {/*  ref={(c) => {*/}
+          {/*    this.form = c;*/}
+          {/*  }}*/}
+          {/*  type={this.state.formModel}*/}
+          {/*  options={this.state.formOptions}*/}
+          {/*  value={this.state.formValue}*/}
+          {/*  onChange={this.formChange}*/}
+          {/*/>*/}
           <TouchableHighlight style={styles.button} onPress={this.submitForm} underlayColor='#99d9f4' testID='submitButton'>
               <Text style={styles.buttonText}>Save</Text>
           </TouchableHighlight>

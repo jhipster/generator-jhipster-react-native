@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { ScrollView, Image, BackHandler } from 'react-native'
-import { Navigation } from 'react-native-navigation'
 
 import { <% if (authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (websocket) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
 import { connect } from 'react-redux'
@@ -15,17 +14,10 @@ import { isLoggedIn } from '../../shared/reducers/account.reducer'
 class DrawerContent extends Component {
   constructor (context, props) {
     super(context, props)
-    Navigation.events().bindComponent(this)
   }
 
   hideSideMenu () {
-    Navigation.mergeOptions(this.props.componentId, {
-      sideMenu: {
-        left: {
-          visible: false
-        }
-      }
-    })
+    // todo add method for hiding side menu?
   }
 
   componentDidMount () {

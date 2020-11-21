@@ -9,10 +9,10 @@ export function * getAccount (api) {
 
   // success?
   if (response.ok && response.headers['content-type'].indexOf('json') !== -1) {
-    console.tron.log('Account - OK')
+    console.log('Account - OK')
     yield put(AccountActions.accountSuccess(response.data))
   } else {
-    console.tron.log('Account - FAIL')
+    console.log('Account - FAIL')
     yield put(
       AccountActions.accountFailure(
         (response.data && response.data.detail) || 'Failed to get account',
@@ -29,10 +29,10 @@ export function * updateAccount (api, action) {
 
   // success?
   if (response.ok) {
-    console.tron.log('AccountUpdate - OK')
+    console.log('AccountUpdate - OK')
     yield put(AccountActions.accountUpdateSuccess())
   } else {
-    console.tron.log('AccountUpdate - FAIL')
+    console.log('AccountUpdate - FAIL')
     yield put(
       AccountActions.accountUpdateFailure(
         (response.data && response.data.detail) || 'Failed to update account',

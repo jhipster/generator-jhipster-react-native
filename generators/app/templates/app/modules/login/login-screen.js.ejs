@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert, Image, View, ScrollView, Text, TextInput, TouchableOpacity } from 'react-native'
-import { Navigation } from 'react-native-navigation'
 import { connect } from 'react-redux'
 
 import styles from './login-screen.styles'
@@ -17,7 +16,6 @@ class LoginScreen extends React.Component {
 
   constructor (props) {
     super(props)
-    Navigation.events().bindComponent(this)
     this.state = {
       username: '',
       password: '',
@@ -32,7 +30,8 @@ class LoginScreen extends React.Component {
         Alert.alert('Error', this.props.error, [{ text: 'OK' }])
       }
       if (!prevProps.account && this.props.account) {
-        Navigation.dismissModal(this.props.componentId)
+        // todo dismiss modal
+        // Navigation.dismissModal(this.props.componentId)
       }
     }
   }
@@ -44,7 +43,8 @@ class LoginScreen extends React.Component {
   }
   handlePressCancel = () => {
     this.props.logout()
-    Navigation.dismissModal(this.props.componentId)
+    // todo dismiss modal
+    // Navigation.dismissModal(this.props.componentId)
   }
 
   handleChangeUsername = (text) => {

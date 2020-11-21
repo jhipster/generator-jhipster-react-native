@@ -30,7 +30,6 @@
         "jsdoc": "jsdoc --configure jsdoc-conf.json",
         "lint": "eslint .",
         "lint-fix": "npm run lint -- --fix",
-        "precommit": "lint-staged",
         "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
         "release": "np",
         "pretest": "npm run lint",

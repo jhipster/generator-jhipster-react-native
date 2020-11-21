@@ -45,7 +45,7 @@ export function * login (api) {
       yield put(AccountActions.accountRequest())
       yield put({ type: 'RELOGIN_OK' })
     } catch (error) {
-      console.tron.log(error)
+      console.log(error)
       <%_ // todo get expected error format _%>
       yield put(LoginActions.loginFailure('Login failed'))
     }
