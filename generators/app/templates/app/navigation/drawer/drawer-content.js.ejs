@@ -1,118 +1,27 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { ScrollView, Image, BackHandler } from 'react-native'
+import React from 'react';
+import { DrawerItem, DrawerItemList, DrawerContentScrollView } from '@react-navigation/drawer';
+import { connect } from 'react-redux';
+import LoginActions from '../../modules/login/login.reducer';
 
-import { <% if (authType !== 'oauth2') { %>loginScreen, registerScreen, forgotPasswordScreen, changePasswordScreen, settingsScreen, <% } %><% if (websocket) { %>chatScreen, <% } %>entitiesScreen, storybookScreen } from '../layouts'
-import { connect } from 'react-redux'
-
-import styles from './drawer-content.styles'
-import { Images } from '../../shared/themes'
-import DrawerButton from './drawer-button'
-import LoginActions from '../../modules/login/login.reducer'
-import { isLoggedIn } from '../../shared/reducers/account.reducer'
-
-class DrawerContent extends Component {
-  constructor (context, props) {
-    super(context, props)
-  }
-
-  hideSideMenu () {
-    // todo add method for hiding side menu?
-  }
-
-  componentDidMount () {
-    BackHandler.addEventListener('hardwareBackPress', () => {
-      this.hideSideMenu()
-    })
-  }
-
-  handlePressLogin = () => {
-    this.hideSideMenu()
-    <%_ if (authType === 'oauth2') { _%>
-    this.props.login()
-    <%_ } else { _%>
-    loginScreen()
-    <%_ } _%>
-  }
-  <%_ if (authType !== 'oauth2') { _%>
-  handlePressRegister = () => {
-    this.hideSideMenu()
-    registerScreen()
-  }
-  handlePressForgotPassword = () => {
-    this.hideSideMenu()
-    forgotPasswordScreen()
-  }
-  handlePressSettings = () => {
-    this.hideSideMenu()
-    settingsScreen()
-  }
-  handlePressChangePassword = () => {
-    this.hideSideMenu()
-    changePasswordScreen()
-  }
-  <%_ } _%>
-  handlePressEntities = () => {
-    this.hideSideMenu()
-    entitiesScreen()
-  }
-  <%_ if (websocket) { _%>
-  handlePressChat = () => {
-    this.hideSideMenu()
-    chatScreen()
-  }
-  <%_ } _%>
-  handlePressLogout = () => {
-    this.hideSideMenu()
-    this.props.logout()
-  }
-  handlePressStorybook = () => {
-    this.hideSideMenu()
-    storybookScreen()
-  }
-
-  render () {
-    return (
-      <ScrollView style={styles.container}>
-        <Image testID='drawerLogo' source={Images.logoJhipster} style={styles.logo} />
-        {!this.props.loggedIn && (<DrawerButton testID='loginDrawerButton' text='Login' onPress={this.handlePressLogin} />)}
-        <%_ if (authType !== 'oauth2') { _%>
-        {!this.props.loggedIn && (<DrawerButton testID='registerDrawerButton' text='Register' onPress={this.handlePressRegister} />)}
-        {!this.props.loggedIn && (<DrawerButton testID='forgotPasswordDrawerButton' text='Forgot Password' onPress={this.handlePressForgotPassword} />)}
-        <%_ } _%>
-
-        {this.props.loggedIn && (<DrawerButton testID='entitiesDrawerButton' text='Entities' onPress={this.handlePressEntities} />)}
-        <%_ if (websocket) { _%>
-        {this.props.loggedIn && (<DrawerButton testID='chatDrawerButton' text='Chat' onPress={this.handlePressChat} />)}
-        <%_ } _%>
-        <%_ if (authType !== 'oauth2') { _%>
-        {this.props.loggedIn && (<DrawerButton testID='settingsDrawerButton' text='Settings' onPress={this.handlePressSettings} />)}
-        {this.props.loggedIn && (<DrawerButton testID='changePasswordDrawerButton' text='Change Password' onPress={this.handlePressChangePassword} />)}
-        <%_ } _%>
-        {this.props.loggedIn && (<DrawerButton testID='logoutDrawerButton' text='Logout' onPress={this.handlePressLogout} />)}
-        {__DEV__ && (<DrawerButton testID='storybookDrawerButton' text='Storybook' onPress={this.handlePressStorybook} />)}
-      </ScrollView>
-    )
-  }
-}
-
-DrawerContent.contextTypes = {
-  drawer: PropTypes.object
+function DrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {props.account && <DrawerItem label="Logout" onPress={() => props.logout()} />}
+    </DrawerContentScrollView>
+  );
 }
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: isLoggedIn(state.account)
-  }
-}
+    account: state.account.account,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ if (authType === 'oauth2') { _%>
-    login: () => dispatch(LoginActions.loginRequest()),
-    <%_ } _%>
-    logout: () => dispatch(LoginActions.logoutRequest())
-  }
-}
+    logout: () => dispatch(LoginActions.logoutRequest()),
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent)
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);

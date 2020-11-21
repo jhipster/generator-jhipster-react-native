@@ -7,6 +7,6 @@ export default {
   uaaBaseUrl: 'services/<%= props.uaaBaseUrl %>/',
   <%_ } _%>
   // use 10.0.2.2 for Android to connect to host machine
-  apiUrl: Platform.OS === 'ios' ? 'http://localhost:8080/' : 'http://10.0.2.2:8080/',
+  apiUrl: Platform.OS === 'android' ? 'http://10.0.2.2:8080/' : 'http://localhost:8080/',
   appUrlScheme: '<%= reactNativeAppName.toLowerCase() %>'
 }

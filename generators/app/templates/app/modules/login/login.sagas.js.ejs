@@ -1,6 +1,6 @@
 import { call, put<% if (authType === 'oauth2' || authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
 <%_ if (authType === 'oauth2') { _%>
-import { Alert, Platform } from 'react-native'
+import { Platform } from 'react-native'
 import { authorize } from 'react-native-app-auth'
 <%_ } _%>
 <%_ if (authType === 'oauth2') { _%>
@@ -50,10 +50,12 @@ export function * login (api) {
       yield put(LoginActions.loginFailure('Login failed'))
     }
   } else {
-    yield put(LoginActions.loginFailure((authInfo.data && authInfo.data.detail) || 'Could not connect to OAuth2 Provider'))
-    if (!authInfo.data) {
-      Alert.alert('Failed to fetch Auth Provider information from the backend API.')
-    }
+    const errorMessage = !response.data
+      ? 'Failed to reach backend API'
+      : response.data && response.data.detail
+      ? response.data.detail
+      : 'Bad Credentials';
+    yield put(LoginActions.loginFailure(errorMessage));
   }
 }
 
@@ -89,7 +91,7 @@ export function * login (api, { username, password }) {
   } else {
     yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad credentials'))
     if (!response.data) {
-      Alert.alert('Failed to reach backend API.')
+      navigate('ModalScreen', { title: 'Error', message: 'Failed to reach backend API.' });
     }
   }
 }

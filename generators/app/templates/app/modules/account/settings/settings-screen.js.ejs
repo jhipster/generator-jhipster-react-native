@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Text, TouchableHighlight } from 'react-native'
+import { Text, TouchableHighlight } from 'react-native'
 import { connect } from 'react-redux'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
@@ -66,9 +66,9 @@ class SettingsScreen extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.updating && !this.props.updating) {
       if (this.props.error) {
-        Alert.alert('Error', this.props.error, [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: this.props.error });
       } else {
-        Alert.alert('Success', 'Settings updated', [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Success', message: 'Settings updated' });
         this.props.getAccount()
       }
     }

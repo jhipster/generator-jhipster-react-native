@@ -19,7 +19,7 @@ class <%= name %>EntityDetailScreen extends React.Component {
   componentDidUpdate (prevProps) {
     if (prevProps.deleting && !this.props.deleting) {
       if (this.props.errorDeleting) {
-        Alert.alert('Error', 'Something went wrong deleting the entity', [{ text: 'OK' }])
+        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: 'Something went wrong deleting the entity' });
       } else {
         this.props.reset<%= pluralName %>()
         // todo pop
@@ -29,6 +29,7 @@ class <%= name %>EntityDetailScreen extends React.Component {
   }
 
   confirmDelete = () => {
+    // todo replace alert with modal?
     Alert.alert(
       'Delete <%= name %>?',
       'Are you sure you want to delete the <%= name %>?',

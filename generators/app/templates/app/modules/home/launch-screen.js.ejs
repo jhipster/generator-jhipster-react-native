@@ -10,14 +10,6 @@ export default class LaunchScreen extends React.Component {
     super(props)
   }
 
-  showSideMenu () {
-    navigation.openDrawer()
-  }
-
-  navigationButtonPressed ({ buttonId }) {
-    this.showSideMenu()
-  }
-
   render() {
     return (
       <View style={styles.mainContainer} testID="launchScreen">

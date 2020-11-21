@@ -1,11 +1,52 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
-export function ModalScreen({ navigation }) {
+export function ModalScreen({ route, navigation }) {
+  React.useEffect(() => {
+    if (!navigation.canGoBack()) {
+      navigation.navigate('Drawer');
+    }
+  }, [navigation]);
+
+  const dimensions = useWindowDimensions();
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
+    <View style={styles.outerContainer}>
+      <View style={[styles.backgroundContainer, { height: dimensions.height / 2, minWidth: dimensions.width / 2 }]}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={styles.flex}>
+            <Text style={styles.titleFont}>{route.params.title || ''}</Text>
+          </View>
+          <View style={styles.flex}>
+            <Text style={styles.messageFont}>{route.params.message || ''}</Text>
+          </View>
+          <View style={styles.flex}>
+            <Button onPress={() => navigation.goBack()} title="DISMISS" />
+          </View>
+        </View>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  titleFont: {
+    fontSize: 30,
+    margin: 20,
+  },
+  messageFont: {
+    fontSize: 25,
+  },
+  flex: {
+    flex: 1,
+  },
+  outerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+  },
+  backgroundContainer: {
+    backgroundColor: 'white',
+    borderRadius: 15,
+  },
+});

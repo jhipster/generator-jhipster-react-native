@@ -12,7 +12,7 @@ import { ModalScreen } from './app/navigation/modal.screen';
 
 const store = createStore();
 
-const config = { screens: { 'ModalScreen': 'alert' } };
+const config = { screens: { ModalScreen: 'alert', Drawer: '' } };
 
 const mapScreensToConfig = (screens) => {
   screens.forEach(screen => {
@@ -45,7 +45,30 @@ export default function App() {
         }}>
          <RootStack.Navigator mode="modal">
            <RootStack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
-           <RootStack.Screen name="ModalScreen" component={ModalScreen} options={{ headerShown: false }} />
+           <RootStack.Screen
+             name="ModalScreen"
+             component={ModalScreen}
+             options={{
+               headerShown: false,
+               cardStyle: { backgroundColor: 'transparent' },
+               cardOverlayEnabled: true,
+               cardStyleInterpolator: ({ current: { progress } }) => ({
+                 cardStyle: {
+                   opacity: progress.interpolate({
+                     inputRange: [0, 0.5, 0.9, 1],
+                     outputRange: [0, 0.25, 0.7, 1],
+                   }),
+                 },
+                 overlayStyle: {
+                   opacity: progress.interpolate({
+                     inputRange: [0, 1],
+                     outputRange: [0, 0.5],
+                     extrapolate: 'clamp',
+                   }),
+                 },
+               }),
+             }}
+           />
          </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
