@@ -18,6 +18,7 @@ const files = {
                 'app/navigation/entity.stack.js',
                 'app/navigation/drawer.stack.js',
                 'app/navigation/nav-ref.js',
+                'app/navigation/modal.screen.js',
                 'app/modules/home/learn-more-links.component.js',
                 'app/modules/login/login-screen.js',
                 'app/modules/account/register/register-screen.js',

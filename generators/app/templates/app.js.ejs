@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { useReduxDevToolsExtension } from '@react-navigation/devtools';
+import { createStackNavigator } from '@react-navigation/stack';
 import { Provider } from 'react-redux';
 import createStore from './app/shared/reducers';
 
 import DrawerStack, { drawerScreens } from './app/navigation/drawer.stack';
 import { entityScreens } from './app/navigation/entity.stack';
 import { navigationRef, isReadyRef } from './app/navigation/nav-ref.js';
+import { ModalScreen } from './app/navigation/modal.screen';
 
 const store = createStore();
 
-const config = { screens: { }};
+const config = { screens: { 'ModalScreen': 'alert' } };
 
 const mapScreensToConfig = (screens) => {
   screens.forEach(screen => {
@@ -24,6 +26,7 @@ const linking = {
   prefixes: ['https://<%= reactNativeAppName.toLowerCase() %>.com', '<%= reactNativeAppName.toLowerCase() %>://'],
   config,
 };
+const RootStack = createStackNavigator();
 
 export default function App() {
   React.useEffect(() => {
@@ -35,13 +38,15 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer
-              linking={linking}
-              ref={navigationRef}
-              onReady={() => {
-                isReadyRef.current = true;
-              }}
-      >
-        <DrawerStack />
+        linking={linking}
+        ref={navigationRef}
+        onReady={() => {
+          isReadyRef.current = true;
+        }}>
+         <RootStack.Navigator mode="modal">
+           <RootStack.Screen name="Drawer" component={DrawerStack} options={{ headerShown: false }} />
+           <RootStack.Screen name="ModalScreen" component={ModalScreen} options={{ headerShown: false }} />
+         </RootStack.Navigator>
       </NavigationContainer>
     </Provider>
   );
