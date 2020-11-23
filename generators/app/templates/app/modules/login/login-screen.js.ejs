@@ -1,85 +1,75 @@
-import React from 'react';
-import { Image, View, ScrollView, Text, TextInput } from 'react-native';
+import React, { createRef } from 'react';
+import { Text, View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
+import * as Yup from 'yup';
 
-import styles from './login-screen.styles';
-import { Images } from '../../shared/themes';
 import LoginActions from './login.reducer';
-import RoundedButton from '../../shared/components/rounded-button/rounded-button';
 import { useDidUpdateEffect } from '../../shared/util/use-did-update-effect';
+import { Form, FormButton, FormField } from '../../shared/components/form';
+import styles from './login-screen.styles';
 
 function LoginScreen(props) {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  // setup error state for displaying error messages
+  const [loginError, setLoginError] = React.useState('');
 
+  // if the user is already logged in, send them home
   React.useEffect(() => {
     if (props.account !== null) {
       props.navigation.navigate('Home');
     }
   }, [props.account, props.navigation]);
 
+  // skip the first render but check for API responses and show error if not fetching
   useDidUpdateEffect(() => {
     if (!props.fetching && props.error) {
-      props.navigation.navigate('ModalScreen', { title: 'Error', message: props.error });
+      setLoginError(props.error);
     }
   }, [props.fetching]);
 
-  const handlePressLogin = () => {
-    // attempt a login - a saga is listening to pick it up from here.
-    props.attemptLogin(username, password);
-  };
+  // submit handler
+  const onSubmit = (data) => props.attemptLogin(data.login, data.password);
 
-  const editable = !props.fetching;
-  const textInputStyle = editable ? styles.textInput : styles.textInputReadonly;
+  // create refs for handling onSubmit functionality
+  const passwordRef = createRef();
+  const formRef = createRef();
+
+  // set up validation schema for the form
+  const validationSchema = Yup.object().shape({
+    login: Yup.string().required('Please enter your login').label('Login'),
+    password: Yup.string().required().label('Password'),
+  });
+
   return (
-    <ScrollView contentContainerStyle={styles.contentContainer} style={[styles.container]} keyboardShouldPersistTaps="always">
-      <Image source={Images.logoLogin} style={[styles.topLogo]} />
-      <View style={styles.form}>
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Username</Text>
-          <TextInput
-            ref={(c) => {
-              this.usernameInput = c;
-            }}
-            testID="loginScreenUsername"
-            style={textInputStyle}
-            value={username}
-            editable={editable}
-            keyboardType="default"
-            returnKeyType="next"
+    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+      <View style={styles.formContainer}>
+        <Text style={styles.errorText}>{loginError}</Text>
+        <Form initialValues={{ login: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
+          <FormField
+            name="login"
+            label="Login"
+            placeholder="Enter login"
+            onSubmitEditing={() => passwordRef?.current?.focus()}
+            autoCapitalize="none"
+            keyboardType="login"
+            textContentType="username"
+            autoFocus={true}
+          />
+          <FormField
+            ref={passwordRef}
+            name="password"
+            label="Password"
+            placeholder="Enter password"
             autoCapitalize="none"
             autoCorrect={false}
-            onChangeText={setUsername}
-            underlineColorAndroid="transparent"
-            onSubmitEditing={() => this.passwordInput.focus()}
-            placeholder="Username"
+            secureTextEntry={true}
+            onSubmitEditing={() => formRef?.current?.submitForm()}
+            textContentType="password"
           />
-        </View>
-
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Password</Text>
-          <TextInput
-            ref={(c) => {
-              this.passwordInput = c;
-            }}
-            testID="loginScreenPassword"
-            style={textInputStyle}
-            value={password}
-            editable={editable}
-            keyboardType="default"
-            returnKeyType="go"
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry
-            onChangeText={setPassword}
-            underlineColorAndroid="transparent"
-            onSubmitEditing={handlePressLogin}
-            placeholder="Password"
-          />
-        </View>
-        <RoundedButton text={'Sign In'} onPress={handlePressLogin} />
+          <FormButton title={'Login'} />
+        </Form>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 }
 
@@ -94,7 +84,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password)),
-    logout: () => dispatch(LoginActions.logoutRequest()),
   };
 };
 

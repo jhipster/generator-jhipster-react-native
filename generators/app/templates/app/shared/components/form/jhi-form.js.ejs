@@ -1,0 +1,11 @@
+import React from 'react';
+import { Formik } from 'formik';
+
+export default React.forwardRef((props, ref) => {
+  const { children, initialValues, onSubmit, validationSchema } = props;
+  return (
+    <Formik innerRef={ref} initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
+      {() => <React.Fragment>{children}</React.Fragment>}
+    </Formik>
+  );
+});

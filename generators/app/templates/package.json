@@ -32,7 +32,9 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "2.10.1",
     "react-native-web": "0.14.8",
-    "@expo/vector-icons":"10.2.1"
+    "@expo/vector-icons":"10.2.1",
+    "formik": "2.2.5",
+    "yup": "0.31.0"
   },
   "devDependencies": {
     "@storybook/addons": "5.3.21",
