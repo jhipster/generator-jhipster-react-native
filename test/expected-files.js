@@ -6,7 +6,7 @@ const expectedFiles = {
         '.eslintrc.js',
         '.gitattributes',
         'babel.config.js',
-        'app.js',
+        'App.js',
         'README.md',
         // templated files
         'app/config/app-config.js',

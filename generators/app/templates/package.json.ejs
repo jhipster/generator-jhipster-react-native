@@ -4,7 +4,7 @@
     "test:watch": "jest --watch",
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
-    "lint": "eslint app test app.js --ext .js",
+    "lint": "eslint app test App.js --ext .js",
     <%_ if (!skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>

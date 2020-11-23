@@ -2,7 +2,7 @@
 
 The project structure is as close to JHipster's React client as possible.
 
-`app.js` is the entrypoint of the app. It bootstraps React Native Navigation and sends the user to the launch screen.
+`App.js` is the entrypoint of the app. It bootstraps React Native Navigation and sends the user to the launch screen.
 
 ## app
 
