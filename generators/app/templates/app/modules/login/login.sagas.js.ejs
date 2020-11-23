@@ -6,6 +6,7 @@ import { authorize } from 'react-native-app-auth'
 <%_ if (authType === 'oauth2') { _%>
 import CookieManager from '@react-native-community/cookies'
 <%_ } _%>
+import { navigate } from '../../navigation/nav-ref';
 
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'

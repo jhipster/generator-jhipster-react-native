@@ -4,7 +4,7 @@ import RegisterActions from './register.reducer'
 
 // attempts to register
 export function * register (api, { user }) {
-  const response = yield call(api.register, user)
+  const response = yield call(api.register, { langKey: 'en', ...user });
   // success?
   if (response.ok) {
     console.log('Register - OK')

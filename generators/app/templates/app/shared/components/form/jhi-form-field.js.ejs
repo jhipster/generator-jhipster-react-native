@@ -1,0 +1,43 @@
+import React from 'react';
+import { useFormikContext } from 'formik';
+
+import AppTextInput from './jhi-text-input';
+import AppSwitchInput from './jhi-switch-input';
+import { StyleSheet, Text } from 'react-native';
+import ApplicationStyles from '../../themes/application.styles';
+
+export default React.forwardRef((props, ref) => {
+  let { name, inputType, ...otherProps } = props;
+  const { setFieldTouched, setFieldValue, values, errors, touched } = useFormikContext();
+
+  const hasError = errors[name] && touched[name];
+  return (
+    <React.Fragment>
+      {(!inputType || inputType === 'text') && (
+        <AppTextInput
+          ref={ref}
+          value={values[name]}
+          onChangeText={(text) => setFieldValue(name, text)}
+          onBlur={() => setFieldTouched(name)}
+          error={hasError}
+          {...otherProps}
+        />
+      )}
+      {inputType === 'switch' && (
+        <AppSwitchInput
+          ref={ref}
+          value={values[name]}
+          onValueChange={(value) => setFieldValue(name, value)}
+          onBlur={() => setFieldTouched(name)}
+          error={hasError}
+          {...otherProps}
+        />
+      )}
+      {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
+    </React.Fragment>
+  );
+});
+
+const styles = StyleSheet.create({
+  ...ApplicationStyles.screen,
+});
