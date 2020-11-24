@@ -21,7 +21,7 @@ function RegisterScreen(props) {
     email: Yup.string().required().email().label('Email'),
   });
 
-  const onSubmit = (data /*: {name: string, email: string, password: string}*/) => {
+  const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
       setError('Passwords do not match');
       return;
