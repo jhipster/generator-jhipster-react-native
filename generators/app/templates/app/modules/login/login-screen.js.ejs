@@ -11,7 +11,7 @@ import styles from './login-screen.styles';
 
 function LoginScreen(props) {
   // setup error state for displaying error messages
-  const [loginError, setLoginError] = React.useState('');
+  const [error, setError] = React.useState('');
 
   // if the user is already logged in, send them home
   React.useEffect(() => {
@@ -23,7 +23,7 @@ function LoginScreen(props) {
   // skip the first render but check for API responses and show error if not fetching
   useDidUpdateEffect(() => {
     if (!props.fetching && props.error) {
-      setLoginError(props.error);
+      setError(props.error);
     }
   }, [props.fetching]);
 
@@ -43,7 +43,7 @@ function LoginScreen(props) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.errorText}>{loginError}</Text>
+        <Text style={styles.errorText}>{error}</Text>
         <Form initialValues={{ login: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
           <FormField
             name="login"
