@@ -11,7 +11,7 @@ import styles from './register-screen.styles';
 
 function RegisterScreen(props) {
   // setup error state for displaying error messages
-  const [registerError, setRegisterError] = React.useState('');
+  const [error, setError] = React.useState('');
 
   // set up validation schema for the form
   const validationSchema = Yup.object().shape({
@@ -23,7 +23,7 @@ function RegisterScreen(props) {
 
   const onSubmit = (data /*: {name: string, email: string, password: string}*/) => {
     if (data.password !== data.confirmPassword) {
-      setRegisterError('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
     props.register(data);
@@ -32,7 +32,7 @@ function RegisterScreen(props) {
   useDidUpdateEffect(() => {
     if (!props.fetching) {
       if (props.error) {
-        setRegisterError(props.error);
+        setError(props.error);
       } else {
         //       // Navigation.popToRoot(this.props.componentId)
         props.navigation.navigate('ModalScreen', { title: 'Registration Successful', message: 'Please check your email' });
@@ -49,7 +49,7 @@ function RegisterScreen(props) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={styles.formContainer}>
-        <Text style={styles.errorText}>{registerError}</Text>
+        <Text style={styles.errorText}>{error}</Text>
         <Form
           initialValues={{ login: '', email: '', confirmPassword: '', password: '' }}
           validationSchema={validationSchema}
@@ -82,7 +82,7 @@ function RegisterScreen(props) {
             autoCapitalize="none"
             autoCorrect={false}
             secureTextEntry={true}
-            onSubmitEditing={() => confirmPasswordRef?.current?.submitForm()}
+            onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
             textContentType="password"
           />
           <FormField
