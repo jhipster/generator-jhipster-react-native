@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
 
 export default React.forwardRef((props, ref) => {
   const { label, labelStyle, error, ...otherProps } = props;
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     borderRadius: 5,
+    backgroundColor: 'white',
     paddingVertical: 5,
     paddingLeft: 5,
     fontSize: 16,

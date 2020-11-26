@@ -2,7 +2,15 @@ import React from 'react';
 import { Formik } from 'formik';
 
 export default React.forwardRef((props, ref) => {
-  const { children, initialValues, onSubmit, validationSchema } = props;
+  const { children, initialValues, onSubmit = (d) => console.log(d), validationSchema = {} } = props;
+
+  // checks to ensure that the validationSchema does not contain validation for non-existent fields, causing submit to fail
+  const fields = children.filter((c) => c && c.props && c.props.name).map((c) => c.props.name);
+  const missingValidatedFields = Object.keys(validationSchema.fields).filter((f) => !fields.includes(f));
+  if (missingValidatedFields.length) {
+    console.warn(`Validating field(s) '${missingValidatedFields.join(', ')}', but no Input is present in the form. It will fail to submit`);
+  }
+
   return (
     <Formik innerRef={ref} initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
       {() => <React.Fragment>{children}</React.Fragment>}

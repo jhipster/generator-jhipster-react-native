@@ -1,4 +1,4 @@
-import { Image, Platform, View, useWindowDimensions } from 'react-native';
+import { Image, Platform, View } from 'react-native';
 import TouchableItem from '@react-navigation/drawer/src/views/TouchableItem';
 import { Images } from '../../shared/themes';
 import * as React from 'react';
@@ -19,7 +19,7 @@ export const DrawerButton = (props) => {
           ios: undefined,
           default: { top: 16, right: 16, bottom: 16, left: 16 },
         })}>
-        {/*Donute Button Image */}
+        {/* Button Image */}
         <Image
           source={Images.toggleDrawerIcon}
           style={{
