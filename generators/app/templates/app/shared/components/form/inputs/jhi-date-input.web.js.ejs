@@ -1,0 +1,48 @@
+import React from 'react';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+export default React.forwardRef((props, ref) => {
+  const { label, labelStyle, error, inputType, ...otherProps } = props;
+  const CustomInput = ({ value, onClick }) => (
+    <TextInput ref={ref} style={[styles.input, { borderColor: error ? '#fc6d47' : '#c0cbd3' }]} value={value} onClick={onClick} />
+  );
+  const extraProps = inputType === 'datetime' ? { showTimeSelect: true, timeFormat: 'p', dateFormat: 'Pp' } : {};
+
+  return (
+    <View style={styles.container}>
+      {/* if there's a label, render it */}
+      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
+      <DatePicker customInputRef={ref} customInput={<CustomInput />} {...extraProps} {...otherProps} />
+      {/* if there's an error, render it */}
+      <Text style={styles.textError}>{error && error.message}</Text>
+    </View>
+  );
+});
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 8,
+  },
+  label: {
+    paddingVertical: 5,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  textError: {
+    color: '#fc6d47',
+    fontSize: 14,
+  },
+  input: {
+    backgroundColor: 'white',
+    borderStyle: 'solid',
+    width: '100%',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingVertical: 5,
+    paddingLeft: 5,
+    fontSize: 16,
+    height: 40,
+  },
+});
