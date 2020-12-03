@@ -14,10 +14,10 @@ const files = {
                 // templated files
                 'app/config/app-config.js',
                 'app/navigation/drawer/drawer-content.js',
-                'app/navigation/layouts.js',
-                'app/navigation/entity.stack.js',
-                'app/navigation/drawer.stack.js',
+                'app/navigation/entity-stack.js',
+                'app/navigation/navigation-container.js',
                 'app/navigation/nav-ref.js',
+                'app/navigation/not-found-screen.tsx',
                 'app/navigation/modal.screen.js',
                 'app/modules/home/learn-more-links.component.js',
                 'app/modules/login/login-screen.js',

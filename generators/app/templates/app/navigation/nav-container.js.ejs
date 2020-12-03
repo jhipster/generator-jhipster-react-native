@@ -10,17 +10,23 @@ import SettingsScreen from '../modules/account/settings/settings-screen';
 import RegisterScreen from '../modules/account/register/register-screen';
 import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen';
 import ChangePasswordScreen from '../modules/account/password/change-password-screen';
-import EntityStackScreen from './entity.stack.js';
+import EntityStackScreen from './entity-stack';
 import StorybookScreen from '../../storybook';
 <%_ if (websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
 import DrawerContent from './drawer/drawer-content';
+import * as Linking from 'expo-linking';
+import { createStackNavigator } from '@react-navigation/stack';
+import { isReadyRef, navigationRef } from './nav-ref';
+import { useReduxDevToolsExtension } from '@react-navigation/devtools';
+import NotFound from '../../NotFound';
+import { NavigationContainer } from '@react-navigation/native';
+import { getEntityRoutes } from './entity.stack';
 
 export const drawerScreens = [
   {
     name: 'Home',
-    route: 'home',
     component: LaunchScreen,
     auth: null,
   },
@@ -56,12 +62,18 @@ export const drawerScreens = [
   },
   {
     name: 'Entities',
-    route: 'entities',
+    isStack: true,
     component: EntityStackScreen,
     options: {
       headerShown: false,
     },
     auth: true,
+  },
+  {
+    name: 'Storybook',
+    route: 'storybook',
+    component: StorybookScreen,
+    auth: null,
   },
   <%_ if (websocket) { _%>
   {
@@ -70,14 +82,42 @@ export const drawerScreens = [
     component: ChatScreen,
   },
   <%_ } _%>
-  {
-    name: 'Storybook',
-    route: 'storybook',
-    component: StorybookScreen,
-    auth: null,
-  },
 ];
 
+export const getDrawerRoutes = () => {
+  const routes = {};
+  drawerScreens.forEach((screen) => {
+    if (screen.route) {
+      routes[screen.name] = screen.route;
+    }
+  });
+  return routes;
+};
+
+const linking = {
+  prefixes: ['rnapp://', Linking.makeUrl('/')],
+  config: {
+    initialRouteName: 'Home',
+    screens: {
+      Home: {
+        screens: {
+          ...getDrawerRoutes(),
+          Entities: {
+            path: 'entities',
+            screens: {
+              EntityStack: '',
+              ...getEntityRoutes(),
+            },
+          },
+        },
+      },
+      ModalScreen: 'alert',
+      NotFound: '*',
+    },
+  },
+};
+
+const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const getScreens = (props) => {
@@ -92,21 +132,48 @@ const getScreens = (props) => {
   });
 };
 
-function DrawerStack(props) {
+function NavContainer(props) {
+  React.useEffect(() => {
+    return () => {
+      isReadyRef.current = false;
+    };
+  }, []);
+  useReduxDevToolsExtension(navigationRef);
+
   const dimensions = useWindowDimensions();
-  return (
-    <Drawer.Navigator
-      drawerContent={(p) => <DrawerContent {...p} />}
-      initialRouteName={drawerScreens[0].name}
-      drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
-      screenOptions={{ headerShown: true }}>
-      {getScreens(props)}
-    </Drawer.Navigator>
+  const { loaded } = props;
+  return !loaded ? (
+    <View>
+      <Text>Loading...</Text>
+    </View>
+  ) : (
+    <NavigationContainer
+      linking={linking}
+      ref={navigationRef}
+      onReady={() => {
+        isReadyRef.current = true;
+      }}>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" options={{ headerShown: false }}>
+          {() => (
+            <Drawer.Navigator
+              drawerContent={(p) => <DrawerContent {...p} />}
+              initialRouteName={drawerScreens[0].name}
+              drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
+              screenOptions={{ headerShown: true }}>
+              {getScreens(props)}
+            </Drawer.Navigator>
+          )}
+        </Stack.Screen>
+        <Stack.Screen name="NotFound" component={NotFound} options={{ title: 'Oops!' }} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
+    loaded: state.appState.rehydrationComplete,
     account: state.account.account,
   };
 };
@@ -115,4 +182,4 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DrawerStack);
+export default connect(mapStateToProps, mapDispatchToProps)(NavContainer);
