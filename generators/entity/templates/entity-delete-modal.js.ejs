@@ -1,0 +1,104 @@
+import React from 'react';
+import { TouchableHighlight, StyleSheet, Modal, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+
+import <%= name %>Actions from './<%= kebabCaseName %>.reducer';
+
+const styles = StyleSheet.create({
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    openButton: {
+        backgroundColor: 'grey',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    cancelButton: {
+        backgroundColor: 'grey',
+    },
+    submitButton: {
+        backgroundColor: 'red',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+    flex: {
+        flex: 1,
+    },
+});
+
+function <%= name %>EntityDeleteModal(props) {
+    const { visible, setVisible, entity, navigation } = props;
+
+    const deleteEntity = () => {
+        props.delete<%= name %>(entity.id);
+        navigation.pop();
+    };
+    return (
+        <Modal animationType="slide" transparent={true} visible={visible}>
+            <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                    <Text style={styles.modalText}>Delete <%= name %> {entity.id}?</Text>
+
+                    <View style={styles.flex}>
+                        <TouchableHighlight style={[styles.openButton, styles.submitButton]} onPress={deleteEntity}>
+                            <Text style={styles.textStyle}>Delete</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight
+                            style={[styles.openButton, styles.cancelButton]}
+                            onPress={() => {
+                                setVisible(false);
+                            }}>
+                            <Text style={styles.textStyle}>Cancel</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    );
+}
+
+const mapStateToProps = (state) => {
+    return {
+        <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
+        fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
+        deleting: state.<%= camelCaseNamePlural %>.deleting,
+        errorDeleting: state.<%= camelCaseNamePlural %>.errorDeleting,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        get<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>Request(id)),
+        getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options)),
+        delete<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>DeleteRequest(id)),
+        reset<%= pluralName %>: () => dispatch(<%= name %>Actions.<%= camelCaseName %>Reset()),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityDeleteModal);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { <%= camelCaseName %>EntityDetailScreen, <%= camelCaseName %>EntityEditScreen } from '../../../navigation/layouts'
+import { useFocusEffect } from '@react-navigation/native';
 <%_ if (searchEngine) { _%>
 import SearchBar from '../../../shared/components/search-bar/search-bar'
 <%_ } _%>
@@ -9,34 +9,28 @@ import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
 import styles from './<%= kebabCaseName %>-entity-screen-style'
 import AlertMessage from '../../../shared/components/alert-message/alert-message'
 
-// More info here: https://reactnative.dev/docs/flatlist.html
+function <%= name %>EntityScreen(props) {
+  const [page, setPage] = React.useState(0);
+  const [sort /*, setSort*/] = React.useState('id,asc');
+  const [size /*, setSize*/] = React.useState(20);
+  <%_ if (searchEngine) { _%>
+  const [searchTerm, setSearchTerm] = React.useState('');
+  <%_ } _%>
 
-class <%= name %>EntityScreen extends React.PureComponent {
-  constructor (props) {
-    super(props)
-    this.state = {
-      page: 0,
-      sort: 'id,asc',
-      size: 20,
-      <%_ if (searchEngine) { _%>
-      searchTerm: '',
-      <%_ } _%>
-    }
-  }
+  const { <%= camelCaseName %>, getAll<%= pluralName %>, fetching } = props;
 
-  navigationButtonPressed ({ buttonId }) {
-    <%= camelCaseName %>EntityEditScreen({ entityId: null })
-  }
-//  componentDidAppear() {
-// todo replace this
-//    this.setState({ page: 0 }, () => {
-//      this.handleLoadMore()
-//    })
-//  }
+  useFocusEffect(
+    React.useCallback(() => {
+      console.debug('<%= name %> entity changed and the list screen is now in focus, refresh');
+      setPage(0);
+      fetch<%= pluralName %>();
+      /* eslint-disable-next-line react-hooks/exhaustive-deps */
+    }, [<%= camelCaseName %>, fetch<%= pluralName %>]),
+  );
 
-  renderRow ({ item }) {
+  const renderRow = ({ item }) => {
     return (
-      <TouchableOpacity onPress={<%= camelCaseName %>EntityDetailScreen.bind(this, { entityId: item.id })}>
+      <TouchableOpacity onPress={() => props.navigation.navigate('<%= name %>EntityDetail', { entityId: item.id })}>
         <View style={styles.row}>
           <Text style={styles.boldLabel}>{item.id}</Text>
           {/* <Text style={styles.label}>{item.description}</Text> */}
@@ -47,88 +41,73 @@ class <%= name %>EntityScreen extends React.PureComponent {
 
   // Render a header
     <%_ if (searchEngine) { _%>
-  renderHeader = () =>
-    <SearchBar onSearch={this.performSearch} searchTerm={this.state.searchTerm} onCancel={this.cancelSearch} />
-    <%_ } else { _%>
-  // renderHeader = () =>
-  //   <Text style={[styles.label, styles.sectionHeader]}> - Header - </Text>
+  const renderHeader = () =>
+    <SearchBar onSearch={performSearch} searchTerm={searchTerm} onCancel={cancelSearch} />
     <%_ } _%>
 
   // Show this when data is empty
-  renderEmpty = () =>
-    <AlertMessage title='No <%= pluralName %> Found' show={!this.props.fetching} />
+  const renderEmpty = () =>
+    <AlertMessage title='No <%= pluralName %> Found' show={!fetching} />
 
-  keyExtractor = (item, index) => `${index}`
+  const keyExtractor = (item, index) => `${index}`
 
   // How many items should be kept im memory as we scroll?
-  oneScreensWorth = 20
+  const oneScreensWorth = 20
 
   <%_ if (searchEngine) { _%>
-  cancelSearch = () => {
-    this.setState({
-      searchTerm: ''
-    })
-    this.fetch<%= pluralName %>()
+  const cancelSearch = () => {
+    setSearchTerm('')
+    fetch<%= pluralName %>()
   }
 
-  performSearch = (query) => {
+  const performSearch = (query) => {
     if (query === '') {
-      this.cancelSearch()
+      cancelSearch()
       return
     }
-    this.setState({
-      searchTerm: query
-    })
-    this.props.performSearch(query)
+    setSearchTerm(query)
+    props.performSearch(query)
   }
   <%_ } _%>
-  fetch<%= pluralName %> = () => {
-    this.props.getAll<%= pluralName %>({ page: this.state.page - 1, sort: this.state.sort, size: this.state.size })
-  }
+  const fetch<%= pluralName %> = React.useCallback(() => {
+    getAll<%= pluralName %>({ page: page - 1, sort, size });
+  }, [getAll<%= pluralName %>, page, sort, size]);
 
-  handleLoadMore = () => {
+
+  const handleLoadMore = () => {
     <%_ if (entityInfo.pagination === 'no') { _%>
-    if (this.props.<%= camelCaseNamePlural %>.length) {
+    if (props.<%= camelCaseNamePlural %>.length) {
     <%_ } else { _%>
-    if (this.state.page < this.props.links.next || this.props.links.next === undefined || this.props.fetching) {
+    if (page < props.links.next || props.links.next === undefined || fetching) {
     <%_ } _%>
       return
     }
-    this.setState({
-      page: this.state.page + 1
-    }, () => {
-      this.fetch<%= pluralName %>()
-    })
+    setPage(page + 1)
+    fetch<%= pluralName %>()
   }
-
-  render () {
-    return (
-      <View style={styles.container} testID='<%= camelCaseName %>Screen'>
-        <FlatList
-          contentContainerStyle={styles.listContent}
-          data={this.props.<%= camelCaseNamePlural %>}
-          renderItem={this.renderRow}
-          keyExtractor={this.keyExtractor}
-          initialNumToRender={this.oneScreensWorth}
-          onEndReached={this.handleLoadMore}
-          <%_ if (searchEngine) { _%>
-          ListHeaderComponent={this.renderHeader}
-          <%_ } else { _%>
-          /* ListHeaderComponent={this.renderHeader} */
-          <%_ } _%>
-          /* ListFooterComponent={this.renderFooter} */
-          ListEmptyComponent={this.renderEmpty}
-          ItemSeparatorComponent={this.renderSeparator}
-        />
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container} testID='<%= camelCaseName %>Screen'>
+      <FlatList
+        contentContainerStyle={styles.listContent}
+        data={props.<%= camelCaseNamePlural %>}
+        renderItem={renderRow}
+        keyExtractor={keyExtractor}
+        initialNumToRender={oneScreensWorth}
+        onEndReached={handleLoadMore}
+        ListEmptyComponent={renderEmpty}
+        <%_ if (searchEngine) { _%>
+        ListHeaderComponent={renderHeader}
+        <%_ } _%>
+      />
+    </View>
+  );
 }
 
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
     <%= camelCaseNamePlural %>: state.<%= camelCaseNamePlural %>.<%= camelCaseNamePlural %>,
+    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
     fetching: state.<%= camelCaseNamePlural %>.fetchingAll,
     error: state.<%= camelCaseNamePlural %>.errorAll,
     <%_ if (entityInfo.pagination !== 'no') { _%>

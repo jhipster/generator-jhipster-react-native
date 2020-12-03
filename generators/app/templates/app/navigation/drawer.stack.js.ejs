@@ -82,18 +82,6 @@ const Drawer = createDrawerNavigator();
 
 const getScreens = (props) => {
   const isAuthed = props.account !== null;
-  if (!props.loaded) {
-    return (
-      <Drawer.Screen
-        name={'Loading'}
-        component={() => (
-          <View>
-            <Text>Loading...</Text>
-          </View>
-        )}
-      />
-    );
-  }
   return drawerScreens.map((screen, index) => {
     if (screen.auth === null || screen.auth === undefined) {
       return <Drawer.Screen name={screen.name} component={screen.component} options={screen.options || {}} key={index} />;
@@ -109,7 +97,7 @@ function DrawerStack(props) {
   return (
     <Drawer.Navigator
       drawerContent={(p) => <DrawerContent {...p} />}
-      initialRouteName={drawerScreens[1].name}
+      initialRouteName={drawerScreens[0].name}
       drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
       screenOptions={{ headerShown: true }}>
       {getScreens(props)}
@@ -120,7 +108,6 @@ function DrawerStack(props) {
 const mapStateToProps = (state) => {
   return {
     account: state.account.account,
-    loaded: state.appState.rehydrationComplete,
   };
 };
 

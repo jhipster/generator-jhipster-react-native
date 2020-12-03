@@ -52,6 +52,7 @@ module.exports = class extends EntityGenerator {
         this.context.entityNameCapitalized = this._.upperFirst(this.name);
 
         // todo remove - used in relationships
+        this.startCase = this._.startCase;
         this.camelCase = this._.camelCase;
         this.kebabCase = this._.kebabCase;
         this.upperFirst = this._.upperFirst;
@@ -62,6 +63,8 @@ module.exports = class extends EntityGenerator {
 
         // load entity JSON from config file
         this.entityInfo = this.context.entityJSON;
+        this.entityContainsImageBlob = false;
+        this.entityContainsTextBlob = false;
         this.entityContainsDate = false;
         this.entityContainsLocalDate = false;
 
@@ -76,12 +79,20 @@ module.exports = class extends EntityGenerator {
                 'LocalDate',
                 'Instant',
                 'ZonedDateTime',
+                'Duration',
+                'UUID',
                 'Boolean',
                 'byte[]',
                 'ByteBuffer',
             ].includes(field.fieldType);
             if (field.fieldType === 'LocalDate') {
                 this.entityContainsLocalDate = true;
+            }
+            if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') {
+                this.entityContainsImageBlob = true;
+            }
+            if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'text') {
+                this.entityContainsTextBlob = true;
             }
             if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') {
                 this.entityContainsDate = true;

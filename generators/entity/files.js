@@ -3,6 +3,11 @@ const files = {
         {
             templates: [
                 {
+                    file: 'entity-delete-modal.js',
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-delete-modal.js`,
+                },
+                {
                     file: 'entity-detail-screen.js',
                     renameTo: generator =>
                         `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen.js`,

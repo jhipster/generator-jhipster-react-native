@@ -47,6 +47,7 @@
         "generator-jhipster": "git://github.com/jhipster/generator-jhipster.git#819d07f1ca349ae6f8710f2a3387030a29964982",
         "pluralize": "8.0.0",
         "semver": "7.3.2",
+        "lodash": "4.17.20",
         "shelljs": "0.8.4"
     },
     "devDependencies": {
