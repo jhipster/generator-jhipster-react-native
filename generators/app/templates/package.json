@@ -38,6 +38,7 @@
     "react-datepicker": "3.3.0",
     "react-native-modal-datetime-picker": "9.1.0",
     "react-native-picker-select": "8.0.3",
+    "expo-linking": "1.0.5",
     "yup": "0.31.0"
   },
   "devDependencies": {

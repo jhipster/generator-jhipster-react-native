@@ -9,7 +9,7 @@ import EntitiesScreen from '../modules/entities/entities-screen';
 export const entityScreens = [
   {
     name: 'EntityStack',
-    route: 'all',
+    route: '',
     component: EntitiesScreen,
     options: {
       title: 'Entities',
@@ -18,6 +18,14 @@ export const entityScreens = [
   },
   // jhipster-react-native-navigation-declaration-needle
 ]
+
+export const getEntityRoutes = () => {
+  const routes = {};
+  entityScreens.forEach((screen) => {
+    routes[screen.name] = screen.route;
+  });
+  return routes;
+};
 
 const EntityStack = createStackNavigator();
 
