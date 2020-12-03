@@ -179,6 +179,7 @@ const expectedFiles = {
         'test/spec/modules/chat/chat.reducer.spec.js',
     ],
     entity: [
+        'app/modules/entities/foo/foo-entity-delete-modal.js',
         'app/modules/entities/foo/foo-entity-detail-screen.js',
         'app/modules/entities/foo/foo-entity-detail-screen-style.js',
         'app/modules/entities/foo/foo-entity-edit-screen.js',

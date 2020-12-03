@@ -41,13 +41,14 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  fetchingOne: null,
-  fetchingAll: null,
-  updating: null,
+  fetchingOne: false,
+  fetchingAll: false,
+  updating: false,
   <%_ if (searchEngine) { _%>
-  searching: null,
+  searching: false,
   <%_ } _%>
-  deleting: null,
+  deleting: false,
+  updateSuccess: false,
   <%= camelCaseName %>: null,
   <%= camelCaseNamePlural %>: [],
   errorOne: null,
@@ -70,6 +71,7 @@ export const request = (state) =>
   state.merge({
     fetchingOne: true,
     errorOne: false,
+    updateSuccess: false,
     <%= camelCaseName %>: null
   })
 
@@ -77,24 +79,28 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
+    updateSuccess: false,
     errorAll: false,
   })
 
 // request to update from an api
 export const updateRequest = (state) =>
   state.merge({
+    updateSuccess: false,
     updating: true
   })
 <%_ if (searchEngine) { _%>
 // request to search from an api
 export const searchRequest = (state) =>
   state.merge({
+    updateSuccess: false,
     searching: true
   })
 <%_ } _%>
 // request to delete from an api
 export const deleteRequest = (state) =>
   state.merge({
+    updateSuccess: false,
     deleting: true
   })
 
@@ -129,6 +135,7 @@ export const allSuccess = (state, action) => {
 export const updateSuccess = (state, action) => {
   const { <%= camelCaseName %> } = action
   return state.merge({
+    updateSuccess: true,
     updating: false,
     errorUpdating: null,
     <%= camelCaseName %>
@@ -176,6 +183,7 @@ export const allFailure = (state, action) => {
 export const updateFailure = (state, action) => {
   const { error } = action
   return state.merge({
+    updateSuccess: false,
     updating: false,
     errorUpdating: error,
     <%= camelCaseName %>: state.<%= camelCaseName %>

@@ -1,81 +1,82 @@
 import React from 'react'
-import { ActivityIndicator, Alert, ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, ScrollView, Text, <% if (entityContainsImageBlob) { %>Image, <% } %>View } from 'react-native';
 import { connect } from 'react-redux'
-import { <%= camelCaseName %>EntityEditScreen } from '../../../navigation/layouts'
+import { useFocusEffect } from '@react-navigation/native';
 <%_ if (entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
 import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
+import <%= name %>EntityDeleteModal from './<%= kebabCaseName %>-entity-delete-modal';
 import styles from './<%= kebabCaseName %>-entity-detail-screen-style'
 
-class <%= name %>EntityDetailScreen extends React.Component {
-  constructor (props) {
-    super(props)
-    this.props.get<%= name %>(this.props.data.entityId)
-  }
+function <%= name %>EntityDetailScreen(props) {
+  const { route, get<%= name %> } = props;
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
 
-  componentDidUpdate (prevProps) {
-    if (prevProps.deleting && !this.props.deleting) {
-      if (this.props.errorDeleting) {
-        this.props.navigation.navigate('ModalScreen', { title: 'Error', message: 'Something went wrong deleting the entity' });
-      } else {
-        this.props.reset<%= pluralName %>()
-        // todo pop
-        // Navigation.pop(this.props.componentId)
-      }
-    }
-  }
+  useFocusEffect(
+    React.useCallback(() => {
+      get<%= name %>(route.params.entityId);
+    }, [route, get<%= name %>]),
+  );
 
-  confirmDelete = () => {
-    // todo replace alert with modal?
-    Alert.alert(
-      'Delete <%= name %>?',
-      'Are you sure you want to delete the <%= name %>?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'OK',
-          onPress: () => {
-            this.props.delete<%= name %>(this.props.data.entityId)
-          }
-        }
-      ],
-      { cancelable: false }
-    )
-  }
-
-  render () {
-    if (!this.props.<%= camelCaseName %> || this.props.fetching) {
-      return (
-        <View style={styles.loading}>
-          <ActivityIndicator size="large" />
-        </View>
-      )
-    }
+  if (!props.<%= camelCaseName %> && !props.fetching && props.error) {
     return (
-      <ScrollView style={styles.container} testID="<%= camelCaseName %>DetailScrollView">
-        <Text>ID: {this.props.<%= camelCaseName %>.id}</Text>
-        <%_ entityInfo.fields.forEach(function (field) { _%>
-        <%_ if (field.fieldType === 'LocalDate') { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {jsDateToLocalDate(this.props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
-        <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {String(this.props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
-        <%_ } else { _%>
-        <Text testID='<%= field.fieldName %>'><%= upperFirst(field.fieldName) %>: {this.props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
-        <%_ } _%>
-        <%_ }) _%>
-        <RoundedButton text='Edit' onPress={<%= camelCaseName %>EntityEditScreen.bind(this, { entityId: this.props.<%= camelCaseName %>.id })} />
-        <RoundedButton text='Delete' onPress={this.confirmDelete} />
-      </ScrollView>
-    )
+      <View style={styles.loading}>
+        <Text>Something went wrong fetching the <%= name %>.</Text>
+      </View>
+    );
   }
+  if (!props.<%= camelCaseName %> || props.fetching) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  return (
+    <ScrollView style={styles.container} testID="<%= camelCaseName %>DetailScrollView">
+      <Text style={styles.label}>Id:</Text>
+      <Text>{props.<%= camelCaseName %>.id}</Text>
+      <%_ entityInfo.fields.forEach(function (field) { _%>
+      {/* <%= upperFirst(field.fieldName) %> Field */}
+      <Text style={styles.label}><%= upperFirst(field.fieldName) %>:</Text>
+      <%_ if (field.fieldType === 'LocalDate') { _%>
+        <Text testID='<%= field.fieldName %>'>{jsDateToLocalDate(props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+      <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant' || field.fieldType === 'Boolean') { _%>
+        <Text testID='<%= field.fieldName %>'>{String(props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+      <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'any') { _%>
+        <Text testID='<%= field.fieldName %>ContentType'>Open {props.<%= camelCaseName %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
+      <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') { _%>
+        <Text testID='<%= field.fieldName %>ContentType'>{props.<%= camelCaseName %>.<%= field.fieldName %>ContentType}</Text>
+        <Image
+          testID="<%= field.fieldName %>"
+          style={styles.imageBlob}
+          source={{ uri: `data:${props.<%= camelCaseName %>.<%= field.fieldName %>ContentType};base64,${props.<%= camelCaseName %>.<%= field.fieldName %>}` }}
+        />
+      <%_ } else { _%>
+        <Text testID='<%= field.fieldName %>'>{props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
+      <%_ } _%>
+      <%_ }) _%>
+      <RoundedButton text="Edit" onPress={() => props.navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} />
+      <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} />
+      {deleteModalVisible && (
+        <<%= name %>EntityDeleteModal
+          navigation={props.navigation}
+          visible={deleteModalVisible}
+          setVisible={setDeleteModalVisible}
+          entity={props.<%= camelCaseName %>}
+        />
+      )}
+    </ScrollView>
+  );
 }
 
 const mapStateToProps = (state) => {
   return {
     <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
+    error: state.<%= camelCaseNamePlural %>.errorOne,
     fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
     deleting: state.<%= camelCaseNamePlural %>.deleting,
     errorDeleting: state.<%= camelCaseNamePlural %>.errorDeleting
