@@ -15,7 +15,7 @@ const files = {
                 'app/config/app-config.js',
                 'app/navigation/drawer/drawer-content.js',
                 'app/navigation/entity-stack.js',
-                'app/navigation/navigation-container.js',
+                'app/navigation/nav-container.js',
                 'app/navigation/nav-ref.js',
                 'app/navigation/not-found-screen.tsx',
                 'app/navigation/modal.screen.js',
