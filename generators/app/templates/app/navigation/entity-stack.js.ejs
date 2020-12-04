@@ -1,6 +1,9 @@
 import * as React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Text } from 'react-native';
+import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
+
 import { DrawerButton } from './drawer/drawer-button';
+import { navigationRef } from './nav-ref';
 
 // import screens
 import EntitiesScreen from '../modules/entities/entities-screen';
@@ -8,11 +11,10 @@ import EntitiesScreen from '../modules/entities/entities-screen';
 
 export const entityScreens = [
   {
-    name: 'EntityStack',
+    name: 'Entities',
     route: '',
     component: EntitiesScreen,
     options: {
-      title: 'Entities',
       headerLeft: DrawerButton,
     },
   },
@@ -38,7 +40,7 @@ export default function EntityStackScreen() {
             name={screen.name}
             component={screen.component}
             key={index}
-            options={screen.options || {}}
+            options={screen.options}
           />;
         })
       )}
