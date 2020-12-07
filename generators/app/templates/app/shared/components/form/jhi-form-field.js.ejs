@@ -23,6 +23,10 @@ export default React.forwardRef((props, ref) => {
     return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
   }
 
+  if(inputType === 'date' || inputType === 'datetime' && !(values[name] instanceof Date)){
+    values[name] = new Date(values[name]);
+  }
+
   const hasError = errors[name] && touched[name];
   return (
     <React.Fragment>
