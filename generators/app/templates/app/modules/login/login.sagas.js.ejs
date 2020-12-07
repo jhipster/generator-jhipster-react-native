@@ -92,7 +92,7 @@ export function * login (api, { username, password }) {
   } else {
     yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad credentials'))
     if (!response.data) {
-      navigate('ModalScreen', { title: 'Error', message: 'Failed to reach backend API.' });
+      navigate('ModalScreen', { title: 'Error', message: 'Failed to reach backend API.', isError: true });
     }
   }
 }
