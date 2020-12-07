@@ -46,12 +46,10 @@ export default React.forwardRef((props, ref) => {
           keyboardType="numeric"
           value={values[name]}
           onChangeText={(text) => {
-            const regex = /^-?(0|[1-9]\d*)?(\.\d+)?(?<=\d)$/;
-            if (text.length === 0 || regex.test(text.toString())) {
-              console.log(text);
+            const numberRegex = new RegExp(/^-?(0|[1-9]\d*)?(\.\d+)?$/);
+            if (text.length === 0 || numberRegex.test(text.toString())) {
               setFieldValue(name, text);
             }
-            console.log(text);
           }}
           onBlur={() => setFieldTouched(name)}
           error={hasError}
