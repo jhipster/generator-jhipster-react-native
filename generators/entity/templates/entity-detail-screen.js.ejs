@@ -22,7 +22,7 @@ function <%= name %>EntityDetailScreen(props) {
       } else {
         get<%= name %>(route.params.entityId);
       }
-    }, [route, get<%= name %>]),
+    }, [route, get<%= name %>, navigation]),
   );
 
   if (!props.<%= camelCaseName %> && !props.fetching && props.error) {
