@@ -23,8 +23,14 @@ export default React.forwardRef((props, ref) => {
     return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
   }
 
-  if(inputType === 'date' || inputType === 'datetime' && !(values[name] instanceof Date)){
+  // ensure fields are the correct format
+  if (inputType === 'date' || (inputType === 'datetime' && !(values[name] instanceof Date))) {
+    // date values can't be strings
     values[name] = new Date(values[name]);
+  }
+  if (inputType === 'number' && (typeof values[name]).toLowerCase() === 'number') {
+    // number values have to be strings
+    values[name] = String(values[name]);
   }
 
   const hasError = errors[name] && touched[name];
