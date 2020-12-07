@@ -18,3 +18,14 @@ export function navigate(name, params) {
 export function toggleDrawer() {
   navigationRef.current.dispatch(DrawerActions.toggleDrawer());
 }
+
+export function goBackOrIfParamsOrDefault(targetScreen, defaultScreen) {
+  const currentRoute = navigationRef.current.getCurrentRoute();
+  if (navigationRef.current.canGoBack()) {
+    navigationRef.current.goBack();
+  } else if (currentRoute && currentRoute.params) {
+    navigate(targetScreen, currentRoute.params);
+  } else {
+    navigate(defaultScreen);
+  }
+}

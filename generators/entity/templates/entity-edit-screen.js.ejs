@@ -36,7 +36,7 @@ _%>
 }) // end of field loop _%>
 
 function <%= name %>EntityEditScreen(props) {
-  const { get<%= name %>, route, <%= camelCaseName %> } = props;
+  const { get<%= name %>, route, <%= camelCaseName %>, fetching, reset } = props;
   const [formValue, setFormValue] = React.useState();
   const [error, setError] = React.useState('');
 
@@ -45,14 +45,16 @@ function <%= name %>EntityEditScreen(props) {
   React.useEffect(() => {
     if (!isNewEntity) {
       get<%= name %>(route.params.entityId);
+    } else {
+      reset();
     }
-  }, [isNewEntity, get<%= name %>, route]);
+  }, [isNewEntity, get<%= name %>, route, reset]);
 
   React.useEffect(() => {
-    if (<%= camelCaseName %>) {
+    if (!fetching) {
       setFormValue(entityToFormValue(<%= camelCaseName %>));
     }
-  }, [<%= camelCaseName %>]);
+  }, [<%= camelCaseName %>, fetching]);
 
   useDidUpdateEffect(() => {
     if (props.updating === false) {
@@ -71,7 +73,7 @@ function <%= name %>EntityEditScreen(props) {
 
   const onSubmit = (data) => props.update<%= name %>(formValueToEntity(data));
 
-  if (props.fetching) {
+  if (fetching) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" />

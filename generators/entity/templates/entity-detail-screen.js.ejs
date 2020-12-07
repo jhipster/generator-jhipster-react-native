@@ -12,12 +12,16 @@ import <%= name %>EntityDeleteModal from './<%= kebabCaseName %>-entity-delete-m
 import styles from './<%= kebabCaseName %>-entity-detail-screen-style'
 
 function <%= name %>EntityDetailScreen(props) {
-  const { route, get<%= name %> } = props;
+  const { route, get<%= name %>, navigation } = props;
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
-      get<%= name %>(route.params.entityId);
+      if (!route.params || !route.params.entityId) {
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('FieldTestEntityEntity');
+      } else {
+        get<%= name %>(route.params.entityId);
+      }
     }, [route, get<%= name %>]),
   );
 
@@ -59,11 +63,11 @@ function <%= name %>EntityDetailScreen(props) {
         <Text testID='<%= field.fieldName %>'>{props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
       <%_ } _%>
       <%_ }) _%>
-      <RoundedButton text="Edit" onPress={() => props.navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} />
+      <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} />
       <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} />
       {deleteModalVisible && (
         <<%= name %>EntityDeleteModal
-          navigation={props.navigation}
+          navigation={navigation}
           visible={deleteModalVisible}
           setVisible={setDeleteModalVisible}
           entity={props.<%= camelCaseName %>}
