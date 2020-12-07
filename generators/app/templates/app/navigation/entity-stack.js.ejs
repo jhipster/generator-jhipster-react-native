@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Text } from 'react-native';
 import { createStackNavigator, HeaderBackButton } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
 
 import { DrawerButton } from './drawer/drawer-button';
-import { navigationRef } from './nav-ref';
+import { navigate, goBackOrIfParamsOrDefault } from './nav-ref';
 
 // import screens
 import EntitiesScreen from '../modules/entities/entities-screen';
