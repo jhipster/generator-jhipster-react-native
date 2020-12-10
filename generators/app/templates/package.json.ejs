@@ -52,6 +52,11 @@
     "react-datepicker": "REPLACE_WITH_VERSION",
     "react-native-modal-datetime-picker": "REPLACE_WITH_VERSION",
     "react-native-picker-select": "REPLACE_WITH_VERSION",
+    <%_ if (authType === 'oauth2') { _%>
+    "expo-auth-session": "REPLACE_WITH_VERSION",
+    "expo-web-browser": "REPLACE_WITH_VERSION",
+    "expo-random": "REPLACE_WITH_VERSION",
+    <%_ } _%>
     "yup": "REPLACE_WITH_VERSION"
   },
   "devDependencies": {
@@ -72,15 +77,11 @@
     <%_ if (!skipCommitHook) { _%>
     "lint-staged": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    <%_ if (authType === 'oauth2') { _%>
-    "react-native-app-auth": "REPLACE_WITH_VERSION",
-    <%_ } _%>
     <%_ if (detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
     "mocha": "REPLACE_WITH_VERSION",
     <%_ } _%>
     "mockery": "REPLACE_WITH_VERSION",
-    "react-dom": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION"
   },

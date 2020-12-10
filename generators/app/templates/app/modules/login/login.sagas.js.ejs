@@ -1,12 +1,4 @@
 import { call, put<% if (authType === 'oauth2' || authType === 'jwt') { %>, select<% } %> } from 'redux-saga/effects'
-<%_ if (authType === 'oauth2') { _%>
-import { Platform } from 'react-native'
-import { authorize } from 'react-native-app-auth'
-<%_ } _%>
-<%_ if (authType === 'oauth2') { _%>
-import CookieManager from '@react-native-community/cookies'
-<%_ } _%>
-import { navigate } from '../../navigation/nav-ref';
 
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
@@ -14,7 +6,9 @@ import AccountActions from '../../shared/reducers/account.reducer'
 import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
 <%_ if (authType === 'oauth2') { _%>
-import AppConfig from '../../config/app-config'
+import { doOauthPkceFlow } from './login.utils';
+
+const oauthClientId = 'PUT-YOUR-OAUTH-CLIENT-ID-HERE';
 <%_ } _%>
 
 <%_ if (authType === 'oauth2' || authType === 'jwt') { _%>
@@ -26,35 +20,28 @@ export function * login (api) {
   // get the oauth issuer information from the backend
   const authInfo = yield call(api.getOauthInfo)
   if (authInfo.ok) {
-    const { issuer, clientId } = authInfo.data
-    const config = {
-      issuer,
-      clientId,
-      scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'],
-      redirectUrl: `${AppConfig.appUrlScheme}://authorize`
-    }
-    if (__DEV__ && Platform.OS === 'android') {
-      // this allows connections to a keycloak instance using http:// in dev
-      config.dangerouslyAllowInsecureHttpRequests = true
-    }
     try {
-      // result includes accessToken, accessTokenExpirationDate and refreshToken
-      const authorizeResult = yield authorize(config)
-      const { accessToken } = authorizeResult
-      yield call(api.setAuthToken, accessToken)
-      yield put(LoginActions.loginSuccess(accessToken))
-      yield put(AccountActions.accountRequest())
-      yield put({ type: 'RELOGIN_OK' })
-    } catch (error) {
-      console.log(error)
+      const { issuer } = authInfo.data;
+      const { accessToken } = yield call(doOauthPkceFlow, oauthClientId, issuer);
+      if (accessToken) {
+        yield call(api.setAuthToken, accessToken);
+        yield put(LoginActions.loginSuccess(accessToken));
+        yield put(AccountActions.accountRequest());
+        <%_ if (websocket) { _%>
+        WebsocketService.setToken(authToken)
+        <%_ } _%>
+        yield put({ type: 'RELOGIN_OK' });
+      }
+    } catch (e) {
+      console.log(e);
       <%_ // todo get expected error format _%>
       yield put(LoginActions.loginFailure('Login failed'))
     }
   } else {
-    const errorMessage = !response.data
+    const errorMessage = !authInfo.data
       ? 'Failed to reach backend API'
-      : response.data && response.data.detail
-      ? response.data.detail
+      : authInfo.data && authInfo.data.detail
+      ? authInfo.data.detail
       : 'Bad Credentials';
     yield put(LoginActions.loginFailure(errorMessage));
   }
@@ -90,10 +77,12 @@ export function * login (api, { username, password }) {
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
   } else {
-    yield put(LoginActions.loginFailure((response.data && response.data.detail) || 'Bad credentials'))
-    if (!response.data) {
-      navigate('ModalScreen', { title: 'Error', message: 'Failed to reach backend API.', isError: true });
-    }
+    const errorMessage = !response.data
+      ? 'Failed to reach backend API'
+      : response.data && response.data.detail
+      ? response.data.detail
+      : 'Bad Credentials';
+    yield put(LoginActions.loginFailure(errorMessage));
   }
 }
 <%_ } _%>
@@ -101,10 +90,7 @@ export function * login (api, { username, password }) {
 export function * logout (api) {
   <%_ if (authType === 'session' || authType === 'uaa') { _%>
   yield call(api.logout)
-  <%_ } else if (authType === 'jwt') { _%>
-  yield call(api.removeAuthToken)
-  <%_ } else if (authType === 'oauth2') { _%>
-  yield CookieManager.clearAll()
+  <%_ } else if (authType === 'jwt' || authType === 'oauth2') { _%>
   yield call(api.removeAuthToken)
   <%_ } _%>
   yield put(AccountActions.accountRequest())

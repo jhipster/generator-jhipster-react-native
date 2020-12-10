@@ -8,7 +8,6 @@ const files = {
                 '.env.example',
                 '.eslintrc.js',
                 '.gitattributes',
-                'babel.config.js',
                 'App.js',
                 'README.md',
                 // templated files
@@ -20,12 +19,12 @@ const files = {
                 'app/navigation/not-found-screen.tsx',
                 'app/navigation/modal.screen.js',
                 'app/modules/home/learn-more-links.component.js',
-                'app/modules/login/login-screen.js',
                 'app/modules/account/register/register-screen.js',
                 'app/shared/services/api.js',
                 'app/modules/login/login.reducer.js',
                 'test/spec/modules/login/login.reducer.spec.js',
                 'app/modules/login/login.sagas.js',
+                'app/modules/login/login.utils.ts',
                 'test/spec/modules/login/login.sagas.spec.js',
                 'app/shared/services/fixture-api.js',
                 'app/shared/fixtures/login.json',
@@ -179,16 +178,31 @@ const files = {
             ],
         },
     ],
+    loginScreen: [
+        {
+            condition: generator => generator.authType !== 'oauth2',
+            templates: ['app/modules/login/login-screen.js'],
+        },
+        {
+            condition: generator => generator.authType === 'oauth2',
+            templates: [
+                {
+                    file: 'app/modules/login/login-screen.oauth2.js',
+                    renameTo: () => 'app/modules/login/login-screen.js',
+                },
+            ],
+        },
+    ],
+    oauth: [
+        {
+            condition: generator => generator.authType === 'oauth2',
+            templates: ['app/shared/fixtures/get-oauth-info.json'],
+        },
+    ],
     detox: [
         {
             condition: generator => generator.detox === true,
-            templates: [
-                '.detoxrc.json',
-                'e2e/init.js',
-                'e2e/.mocharc.json',
-                'e2e/launch-screen.spec.js',
-                'e2e/utils.js',
-            ],
+            templates: ['.detoxrc.json', 'e2e/init.js', 'e2e/.mocharc.json', 'e2e/launch-screen.spec.js', 'e2e/utils.js'],
         },
         {
             condition: generator => generator.detox === true && generator.authType !== 'oauth2',
