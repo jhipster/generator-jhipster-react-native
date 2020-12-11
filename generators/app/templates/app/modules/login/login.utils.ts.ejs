@@ -1,57 +1,31 @@
-import * as Crypto from 'expo-crypto';
-import * as Random from 'expo-random';
-import { Buffer } from 'buffer';
 import { DiscoveryDocument, makeRedirectUri } from 'expo-auth-session';
 import * as AuthSession from 'expo-auth-session';
+import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
+import { buildQueryString } from 'expo-auth-session/src/QueryParams';
 import { Platform } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 WebBrowser.maybeCompleteAuthSession();
 
-export function generateShortUUID(): string {
-  return Math.random().toString(36).substring(2, 15);
-}
-
-interface StringMap {
-  [key: string]: string;
-}
 interface AuthParams {
   state: string;
   codeVerifier: string;
   authUrl: string;
 }
-export function toQueryString(params: StringMap): string {
-  return (
-    '?' +
-    Object.entries(params)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&')
-  );
-}
 
-export function URLEncode(str: string): string {
-  return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/[=]/g, '');
-}
-
-export async function sha256(buffer: string): Promise<string> {
-  return await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, buffer, { encoding: Crypto.CryptoEncoding.BASE64 });
-}
 export async function getAuthParams(clientId: string, redirectUri: string, discovery: DiscoveryDocument): Promise<AuthParams> {
-  const state = generateShortUUID();
-  const randomBytes = await Random.getRandomBytesAsync(32);
-  const base64String = Buffer.from(randomBytes).toString('base64');
-  const codeVerifier = URLEncode(base64String);
-  const codeChallengs = URLEncode(await sha256(codeVerifier));
+  const state = await generateHexStringAsync(16);
+  const { codeVerifier, codeChallenge } = await buildCodeAsync();
   const authenticationOptions = {
     response_type: 'code',
-    code_challenge: codeChallengs,
+    code_challenge: codeChallenge,
     code_challenge_method: 'S256',
     scope: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'].join(' '),
     state,
     client_id: clientId,
     redirect_uri: redirectUri,
   };
-  const authUrl = discovery.discoveryDocument?.authorization_endpoint + toQueryString(authenticationOptions);
+  const authUrl = `${discovery.discoveryDocument?.authorization_endpoint}?${buildQueryString(authenticationOptions)}`;
   return {
     state,
     codeVerifier,
