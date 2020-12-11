@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, useWindowDimensions, View } from 'react-native';
 import * as Linking from 'expo-linking';
+import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -138,6 +139,13 @@ function NavContainer(props) {
       isReadyRef.current = false;
     };
   }, []);
+
+  React.useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
+
   useReduxDevToolsExtension(navigationRef);
 
   const dimensions = useWindowDimensions();

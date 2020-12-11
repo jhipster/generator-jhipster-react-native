@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { Ionicons } from '@expo/vector-icons';
 
 import styles from './search-bar.styles'
 import { Colors, Metrics } from '../../themes'
@@ -17,7 +17,7 @@ export default class SearchBar extends React.Component {
     const { onSearch, onCancel, searchTerm } = this.props
     return (
       <View style={styles.container}>
-        <Icon name='search' size={Metrics.icons.tiny} style={styles.searchIcon} />
+        <Ionicons name="md-search" size={Metrics.icons.tiny} style={styles.searchIcon} />
         <TextInput
           placeholder='Search'
           placeholderTextColor={Colors.snow}

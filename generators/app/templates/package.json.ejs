@@ -19,7 +19,6 @@
     "prop-types": "REPLACE_WITH_VERSION",
     "querystringify": "REPLACE_WITH_VERSION",
     "ramda": "REPLACE_WITH_VERSION",
-    "react-native-vector-icons": "REPLACE_WITH_VERSION",
     "react-native-keyboard-aware-scroll-view": "REPLACE_WITH_VERSION",
     "react-redux": "REPLACE_WITH_VERSION",
     "redux": "REPLACE_WITH_VERSION",
@@ -27,7 +26,7 @@
     "redux-saga": "REPLACE_WITH_VERSION",
     "reduxsauce": "REPLACE_WITH_VERSION",
     "seamless-immutable": "REPLACE_WITH_VERSION",
-    <%_ if (authType === 'session' || authType === 'uaa' || authType === 'oauth2') { _%>
+    <%_ if (authType === 'session' || authType === 'uaa') { _%>
     "@react-native-community/cookies": "REPLACE_WITH_VERSION",
     <%_ } _%>
     <%_ if (websocket) { _%>
@@ -43,10 +42,10 @@
     "react-native-gesture-handler": "REPLACE_WITH_VERSION",
     "react-native-reanimated": "REPLACE_WITH_VERSION",
     "react-native-safe-area-context": "REPLACE_WITH_VERSION",
-    "react-native-screens": "REPLACE_WITH_VERSION",
     "react-native-web": "REPLACE_WITH_VERSION",
     "@expo/vector-icons": "REPLACE_WITH_VERSION",
     "expo-linking": "REPLACE_WITH_VERSION",
+    "expo-splash-screen": "REPLACE_WITH_VERSION",
     "formik": "REPLACE_WITH_VERSION",
     "@react-native-community/datetimepicker": "REPLACE_WITH_VERSION",
     "react-datepicker": "REPLACE_WITH_VERSION",
@@ -70,6 +69,7 @@
     "@react-native-community/eslint-config": "REPLACE_WITH_VERSION",
     "babel-jest": "REPLACE_WITH_VERSION",
     "jest": "REPLACE_WITH_VERSION",
+    "jest-expo": "REPLACE_WITH_VERSION",
     "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
@@ -121,7 +121,7 @@
       "/storybook/",
       "/*\\.story\\.js"
     ],
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "config": { }
 }
