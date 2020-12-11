@@ -29,28 +29,15 @@ export default {
     }
   },
   // auth fixtures
-  <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
   setAuthToken: () => {
 
   },
   removeAuthToken: () => {
 
   },
-  <%_ } _%>
-  <%_ if (authType === 'session' || authType === 'uaa') { _%>
-  logout: () => {
-    return {
-      ok: true
-    }
-  },
-  <%_ } _%>
-  <%_ if (authType !== 'oauth2') { _%>
+  <%_ if (authType === 'jwt') { _%>
   login: (authObj) => {
-    <%_ if (authType === 'session') { _%>
-    if (authObj === 'username=user&password=user&remember-me=true') {
-    <%_ } else if (authType === 'jwt' || authType === 'uaa') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
-    <%_ } _%>
       return {
         ok: true,
         data: require('../fixtures/login.json')
@@ -63,7 +50,7 @@ export default {
       }
     }
   },
-  <%_ } else { _%>
+  <%_ } else if (authType === 'oauth2') { _%>
   getOauthInfo: () => {
     return {
       ok: true,

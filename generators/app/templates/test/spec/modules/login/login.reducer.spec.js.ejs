@@ -18,7 +18,6 @@ test('failure', () => {
   expect(state.fetching).toBe(false)
   expect(state.error).toBe(69)
 })
-<%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
 test('load login request', () => {
   const state = reducer(INITIAL_STATE, Actions.loginLoad())
   expect(state.loading).toBe(true)
@@ -28,7 +27,6 @@ test('load login success', () => {
   const state = reducer(INITIAL_STATE, Actions.loginLoadSuccess())
   expect(state.loading).toBe(false)
 })
-<%_ } _%>
 test('logout', () => {
   const loginState = reducer(INITIAL_STATE, Actions.loginSuccess({ id_token: 'hi' }))
   const state = reducer(loginState, Actions.logoutRequest())

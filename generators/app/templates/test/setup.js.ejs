@@ -7,11 +7,6 @@ configure({ adapter: new Adapter() })
 // Mock your external modules here if needed
 jest
   .mock('@react-native-community/async-storage', () => mockAsyncStorage)
-<%_ if (authType === 'session' || authType === 'uaa' || authType === 'oauth2') { _%>
-  .mock('@react-native-community/cookies', () => {
-    return { get: jest.fn((url) => { return [] }), clearAll: jest.fn((url) => { return [] }) }
-  })
-<%_ } _%>
   // related to https://github.com/rt2zz/redux-persist/issues/1243
   .mock("redux-persist/lib/createPersistoid", () =>
     jest.fn(() => ({
