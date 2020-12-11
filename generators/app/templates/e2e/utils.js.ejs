@@ -1,3 +1,4 @@
+const { reloadApp } = require('detox-expo-helpers');
 const { closeSoftKeyboard } = require('detox/src/android/espressoapi/ViewActions');
 
 const username = process.env.E2E_USERNAME || 'user';
@@ -51,11 +52,18 @@ const scrollTo = async (fieldId, listId) => {
   await waitFor(element(by.id(fieldId))).toBeVisible().whileElement(by.id(listId)).scroll(150, 'down', 0.01, 0.01)
 }
 
+const reloadApp = async () => {
+  await reloadApp();
+  // if you eject from expo, you should replace the line above with:
+  // device.reloadReactNative()
+}
+
 module.exports = {
   navigateToLoginScreen,
   loginAsUser,
   goBack,
   logout,
   scrollTo,
-  closeKeyboard
+  closeKeyboard,
+  reloadApp,
 }

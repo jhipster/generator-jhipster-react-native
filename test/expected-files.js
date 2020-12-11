@@ -31,7 +31,6 @@ const expectedFiles = {
         'test/spec/shared/sagas/startup.saga.spec.js',
         'test/setup.js',
         'app/shared/reducers/create-store.js',
-        // files without special templating
         'app/config/debug-config.js',
         'app/config/index.js',
         'app/config/redux-persist.js',
@@ -160,7 +159,7 @@ const expectedFiles = {
         'test/spec/shared/sagas/user.saga.spec.js',
         'test/spec/shared/services/fixture-api.spec.js',
     ],
-    detox: ['.detoxrc.json', 'e2e/init.js', 'e2e/launch-screen.spec.js', 'e2e/utils.js'],
+    detox: ['.detoxrc.json', 'e2e/init.js', 'e2e/.mocharc.json', 'e2e/launch-screen.spec.js', 'e2e/utils.js', 'e2e/download-expo.sh'],
     detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
     detoxAndNotOauth: [
         'e2e/account/change-password-screen.spec.js',
