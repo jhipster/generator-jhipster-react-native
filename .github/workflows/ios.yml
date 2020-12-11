@@ -20,13 +20,9 @@ jobs:
       matrix:
         node_version: [12.16.1]
         app_type:
-          - SessionDtoApp
           - OauthDtoApp
           - JwtWebsocketsApp
         include:
-          - app_type: SessionDtoApp
-            auth_type: session
-            jhi_dto: true
           - app_type: OauthDtoApp
             auth_type: oauth2
             jhi_dto: true

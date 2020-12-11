@@ -61,8 +61,6 @@ After generating, you can use the [entity generator and JDL importer](docs/gener
 `app/config/app-config.js` contains several important variables:
 
 -   `apiUrl`: Your JHipster app's API url
--   `appUrlScheme`: Your app's URL scheme for deep-linking, this is also configured for iOS (Info.plist) and Android (AndroidManifest.xml) separately.
--   `uaaBaseUrl`: (UAA only) If you use a `uaaBasePath` other than `uaa`, configure this variable
 
 #### Notes for Android
 

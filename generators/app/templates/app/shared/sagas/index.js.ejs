@@ -17,7 +17,7 @@ import { UserTypes } from '../../shared/reducers/user.reducer'
 /* ------------- Sagas ------------- */
 
 import { startup } from './startup.saga'
-import { login, logout<% if (authType === 'jwt' || authType === 'oauth2') { %>, loginLoad<% } %> } from '../../modules/login/login.sagas'
+import { login, logout, loginLoad } from '../../modules/login/login.sagas'
 import { register } from '../../modules/account/register/register.sagas'
 import { forgotPassword } from '../../modules/account/password-reset/forgot-password.sagas'
 import { changePassword } from '../../modules/account/password/change-password.sagas'
@@ -39,9 +39,7 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
 
     // JHipster accounts
-    <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
     takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),
-    <%_ } _%>
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout, api),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),

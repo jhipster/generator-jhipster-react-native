@@ -1,15 +1,11 @@
 import { put } from 'redux-saga/effects'
 import AppStateActions from '../reducers/app-state.reducer'
-<%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
 import LoginActions from '../../modules/login/login.reducer'
-<%_ } _%>
 import AccountActions from '../reducers/account.reducer'
 
 // process STARTUP actions
 export function * startup (action) {
-  <%_ if (authType === 'jwt' || authType === 'oauth2') { _%>
   yield put(LoginActions.loginLoad())
-  <%_ } _%>
   yield put(AccountActions.accountRequest())
   yield put(AppStateActions.setRehydrationComplete())
 }
