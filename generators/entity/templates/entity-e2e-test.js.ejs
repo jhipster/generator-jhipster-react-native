@@ -2,7 +2,7 @@ const Utils = require('../utils')
 
 describe('<%= name %> Screen Tests', () => {
   before(async () => {
-    await device.reloadReactNative()
+    await Utils.reloadApp()
     await Utils.loginAsUser()
   })
   after(async () => {
@@ -12,7 +12,7 @@ describe('<%= name %> Screen Tests', () => {
   })
 
   beforeEach(async () => {
-    await device.reloadReactNative()
+    await Utils.reloadApp()
     await navigateTo<%= name %>Screen()
   })
 

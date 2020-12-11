@@ -8,6 +8,12 @@
     <%_ if (!skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
+    <%_ if (detox) { _%>
+    "e2e:build:ios": "detox build --configuration ios.sim.debug",
+    "e2e:test:ios": "./e2e/download-expo.sh && detox test --configuration ios.sim.debug",
+    "e2e:build:android": "detox build --configuration android.emu.debug",
+    "e2e:test:android": "./e2e/download-expo.sh && detox test --configuration android.emu.debug",
+    <%_ } _%>
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
   },
   "dependencies": {
@@ -78,6 +84,7 @@
     <%_ if (detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
     "mocha": "REPLACE_WITH_VERSION",
+    "detox-expo-helpers": "REPLACE_WITH_VERSION",
     <%_ } _%>
     "mockery": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",

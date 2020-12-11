@@ -1,6 +1,8 @@
+const Utils = require('./utils')
+
 describe('Launch Screen Tests', () => {
   beforeEach(async () => {
-    await device.reloadReactNative()
+    await Utils.reloadApp()
   })
 
   it('should have welcome screen', async () => {

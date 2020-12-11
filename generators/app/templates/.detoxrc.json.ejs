@@ -1,28 +1,24 @@
 {
   "configurations": {
     "ios.sim.debug": {
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/<%= reactNativeAppName %>.app",
-      "build": "xcodebuild -workspace ios/<%= reactNativeAppName %>.xcworkspace -scheme <%= reactNativeAppName %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+      "binaryPath": "bin/Exponent.app",
       "type": "ios.simulator",
       "name": "iPhone 11"
     },
     "ios.sim.release": {
-      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/<%= reactNativeAppName %>.app",
-      "build": "export RCT_NO_LAUNCH_PACKAGER=true && xcodebuild -workspace ios/<%= reactNativeAppName %>.xcworkspace -scheme <%= reactNativeAppName %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+      "binaryPath": "bin/Exponent.app",
       "type": "ios.simulator",
       "name": "iPhone 11"
     },
     "android.emu.debug": {
-      "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
-      "build": "cd android && ./gradlew app:assembleDebug app:assembleAndroidTest -DtestBuildType=debug",
+      "binaryPath": "bin/Exponent.app",
       "type": "android.emulator",
       "device": {
         "avdName": "Nexus_6_API_29"
       }
     },
     "android.emu.release": {
-      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-      "build": "cd android && ./gradlew app:assembleRelease app:assembleAndroidTest -DtestBuildType=release",
+      "binaryPath": "bin/Exponent.app",
       "type": "android.emulator",
       "device": {
         "avdName": "Nexus_6_API_29"
