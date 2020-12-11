@@ -7,7 +7,9 @@ import * as Yup from 'yup';
 import AccountActions from '../../../shared/reducers/account.reducer';
 import styles from './settings-screen.styles';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
-import { Form, FormButton, FormField } from '../../../shared/components/form';
+import FormButton from '../../../shared/components/form/jhi-form-button';
+import FormField from '../../../shared/components/form/jhi-form-field';
+import Form from '../../../shared/components/form/jhi-form';
 
 function SettingsScreen(props) {
   // setup error state for displaying error messages

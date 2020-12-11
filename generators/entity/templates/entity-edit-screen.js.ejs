@@ -13,7 +13,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 <%_ if (entityContainsLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
-import { Form, FormField, FormButton } from '../../../shared/components/form';
+import FormButton from '../../../shared/components/form/jhi-form-button';
+import FormField from '../../../shared/components/form/jhi-form-field';
+import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
 
 

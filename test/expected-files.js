@@ -32,9 +32,6 @@ const expectedFiles = {
         'test/spec/shared/sagas/startup.saga.spec.js',
         'test/setup.js',
         'app/shared/reducers/create-store.js',
-        'fastlane/Appfile',
-        'fastlane/Fastfile',
-        'fastlane/Matchfile',
         // files without special templating
         'app/config/debug-config.js',
         'app/config/index.js',
@@ -70,7 +67,6 @@ const expectedFiles = {
         'app/shared/components/form/inputs/jhi-list-input.js',
         'app/shared/components/form/inputs/jhi-switch-input.js',
         'app/shared/components/form/inputs/jhi-text-input.js',
-        'app/shared/components/form/index.js',
         'app/shared/components/form/jhi-form.js',
         'app/shared/components/form/jhi-form-button.js',
         'app/shared/components/form/jhi-form-field.js',
@@ -118,6 +114,10 @@ const expectedFiles = {
         'app/shared/images/your-app.png',
         'app/shared/images/your-app@2x.png',
         'app/shared/images/your-app@3x.png',
+        'assets/icon.png',
+        'assets/splash.png',
+        'assets/favicon.ico',
+        'assets/adaptive-icon.png',
         // other files
         'app/shared/reducers/account.reducer.js',
         'app/shared/reducers/app-state.reducer.js',
