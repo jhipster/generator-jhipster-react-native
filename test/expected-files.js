@@ -23,7 +23,6 @@ const expectedFiles = {
         'test/spec/modules/login/login.reducer.spec.js',
         'app/modules/login/login.sagas.js',
         'test/spec/modules/login/login.sagas.spec.js',
-        'app/modules/login/login.utils.ts',
         'app/shared/services/fixture-api.js',
         'app/shared/fixtures/login.json',
         'app/shared/sagas/index.js',

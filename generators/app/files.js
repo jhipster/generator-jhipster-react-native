@@ -24,7 +24,6 @@ const files = {
                 'app/modules/login/login.reducer.js',
                 'test/spec/modules/login/login.reducer.spec.js',
                 'app/modules/login/login.sagas.js',
-                'app/modules/login/login.utils.ts',
                 'test/spec/modules/login/login.sagas.spec.js',
                 'app/shared/services/fixture-api.js',
                 'app/shared/fixtures/login.json',
@@ -117,7 +116,7 @@ const files = {
                 { file: 'app/shared/images/your-app@3x.png', method: 'copy' },
                 { file: 'assets/icon.png', method: 'copy' },
                 { file: 'assets/splash.png', method: 'copy' },
-                { file: 'assets/favicon.ico', method: 'copy' },
+                { file: 'assets/favicon.png', method: 'copy' },
                 { file: 'assets/adaptive-icon.png', method: 'copy' },
                 'app/shared/reducers/account.reducer.js',
                 'app/shared/reducers/app-state.reducer.js',
@@ -196,7 +195,7 @@ const files = {
     oauth: [
         {
             condition: generator => generator.authType === 'oauth2',
-            templates: ['app/shared/fixtures/get-oauth-info.json'],
+            templates: ['app/shared/fixtures/get-oauth-info.json', 'app/modules/login/login.utils.ts'],
         },
     ],
     detox: [
