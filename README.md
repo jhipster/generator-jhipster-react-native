@@ -20,7 +20,6 @@
     -   [Websockets](docs/websockets.md)
 -   React Native Library Integrations
     -   [Storybook](docs/storybook.md) - Develop UI components in isolation
-    -   [fastlane](docs/fastlane.md) - Automate building and releasing your mobile apps
     -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
     -   [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
     -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
