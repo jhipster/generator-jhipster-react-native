@@ -16,9 +16,9 @@ describe('Chat Screen Tests', () => {
   })
 
   const navigateToChatScreen = async () => {
-    await expect(element(by.id('launchScreen'))).toBeVisible()
-    await element(by.id('menuButton')).tap()
-    await element(by.id('chatDrawerButton')).tap()
+    await Utils.waitForSplashScreen();
+    await Utils.tapFirstElementByLabel('Menu Button');
+    await Utils.tapFirstElementByLabel('Chat');
   }
 
   const sendChat = async (message) => {

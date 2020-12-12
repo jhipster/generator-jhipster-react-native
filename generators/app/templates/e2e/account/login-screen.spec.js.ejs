@@ -8,7 +8,7 @@ describe('Login Screen Tests', () => {
   it('should close on cancel button press', async () => {
     await Utils.navigateToLoginScreen()
     await element(by.id('loginScreenCancelButton')).tap()
-    await expect(element(by.id('launchScreen'))).toBeVisible()
+    await Utils.waitForSplashScreen();
   })
 
   it('should show an alert on log in failure', async () => {
@@ -23,15 +23,15 @@ describe('Login Screen Tests', () => {
 
   it('should log in as user successfully', async () => {
     await Utils.loginAsUser()
-    await expect(element(by.id('launchScreen'))).toBeVisible()
-    await element(by.id('menuButton')).tap()
+    await Utils.waitForSplashScreen();
+    await Utils.tapFirstElementByLabel('Menu Button');
     await expect(element(by.id('logoutDrawerButton'))).toExist()
   })
 
   it('should log out successfully', async () => {
-    await element(by.id('menuButton')).tap()
-    await element(by.id('logoutDrawerButton')).tap()
-    await element(by.id('menuButton')).tap()
+    await Utils.tapFirstElementByLabel('Menu Button');
+    await Utils.tapFirstElementByLabel('Logout')
+    await Utils.tapFirstElementByLabel('Menu Button');
     await expect(element(by.id('loginDrawerButton'))).toExist()
   })
 })

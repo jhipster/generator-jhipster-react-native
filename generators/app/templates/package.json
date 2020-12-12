@@ -61,6 +61,7 @@
     "lint-staged": "10.5.1",
     "detox": "17.11.1",
     "detox-expo-helpers": "^0.6.0",
+    "expo-detox-hook": "^1.0.10",
     "mocha": "8.2.1",
     "mockery": "2.1.0",
     "prettier": "2.1.2",
