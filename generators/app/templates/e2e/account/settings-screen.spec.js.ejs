@@ -1,43 +1,37 @@
-const Utils = require('../utils')
+const Utils = require('../utils');
 
 describe('Settings Screen Tests', () => {
   before(async () => {
-    await Utils.reloadApp()
-    await Utils.loginAsUser()
-  })
+    await Utils.reloadApp();
+    await Utils.loginAsUser();
+  });
   after(async () => {
-    await Utils.goBack()
-    await Utils.logout()
-  })
+    await Utils.logout();
+  });
 
   beforeEach(async () => {
-    await Utils.reloadApp()
-    await navigateToSettingsScreen()
-  })
+    await Utils.reloadApp();
+    await navigateToSettingsScreen();
+  });
 
   const navigateToSettingsScreen = async () => {
     await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Settings');
-  }
-
-  it('should display the settings form', async () => {
-    await expect(element(by.id('firstNameInput'))).toBeVisible()
-    await expect(element(by.id('lastNameInput'))).toBeVisible()
-    await expect(element(by.id('emailInput'))).toBeVisible()
-    await expect(element(by.id('settingsSubmitButton'))).toBeVisible()
-  })
+  };
 
   it('should display a popup on settings update success', async () => {
-    await element(by.id('settingsSubmitButton')).tap()
-    await expect(element(by.text('Settings updated'))).toBeVisible()
-    await element(by.text('OK')).tap()
-  })
+    await element(by.id('emailInput')).replaceText('user@localhost.com');
+    await Utils.closeKeyboard('settingsScreen');
+    await element(by.id('settingsSubmitButton')).tap();
+    await expect(element(by.label('Settings updated'))).toBeVisible();
+    await Utils.tapFirstElementByLabel('DISMISS');
+  });
 
   it('should display a popup on settings update failure', async () => {
-    await element(by.id('emailInput')).replaceText('invalid-email')
-    await element(by.id('settingsSubmitButton')).tap()
-    await expect(element(by.text('Error'))).toBeVisible()
-    await element(by.text('OK')).tap()
-  })
-})
+    await element(by.id('emailInput')).replaceText('invalid-email');
+    await Utils.closeKeyboard('settingsScreen');
+    await element(by.id('settingsSubmitButton')).tap();
+    await expect(element(by.label('Email must be a valid email'))).toBeVisible();
+  });
+});

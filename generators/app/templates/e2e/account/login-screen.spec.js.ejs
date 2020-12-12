@@ -1,37 +1,28 @@
-const Utils = require('../utils')
+const Utils = require('../utils');
 
 describe('Login Screen Tests', () => {
   beforeEach(async () => {
-    await Utils.reloadApp()
-  })
-
-  it('should close on cancel button press', async () => {
-    await Utils.navigateToLoginScreen()
-    await element(by.id('loginScreenCancelButton')).tap()
-    await Utils.waitForSplashScreen();
-  })
+    await Utils.reloadApp();
+  });
 
   it('should show an alert on log in failure', async () => {
-    await Utils.navigateToLoginScreen()
-    await element(by.id('loginScreenUsername')).replaceText('invalid')
-    await element(by.id('loginScreenPassword')).replaceText('invalid')
-    await element(by.id('loginScreenLoginButton')).tap()
-    await expect(element(by.text('Bad credentials'))).toBeVisible()
-    await element(by.text('OK')).tap()
-    await element(by.id('loginScreenCancelButton')).tap()
-  })
+    await Utils.navigateToLoginScreen();
+    await element(by.id('loginScreenUsername')).replaceText('invalid');
+    await element(by.id('loginScreenPassword')).replaceText('invalid');
+    await Utils.closeKeyboard('loginScreen');
+    await element(by.id('loginScreenLoginButton')).tap();
+    await expect(element(by.label('Bad credentials'))).toBeVisible();
+  });
 
   it('should log in as user successfully', async () => {
-    await Utils.loginAsUser()
-    await Utils.waitForSplashScreen();
+    await Utils.loginAsUser();
     await Utils.tapFirstElementByLabel('Menu Button');
-    await expect(element(by.id('logoutDrawerButton'))).toExist()
-  })
+    await expect(element(by.label('Logout'))).toExist();
+  });
 
   it('should log out successfully', async () => {
     await Utils.tapFirstElementByLabel('Menu Button');
-    await Utils.tapFirstElementByLabel('Logout')
-    await Utils.tapFirstElementByLabel('Menu Button');
-    await expect(element(by.id('loginDrawerButton'))).toExist()
-  })
-})
+    await Utils.tapFirstElementByLabel('Logout');
+    await expect(element(by.label('Login'))).toExist();
+  });
+});

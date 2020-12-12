@@ -43,12 +43,13 @@ function LoginScreen(props) {
   });
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container} testID='loginScreen'>
       <View style={styles.formContainer}>
         <Text style={styles.errorText}>{error}</Text>
         <Form initialValues={{ login: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
           <FormField
             name="login"
+            testID="loginScreenUsername"
             label="Login"
             placeholder="Enter login"
             onSubmitEditing={() => passwordRef?.current?.focus()}
@@ -59,6 +60,7 @@ function LoginScreen(props) {
           <FormField
             ref={passwordRef}
             name="password"
+            testID="loginScreenPassword"
             label="Password"
             placeholder="Enter password"
             autoCapitalize="none"
@@ -67,7 +69,7 @@ function LoginScreen(props) {
             onSubmitEditing={() => formRef?.current?.submitForm()}
             textContentType="password"
           />
-          <FormButton title={'Login'} />
+          <FormButton testID="loginScreenLoginButton" title={'Login'} />
         </Form>
       </View>
     </KeyboardAwareScrollView>

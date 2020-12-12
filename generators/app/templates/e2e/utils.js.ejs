@@ -15,17 +15,18 @@ const loginAsUser = async () => {
   await navigateToLoginScreen();
   await element(by.id('loginScreenUsername')).replaceText(username);
   await element(by.id('loginScreenPassword')).replaceText(password);
+  await closeKeyboard('loginScreen');
   await element(by.id('loginScreenLoginButton')).tap();
   try {
-    await Utils.waitForSplashScreen();;
+    await waitForSplashScreen();
   } catch (e) {
     throw new Error('Logging in failed. Check backend status or credentials.');
   }
 };
 
 const logout = async () => {
-  await Utils.tapFirstElementByLabel('Menu Button');
-  await Utils.tapFirstElementByLabel('Logout');
+  await tapFirstElementByLabel('Menu Button');
+  await tapFirstElementByLabel('Logout');
 };
 
 const goBack = async () => {
@@ -60,7 +61,9 @@ const tapFirstElementByLabel = async (elementId) => {
 };
 
 const waitForSplashScreen = async () => {
-  await waitFor(element(by.id('launchScreen'))).toBeVisible().withTimeout(3000);
+  await waitFor(element(by.id('launchScreen')))
+    .toBeVisible()
+    .withTimeout(3000);
 };
 
 const reloadApp = async () => {
