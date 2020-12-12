@@ -41,13 +41,14 @@ function SettingsScreen(props) {
   const emailRef = createRef();
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container} testID="settingsScreen">
       <View style={styles.formContainer}>
         <Text style={styles.errorText}>{error}</Text>
         <Form initialValues={props.account} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
           <FormField
             name="firstName"
             ref={firstNameRef}
+            testID="firstNameInput"
             label="First Name"
             placeholder="Enter first name"
             onSubmitEditing={() => lastNameRef?.current?.focus()}
@@ -57,6 +58,7 @@ function SettingsScreen(props) {
           <FormField
             name="lastName"
             ref={lastNameRef}
+            testID="lastNameInput"
             label="Last Name"
             placeholder="Enter last name"
             onSubmitEditing={() => emailRef?.current?.focus()}
@@ -65,6 +67,7 @@ function SettingsScreen(props) {
           <FormField
             name="email"
             ref={emailRef}
+            testID="emailInput"
             label="Email"
             placeholder="Enter email"
             onSubmitEditing={() => formRef?.current?.submitForm()}
@@ -72,7 +75,7 @@ function SettingsScreen(props) {
             keyboardType="email-address"
             textContentType="username"
           />
-          <FormButton title={'Save'} />
+          <FormButton testID="settingsSubmitButton" title={'Save'} />
         </Form>
       </View>
     </KeyboardAwareScrollView>

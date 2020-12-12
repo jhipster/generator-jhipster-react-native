@@ -105,7 +105,7 @@ describe('<%= name %> Screen Tests', () => {
     await Utils.closeKeyboard('<%= camelCaseName %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= camelCaseName %>EditScrollView')
     await element(by.id('submitButton')).tap()
-    await element(by.text('OK')).tap()
+    await Utils.tapFirstElementByLabel('DISMISS');
     <%_ entityInfo.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
