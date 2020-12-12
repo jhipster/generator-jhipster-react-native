@@ -12,6 +12,7 @@ export const DrawerButton = (props) => {
     <View style={{ flexDirection: 'row' }}>
       <TouchableItem
         onPress={toggleDrawer}
+        accessibilityLabel={'Menu Button'}
         style={{
           marginHorizontal: 11,
         }}
@@ -22,6 +23,7 @@ export const DrawerButton = (props) => {
         {/* Button Image */}
         <Image
           source={Images.toggleDrawerIcon}
+          accessibilityLabel={'Menu Button'}
           style={{
             height: 24,
             width: 24,

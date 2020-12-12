@@ -6,6 +6,7 @@ describe('Launch Screen Tests', () => {
   })
 
   it('should have welcome screen', async () => {
+    await Utils.waitForSplashScreen();
     await expect(element(by.id('launchScreen'))).toBeVisible()
   })
 })
