@@ -134,6 +134,8 @@ const getScreens = (props) => {
 };
 
 function NavContainer(props) {
+  const { loaded } = props;
+
   React.useEffect(() => {
     return () => {
       isReadyRef.current = false;
@@ -149,7 +151,6 @@ function NavContainer(props) {
   useReduxDevToolsExtension(navigationRef);
 
   const dimensions = useWindowDimensions();
-  const { loaded } = props;
   return !loaded ? (
     <View>
       <Text>Loading...</Text>

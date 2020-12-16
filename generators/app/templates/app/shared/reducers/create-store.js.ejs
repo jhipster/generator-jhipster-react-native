@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
@@ -27,7 +28,7 @@ export default (rootReducer, rootSaga) => {
 
   enhancers.push(applyMiddleware(...middleware))
 
-  const store = createStore(rootReducer, compose(...enhancers))
+  const store = createStore(rootReducer, composeWithDevTools(...enhancers));
 
   // configure persistStore and check reducer version number
   if (ReduxPersist.active) {

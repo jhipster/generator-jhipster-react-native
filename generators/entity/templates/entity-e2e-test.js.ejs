@@ -26,9 +26,8 @@ describe('<%= name %> Screen Tests', () => {
 
   it('should allow you to create an entity', async () => {
     await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
-    await expect(element(by.text('Create'))).toBeVisible()
     // create
-    await element(by.id('<%= camelCaseName %>CreateButton')).tap()
+    await Utils.tapFirstElementByLabel(' New ')
     <%_ entityInfo.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
