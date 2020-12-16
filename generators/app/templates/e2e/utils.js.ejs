@@ -5,7 +5,6 @@ const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
 
 const navigateToLoginScreen = async () => {
-  await waitForSplashScreen();
   await tapFirstElementByLabel('Menu Button');
   await tapFirstElementByLabel('Login');
   await expect(element(by.id('loginScreenUsername'))).toBeVisible();
@@ -50,10 +49,18 @@ const closeKeyboard = async (componentId = null) => {
 };
 
 const scrollTo = async (fieldId, listId) => {
-  await waitFor(element(by.id(fieldId)))
-    .toBeVisible()
-    .whileElement(by.id(listId))
-    .scroll(150, 'down', 0.01, 0.01);
+  let attempts = 0;
+  if (device.getPlatform() === 'ios') {
+    let attributes = await element(by.id(fieldId)).getAttributes();
+    while (!attributes.visible && attempts < 20) {
+      await element(by.id(listId)).swipe('up', 'slow', .3);
+      attributes = await element(by.id(fieldId)).getAttributes();
+      attempts += 1;
+    }
+    if (attempts >= 20) {
+      throw `Did not find after attempting to scroll ${listId} to element ${fieldID}`;
+    }
+  }
 };
 
 const tapFirstElementByLabel = async (elementId) => {
@@ -70,6 +77,7 @@ const reloadApp = async () => {
   await DetoxExpoHelpers.reloadApp();
   // if you eject from expo, you should replace the line above with:
   // device.reloadReactNative()
+  await waitForSplashScreen();
 };
 
 module.exports = {
