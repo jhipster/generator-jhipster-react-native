@@ -177,11 +177,11 @@ const files = {
     ],
     loginScreen: [
         {
-            condition: generator => generator.authType !== 'oauth2',
+            condition: generator => generator.authenticationType !== 'oauth2',
             templates: ['app/modules/login/login-screen.js'],
         },
         {
-            condition: generator => generator.authType === 'oauth2',
+            condition: generator => generator.authenticationType === 'oauth2',
             templates: [
                 {
                     file: 'app/modules/login/login-screen.oauth2.js',
@@ -192,13 +192,13 @@ const files = {
     ],
     oauth: [
         {
-            condition: generator => generator.authType === 'oauth2',
+            condition: generator => generator.authenticationType === 'oauth2',
             templates: ['app/shared/fixtures/get-oauth-info.json', 'app/modules/login/login.utils.ts'],
         },
     ],
     detox: [
         {
-            condition: generator => generator.detox === true,
+            condition: generator => generator.context.detox === true,
             templates: [
                 '.detoxrc.json',
                 'e2e/init.js',
@@ -209,7 +209,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.detox === true && generator.authType !== 'oauth2',
+            condition: generator => generator.context.detox === true && generator.authenticationType !== 'oauth2',
             templates: [
                 'e2e/account/change-password-screen.spec.js',
                 'e2e/account/login-screen.spec.js',
@@ -217,7 +217,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.detox === true && generator.websocket,
+            condition: generator => generator.context.detox === true && generator.websocket,
             templates: ['e2e/websockets/chat-screen.spec.js'],
         },
     ],

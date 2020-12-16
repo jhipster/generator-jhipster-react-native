@@ -82,7 +82,7 @@ const files = {
     ],
     detox: [
         {
-            condition: generator => generator.detox,
+            condition: generator => generator.context.detox,
             templates: [{ file: 'entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.context.entityFileName}.spec.js` }],
         },
     ],

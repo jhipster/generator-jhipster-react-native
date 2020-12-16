@@ -31,6 +31,9 @@ module.exports = class extends AppGenerator {
         }
 
         this.patchInFile = patchInFile.bind(this);
+        if (!this.context) {
+            this.context = {}
+        }
     }
 
     get initializing() {

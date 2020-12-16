@@ -126,3 +126,11 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
   })
 })
+
+<%_
+// this generates acceptable fake data to use
+context.resetFakerSeed(`entity-cypress-${context.entityNameCapitalized}`);
+context.fieldsNoId.forEach((field) => {
+  const data = field.generateFakeData('cypress')
+  })
+_%>

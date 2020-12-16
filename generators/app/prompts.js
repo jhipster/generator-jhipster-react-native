@@ -24,7 +24,7 @@ function checkForApp(input) {
 function askNamePrompt(meta) {
     // if (!meta) return;
     if (this.options.defaults) {
-        this.reactNativeAppName = 'RnApp';
+        this.context.reactNativeAppName = 'RnApp';
         return;
     }
 
@@ -43,13 +43,13 @@ function askNamePrompt(meta) {
 
     const promise = this.prompt(prompts);
     promise.then(props => {
-        this.reactNativeAppName = props.appName;
+        this.context.reactNativeAppName = props.appName;
         done();
     });
 }
 function askDetoxPrompt(meta) {
     if (this.options.defaults) {
-        this.detox = true;
+        this.context.detox = true;
         return;
     }
     // if (!meta) return;
@@ -67,7 +67,7 @@ function askDetoxPrompt(meta) {
 
     const promise = this.prompt(prompts);
     promise.then(props => {
-        this.detox = props.detox;
+        this.context.detox = props.detox;
         done();
     });
 }

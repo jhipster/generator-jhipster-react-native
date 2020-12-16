@@ -8,7 +8,7 @@ import AccountActions from '../../../../app/shared/reducers/account.reducer'
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('login success path', () => {
-  <%_ if (authType === 'oauth2') { _%>
+  <%_ if (context.authenticationType === 'oauth2') { _%>
   const oauthInfo = FixtureAPI.getOauthInfo()
   const step = stepper(login(FixtureAPI, oauthInfo))
   const sampleOauthResponse = {
@@ -24,7 +24,7 @@ test('login success path', () => {
   expect(step()).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
-  <%_} else if (authType === 'jwt') { _%>
+  <%_} else if (context.authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',
     password: 'user',
@@ -45,7 +45,7 @@ test('login success path', () => {
   <%_ } _%>
 })
 test('login failure path', () => {
-  <%_ if (authType === 'oauth2') { _%>
+  <%_ if (context.authenticationType === 'oauth2') { _%>
   const response = FixtureAPI.getOauthInfo()
   const step = stepper(login(FixtureAPI))
 
@@ -54,7 +54,7 @@ test('login failure path', () => {
   // set response.ok to false as if the oauth issuer is down
   response.ok = false
   expect(step(response)).toEqual(put(LoginActions.loginFailure('Could not connect to OAuth2 Provider')))
-  <%_} else if (authType === 'jwt') { _%>
+  <%_} else if (context.authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',
     password: 'user2',

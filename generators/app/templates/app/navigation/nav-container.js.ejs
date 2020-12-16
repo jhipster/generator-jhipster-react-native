@@ -17,7 +17,7 @@ import ForgotPasswordScreen from '../modules/account/password-reset/forgot-passw
 import ChangePasswordScreen from '../modules/account/password/change-password-screen';
 import EntityStackScreen, { getEntityRoutes } from './entity-stack';
 import StorybookScreen from '../../storybook';
-<%_ if (websocket) { _%>
+<%_ if (context.websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
 import DrawerContent from './drawer/drawer-content';
@@ -77,7 +77,7 @@ export const drawerScreens = [
     component: StorybookScreen,
     auth: null,
   },
-  <%_ if (websocket) { _%>
+  <%_ if (context.websocket) { _%>
   {
     name: 'Chat',
     route: 'chat',

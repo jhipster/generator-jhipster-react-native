@@ -6,6 +6,7 @@ const {
     patchInFile,
     patchNavigationForEntity,
     patchEntityApi,
+    loadVariables,
     getEntityFormField,
     getRelationshipFormField,
     getFieldValidateType,
@@ -42,7 +43,10 @@ module.exports = class extends EntityGenerator {
     }
 
     get loading() {
-        return super._loading();
+        return {
+            ...super._loading(),
+            loadVariables: loadVariables.bind(this),
+        };
     }
 
     get preparing() {
