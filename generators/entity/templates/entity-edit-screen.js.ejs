@@ -65,7 +65,12 @@ function <%= name %>EntityEditScreen(props) {
         setError('Something went wrong updating the entity');
       } else {
         setError('');
-        props.navigation.replace('<%= name %>EntityDetail', { entityId: <%= camelCaseName %>?.id });
+        if (isNewEntity) {
+          // send to the detail screen on new entity, otherwise pop (to the detail screen)
+          props.navigation.replace('<%= name %>EntityDetail', { entityId: <%= camelCaseName %>?.id });
+        } else {
+          props.navigation.pop();
+        }
       }
     }
   }, [props.updateSuccess]);
@@ -149,13 +154,13 @@ const entityToFormValue = (value) => {
     <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
     <%_ if (entityInfo.dto === 'no') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id })),
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
     <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null,
       <%_ } _%>
     <%_ } else if (entityInfo.dto === 'mapstruct') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return <%= relation.relationshipName %>.id })),
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
     <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null,
       <%_ } _%>
@@ -179,7 +184,7 @@ const formValueToEntity = (value) => {
     <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
     <%_  if (entityInfo.dto === 'mapstruct') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } })),
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
     <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null,
       <%_ } _%>
@@ -189,7 +194,7 @@ const formValueToEntity = (value) => {
   <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
     <%_ if (entityInfo.dto === 'no') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-  entity.<%= relation.relationshipNamePlural %> = [].concat(value.<%= relation.relationshipNamePlural %>.map((<%= relation.relationshipName %>) => { return { id: <%= relation.relationshipName %> } }))
+  entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
   if (value.<%= relation.otherEntityName %>Id) {
     entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }

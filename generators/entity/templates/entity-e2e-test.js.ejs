@@ -7,7 +7,6 @@ describe('<%= name %> Screen Tests', () => {
   })
   after(async () => {
     await Utils.goBack()
-    await Utils.goBack()
     await Utils.logout()
   })
 
@@ -24,7 +23,7 @@ describe('<%= name %> Screen Tests', () => {
     await element(by.id('<%= camelCaseName %>EntityScreenButton')).tap()
   }
 
-  it('should allow you to create an entity', async () => {
+  it('should allow you to create, update, and delete the <%= name %> entity', async () => {
     await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
     // create
     await Utils.tapFirstElementByLabel(' New ')
@@ -54,7 +53,6 @@ describe('<%= name %> Screen Tests', () => {
     await Utils.scrollTo('submitButton', '<%= camelCaseName %>EditScrollView')
     await element(by.id('submitButton')).tap()
     // view
-    await element(by.text('View')).tap()
     <%_ entityInfo.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
@@ -72,13 +70,13 @@ describe('<%= name %> Screen Tests', () => {
     await Utils.scrollTo('<%= field.fieldName %>', '<%= camelCaseName %>DetailScrollView')
     <%_ } _%>
     <%_ if (tcombFieldType === 'String') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data')
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data')
     <%_ } else if (tcombFieldType === 'Number') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 123')
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('123')
     <%_ } _%>
     <%_ }) _%>
     // update
-    await element(by.text('EDIT')).tap()
+    await Utils.tapFirstElementByLabel('<%= name %> Edit Button');
     <%_ entityInfo.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
@@ -104,7 +102,6 @@ describe('<%= name %> Screen Tests', () => {
     await Utils.closeKeyboard('<%= camelCaseName %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= camelCaseName %>EditScrollView')
     await element(by.id('submitButton')).tap()
-    await Utils.tapFirstElementByLabel('DISMISS');
     <%_ entityInfo.fields.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
@@ -118,14 +115,14 @@ describe('<%= name %> Screen Tests', () => {
         tcombFieldType = field.fieldType
       }
     if (tcombFieldType === 'String') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: sample-data-2')
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data-2')
     <%_ } else if (tcombFieldType === 'Number') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveText('<%= upperFirst(field.fieldName) %>: 1234')
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('1234')
     <%_ } _%>
     <%_ }) _%>
     // delete
-    await element(by.text('DELETE')).tap()
-    await element(by.text('OK')).tap()
+    await Utils.tapFirstElementByLabel('<%= name %> Delete Button');
+    await Utils.tapFirstElementByLabel('Delete');
     await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
   })
 })
