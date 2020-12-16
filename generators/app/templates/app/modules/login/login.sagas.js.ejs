@@ -2,10 +2,10 @@ import { call, put, select } from 'redux-saga/effects'
 
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
-<%_ if (websocket) { _%>
+<%_ if (context.websocket) { _%>
 import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
-<%_ if (authType === 'oauth2') { _%>
+<%_ if (context.authenticationType === 'oauth2') { _%>
 import { doOauthPkceFlow } from './login.utils';
 
 const oauthClientId = 'PUT-YOUR-OAUTH-CLIENT-ID-HERE';
@@ -13,7 +13,7 @@ const oauthClientId = 'PUT-YOUR-OAUTH-CLIENT-ID-HERE';
 
 export const selectAuthToken = (state) => state.login.authToken
 // attempts to login
-<%_ if (authType === 'oauth2') { _%>
+<%_ if (context.authenticationType === 'oauth2') { _%>
 export function * login (api) {
   // get the oauth issuer information from the backend
   const authInfo = yield call(api.getOauthInfo)
@@ -25,7 +25,7 @@ export function * login (api) {
         yield call(api.setAuthToken, accessToken);
         yield put(LoginActions.loginSuccess(accessToken));
         yield put(AccountActions.accountRequest());
-        <%_ if (websocket) { _%>
+        <%_ if (context.websocket) { _%>
         WebsocketService.setToken(authToken)
         <%_ } _%>
         yield put({ type: 'RELOGIN_OK' });
@@ -45,7 +45,7 @@ export function * login (api) {
   }
 }
 
-<%_ } else if (authType === 'jwt') { _%>
+<%_ } else if (context.authenticationType === 'jwt') { _%>
 export function * login (api, { username, password }) {
   const authObj = {
     username: username,
@@ -60,7 +60,7 @@ export function * login (api, { username, password }) {
     yield call(api.setAuthToken, response.data.id_token)
     yield put(LoginActions.loginSuccess(response.data.id_token))
     yield put(AccountActions.accountRequest())
-    <%_ if (websocket) { _%>
+    <%_ if (context.websocket) { _%>
     WebsocketService.setToken(response.data.id_token)
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
@@ -88,7 +88,7 @@ export function * loginLoad (api) {
   // only set the token if we have it
   if (authToken) {
     yield call(api.setAuthToken, authToken)
-    <%_ if (websocket) { _%>
+    <%_ if (context.websocket) { _%>
     WebsocketService.setToken(authToken)
     <%_ } _%>
   }

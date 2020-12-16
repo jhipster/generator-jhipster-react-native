@@ -40,7 +40,6 @@
         "reactNative": {
             "reactNativeAppName": "Mono",
             "detox": false,
-            "useNpm": true,
             "version": "0.0.0"
         }
     }

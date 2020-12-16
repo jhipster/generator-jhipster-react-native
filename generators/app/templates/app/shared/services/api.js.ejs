@@ -38,10 +38,10 @@ const create = (baseURL = AppConfig.apiUrl) => {
   //
   const setAuthToken = (userAuth) => api.setHeader('Authorization', 'Bearer ' + userAuth)
   const removeAuthToken = () => api.deleteHeader('Authorization')
-  <%_ if (authType === 'oauth2') { _%>
+  <%_ if (context.authenticationType === 'oauth2') { _%>
   const getOauthInfo = () => api.get('api/auth-info')
   const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
-  <%_ } else if (authType === 'jwt') { _%>
+  <%_ } else if (context.authenticationType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)
   <%_ } _%>
   const register = (user) => api.post('api/register', user)
@@ -80,10 +80,10 @@ const create = (baseURL = AppConfig.apiUrl) => {
     // jhipster-react-native-api-export-needle
     setAuthToken,
     removeAuthToken,
-    <%_ if (authType === 'oauth2') { _%>
+    <%_ if (context.authenticationType === 'oauth2') { _%>
     getOauthInfo,
     getOauthIssuerInfo,
-    <%_ } else if (authType === 'jwt') { _%>
+    <%_ } else if (context.authenticationType === 'jwt') { _%>
     login,
     <%_ } _%>
     register,

@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
-<%_ if (websocket) { _%>
+<%_ if (context.websocket) { _%>
 import WebsocketService from '../websockets/websocket.service'
 <%_ } _%>
 // creates the store
@@ -19,7 +19,7 @@ export default (rootReducer, rootSaga) => {
   const sagaMonitor = null;
   const sagaMiddleware = createSagaMiddleware({ sagaMonitor })
   middleware.push(sagaMiddleware)
-  <%_ if (websocket) { _%>
+  <%_ if (context.websocket) { _%>
   const wsSagaMiddleware = createSagaMiddleware(WebsocketService.websocketSagas)
   middleware.push(wsSagaMiddleware)
   <%_ } _%>
@@ -37,14 +37,14 @@ export default (rootReducer, rootSaga) => {
 
   // kick off root saga
   let sagasManager = sagaMiddleware.run(rootSaga)
-  <%_ if (websocket) { _%>
+  <%_ if (context.websocket) { _%>
   let websocketSagaManager = wsSagaMiddleware.run(WebsocketService.websocketSagas)
   <%_ } _%>
 
   return {
     store,
     sagasManager,
-    <%_ if (websocket) { _%>
+    <%_ if (context.websocket) { _%>
     websocketSagaManager,
     <%_ } _%>
     sagaMiddleware

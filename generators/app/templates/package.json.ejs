@@ -5,10 +5,10 @@
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "lint": "eslint app test App.js --ext .js",
-    <%_ if (!skipCommitHook) { _%>
+    <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
-    <%_ if (detox) { _%>
+    <%_ if (context.detox) { _%>
     "e2e:build:ios": "detox build --configuration ios.sim.debug",
     "e2e:test:ios": "./e2e/download-expo.sh && detox test --configuration ios.sim.debug",
     "e2e:build:android": "detox build --configuration android.emu.debug",
@@ -32,7 +32,7 @@
     "redux-saga": "REPLACE_WITH_VERSION",
     "reduxsauce": "REPLACE_WITH_VERSION",
     "seamless-immutable": "REPLACE_WITH_VERSION",
-    <%_ if (websocket) { _%>
+    <%_ if (context.websocket) { _%>
     "stompjs": "REPLACE_WITH_VERSION",
     "sockjs-client": "REPLACE_WITH_VERSION",
     "net": "REPLACE_WITH_VERSION",
@@ -55,7 +55,7 @@
     "react-datepicker": "REPLACE_WITH_VERSION",
     "react-native-modal-datetime-picker": "REPLACE_WITH_VERSION",
     "react-native-picker-select": "REPLACE_WITH_VERSION",
-    <%_ if (authType === 'oauth2') { _%>
+    <%_ if (context.authenticationType === 'oauth2') { _%>
     "expo-auth-session": "REPLACE_WITH_VERSION",
     "expo-web-browser": "REPLACE_WITH_VERSION",
     "expo-random": "REPLACE_WITH_VERSION",
@@ -77,11 +77,11 @@
     "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
-    "generator-jhipster-react-native": "<%= packageVersion %>",
-    <%_ if (!skipCommitHook) { _%>
+    "generator-jhipster-react-native": "<%= context.packageVersion %>",
+    <%_ if (!context.skipCommitHook) { _%>
     "lint-staged": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    <%_ if (detox) { _%>
+    <%_ if (context.detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
     "mocha": "REPLACE_WITH_VERSION",
     "detox-expo-helpers": "REPLACE_WITH_VERSION",
@@ -92,7 +92,7 @@
     "prettier": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION"
   },
-  <%_ if (!skipCommitHook) { _%>
+  <%_ if (!context.skipCommitHook) { _%>
   "lint-staged": {
     "{,app/**/,test/**/}*.{js}": [
       "prettier --write",
