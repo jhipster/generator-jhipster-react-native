@@ -94,7 +94,6 @@ const files = {
                 { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png', method: 'copy' },
                 { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png', method: 'copy' },
                 { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png', method: 'copy' },
-                { file: 'app/shared/images/bg.png', method: 'copy' },
                 { file: 'app/shared/images/chevron-left.png', method: 'copy' },
                 { file: 'app/shared/images/chevron-left@2x.png', method: 'copy' },
                 { file: 'app/shared/images/chevron-left@3x.png', method: 'copy' },

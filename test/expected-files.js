@@ -93,7 +93,6 @@ const expectedFiles = {
         'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png',
         'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png',
         'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png',
-        'app/shared/images/bg.png',
         'app/shared/images/chevron-left.png',
         'app/shared/images/chevron-left@2x.png',
         'app/shared/images/chevron-left@3x.png',
