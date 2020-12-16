@@ -63,8 +63,8 @@ function <%= name %>EntityDetailScreen(props) {
         <Text testID='<%= field.fieldName %>'>{props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
       <%_ } _%>
       <%_ }) _%>
-      <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} />
-      <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} />
+      <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} accessibilityLabel={'<%= name %> Edit Button'} />
+      <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} accessibilityLabel={'<%= name %> Delete Button'} />
       {deleteModalVisible && (
         <<%= name %>EntityDeleteModal
           navigation={navigation}

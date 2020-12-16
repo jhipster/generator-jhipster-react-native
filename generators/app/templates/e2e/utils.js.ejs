@@ -30,7 +30,7 @@ const logout = async () => {
 
 const goBack = async () => {
   if (device.getPlatform() === 'ios') {
-    await element(by.id('header-back')).tap();
+    await tapFirstElementByLabel('Back');
   } else {
     await device.pressBack();
   }
