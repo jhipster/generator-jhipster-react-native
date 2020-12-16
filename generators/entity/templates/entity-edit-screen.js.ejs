@@ -65,10 +65,7 @@ function <%= name %>EntityEditScreen(props) {
         setError('Something went wrong updating the entity');
       } else {
         setError('');
-        props.navigation.pop();
-        // todo success message
-        // isNewEntity
-        // props.navigation.navigate('ModalScreen', { title: 'Success', message: 'Entity saved successfully' });
+        props.navigation.replace('<%= name %>EntityDetail', { entityId: <%= camelCaseName %>?.id });
       }
     }
   }, [props.updateSuccess]);

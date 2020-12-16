@@ -71,7 +71,6 @@ export const request = (state) =>
   state.merge({
     fetchingOne: true,
     errorOne: false,
-    updateSuccess: false,
     <%= camelCaseName %>: null
   })
 
@@ -79,7 +78,6 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    updateSuccess: false,
     errorAll: false,
   })
 
@@ -93,14 +91,12 @@ export const updateRequest = (state) =>
 // request to search from an api
 export const searchRequest = (state) =>
   state.merge({
-    updateSuccess: false,
     searching: true
   })
 <%_ } _%>
 // request to delete from an api
 export const deleteRequest = (state) =>
   state.merge({
-    updateSuccess: false,
     deleting: true
   })
 
