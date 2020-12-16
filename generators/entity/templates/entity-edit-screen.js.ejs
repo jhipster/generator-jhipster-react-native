@@ -1,6 +1,10 @@
 import React, { createRef } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux'
+<%_ if (isValidatorsRequired) { _%>
+import * as Yup from 'yup';
+<%_ } _%>
+
 import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
 <%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
 <%_ if (relation.otherEntityName === 'user') { _%>
@@ -17,9 +21,34 @@ import FormButton from '../../../shared/components/form/jhi-form-button';
 import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
-
-
 import styles from './<%= kebabCaseName %>-entity-edit-screen-style'
+
+<%_ if (isValidatorsRequired) { // start of isValidatorsRequired if statement _%>
+// set up validation schema for the form
+const validationSchema = Yup.object().shape({
+  <%_ entityInfo.fields.forEach((field) => { // start of fields loop
+  if (field.fieldValidate) {  // start of fieldValidate if statement_%>
+  <%= field.fieldName %>: yup.<%= field.fieldValidateType %>()
+    <%_field.fieldValidateRules.forEach((rule, index) => { // start of fieldValidateRules loop _%>
+      <%_ if (rule === 'required') { _%>
+    .required()
+      <%_ } else if (rule === 'pattern') { _%>
+    .pattern(/<%= field.fieldValidateRulesPattern %>/)
+      <%_ } else if (rule === 'minlength') { _%>
+    .min(<%= field.fieldValidateRulesMinlength %>)
+      <%_ } else if (rule === 'min') { _%>
+    .min(<%= field.fieldValidateRulesMin %>)
+      <%_ } else if (rule === 'maxlength') { _%>
+    .max(<%= field.fieldValidateRulesMaxlength %>)
+      <%_ } else if (rule === 'max') { _%>
+    .max(<%= field.fieldValidateRulesMax %>)
+      <%_ }_%>
+    <%_ }) // end of fieldValidateRules loop _%>
+,
+  <%_ } // end of fieldValidate if statement _%>
+  <%_ }) // end of fields loop _%>
+});
+<%_ } // end of isValidatorsRequired if statement _%>
 
 <%_ entityInfo.fields.forEach((field) => {
   if (field.fieldIsEnum) { _%>
@@ -98,7 +127,7 @@ function <%= name %>EntityEditScreen(props) {
       <KeyboardAwareScrollView testID="<%= camelCaseName %>EditScrollView" keyboardShouldPersistTaps={'handled'}>
         <Text style={styles.errorText}>{error}</Text>
         {formValue && (
-          <Form initialValues={formValue} validationSchema={null} onSubmit={onSubmit} ref={formRef}>
+          <Form initialValues={formValue} <%_ if (isValidatorsRequired) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
           <%_ entityInfo.fields.forEach((field, index) => {
             let nextFieldName = null
             if (index !== entityInfo.fields.length - 1) {

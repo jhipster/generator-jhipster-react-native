@@ -69,6 +69,7 @@ module.exports = class extends EntityGenerator {
         this.entityContainsLocalDate = false;
 
         this.entityInfo.fields.forEach(field => {
+            // enums
             field.fieldIsEnum = ![
                 'String',
                 'Integer',
@@ -85,18 +86,47 @@ module.exports = class extends EntityGenerator {
                 'byte[]',
                 'ByteBuffer',
             ].includes(field.fieldType);
-            if (field.fieldType === 'LocalDate') {
-                this.entityContainsLocalDate = true;
-            }
+
+            // blobs
             if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') {
                 this.entityContainsImageBlob = true;
             }
             if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'text') {
                 this.entityContainsTextBlob = true;
             }
+
+            // dates
+            if (field.fieldType === 'LocalDate') {
+                this.entityContainsLocalDate = true;
+            }
             if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') {
                 this.entityContainsDate = true;
             }
+
+            // validation
+            field.fieldValidate = Array.isArray(field.fieldValidateRules) && field.fieldValidateRules.length >= 1;
+            switch (field.fieldType) {
+                case 'LocalDate':
+                case 'ZonedDateTime':
+                case 'Instant':
+                    field.fieldValidateType = 'date';
+                    break;
+                case 'Integer':
+                case 'Long':
+                case 'Float':
+                case 'Double':
+                case 'BigDecimal':
+                    field.fieldValidateType = 'number';
+                    break;
+                case 'byte[]':
+                case 'String':
+                case 'Duration':
+                default:
+                    field.fieldValidateType = 'string';
+            }
+
+            field.nullable = !(field.fieldValidate === true && field.fieldValidateRules.includes('required'));
+            field.unique = field.fieldValidate === true && field.fieldValidateRules.includes('unique');
         });
         // these lists are to prevent double imports when there are multiple relations between the same entity
         const alreadyIncludedEntities = [];
@@ -122,6 +152,21 @@ module.exports = class extends EntityGenerator {
         if (Object.prototype.hasOwnProperty.call(this.entityInfo, 'microserviceName')) {
             this.microservicePath = `services/${this.entityInfo.microserviceName}/`;
         }
+
+        // todo
+        this.hasValidationRule = this.entityInfo.fields.some(
+            field =>
+                field.fieldValidate &&
+                (field.fieldValidateRules.includes('required') ||
+                    field.fieldValidateRules.includes('minlength') ||
+                    field.fieldValidateRules.includes('maxlength') ||
+                    field.fieldValidateRules.includes('min') ||
+                    field.fieldValidateRules.includes('max') ||
+                    field.fieldValidateRules.includes('pattern'))
+        );
+
+        this.hasRequiredRelationship = this.entityInfo.relationships.some(relationship => relationship.relationshipRequired);
+        this.isValidatorsRequired = this.hasValidationRule || this.hasRequiredRelationship;
     }
 
     get configuring() {
