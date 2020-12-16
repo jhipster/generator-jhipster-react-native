@@ -1,98 +1,98 @@
 import { put } from 'redux-saga/effects'
 
 import FixtureAPI from '../../../../../app/shared/services/fixture-api'
-import { get<%= name %>, get<%= pluralName %>, update<%= name %>, delete<%= name %><%= searchEngine ? `, search${pluralName}` : '' %> } from '../../../../../app/modules/entities/<%= kebabCaseName %>/<%= kebabCaseName %>.sagas'
-import <%= name %>Actions from '../../../../../app/modules/entities/<%= kebabCaseName %>/<%= kebabCaseName %>.reducer'
+import { get<%= context.entityNameCapitalized %>, get<%= context.entityNamePlural %>, update<%= context.entityNameCapitalized %>, delete<%= context.entityNameCapitalized %><%= context.searchEngine ? `, search${context.entityNamePlural}` : '' %> } from '../../../../../app/modules/entities/<%= context.entityFileName %>/<%= context.entityFileName %>.sagas'
+import <%= context.entityNameCapitalized %>Actions from '../../../../../app/modules/entities/<%= context.entityFileName %>/<%= context.entityFileName %>.reducer'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('get success path', () => {
-  const response = FixtureAPI.get<%= name %>(1)
-  const step = stepper(get<%= name %>(FixtureAPI, { <%= camelCaseName %>Id: { id: 1 } }))
+  const response = FixtureAPI.get<%= context.entityNameCapitalized %>(1)
+  const step = stepper(get<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>Success({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Success({ id: 1 })))
 })
 
 test('get failure path', () => {
   const response = { ok: false }
-  const step = stepper(get<%= name %>(FixtureAPI, { <%= camelCaseName %>Id: { id: 1 } }))
+  const step = stepper(get<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>Failure()))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Failure()))
 })
 
 test('getAll success path', () => {
-  const response = FixtureAPI.get<%= pluralName %>()
-  const step = stepper(get<%= pluralName %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
+  const response = FixtureAPI.get<%= context.entityNamePlural %>()
+  const step = stepper(get<%= context.entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>AllSuccess([{ id: 1 }, { id: 2 }])))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }])))
 })
 
 test('getAll failure path', () => {
   const response = { ok: false }
-  const step = stepper(get<%= pluralName %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
+  const step = stepper(get<%= context.entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>AllFailure()))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllFailure()))
 })
 
 test('update success path', () => {
-  const response = FixtureAPI.update<%= name %>({ id: 1 })
-  const step = stepper(update<%= name %>(FixtureAPI, { <%= camelCaseName %>: { id: 1 } }))
+  const response = FixtureAPI.update<%= context.entityNameCapitalized %>({ id: 1 })
+  const step = stepper(update<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>UpdateSuccess({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>UpdateSuccess({ id: 1 })))
 })
 
 test('update failure path', () => {
   const response = { ok: false }
-  const step = stepper(update<%= name %>(FixtureAPI, { <%= camelCaseName %>: { id: 1 } }))
+  const step = stepper(update<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>UpdateFailure()))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>UpdateFailure()))
 })
 
-<%_ if (searchEngine) { _%>
+<%_ if (context.searchEngine) { _%>
 test('search success path', () => {
-  const response = FixtureAPI.search<%= pluralName %>()
-  const step = stepper(search<%= pluralName %>(FixtureAPI, '*'))
+  const response = FixtureAPI.search<%= context.entityNamePlural %>()
+  const step = stepper(search<%= context.entityNamePlural %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>SearchSuccess([{ id: 1 }, { id: 2 }])))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>SearchSuccess([{ id: 1 }, { id: 2 }])))
 })
 
 test('search failure path', () => {
   const response = { ok: false }
-  const step = stepper(search<%= pluralName %>(FixtureAPI, '*'))
+  const step = stepper(search<%= context.entityNamePlural %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>SearchFailure()))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>SearchFailure()))
 })
 <%_ } _%>
 test('delete success path', () => {
-  const response = FixtureAPI.delete<%= name %>({ id: 1 })
-  const step = stepper(delete<%= name %>(FixtureAPI, { <%= camelCaseName %>Id: { id: 1 } }))
+  const response = FixtureAPI.delete<%= context.entityNameCapitalized %>({ id: 1 })
+  const step = stepper(delete<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>DeleteSuccess({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>DeleteSuccess({ id: 1 })))
 })
 
 test('delete failure path', () => {
   const response = { ok: false }
-  const step = stepper(delete<%= name %>(FixtureAPI, { <%= camelCaseName %>Id: { id: 1 } }))
+  const step = stepper(delete<%= context.entityNameCapitalized %>(FixtureAPI, { <%= context.entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= name %>Actions.<%= camelCaseName %>DeleteFailure()))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>DeleteFailure()))
 })

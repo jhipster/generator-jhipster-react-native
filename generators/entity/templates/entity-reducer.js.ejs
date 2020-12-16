@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-<%_ if (entityInfo.pagination !== 'no') { _%>
+<%_ if (context.pagination !== 'no') { _%>
 import { loadMoreDataWhenScrolled } from '../../../shared/util/pagination-utils'
 import { parseHeaderForLinks } from '../../../shared/util/url-utils'
 <%_ } _%>
@@ -8,34 +8,34 @@ import { parseHeaderForLinks } from '../../../shared/util/url-utils'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  <%= camelCaseName %>Request: ['<%= camelCaseName %>Id'],
-  <%= camelCaseName %>AllRequest: ['options'],
-  <%= camelCaseName %>UpdateRequest: ['<%= camelCaseName %>'],
-  <%_ if (searchEngine) { _%>
-  <%= camelCaseName %>SearchRequest: ['query'],
+  <%= context.entityInstance %>Request: ['<%= context.entityInstance %>Id'],
+  <%= context.entityInstance %>AllRequest: ['options'],
+  <%= context.entityInstance %>UpdateRequest: ['<%= context.entityInstance %>'],
+  <%_ if (context.searchEngine) { _%>
+  <%= context.entityInstance %>SearchRequest: ['query'],
   <%_ } _%>
-  <%= camelCaseName %>DeleteRequest: ['<%= camelCaseName %>Id'],
+  <%= context.entityInstance %>DeleteRequest: ['<%= context.entityInstance %>Id'],
 
-  <%= camelCaseName %>Success: ['<%= camelCaseName %>'],
-  <%= camelCaseName %>AllSuccess: ['<%= camelCaseNamePlural %>', 'headers'],
-  <%= camelCaseName %>UpdateSuccess: ['<%= camelCaseName %>'],
-  <%_ if (searchEngine) { _%>
-  <%= camelCaseName %>SearchSuccess: ['<%= camelCaseNamePlural %>'],
+  <%= context.entityInstance %>Success: ['<%= context.entityInstance %>'],
+  <%= context.entityInstance %>AllSuccess: ['<%= context.entityInstancePlural %>', 'headers'],
+  <%= context.entityInstance %>UpdateSuccess: ['<%= context.entityInstance %>'],
+  <%_ if (context.searchEngine) { _%>
+  <%= context.entityInstance %>SearchSuccess: ['<%= context.entityInstancePlural %>'],
   <%_ } _%>
-  <%= camelCaseName %>DeleteSuccess: [],
+  <%= context.entityInstance %>DeleteSuccess: [],
 
-  <%= camelCaseName %>Failure: ['error'],
-  <%= camelCaseName %>AllFailure: ['error'],
-  <%= camelCaseName %>UpdateFailure: ['error'],
-  <%_ if (searchEngine) { _%>
-  <%= camelCaseName %>SearchFailure: ['error'],
+  <%= context.entityInstance %>Failure: ['error'],
+  <%= context.entityInstance %>AllFailure: ['error'],
+  <%= context.entityInstance %>UpdateFailure: ['error'],
+  <%_ if (context.searchEngine) { _%>
+  <%= context.entityInstance %>SearchFailure: ['error'],
   <%_ } _%>
-  <%= camelCaseName %>DeleteFailure: ['error'],
+  <%= context.entityInstance %>DeleteFailure: ['error'],
 
-  <%= camelCaseName %>Reset: []
+  <%= context.entityInstance %>Reset: []
 })
 
-export const <%= name %>Types = Types
+export const <%= context.entityNameCapitalized %>Types = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -44,21 +44,21 @@ export const INITIAL_STATE = Immutable({
   fetchingOne: false,
   fetchingAll: false,
   updating: false,
-  <%_ if (searchEngine) { _%>
+  <%_ if (context.searchEngine) { _%>
   searching: false,
   <%_ } _%>
   deleting: false,
   updateSuccess: false,
-  <%= camelCaseName %>: null,
-  <%= camelCaseNamePlural %>: [],
+  <%= context.entityInstance %>: null,
+  <%= context.entityInstancePlural %>: [],
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
-  <%_ if (searchEngine) { _%>
+  <%_ if (context.searchEngine) { _%>
   errorSearching: null,
   <%_ } _%>
   errorDeleting: null,
-  <%_ if (entityInfo.pagination !== 'no') { _%>
+  <%_ if (context.pagination !== 'no') { _%>
   links: { next: 0 },
   totalItems: 0,
   <%_ } _%>
@@ -71,7 +71,7 @@ export const request = (state) =>
   state.merge({
     fetchingOne: true,
     errorOne: false,
-    <%= camelCaseName %>: null
+    <%= context.entityInstance %>: null
   })
 
 // request the data from an api
@@ -87,7 +87,7 @@ export const updateRequest = (state) =>
     updateSuccess: false,
     updating: true
   })
-<%_ if (searchEngine) { _%>
+<%_ if (context.searchEngine) { _%>
 // request to search from an api
 export const searchRequest = (state) =>
   state.merge({
@@ -102,49 +102,49 @@ export const deleteRequest = (state) =>
 
 // successful api lookup for single entity
 export const success = (state, action) => {
-  const { <%= camelCaseName %> } = action
+  const { <%= context.entityInstance %> } = action
   return state.merge({
     fetchingOne: false,
     errorOne: null,
-    <%= camelCaseName %>
+    <%= context.entityInstance %>
   })
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { <%= camelCaseNamePlural %><%_ if (entityInfo.pagination !== 'no') { _%>, headers<%_ } _%> } = action
-  <%_ if (entityInfo.pagination !== 'no') { _%>
+  const { <%= context.entityInstancePlural %><%_ if (context.pagination !== 'no') { _%>, headers<%_ } _%> } = action
+  <%_ if (context.pagination !== 'no') { _%>
   const links = parseHeaderForLinks(headers.link)
   <%_ } _%>
   return state.merge({
     fetchingAll: false,
     errorAll: null,
-    <%_ if (entityInfo.pagination !== 'no') { _%>
+    <%_ if (context.pagination !== 'no') { _%>
     links,
     totalItems: parseInt(headers['x-total-count'], 10),
-    <%= camelCaseNamePlural %>: loadMoreDataWhenScrolled(state.<%= camelCaseNamePlural %>, <%= camelCaseNamePlural %>, links),
+    <%= context.entityInstancePlural %>: loadMoreDataWhenScrolled(state.<%= context.entityInstancePlural %>, <%= context.entityInstancePlural %>, links),
     <%_ } else { _%>
-    <%= camelCaseNamePlural %>
+    <%= context.entityInstancePlural %>
     <%_ } _%>
   })
 }
 // successful api update
 export const updateSuccess = (state, action) => {
-  const { <%= camelCaseName %> } = action
+  const { <%= context.entityInstance %> } = action
   return state.merge({
     updateSuccess: true,
     updating: false,
     errorUpdating: null,
-    <%= camelCaseName %>
+    <%= context.entityInstance %>
   })
 }
-<%_ if (searchEngine) { _%>
+<%_ if (context.searchEngine) { _%>
 // successful api search
 export const searchSuccess = (state, action) => {
-  const { <%= camelCaseNamePlural %> } = action
+  const { <%= context.entityInstancePlural %> } = action
   return state.merge({
     searching: false,
     errorSearching: null,
-    <%= camelCaseNamePlural %>
+    <%= context.entityInstancePlural %>
   })
 }
 <%_ } _%>
@@ -153,7 +153,7 @@ export const deleteSuccess = (state) => {
   return state.merge({
     deleting: false,
     errorDeleting: null,
-    <%= camelCaseName %>: null
+    <%= context.entityInstance %>: null
   })
 }
 
@@ -163,7 +163,7 @@ export const failure = (state, action) => {
   return state.merge({
     fetchingOne: false,
     errorOne: error,
-    <%= camelCaseName %>: null
+    <%= context.entityInstance %>: null
   })
 }
 // Something went wrong fetching all entities.
@@ -172,7 +172,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    <%= camelCaseNamePlural %>: []
+    <%= context.entityInstancePlural %>: []
   })
 }
 // Something went wrong updating.
@@ -182,7 +182,7 @@ export const updateFailure = (state, action) => {
     updateSuccess: false,
     updating: false,
     errorUpdating: error,
-    <%= camelCaseName %>: state.<%= camelCaseName %>
+    <%= context.entityInstance %>: state.<%= context.entityInstance %>
   })
 }
 // Something went wrong deleting.
@@ -191,17 +191,17 @@ export const deleteFailure = (state, action) => {
   return state.merge({
     deleting: false,
     errorDeleting: error,
-    <%= camelCaseName %>: state.<%= camelCaseName %>
+    <%= context.entityInstance %>: state.<%= context.entityInstance %>
   })
 }
-<%_ if (searchEngine) { _%>
+<%_ if (context.searchEngine) { _%>
 // Something went wrong searching the entities.
 export const searchFailure = (state, action) => {
   const { error } = action
   return state.merge({
     searching: false,
     errorSearching: error,
-    <%= camelCaseNamePlural %>: []
+    <%= context.entityInstancePlural %>: []
   })
 }
 <%_ } _%>
@@ -211,28 +211,28 @@ export const reset = (state) => INITIAL_STATE
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= snakeCaseName.toUpperCase() %>_REQUEST]: request,
-  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_REQUEST]: allRequest,
-  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
-  <%_ if (searchEngine) { _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
+  [Types.<%= context.entityTableName.toUpperCase() %>_REQUEST]: request,
+  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_REQUEST]: allRequest,
+  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
+  <%_ if (context.searchEngine) { _%>
+  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
   <%_ } _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
+  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
 
-  [Types.<%= snakeCaseName.toUpperCase() %>_SUCCESS]: success,
-  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
-  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
-  <%_ if (searchEngine) { _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
+  [Types.<%= context.entityTableName.toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
+  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
+  <%_ if (context.searchEngine) { _%>
+  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
   <%_ } _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
+  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
 
-  [Types.<%= snakeCaseName.toUpperCase() %>_FAILURE]: failure,
-  [Types.<%= snakeCaseName.toUpperCase() %>_ALL_FAILURE]: allFailure,
-  [Types.<%= snakeCaseName.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
-  <%_ if (searchEngine) { _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
+  [Types.<%= context.entityTableName.toUpperCase() %>_FAILURE]: failure,
+  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_FAILURE]: allFailure,
+  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
+  <%_ if (context.searchEngine) { _%>
+  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
   <%_ } _%>
-  [Types.<%= snakeCaseName.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
-  [Types.<%= snakeCaseName.toUpperCase() %>_RESET]: reset
+  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
+  [Types.<%= context.entityTableName.toUpperCase() %>_RESET]: reset
 })

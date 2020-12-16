@@ -5,53 +5,53 @@ const files = {
                 {
                     file: 'entity-delete-modal.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-delete-modal.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-delete-modal.js`,
                 },
                 {
                     file: 'entity-detail-screen.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-detail-screen.js`,
                 },
                 {
                     file: 'entity-detail-screen-style.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-detail-screen-style.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-detail-screen-style.js`,
                 },
                 {
                     file: 'entity-edit-screen.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-edit-screen.js`,
                 },
                 {
                     file: 'entity-edit-screen-style.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-edit-screen-style.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-edit-screen-style.js`,
                 },
                 {
                     file: 'entity-flatlist.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-screen.js`,
+                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen.js`,
                 },
                 {
                     file: 'entity-flatlist-style.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}-entity-screen-style.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen-style.js`,
                 },
                 {
                     file: 'entity-reducer.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.reducer.js`,
+                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.js`,
                 },
                 {
                     file: 'entity-reducer.spec.js',
                     renameTo: generator =>
-                        `test/spec/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.reducer.spec.js`,
+                        `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.spec.js`,
                 },
                 {
                     file: 'entity-sagas.js',
-                    renameTo: generator => `app/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.sagas.js`,
+                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.js`,
                 },
                 {
                     file: 'entity-sagas.spec.js',
-                    renameTo: generator => `test/spec/modules/entities/${generator.kebabCaseName}/${generator.kebabCaseName}.sagas.spec.js`,
+                    renameTo: generator => `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.spec.js`,
                 },
             ],
         },
@@ -59,14 +59,14 @@ const files = {
     fixtures: [
         {
             templates: [
-                { file: 'fixtures/entity-get.json', renameTo: generator => `app/shared/fixtures/get-${generator.kebabCaseName}.json` },
+                { file: 'fixtures/entity-get.json', renameTo: generator => `app/shared/fixtures/get-${generator.context.entityFileName}.json` },
                 {
                     file: 'fixtures/entity-get-all.json',
-                    renameTo: generator => `app/shared/fixtures/get-${generator.kebabCaseNamePlural}.json`,
+                    renameTo: generator => `app/shared/fixtures/get-${generator.context.entityPluralFileName}.json`,
                 },
                 {
                     file: 'fixtures/entity-update.json',
-                    renameTo: generator => `app/shared/fixtures/update-${generator.kebabCaseName}.json`,
+                    renameTo: generator => `app/shared/fixtures/update-${generator.context.entityFileName}.json`,
                 },
             ],
         },
@@ -75,7 +75,7 @@ const files = {
             templates: [
                 {
                     file: 'fixtures/entity-get-all.json',
-                    renameTo: generator => `app/shared/fixtures/search-${generator.pluralName.toLowerCase()}.json`,
+                    renameTo: generator => `app/shared/fixtures/search-${generator.context.entityPluralFileName}.json`,
                 },
             ],
         },
@@ -83,7 +83,7 @@ const files = {
     detox: [
         {
             condition: generator => generator.detox,
-            templates: [{ file: 'entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.kebabCaseName}.spec.js` }],
+            templates: [{ file: 'entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.context.entityFileName}.spec.js` }],
         },
     ],
 };

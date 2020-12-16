@@ -2,35 +2,35 @@ import React from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native';
-<%_ if (searchEngine) { _%>
+<%_ if (context.searchEngine) { _%>
 import SearchBar from '../../../shared/components/search-bar/search-bar'
 <%_ } _%>
-import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
-import styles from './<%= kebabCaseName %>-entity-screen-style'
+import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
+import styles from './<%= context.entityFileName %>-entity-screen-style'
 import AlertMessage from '../../../shared/components/alert-message/alert-message'
 
-function <%= name %>EntityScreen(props) {
+function <%= context.entityNameCapitalized %>EntityScreen(props) {
   const [page, setPage] = React.useState(0);
   const [sort /*, setSort*/] = React.useState('id,asc');
   const [size /*, setSize*/] = React.useState(20);
-  <%_ if (searchEngine) { _%>
+  <%_ if (context.searchEngine) { _%>
   const [searchTerm, setSearchTerm] = React.useState('');
   <%_ } _%>
 
-  const { <%= camelCaseName %>, getAll<%= pluralName %>, fetching } = props;
+  const { <%= context.entityInstance %>, getAll<%= context.entityNamePlural %>, fetching } = props;
 
   useFocusEffect(
     React.useCallback(() => {
-      console.debug('<%= name %> entity changed and the list screen is now in focus, refresh');
+      console.debug('<%= context.entityNameCapitalized %> entity changed and the list screen is now in focus, refresh');
       setPage(0);
-      fetch<%= pluralName %>();
+      fetch<%= context.entityNamePlural %>();
       /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, [<%= camelCaseName %>, fetch<%= pluralName %>]),
+    }, [<%= context.entityInstance %>, fetch<%= context.entityNamePlural %>]),
   );
 
   const renderRow = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => props.navigation.navigate('<%= name %>EntityDetail', { entityId: item.id })}>
+      <TouchableOpacity onPress={() => props.navigation.navigate('<%= context.entityNameCapitalized %>EntityDetail', { entityId: item.id })}>
         <View style={styles.row}>
           <Text style={styles.boldLabel}>{item.id}</Text>
           {/* <Text style={styles.label}>{item.description}</Text> */}
@@ -40,24 +40,24 @@ function <%= name %>EntityScreen(props) {
   }
 
   // Render a header
-    <%_ if (searchEngine) { _%>
+    <%_ if (context.searchEngine) { _%>
   const renderHeader = () =>
     <SearchBar onSearch={performSearch} searchTerm={searchTerm} onCancel={cancelSearch} />
     <%_ } _%>
 
   // Show this when data is empty
   const renderEmpty = () =>
-    <AlertMessage title='No <%= pluralName %> Found' show={!fetching} />
+    <AlertMessage title='No <%= context.entityNamePlural %> Found' show={!fetching} />
 
   const keyExtractor = (item, index) => `${index}`
 
   // How many items should be kept im memory as we scroll?
   const oneScreensWorth = 20
 
-  <%_ if (searchEngine) { _%>
+  <%_ if (context.searchEngine) { _%>
   const cancelSearch = () => {
     setSearchTerm('')
-    fetch<%= pluralName %>()
+    fetch<%= context.entityNamePlural %>()
   }
 
   const performSearch = (query) => {
@@ -69,33 +69,33 @@ function <%= name %>EntityScreen(props) {
     props.performSearch(query)
   }
   <%_ } _%>
-  const fetch<%= pluralName %> = React.useCallback(() => {
-    getAll<%= pluralName %>({ page: page - 1, sort, size });
-  }, [getAll<%= pluralName %>, page, sort, size]);
+  const fetch<%= context.entityNamePlural %> = React.useCallback(() => {
+    getAll<%= context.entityNamePlural %>({ page: page - 1, sort, size });
+  }, [getAll<%= context.entityNamePlural %>, page, sort, size]);
 
 
   const handleLoadMore = () => {
-    <%_ if (entityInfo.pagination === 'no') { _%>
-    if (props.<%= camelCaseNamePlural %>.length) {
+    <%_ if (context.pagination === 'no') { _%>
+    if (props.<%= context.entityInstancePlural %>.length) {
     <%_ } else { _%>
     if (page < props.links.next || props.links.next === undefined || fetching) {
     <%_ } _%>
       return
     }
     setPage(page + 1)
-    fetch<%= pluralName %>()
+    fetch<%= context.entityNamePlural %>()
   }
   return (
-    <View style={styles.container} testID='<%= camelCaseName %>Screen'>
+    <View style={styles.container} testID='<%= context.entityInstance %>Screen'>
       <FlatList
         contentContainerStyle={styles.listContent}
-        data={props.<%= camelCaseNamePlural %>}
+        data={props.<%= context.entityInstancePlural %>}
         renderItem={renderRow}
         keyExtractor={keyExtractor}
         initialNumToRender={oneScreensWorth}
         onEndReached={handleLoadMore}
         ListEmptyComponent={renderEmpty}
-        <%_ if (searchEngine) { _%>
+        <%_ if (context.searchEngine) { _%>
         ListHeaderComponent={renderHeader}
         <%_ } _%>
       />
@@ -106,23 +106,23 @@ function <%= name %>EntityScreen(props) {
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
-    <%= camelCaseNamePlural %>: state.<%= camelCaseNamePlural %>.<%= camelCaseNamePlural %>,
-    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
-    fetching: state.<%= camelCaseNamePlural %>.fetchingAll,
-    error: state.<%= camelCaseNamePlural %>.errorAll,
-    <%_ if (entityInfo.pagination !== 'no') { _%>
-    links: state.<%= camelCaseNamePlural %>.links,
+    <%= context.entityInstancePlural %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstancePlural %>,
+    <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
+    fetching: state.<%= context.entityInstancePlural %>.fetchingAll,
+    error: state.<%= context.entityInstancePlural %>.errorAll,
+    <%_ if (context.pagination !== 'no') { _%>
+    links: state.<%= context.entityInstancePlural %>.links,
     <%_ } _%>
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ if (searchEngine) { _%>
-    performSearch: (query) => dispatch(<%= name %>Actions.<%= camelCaseName %>SearchRequest(query)),
+    <%_ if (context.searchEngine) { _%>
+    performSearch: (query) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>SearchRequest(query)),
     <%_ } _%>
-    getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options))
+    getAll<%= context.entityNamePlural %>: (options) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllRequest(options))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityScreen)
