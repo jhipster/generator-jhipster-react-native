@@ -1,12 +1,12 @@
 import React, { createRef } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux'
-<%_ if (isValidatorsRequired) { _%>
+<%_ if (context.validation) { _%>
 import * as Yup from 'yup';
 <%_ } _%>
 
-import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
-<%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
+import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
+<%_ context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
 <%_ if (relation.otherEntityName === 'user') { _%>
 import UserActions from '../../../shared/reducers/user.reducer'
 <%_ } else { _%>
@@ -14,21 +14,21 @@ import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase
 <%_ } _%>
 <%_ }) _%>
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-<%_ if (entityContainsLocalDate) { _%>
+<%_ if (context.fieldsContainLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 import FormButton from '../../../shared/components/form/jhi-form-button';
 import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
-import styles from './<%= kebabCaseName %>-entity-edit-screen-style'
+import styles from './<%= context.entityFileName %>-entity-edit-screen-style'
 
-<%_ if (isValidatorsRequired) { // start of isValidatorsRequired if statement _%>
+<%_ if (context.validation) { // start of validation if statement _%>
 // set up validation schema for the form
 const validationSchema = Yup.object().shape({
-  <%_ entityInfo.fields.forEach((field) => { // start of fields loop
+  <%_ context.fieldsNoId.forEach((field) => { // start of fields loop
   if (field.fieldValidate) {  // start of fieldValidate if statement_%>
-  <%= field.fieldName %>: yup.<%= field.fieldValidateType %>()
+  <%= field.fieldName %>: Yup.<%= context.getFieldValidateType(field.fieldType) %>()
     <%_field.fieldValidateRules.forEach((rule, index) => { // start of fieldValidateRules loop _%>
       <%_ if (rule === 'required') { _%>
     .required()
@@ -48,9 +48,9 @@ const validationSchema = Yup.object().shape({
   <%_ } // end of fieldValidate if statement _%>
   <%_ }) // end of fields loop _%>
 });
-<%_ } // end of isValidatorsRequired if statement _%>
+<%_ } // end of validation if statement _%>
 
-<%_ entityInfo.fields.forEach((field) => {
+<%_ context.fieldsNoId.forEach((field) => {
   if (field.fieldIsEnum) { _%>
 const <%= field.fieldType %> = [
 <%_
@@ -66,8 +66,8 @@ _%>
 <%_ } // end of if statement
 }) // end of field loop _%>
 
-function <%= name %>EntityEditScreen(props) {
-  const { get<%= name %>, route, <%= camelCaseName %>, fetching, reset } = props;
+function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
+  const { get<%= context.entityNameCapitalized %>, route, <%= context.entityInstance %>, fetching, reset } = props;
   const [formValue, setFormValue] = React.useState();
   const [error, setError] = React.useState('');
 
@@ -75,17 +75,17 @@ function <%= name %>EntityEditScreen(props) {
 
   React.useEffect(() => {
     if (!isNewEntity) {
-      get<%= name %>(route.params.entityId);
+      get<%= context.entityNameCapitalized %>(route.params.entityId);
     } else {
       reset();
     }
-  }, [isNewEntity, get<%= name %>, route, reset]);
+  }, [isNewEntity, get<%= context.entityNameCapitalized %>, route, reset]);
 
   React.useEffect(() => {
     if (!fetching) {
-      setFormValue(entityToFormValue(<%= camelCaseName %>));
+      setFormValue(entityToFormValue(<%= context.entityInstance %>));
     }
-  }, [<%= camelCaseName %>, fetching]);
+  }, [<%= context.entityInstance %>, fetching]);
 
   useDidUpdateEffect(() => {
     if (props.updating === false) {
@@ -96,7 +96,7 @@ function <%= name %>EntityEditScreen(props) {
         setError('');
         if (isNewEntity) {
           // send to the detail screen on new entity, otherwise pop (to the detail screen)
-          props.navigation.replace('<%= name %>EntityDetail', { entityId: <%= camelCaseName %>?.id });
+          props.navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
         } else {
           props.navigation.pop();
         }
@@ -104,7 +104,7 @@ function <%= name %>EntityEditScreen(props) {
     }
   }, [props.updateSuccess]);
 
-  const onSubmit = (data) => props.update<%= name %>(formValueToEntity(data));
+  const onSubmit = (data) => props.update<%= context.entityNameCapitalized %>(formValueToEntity(data));
 
   if (fetching) {
     return (
@@ -115,25 +115,25 @@ function <%= name %>EntityEditScreen(props) {
   }
 
   const formRef = createRef();
-  <%_ entityInfo.fields.forEach((field, index) => { _%>
+  <%_ context.fieldsNoId.forEach((field, index) => { _%>
   const <%= field.fieldName %>Ref = createRef();
   <%_ }) _%>
-  <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+  <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
   const <%= relation.relationshipNamePlural %>Ref = createRef();
   <%_ }) _%>
 
   return (
     <View style={styles.container}>
-      <KeyboardAwareScrollView testID="<%= camelCaseName %>EditScrollView" keyboardShouldPersistTaps={'handled'}>
+      <KeyboardAwareScrollView testID="<%= context.entityInstance %>EditScrollView" keyboardShouldPersistTaps={'handled'}>
         <Text style={styles.errorText}>{error}</Text>
         {formValue && (
-          <Form initialValues={formValue} <%_ if (isValidatorsRequired) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
-          <%_ entityInfo.fields.forEach((field, index) => {
+          <Form initialValues={formValue} <%_ if (context.validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
+          <%_ context.fieldsNoId.forEach((field, index) => {
             let nextFieldName = null
-            if (index !== entityInfo.fields.length - 1) {
-              nextFieldName = entityInfo.fields[index + 1].fieldName
+            if (index !== context.fieldsNoId.length - 1) {
+              nextFieldName = context.fieldsNoId[index + 1].fieldName
             }
-            const formAttributes = getEntityFormField(field, nextFieldName, entityInfo.ownerSideRelationships.length);
+            const formAttributes = context.getEntityFormField(field, nextFieldName, context.relationships.filter(relation => relation.ownerSide).length);
           _%>
           <FormField
                 <%- formAttributes %>
@@ -149,14 +149,14 @@ function <%= name %>EntityEditScreen(props) {
 /*
 
 // generate entity form fields...
-<%_ entityInfo.ownerSideRelationships.forEach((relation) => { _%>
+<%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation) => { _%>
   <%= relation.otherEntityName %>Id: {
   testID: '<%= relation.otherEntityName %>IdInput',
   label: '<%= pascalCase(relation.relationshipName) %>'
   },
 <%_ }) _%>
 
-<%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+<%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
   get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
     const <%= camelCase(relation.otherEntityNamePlural) %> = {}
     this.props.<%= camelCase(relation.otherEntityNamePlural) %>.forEach(<%= camelCase(relation.otherEntityName) %> => {
@@ -174,13 +174,13 @@ const entityToFormValue = (value) => {
   }
   return {
     id: value.id || null,
-    <%_ entityInfo.fields.forEach((field, index) => { _%>
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
     <%= field.fieldName %>: value.<%= field.fieldName %> || null,
       <%_  if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
     <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType || null,
       <%_ } _%>
     <%_ }) _%>
-    <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (entityInfo.dto === 'no') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
@@ -200,7 +200,7 @@ const entityToFormValue = (value) => {
 const formValueToEntity = (value) => {
   const entity = {
     id: value.id || null,
-    <%_ entityInfo.fields.forEach((field, index) => { _%>
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
       <%_ if (field.fieldType === 'Boolean') { _%>
     <%= field.fieldName %>: value.<%= field.fieldName %> === null ? null : Boolean(value.<%= field.fieldName %>),
       <%_ } else { _%>
@@ -210,7 +210,7 @@ const formValueToEntity = (value) => {
     <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType || null,
       <%_ } _%>
     <%_ }) _%>
-    <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+    <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_  if (entityInfo.dto === 'mapstruct') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
@@ -220,7 +220,7 @@ const formValueToEntity = (value) => {
     <%_ } _%>
   <%_ }) _%>
   }
-  <%_ entityInfo.ownerSideRelationships.forEach((relation, index) => { _%>
+  <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (entityInfo.dto === 'no') { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
   entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
@@ -236,27 +236,27 @@ const formValueToEntity = (value) => {
 
 const mapStateToProps = (state) => {
   return {
-    <%_ entityInfo.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    <%_ context.differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { _%>
     <%= camelCase(relation.otherEntityNamePlural) %>: state.<%= camelCase(relation.otherEntityNamePlural) %>.<%= camelCase(relation.otherEntityNamePlural) %> || [],
     <%_ }) _%>
-    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
-    fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
-    updating: state.<%= camelCaseNamePlural %>.updating,
-    updateSuccess: state.<%= camelCaseNamePlural %>.updateSuccess,
-    error: state.<%= camelCaseNamePlural %>.errorUpdating
+    <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
+    fetching: state.<%= context.entityInstancePlural %>.fetchingOne,
+    updating: state.<%= context.entityInstancePlural %>.updating,
+    updateSuccess: state.<%= context.entityInstancePlural %>.updateSuccess,
+    error: state.<%= context.entityInstancePlural %>.errorUpdating
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ entityInfo.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
+    <%_ context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
     getAll<%= pascalCase(relation.otherEntityNamePlural) %>: (options) => dispatch(<%= pascalCase(relation.otherEntityName) %>Actions.<%= camelCase(relation.otherEntityName) %>AllRequest(options)),
     <%_ }) _%>
-    get<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>Request(id)),
-    getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options)),
-    update<%= name %>: (<%= camelCaseName %>) => dispatch(<%= name %>Actions.<%= camelCaseName %>UpdateRequest(<%= camelCaseName %>)),
-    reset: () => dispatch(<%= name %>Actions.<%= camelCaseName %>Reset()),
+    get<%= context.entityNameCapitalized %>: (id) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Request(id)),
+    getAll<%= context.entityNamePlural %>: (options) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllRequest(options)),
+    update<%= context.entityNameCapitalized %>: (<%= context.entityInstance %>) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>UpdateRequest(<%= context.entityInstance %>)),
+    reset: () => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Reset()),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityEditScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityEditScreen)

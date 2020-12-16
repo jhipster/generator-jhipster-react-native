@@ -1,6 +1,6 @@
 const Utils = require('../utils')
 
-describe('<%= name %> Screen Tests', () => {
+describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
   before(async () => {
     await Utils.reloadApp()
     await Utils.loginAsUser()
@@ -12,22 +12,22 @@ describe('<%= name %> Screen Tests', () => {
 
   beforeEach(async () => {
     await Utils.reloadApp()
-    await navigateTo<%= name %>Screen()
+    await navigateTo<%= context.entityNameCapitalized %>Screen()
   })
 
-  const navigateTo<%= name %>Screen = async () => {
+  const navigateTo<%= context.entityNameCapitalized %>Screen = async () => {
     await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Entities');
-    await Utils.scrollTo('<%= camelCaseName %>EntityScreenButton', 'entityScreenScrollList')
-    await element(by.id('<%= camelCaseName %>EntityScreenButton')).tap()
+    await Utils.scrollTo('<%= context.entityInstance %>EntityScreenButton', 'entityScreenScrollList')
+    await element(by.id('<%= context.entityInstance %>EntityScreenButton')).tap()
   }
 
-  it('should allow you to create, update, and delete the <%= name %> entity', async () => {
-    await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
+  it('should allow you to create, update, and delete the <%= context.entityNameCapitalized %> entity', async () => {
+    await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
     // create
     await Utils.tapFirstElementByLabel(' New ')
-    <%_ entityInfo.fields.forEach((field, index) => {
+    <%_ context.fieldsNoId.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
@@ -41,7 +41,7 @@ describe('<%= name %> Screen Tests', () => {
       }
     _%>
     <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
-    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCaseName %>EditScrollView')
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
     <%_ } _%>
     <%_ if (tcombFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data')
@@ -49,11 +49,11 @@ describe('<%= name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
       <%_ } _%>
     <%_ }) _%>
-    await Utils.closeKeyboard('<%= camelCaseName %>EditScrollView')
-    await Utils.scrollTo('submitButton', '<%= camelCaseName %>EditScrollView')
+    await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
+    await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
     // view
-    <%_ entityInfo.fields.forEach((field, index) => {
+    <%_ context.fieldsNoId.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
@@ -67,7 +67,7 @@ describe('<%= name %> Screen Tests', () => {
       }
     _%>
     <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
-    await Utils.scrollTo('<%= field.fieldName %>', '<%= camelCaseName %>DetailScrollView')
+    await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
     <%_ } _%>
     <%_ if (tcombFieldType === 'String') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data')
@@ -76,8 +76,8 @@ describe('<%= name %> Screen Tests', () => {
     <%_ } _%>
     <%_ }) _%>
     // update
-    await Utils.tapFirstElementByLabel('<%= name %> Edit Button');
-    <%_ entityInfo.fields.forEach((field, index) => {
+    await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
+    <%_ context.fieldsNoId.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
@@ -91,7 +91,7 @@ describe('<%= name %> Screen Tests', () => {
       }
       _%>
     <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
-    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= camelCaseName %>EditScrollView')
+    await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
     <%_ } _%>
     <%_ if (tcombFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
@@ -99,10 +99,10 @@ describe('<%= name %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
     <%_ } _%>
     <%_ }) _%>
-    await Utils.closeKeyboard('<%= camelCaseName %>EditScrollView')
-    await Utils.scrollTo('submitButton', '<%= camelCaseName %>EditScrollView')
+    await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
+    await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
-    <%_ entityInfo.fields.forEach((field, index) => {
+    <%_ context.fieldsNoId.forEach((field, index) => {
       let tcombFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
@@ -121,8 +121,8 @@ describe('<%= name %> Screen Tests', () => {
     <%_ } _%>
     <%_ }) _%>
     // delete
-    await Utils.tapFirstElementByLabel('<%= name %> Delete Button');
+    await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Delete Button');
     await Utils.tapFirstElementByLabel('Delete');
-    await expect(element(by.id('<%= camelCaseName %>Screen'))).toBeVisible()
+    await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
   })
 })

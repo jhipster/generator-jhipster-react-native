@@ -1,38 +1,38 @@
 import React from 'react'
-import { ActivityIndicator, ScrollView, Text, <% if (entityContainsImageBlob) { %>Image, <% } %>View } from 'react-native';
+import { ActivityIndicator, ScrollView, Text, <% if (context.fieldsContainImageBlob) { %>Image, <% } %>View } from 'react-native';
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native';
-<%_ if (entityContainsLocalDate) { _%>
+<%_ if (context.fieldsContainLocalDate) { _%>
 import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
-import <%= name %>Actions from './<%= kebabCaseName %>.reducer'
+import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
 import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
-import <%= name %>EntityDeleteModal from './<%= kebabCaseName %>-entity-delete-modal';
-import styles from './<%= kebabCaseName %>-entity-detail-screen-style'
+import <%= context.entityNameCapitalized %>EntityDeleteModal from './<%= context.entityFileName %>-entity-delete-modal';
+import styles from './<%= context.entityFileName %>-entity-detail-screen-style'
 
-function <%= name %>EntityDetailScreen(props) {
-  const { route, get<%= name %>, navigation } = props;
+function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
+  const { route, get<%= context.entityNameCapitalized %>, navigation } = props;
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
       if (!route.params || !route.params.entityId) {
-        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= name %>Entity');
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>Entity');
       } else {
-        get<%= name %>(route.params.entityId);
+        get<%= context.entityNameCapitalized %>(route.params.entityId);
       }
-    }, [route, get<%= name %>, navigation]),
+    }, [route, get<%= context.entityNameCapitalized %>, navigation]),
   );
 
-  if (!props.<%= camelCaseName %> && !props.fetching && props.error) {
+  if (!props.<%= context.entityInstance %> && !props.fetching && props.error) {
     return (
       <View style={styles.loading}>
-        <Text>Something went wrong fetching the <%= name %>.</Text>
+        <Text>Something went wrong fetching the <%= context.entityNameCapitalized %>.</Text>
       </View>
     );
   }
-  if (!props.<%= camelCaseName %> || props.fetching) {
+  if (!props.<%= context.entityInstance %> || props.fetching) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" />
@@ -40,37 +40,37 @@ function <%= name %>EntityDetailScreen(props) {
     );
   }
   return (
-    <ScrollView style={styles.container} testID="<%= camelCaseName %>DetailScrollView">
+    <ScrollView style={styles.container} testID="<%= context.entityInstance %>DetailScrollView">
       <Text style={styles.label}>Id:</Text>
-      <Text>{props.<%= camelCaseName %>.id}</Text>
-      <%_ entityInfo.fields.forEach(function (field) { _%>
-      {/* <%= upperFirst(field.fieldName) %> Field */}
-      <Text style={styles.label}><%= upperFirst(field.fieldName) %>:</Text>
+      <Text>{props.<%= context.entityInstance %>.id}</Text>
+      <%_ context.fieldsNoId.forEach(function (field) { _%>
+      {/* <%= field.fieldNameCapitalized %> Field */}
+      <Text style={styles.label}><%= field.fieldNameCapitalized %>:</Text>
       <%_ if (field.fieldType === 'LocalDate') { _%>
-        <Text testID='<%= field.fieldName %>'>{jsDateToLocalDate(props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'>{jsDateToLocalDate(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
       <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant' || field.fieldType === 'Boolean') { _%>
-        <Text testID='<%= field.fieldName %>'>{String(props.<%= camelCaseName %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'>{String(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
       <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'any') { _%>
-        <Text testID='<%= field.fieldName %>ContentType'>Open {props.<%= camelCaseName %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
+        <Text testID='<%= field.fieldName %>ContentType'>Open {props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
       <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') { _%>
-        <Text testID='<%= field.fieldName %>ContentType'>{props.<%= camelCaseName %>.<%= field.fieldName %>ContentType}</Text>
+        <Text testID='<%= field.fieldName %>ContentType'>{props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType}</Text>
         <Image
           testID="<%= field.fieldName %>"
           style={styles.imageBlob}
-          source={{ uri: `data:${props.<%= camelCaseName %>.<%= field.fieldName %>ContentType};base64,${props.<%= camelCaseName %>.<%= field.fieldName %>}` }}
+          source={{ uri: `data:${props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType};base64,${props.<%= context.entityInstance %>.<%= field.fieldName %>}` }}
         />
       <%_ } else { _%>
-        <Text testID='<%= field.fieldName %>'>{props.<%= camelCaseName %>.<%= field.fieldName %>}</Text>
+        <Text testID='<%= field.fieldName %>'>{props.<%= context.entityInstance %>.<%= field.fieldName %>}</Text>
       <%_ } _%>
       <%_ }) _%>
-      <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= name %>EntityEdit', { entityId: props.<%= camelCaseName %>.id })} accessibilityLabel={'<%= name %> Edit Button'} />
-      <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} accessibilityLabel={'<%= name %> Delete Button'} />
+      <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>EntityEdit', { entityId: props.<%= context.entityInstance %>.id })} accessibilityLabel={'<%= context.entityNameCapitalized %> Edit Button'} />
+      <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} accessibilityLabel={'<%= context.entityNameCapitalized %> Delete Button'} />
       {deleteModalVisible && (
-        <<%= name %>EntityDeleteModal
+        <<%= context.entityNameCapitalized %>EntityDeleteModal
           navigation={navigation}
           visible={deleteModalVisible}
           setVisible={setDeleteModalVisible}
-          entity={props.<%= camelCaseName %>}
+          entity={props.<%= context.entityInstance %>}
         />
       )}
     </ScrollView>
@@ -79,21 +79,21 @@ function <%= name %>EntityDetailScreen(props) {
 
 const mapStateToProps = (state) => {
   return {
-    <%= camelCaseName %>: state.<%= camelCaseNamePlural %>.<%= camelCaseName %>,
-    error: state.<%= camelCaseNamePlural %>.errorOne,
-    fetching: state.<%= camelCaseNamePlural %>.fetchingOne,
-    deleting: state.<%= camelCaseNamePlural %>.deleting,
-    errorDeleting: state.<%= camelCaseNamePlural %>.errorDeleting
+    <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
+    error: state.<%= context.entityInstancePlural %>.errorOne,
+    fetching: state.<%= context.entityInstancePlural %>.fetchingOne,
+    deleting: state.<%= context.entityInstancePlural %>.deleting,
+    errorDeleting: state.<%= context.entityInstancePlural %>.errorDeleting
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    get<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>Request(id)),
-    getAll<%= pluralName %>: (options) => dispatch(<%= name %>Actions.<%= camelCaseName %>AllRequest(options)),
-    delete<%= name %>: (id) => dispatch(<%= name %>Actions.<%= camelCaseName %>DeleteRequest(id)),
-    reset<%= pluralName %>: () => dispatch(<%= name %>Actions.<%= camelCaseName %>Reset()),
+    get<%= context.entityNameCapitalized %>: (id) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Request(id)),
+    getAll<%= context.entityNamePlural %>: (options) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllRequest(options)),
+    delete<%= context.entityNameCapitalized %>: (id) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>DeleteRequest(id)),
+    reset<%= context.entityNamePlural %>: () => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Reset()),
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= name %>EntityDetailScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityDetailScreen)
