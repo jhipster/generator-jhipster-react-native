@@ -158,7 +158,17 @@ const expectedFiles = {
         'test/spec/shared/sagas/user.saga.spec.js',
         'test/spec/shared/services/fixture-api.spec.js',
     ],
-    detox: ['.detoxrc.json', 'e2e/init.js', 'e2e/.mocharc.json', 'e2e/launch-screen.spec.js', 'e2e/utils.js', 'e2e/download-expo.sh'],
+    detox: [
+        '.detoxrc.json',
+        'e2e/init.js',
+        'e2e/.mocharc.json',
+        'e2e/launch-screen.spec.js',
+        'e2e/utils.js',
+        {
+            file: 'e2e/download-expo.sh',
+            method: 'copy',
+        },
+    ],
     detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
     detoxAndNotOauth: [
         'e2e/account/change-password-screen.spec.js',
