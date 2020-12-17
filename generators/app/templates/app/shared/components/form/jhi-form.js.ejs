@@ -1,8 +1,9 @@
 import React from 'react';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 export default React.forwardRef((props, ref) => {
-  const { children, initialValues = {}, onSubmit = (d) => console.log(d), validationSchema = {} } = props;
+  const { children, initialValues = {}, onSubmit = (d) => console.log(d), validationSchema = Yup.object().shape({}) } = props;
 
   // get list of field names
   const fields = children.filter((c) => c && c.props && c.props.name).map((c) => c.props.name);
