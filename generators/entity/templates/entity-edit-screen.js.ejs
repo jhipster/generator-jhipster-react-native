@@ -33,7 +33,7 @@ const validationSchema = Yup.object().shape({
       <%_ if (rule === 'required') { _%>
     .required()
       <%_ } else if (rule === 'pattern') { _%>
-    .pattern(/<%= field.fieldValidateRulesPattern %>/)
+    .matches(/<%= field.fieldValidateRulesPattern %>/)
       <%_ } else if (rule === 'minlength') { _%>
     .min(<%= field.fieldValidateRulesMinlength %>)
       <%_ } else if (rule === 'min') { _%>

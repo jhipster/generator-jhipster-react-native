@@ -28,24 +28,24 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     // create
     await Utils.tapFirstElementByLabel(' New ')
     <%_ context.fieldsNoId.forEach((field, index) => {
-      let tcombFieldType = 'String'
+      let formFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        tcombFieldType = 'Number'
+        formFieldType = 'Number'
       } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        tcombFieldType = 'Date'
+        formFieldType = 'Date'
       } else if (field.fieldType === 'Boolean') {
-        tcombFieldType = 'Boolean'
+        formFieldType = 'Boolean'
       } else if (field.fieldIsEnum) {
-        tcombFieldType = field.fieldType
+        formFieldType = field.fieldType
       }
     _%>
-    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
     <%_ } _%>
-    <%_ if (tcombFieldType === 'String') { _%>
+    <%_ if (formFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data')
-      <%_ } else if (tcombFieldType === 'Number') { _%>
+      <%_ } else if (formFieldType === 'Number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
       <%_ } _%>
     <%_ }) _%>
@@ -54,69 +54,76 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await element(by.id('submitButton')).tap()
     // view
     <%_ context.fieldsNoId.forEach((field, index) => {
-      let tcombFieldType = 'String'
+      let formFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        tcombFieldType = 'Number'
+        formFieldType = 'Number'
       } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        tcombFieldType = 'Date'
+        formFieldType = 'Date'
       } else if (field.fieldType === 'Boolean') {
-        tcombFieldType = 'Boolean'
+        formFieldType = 'Boolean'
       } else if (field.fieldIsEnum) {
-        tcombFieldType = field.fieldType
+        formFieldType = field.fieldType
       }
     _%>
-    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
     <%_ } _%>
-    <%_ if (tcombFieldType === 'String') { _%>
+    <%_ if (formFieldType === 'String') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data')
-    <%_ } else if (tcombFieldType === 'Number') { _%>
+    <%_ } else if (formFieldType === 'Number') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('123')
     <%_ } _%>
     <%_ }) _%>
     // update
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
     <%_ context.fieldsNoId.forEach((field, index) => {
-      let tcombFieldType = 'String'
+      let formFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        tcombFieldType = 'Number'
+        formFieldType = 'Number'
       } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        tcombFieldType = 'Date'
+        formFieldType = 'Date'
       } else if (field.fieldType === 'Boolean') {
-        tcombFieldType = 'Boolean'
+        formFieldType = 'Boolean'
       } else if (field.fieldIsEnum) {
-        tcombFieldType = field.fieldType
+        formFieldType = field.fieldType
       }
       _%>
-    <%_ if (['String', 'Number'].includes(tcombFieldType)) { _%>
+
+
+
+
+    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
     <%_ } _%>
-    <%_ if (tcombFieldType === 'String') { _%>
+    <%_ if (formFieldType === 'String') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
-    <%_ } else if (tcombFieldType === 'Number') { _%>
+    <%_ } else if (formFieldType === 'Number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
     <%_ } _%>
+
+
+
     <%_ }) _%>
     await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
     <%_ context.fieldsNoId.forEach((field, index) => {
-      let tcombFieldType = 'String'
+      let formFieldType = 'String'
       if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
         field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        tcombFieldType = 'Number'
+        formFieldType = 'Number'
       } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        tcombFieldType = 'Date'
+        formFieldType = 'Date'
       } else if (field.fieldType === 'Boolean') {
-        tcombFieldType = 'Boolean'
+        formFieldType = 'Boolean'
       } else if (field.fieldIsEnum) {
-        tcombFieldType = field.fieldType
+        formFieldType = field.fieldType
       }
-    if (tcombFieldType === 'String') { _%>
+    if (formFieldType === 'String') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data-2')
-    <%_ } else if (tcombFieldType === 'Number') { _%>
+    <%_ } else if (formFieldType === 'Number') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('1234')
     <%_ } _%>
     <%_ }) _%>
