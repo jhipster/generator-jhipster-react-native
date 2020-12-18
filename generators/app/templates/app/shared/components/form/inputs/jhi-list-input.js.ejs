@@ -4,7 +4,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import { Fonts } from '../../../themes';
 
 export default React.forwardRef((props, ref) => {
-  const { label, labelStyle, error, listItems = [], placeholder, ...otherProps } = props;
+  const { label, labelStyle, error, listItems = [], placeholder, testID, ...otherProps } = props;
   const actualPlaceholder = {
     label: placeholder ? placeholder : 'Select an item...',
     value: '',
@@ -17,7 +17,16 @@ export default React.forwardRef((props, ref) => {
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
       {/* render the text input */}
 
-      <RNPickerSelect placeholder={actualPlaceholder} items={listItems} style={pickerStyles} ref={ref} {...otherProps} />
+      <RNPickerSelect
+        placeholder={actualPlaceholder}
+        items={listItems}
+        style={pickerStyles}
+        ref={ref}
+        touchableWrapperProps={{ testID }}
+        pickerProps={{ testID: `${testID}Picker` }}
+        touchableDoneProps={{ testID: `${testID}PickerDone` }}
+        {...otherProps}
+      />
 
       {/* if there's an error, render it */}
       <Text style={styles.textError}>{error && error.message}</Text>
