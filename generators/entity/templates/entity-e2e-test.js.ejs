@@ -1,4 +1,37 @@
+const jestExpect = require('expect');
 const Utils = require('../utils')
+<%_
+context.resetFakerSeed(`entity-cypress-${context.entityNameCapitalized}`);
+const createFakeData = context.generateFakeData('cypress');
+const updateFakeData = context.generateFakeData('cypress');
+
+// used for setting the datepicker date in the expected full ISO format (JS gives a compact version)
+Date.prototype.toFullISOString = function() {
+  var tzo = -this.getTimezoneOffset(),
+          dif = tzo >= 0 ? '+' : '-',
+          pad = function(num) {
+            var norm = Math.floor(Math.abs(num));
+            return (norm < 10 ? '0' : '') + norm;
+          };
+  return this.getFullYear() +
+          '-' + pad(this.getMonth() + 1) +
+          '-' + pad(this.getDate()) +
+          'T' + pad(this.getHours()) +
+          ':' + pad(this.getMinutes()) +
+          ':' + pad(this.getSeconds()) +
+          dif + pad(tzo / 60) +
+          ':' + pad(tzo % 60);
+}
+Date.prototype.toCustomLocalDate = function() {
+  return (
+          ('0' + (this.getMonth() + 1).toString()).substr(-2) +
+          '/' +
+          ('0' + this.getDate().toString()).substr(-2) +
+          '/' +
+          this.getFullYear().toString().substr(2)
+  );
+}
+_%>
 
 describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
   before(async () => {
@@ -25,119 +58,112 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
 
   it('should allow you to create, update, and delete the <%= context.entityNameCapitalized %> entity', async () => {
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
+
     // create
     await Utils.tapFirstElementByLabel(' New ')
-    <%_ context.fieldsNoId.forEach((field, index) => {
-      let formFieldType = 'String'
-      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
-        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        formFieldType = 'Number'
-      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        formFieldType = 'Date'
-      } else if (field.fieldType === 'Boolean') {
-        formFieldType = 'Boolean'
-      } else if (field.fieldIsEnum) {
-        formFieldType = field.fieldType
-      }
-    _%>
-    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
-    <%_ } _%>
-    <%_ if (formFieldType === 'String') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data')
-      <%_ } else if (formFieldType === 'Number') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('123')
+      <%_ if (formFieldType === 'text') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'number') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'date') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputModal')).setDatePickerDate('<%= new Date(createFakeData[field.fieldName]).toCustomLocalDate() %>', 'MM/dd/yy');
+    await Utils.tapFirstElementByLabel('Confirm');
+      <%_ } else if (formFieldType === 'datetime') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputModal')).setDatePickerDate('<%= new Date(createFakeData[field.fieldName]).toFullISOString() %>', 'ISO8601');
+    await Utils.tapFirstElementByLabel('Confirm');
+        <%_ } else if (formFieldType === 'boolean') { _%>
+    await Utils.toggleSwitchToValue('<%= field.fieldName %>Input', <%= createFakeData[field.fieldName] %>);
+      <%_ } else if (formFieldType === 'list') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputPicker')).setColumnToValue(0, '<%= createFakeData[field.fieldName] %>');
+    await element(by.id('<%= field.fieldName %>InputPickerDone')).tap();
       <%_ } _%>
     <%_ }) _%>
     await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
-    // view
-    <%_ context.fieldsNoId.forEach((field, index) => {
-      let formFieldType = 'String'
-      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
-        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        formFieldType = 'Number'
-      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        formFieldType = 'Date'
-      } else if (field.fieldType === 'Boolean') {
-        formFieldType = 'Boolean'
-      } else if (field.fieldIsEnum) {
-        formFieldType = field.fieldType
-      }
-    _%>
-    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
+
+    // view - validate the creation
+    await Utils.waitForElementToBeVisible('<%= context.entityInstance %>DetailScrollView');
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
-    <%_ } _%>
-    <%_ if (formFieldType === 'String') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data')
-    <%_ } else if (formFieldType === 'Number') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('123')
-    <%_ } _%>
+      <%_ if (formFieldType === 'text') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'date') { _%>
+    const <%= field.fieldName %>CreateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
+    jestExpect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toCustomLocalDate() %>'));
+      <%_ } else if (formFieldType === 'datetime') { _%>
+    const <%= field.fieldName %>CreateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
+    jestExpect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toFullISOString() %>'));
+      <%_ } else if (formFieldType === 'boolean') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'list') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+      <%_ } _%>
     <%_ }) _%>
+
     // update
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
-    <%_ context.fieldsNoId.forEach((field, index) => {
-      let formFieldType = 'String'
-      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
-        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        formFieldType = 'Number'
-      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        formFieldType = 'Date'
-      } else if (field.fieldType === 'Boolean') {
-        formFieldType = 'Boolean'
-      } else if (field.fieldIsEnum) {
-        formFieldType = field.fieldType
-      }
-      _%>
-
-
-
-
-    <%_ if (['String', 'Number'].includes(formFieldType)) { _%>
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
-    <%_ } _%>
-    <%_ if (formFieldType === 'String') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('sample-data-2')
-    <%_ } else if (formFieldType === 'Number') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('1234')
-    <%_ } _%>
-
-
-
+      <%_ if (formFieldType === 'text') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= updateFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'number') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= updateFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'date') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputModal')).setDatePickerDate('<%= new Date(updateFakeData[field.fieldName]).toCustomLocalDate() %>', 'MM/dd/yy');
+    await Utils.tapFirstElementByLabel('Confirm');
+      <%_ } else if (formFieldType === 'datetime') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputModal')).setDatePickerDate('<%= new Date(updateFakeData[field.fieldName]).toFullISOString() %>', 'ISO8601');
+    await Utils.tapFirstElementByLabel('Confirm');
+        <%_ } else if (formFieldType === 'boolean') { _%>
+    await Utils.toggleSwitchToValue('<%= field.fieldName %>Input', <%= updateFakeData[field.fieldName] %>);
+      <%_ } else if (formFieldType === 'list') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).tap();
+    await element(by.id('<%= field.fieldName %>InputPicker')).setColumnToValue(0, '<%= updateFakeData[field.fieldName] %>');
+    await element(by.id('<%= field.fieldName %>InputPickerDone')).tap();
+      <%_ } _%>
     <%_ }) _%>
     await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
-    <%_ context.fieldsNoId.forEach((field, index) => {
-      let formFieldType = 'String'
-      if (field.fieldType === 'Integer' || field.fieldType === 'Long' || field.fieldType === 'Float' ||
-        field.fieldType === 'Decimal' || field.fieldType === 'Double' || field.fieldType === 'BigDecimal') {
-        formFieldType = 'Number'
-      } else if (field.fieldType === 'LocalDate' || field.fieldType === 'Instant' || field.fieldType === 'ZonedDateTime') {
-        formFieldType = 'Date'
-      } else if (field.fieldType === 'Boolean') {
-        formFieldType = 'Boolean'
-      } else if (field.fieldIsEnum) {
-        formFieldType = field.fieldType
-      }
-    if (formFieldType === 'String') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('sample-data-2')
-    <%_ } else if (formFieldType === 'Number') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('1234')
-    <%_ } _%>
+
+    // view - validate the update
+    await Utils.waitForElementToBeVisible('<%= context.entityInstance %>DetailScrollView');
+    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
+      <%_ if (formFieldType === 'text') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'number') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'date') { _%>
+    const <%= field.fieldName %>UpdateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
+    jestExpect(Date.parse(<%= field.fieldName %>UpdateAttributes.label)).toEqual(Date.parse('<%= new Date(updateFakeData[field.fieldName]).toCustomLocalDate() %>'));
+      <%_ } else if (formFieldType === 'datetime') { _%>
+    const <%= field.fieldName %>UpdateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
+    jestExpect(Date.parse(<%= field.fieldName %>UpdateAttributes.label)).toEqual(Date.parse('<%= new Date(updateFakeData[field.fieldName]).toFullISOString() %>'));
+      <%_ } else if (formFieldType === 'boolean') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
+      <%_ } else if (formFieldType === 'list') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
+      <%_ } _%>
     <%_ }) _%>
+
     // delete
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Delete Button');
     await Utils.tapFirstElementByLabel('Delete');
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
   })
 })
-
-<%_
-// this generates acceptable fake data to use
-context.resetFakerSeed(`entity-cypress-${context.entityNameCapitalized}`);
-context.fieldsNoId.forEach((field) => {
-  const data = field.generateFakeData('cypress')
-  })
-_%>

@@ -36,6 +36,14 @@ const goBack = async () => {
   }
 };
 
+const toggleSwitchToValue = async (switchId, targetValue) => {
+  let attributes = await element(by.id(switchId)).getAttributes();
+  while (!!+attributes.value !== targetValue) {
+    await element(by.id(switchId)).longPress();
+    attributes = await element(by.id(switchId)).getAttributes();
+  }
+};
+
 const closeKeyboard = async (componentId = null) => {
   try {
     if (device.getPlatform() === 'ios') {
@@ -53,7 +61,7 @@ const scrollTo = async (fieldId, listId) => {
   if (device.getPlatform() === 'ios') {
     let attributes = await element(by.id(fieldId)).getAttributes();
     while (!attributes.visible && attempts < 20) {
-      await element(by.id(listId)).swipe('up', 'slow', .3);
+      await element(by.id(listId)).swipe('up', 'slow', 0.3);
       attributes = await element(by.id(fieldId)).getAttributes();
       attempts += 1;
     }
@@ -63,14 +71,18 @@ const scrollTo = async (fieldId, listId) => {
   }
 };
 
-const tapFirstElementByLabel = async (elementId) => {
-  await element(by.label(elementId)).atIndex(0).tap();
+const tapFirstElementByLabel = async (label) => {
+  await element(by.label(label)).atIndex(0).tap();
 };
 
-const waitForSplashScreen = async () => {
-  await waitFor(element(by.id('launchScreen')))
+const waitForElementToBeVisible = async (elementId, timeout = 3000) => {
+  await waitFor(element(by.id(elementId)))
     .toBeVisible()
-    .withTimeout(3000);
+    .withTimeout(timeout);
+}
+
+const waitForSplashScreen = async () => {
+  await waitForElementToBeVisible('launchScreen')
 };
 
 const reloadApp = async () => {
@@ -88,6 +100,8 @@ module.exports = {
   scrollTo,
   tapFirstElementByLabel,
   waitForSplashScreen,
+  waitForElementToBeVisible,
   closeKeyboard,
+  toggleSwitchToValue,
   reloadApp,
 };

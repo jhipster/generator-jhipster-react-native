@@ -7,10 +7,18 @@ export default React.forwardRef((props, ref) => {
 
   // get list of field names
   const fields = children.filter((c) => c && c.props && c.props.name).map((c) => c.props.name);
+  const dateFields = children
+    .filter((c) => c && c.props && c.props.inputType && (c.props.inputType === 'date' || c.props.inputType === 'datetime'))
+    .map((c) => c.props.name);
+
   // ensure an initial value is provided for each field
-  fields.forEach((f) => {
-    if (!initialValues[f]) {
-      initialValues[f] = '';
+  fields.forEach((fieldName) => {
+    if (!initialValues[fieldName]) {
+      if (dateFields.includes(fieldName)) {
+        initialValues[fieldName] = new Date();
+      } else {
+        initialValues[fieldName] = '';
+      }
     }
   });
   // ensure that the validationSchema does not contain validation for non-existent fields, causing submit to fail

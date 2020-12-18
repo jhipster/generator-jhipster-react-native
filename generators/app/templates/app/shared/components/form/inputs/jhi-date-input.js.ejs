@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default React.forwardRef((props, ref) => {
-  const { label, labelStyle, error, onChange, inputType, ...otherProps } = props;
+  const { label, labelStyle, error, onChange, inputType, testID, ...otherProps } = props;
 
   const [showDatePicker, setShowDatePicker] = React.useState(false);
 
@@ -32,7 +32,7 @@ export default React.forwardRef((props, ref) => {
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
       {/* render the text input */}
 
-      <TouchableOpacity onPress={toggleDatePickerButton}>
+      <TouchableOpacity onPress={toggleDatePickerButton} testID={testID}>
         <View pointerEvents="none">
           <TextInput editable={false} style={styles.input} value={displayValue} />
         </View>
@@ -44,6 +44,7 @@ export default React.forwardRef((props, ref) => {
         isDarkModeEnabled={false}
         onConfirm={onConfirm}
         onCancel={toggleDatePickerButton}
+        testID={`${testID}Modal`}
         {...otherProps}
       />
 

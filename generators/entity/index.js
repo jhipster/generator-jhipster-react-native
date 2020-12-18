@@ -10,6 +10,7 @@ const {
     getEntityFormField,
     getRelationshipFormField,
     getFieldValidateType,
+    getEntityFormFieldType,
 } = require('../../lib');
 
 module.exports = class extends EntityGenerator {
@@ -57,6 +58,7 @@ module.exports = class extends EntityGenerator {
                 this.context.getEntityFormField = getEntityFormField.bind(this);
                 this.context.getRelationshipFormField = getRelationshipFormField.bind(this);
                 this.context.getFieldValidateType = getFieldValidateType.bind(this);
+                this.context.getEntityFormFieldType = getEntityFormFieldType.bind(this);
 
                 // log the context for debugging purposes
                 if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
