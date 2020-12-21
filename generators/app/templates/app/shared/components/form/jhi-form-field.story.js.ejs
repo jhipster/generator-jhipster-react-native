@@ -59,7 +59,7 @@ function DemoForm() {
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
       <View style={styles.formContainer}>
         <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
           <FormField

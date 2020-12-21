@@ -12,8 +12,8 @@ import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
 import styles from './register-screen.styles';
 
 function RegisterScreen(props) {
-  // setup error state for displaying error messages
   const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
 
   // set up validation schema for the form
   const validationSchema = Yup.object().shape({
@@ -36,8 +36,7 @@ function RegisterScreen(props) {
       if (props.error) {
         setError(props.error);
       } else {
-        //       // Navigation.popToRoot(this.props.componentId)
-        props.navigation.navigate('ModalScreen', { title: 'Registration Successful', message: 'Please check your email' });
+        setSuccess('Please check your email');
       }
     }
   }, [props.fetching]);
@@ -49,9 +48,10 @@ function RegisterScreen(props) {
   const confirmPasswordRef = createRef();
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+    <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
       <View style={styles.formContainer}>
         <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.successText}>{success}</Text>
         <Form
           initialValues={{ login: '', email: '', confirmPassword: '', password: '' }}
           validationSchema={validationSchema}

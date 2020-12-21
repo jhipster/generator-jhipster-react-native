@@ -25,7 +25,6 @@ describe('Settings Screen Tests', () => {
     await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
     await expect(element(by.label('Settings updated'))).toBeVisible();
-    await Utils.tapFirstElementByLabel('DISMISS');
   });
 
   it('should display a popup on settings update failure', async () => {

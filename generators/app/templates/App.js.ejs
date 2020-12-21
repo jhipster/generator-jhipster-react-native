@@ -12,7 +12,9 @@ export default function App() {
   const [displayApp, setDisplayApp] = React.useState(false);
   React.useEffect(() => {
     if (!displayApp) {
-      SplashScreen.preventAutoHideAsync().then(() => setDisplayApp(true));
+      SplashScreen.preventAutoHideAsync()
+        .then(() => setDisplayApp(true))
+        .catch(() => setDisplayApp(true));
     }
   }, [displayApp, setDisplayApp]);
 
