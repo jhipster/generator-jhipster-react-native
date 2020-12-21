@@ -11,7 +11,7 @@ export default React.forwardRef((props, ref) => {
       {/* render the text input */}
       <TextInput ref={ref} style={[styles.input, { borderColor: error ? '#fc6d47' : '#c0cbd3' }]} {...otherProps} />
       {/* if there's an error, render it */}
-      <Text style={styles.textError}>{error && error.message}</Text>
+      {!!error && !!error.message && <Text style={styles.textError}>{error && error.message}</Text>}
     </View>
   );
 });
