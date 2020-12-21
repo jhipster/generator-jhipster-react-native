@@ -61,7 +61,7 @@ const scrollTo = async (fieldId, listId) => {
   if (device.getPlatform() === 'ios') {
     let attributes = await element(by.id(fieldId)).getAttributes();
     while (!attributes.visible && attempts < 20) {
-      await element(by.id(listId)).swipe('up', 'slow', 0.3);
+      await element(by.id(listId)).swipe('up', 'slow', 0.25);
       attributes = await element(by.id(fieldId)).getAttributes();
       attempts += 1;
     }

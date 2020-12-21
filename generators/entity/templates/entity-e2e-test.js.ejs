@@ -38,10 +38,6 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.reloadApp()
     await Utils.loginAsUser()
   })
-  after(async () => {
-    await Utils.goBack()
-    await Utils.logout()
-  })
 
   beforeEach(async () => {
     await Utils.reloadApp()
@@ -65,7 +61,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
+        <%_ if (field.fieldType === 'byte[]') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+        <%_ } else if (field.fieldType !== 'Duration') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+        <%_ } else { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('PT12S')
+        <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'date') { _%>
@@ -94,7 +96,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
+        <%_ if (field.fieldType === 'byte[]') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+        <%_ } else if (field.fieldType !== 'Duration') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+        <%_ } else { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('PT12S')
+        <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'date') { _%>
@@ -116,7 +124,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= updateFakeData[field.fieldName] %>')
+        <%_ if (field.fieldType === 'byte[]') { _%>
+    await element(by.id('<%= field.fieldName %>')).replaceText('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+        <%_ } else if (field.fieldType !== 'Duration') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+        <%_ } else { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('PT13S')
+        <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= updateFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'date') { _%>
@@ -145,7 +159,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
+        <%_ if (field.fieldType === 'byte[]') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+        <%_ } else if (field.fieldType !== 'Duration') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
+        <%_ } else { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('PT13S')
+        <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= updateFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'date') { _%>
@@ -165,5 +185,9 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Delete Button');
     await Utils.tapFirstElementByLabel('Delete');
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
+
+    // logout
+    await Utils.goBack()
+    await Utils.logout()
   })
 })

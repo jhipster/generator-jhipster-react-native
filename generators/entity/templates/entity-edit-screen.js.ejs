@@ -67,7 +67,19 @@ _%>
 }) // end of field loop _%>
 
 function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
-  const { get<%= context.entityNameCapitalized %>, route, <%= context.entityInstance %>, fetching, reset } = props;
+  const {
+    get<%= context.entityNameCapitalized %>,
+    update<%= context.entityNameCapitalized %>,
+    route,
+    <%= context.entityInstance %>,
+    fetching,
+    updating,
+    errorUpdating,
+    updateSuccess,
+    navigation,
+    reset,
+  } = props;
+
   const [formValue, setFormValue] = React.useState();
   const [error, setError] = React.useState('');
 
@@ -88,23 +100,23 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
   }, [<%= context.entityInstance %>, fetching]);
 
   useDidUpdateEffect(() => {
-    if (props.updating === false) {
-      if (props.error) {
-        // setError(props.error)
-        setError('Something went wrong updating the entity');
+    if (updating === false) {
+      if (errorUpdating) {
+        setError(errorUpdating && errorUpdating.detail ? errorUpdating.detail : 'Something went wrong updating the entity');
       } else {
         setError('');
         if (isNewEntity) {
           // send to the detail screen on new entity, otherwise pop (to the detail screen)
-          props.navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
+          navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
         } else {
-          props.navigation.pop();
+          navigation.pop();
         }
       }
     }
-  }, [props.updateSuccess]);
+  }, [updateSuccess, errorUpdating, navigation]);
 
-  const onSubmit = (data) => props.update<%= context.entityNameCapitalized %>(formValueToEntity(data));
+
+const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueToEntity(data));
 
   if (fetching) {
     return (
@@ -124,20 +136,19 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
 
   return (
     <View style={styles.container}>
-      <KeyboardAwareScrollView testID="<%= context.entityInstance %>EditScrollView" keyboardShouldPersistTaps={'handled'}>
+      <KeyboardAwareScrollView testID="<%= context.entityInstance %>EditScrollView" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
         <Text style={styles.errorText}>{error}</Text>
         {formValue && (
           <Form initialValues={formValue} <%_ if (context.validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
-          <%_ context.fieldsNoId.forEach((field, index) => {
+          <%_ context.fieldsNoId.forEach((field, index) => { _%>
+          <%_
             let nextFieldName = null
             if (index !== context.fieldsNoId.length - 1) {
               nextFieldName = context.fieldsNoId[index + 1].fieldName
             }
-            const formAttributes = context.getEntityFormField(field, nextFieldName, context.relationships.filter(relation => relation.ownerSide).length);
+            const formField = context.getEntityFormField(field, nextFieldName, context.relationships.filter(relation => relation.ownerSide).length);
           _%>
-          <FormField
-                <%- formAttributes %>
-          />
+                <%- formField %>
           <%_ }) _%>
             <FormButton title={'Save'} testID={'submitButton'} />
           </Form>
@@ -243,7 +254,7 @@ const mapStateToProps = (state) => {
     fetching: state.<%= context.entityInstancePlural %>.fetchingOne,
     updating: state.<%= context.entityInstancePlural %>.updating,
     updateSuccess: state.<%= context.entityInstancePlural %>.updateSuccess,
-    error: state.<%= context.entityInstancePlural %>.errorUpdating
+    errorUpdating: state.<%= context.entityInstancePlural %>.errorUpdating
   }
 }
 

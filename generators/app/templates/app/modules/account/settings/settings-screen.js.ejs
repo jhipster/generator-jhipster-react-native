@@ -12,8 +12,8 @@ import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
 
 function SettingsScreen(props) {
-  // setup error state for displaying error messages
   const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
 
   // set up validation schema for the form
   const validationSchema = Yup.object().shape({
@@ -27,9 +27,8 @@ function SettingsScreen(props) {
       if (props.error) {
         setError(props.error);
       } else {
-        //       // Navigation.popToRoot(this.props.componentId)
         props.getAccount();
-        props.navigation.navigate('ModalScreen', { title: 'Success', message: 'Settings updated' });
+        setSuccess('Settings updated');
       }
     }
   }, [props.updating]);
@@ -41,9 +40,10 @@ function SettingsScreen(props) {
   const emailRef = createRef();
 
   return (
-    <KeyboardAwareScrollView contentContainerStyle={styles.container} testID="settingsScreen">
+    <KeyboardAwareScrollView contentContainerStyle={styles.container} testID="settingsScreen" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
       <View style={styles.formContainer}>
         <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.successText}>{success}</Text>
         <Form initialValues={props.account} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
           <FormField
             name="firstName"
