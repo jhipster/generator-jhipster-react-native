@@ -10,7 +10,7 @@ import styles from './launch-screen.styles';
 function LaunchScreen(props) {
   const { account } = props;
   return (
-    <View style={styles.mainContainer} testID="launchScreen">
+    <View style={[styles.container, styles.mainContainer]} testID="launchScreen">
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
         <View style={styles.centered}>
           <Image source={Images.logoJhipster} style={styles.logo} />

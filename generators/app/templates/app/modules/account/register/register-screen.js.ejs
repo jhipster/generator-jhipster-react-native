@@ -49,58 +49,56 @@ function RegisterScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <View style={styles.formContainer}>
-        <Text style={styles.errorText}>{error}</Text>
-        <Text style={styles.successText}>{success}</Text>
-        <Form
-          initialValues={{ login: '', email: '', confirmPassword: '', password: '' }}
-          validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          ref={formRef}>
-          <FormField
-            name="login"
-            label="Login"
-            placeholder="Enter login"
-            onSubmitEditing={() => emailRef?.current?.focus()}
-            autoCapitalize="none"
-            textContentType="username"
-            autoFocus={true}
-          />
-          <FormField
-            name="email"
-            ref={emailRef}
-            label="Email"
-            placeholder="Enter email"
-            onSubmitEditing={() => passwordRef?.current?.focus()}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="username"
-          />
-          <FormField
-            ref={passwordRef}
-            name="password"
-            label="Password"
-            placeholder="Enter password"
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
-            onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
-            textContentType="password"
-          />
-          <FormField
-            ref={confirmPasswordRef}
-            name="confirmPassword"
-            label="Confirm Password"
-            placeholder="Enter password"
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
-            onSubmitEditing={() => formRef?.current?.submitForm()}
-            textContentType="password"
-          />
-          <FormButton title={'Register'} />
-        </Form>
-      </View>
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
+      {!!success && <Text style={styles.successText}>{success}</Text>}
+      <Form
+        initialValues={{ login: '', email: '', confirmPassword: '', password: '' }}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+        ref={formRef}>
+        <FormField
+          name="login"
+          label="Login"
+          placeholder="Enter login"
+          onSubmitEditing={() => emailRef?.current?.focus()}
+          autoCapitalize="none"
+          textContentType="username"
+          autoFocus={true}
+        />
+        <FormField
+          name="email"
+          ref={emailRef}
+          label="Email"
+          placeholder="Enter email"
+          onSubmitEditing={() => passwordRef?.current?.focus()}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="username"
+        />
+        <FormField
+          ref={passwordRef}
+          name="password"
+          label="Password"
+          placeholder="Enter password"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry={true}
+          onSubmitEditing={() => confirmPasswordRef?.current?.focus()}
+          textContentType="password"
+        />
+        <FormField
+          ref={confirmPasswordRef}
+          name="confirmPassword"
+          label="Confirm Password"
+          placeholder="Enter password"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry={true}
+          onSubmitEditing={() => formRef?.current?.submitForm()}
+          textContentType="password"
+        />
+        <FormButton title={'Register'} />
+      </Form>
     </KeyboardAwareScrollView>
   );
 }

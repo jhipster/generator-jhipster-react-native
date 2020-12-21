@@ -62,7 +62,7 @@ module.exports = class extends EntityGenerator {
 
                 // log the context for debugging purposes
                 if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
-                    console.log(this.context);
+                    // console.log(this.context);
                 }
             },
         };

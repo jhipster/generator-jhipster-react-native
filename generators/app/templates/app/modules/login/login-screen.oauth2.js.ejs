@@ -28,10 +28,8 @@ function LoginScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <View style={styles.formContainer}>
         <Text style={styles.errorText}>{loginError}</Text>
         <Button title={'Login'} onPress={attemptLogin} />
-      </View>
     </KeyboardAwareScrollView>
   );
 }

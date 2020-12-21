@@ -41,43 +41,41 @@ function SettingsScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} testID="settingsScreen" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <View style={styles.formContainer}>
-        <Text style={styles.errorText}>{error}</Text>
-        <Text style={styles.successText}>{success}</Text>
-        <Form initialValues={props.account} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
-          <FormField
-            name="firstName"
-            ref={firstNameRef}
-            testID="firstNameInput"
-            label="First Name"
-            placeholder="Enter first name"
-            onSubmitEditing={() => lastNameRef?.current?.focus()}
-            autoCapitalize="none"
-            autoFocus={true}
-          />
-          <FormField
-            name="lastName"
-            ref={lastNameRef}
-            testID="lastNameInput"
-            label="Last Name"
-            placeholder="Enter last name"
-            onSubmitEditing={() => emailRef?.current?.focus()}
-            autoCapitalize="none"
-          />
-          <FormField
-            name="email"
-            ref={emailRef}
-            testID="emailInput"
-            label="Email"
-            placeholder="Enter email"
-            onSubmitEditing={() => formRef?.current?.submitForm()}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="username"
-          />
-          <FormButton testID="settingsSubmitButton" title={'Save'} />
-        </Form>
-      </View>
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
+      {!!success && <Text style={styles.successText}>{success}</Text>}
+      <Form initialValues={props.account} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
+        <FormField
+          name="firstName"
+          ref={firstNameRef}
+          testID="firstNameInput"
+          label="First Name"
+          placeholder="Enter first name"
+          onSubmitEditing={() => lastNameRef?.current?.focus()}
+          autoCapitalize="none"
+          autoFocus={true}
+        />
+        <FormField
+          name="lastName"
+          ref={lastNameRef}
+          testID="lastNameInput"
+          label="Last Name"
+          placeholder="Enter last name"
+          onSubmitEditing={() => emailRef?.current?.focus()}
+          autoCapitalize="none"
+        />
+        <FormField
+          name="email"
+          ref={emailRef}
+          testID="emailInput"
+          label="Email"
+          placeholder="Enter email"
+          onSubmitEditing={() => formRef?.current?.submitForm()}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="username"
+        />
+        <FormButton testID="settingsSubmitButton" title={'Save'} />
+      </Form>
     </KeyboardAwareScrollView>
   );
 }

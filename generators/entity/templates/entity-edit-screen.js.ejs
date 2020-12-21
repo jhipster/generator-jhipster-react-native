@@ -129,15 +129,22 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
   const formRef = createRef();
   <%_ context.fieldsNoId.forEach((field, index) => { _%>
   const <%= field.fieldName %>Ref = createRef();
+    <%_ if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
+  const <%= field.fieldName %>ContentTypeRef = createRef();
+    <%_ } _%>
   <%_ }) _%>
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
   const <%= relation.relationshipNamePlural %>Ref = createRef();
   <%_ }) _%>
 
   return (
-    <View style={styles.container}>
-      <KeyboardAwareScrollView testID="<%= context.entityInstance %>EditScrollView" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-        <Text style={styles.errorText}>{error}</Text>
+    <View style={styles.entityContainer}>
+      <KeyboardAwareScrollView
+        testID="<%= context.entityInstance %>EditScrollView"
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        style={styles.entityScrollView}>
+        {!!error && <Text style={styles.errorText}>{error}</Text>}
         {formValue && (
           <Form initialValues={formValue} <%_ if (context.validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
           <%_ context.fieldsNoId.forEach((field, index) => { _%>
