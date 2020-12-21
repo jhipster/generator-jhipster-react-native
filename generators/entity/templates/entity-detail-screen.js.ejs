@@ -51,7 +51,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
       <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant' || field.fieldType === 'Boolean') { _%>
         <Text testID='<%= field.fieldName %>'>{String(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
       <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'any') { _%>
-        <Text testID='<%= field.fieldName %>ContentType'>Open {props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
+        <Text testID='<%= field.fieldName %>'>Open {props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
       <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') { _%>
         <Text testID='<%= field.fieldName %>ContentType'>{props.<%= context.entityInstance %>.<%= field.fieldName %>ContentType}</Text>
         <Image

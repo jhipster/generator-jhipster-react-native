@@ -62,7 +62,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
-    await element(by.id('<%= field.fieldName %>Input')).replaceText('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+          <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+    await Utils.scrollTo('<%= field.fieldName %>ContentTypeInput', '<%= context.entityInstance %>EditScrollView')
+    await element(by.id('<%= field.fieldName %>ContentTypeInput')).replaceText('image/gif')
+          <%_ } else { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('long-text-blob-content')
+          <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
         <%_ } else { _%>
@@ -97,7 +103,11 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+          <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toBeVisible()
+          <%_ } else { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('long-text-blob-content')
+          <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
         <%_ } else { _%>
@@ -125,7 +135,13 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
-    await element(by.id('<%= field.fieldName %>')).replaceText('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+          <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+    await Utils.scrollTo('<%= field.fieldName %>ContentTypeInput', '<%= context.entityInstance %>EditScrollView')
+    await element(by.id('<%= field.fieldName %>ContentTypeInput')).replaceText('image/gif')
+          <%_ } else { _%>
+    await element(by.id('<%= field.fieldName %>Input')).replaceText('long-text-blob-content-2')
+          <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
         <%_ } else { _%>
@@ -160,7 +176,11 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
-    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
+          <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toBeVisible()
+          <%_ } else { _%>
+    await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('long-text-blob-content-2')
+          <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
         <%_ } else { _%>

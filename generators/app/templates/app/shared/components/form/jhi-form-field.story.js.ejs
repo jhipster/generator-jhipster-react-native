@@ -60,41 +60,39 @@ function DemoForm() {
 
   return (
     <KeyboardAwareScrollView style={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <View style={styles.formContainer}>
-        <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
-          <FormField
-            inputType="text"
-            name="stringField"
-            ref={stringFieldRef}
-            label="String Field"
-            placeholder="Enter string field"
-            autoCapitalize="none"
-          />
-          <FormField
-            inputType="boolean"
-            name="booleanField"
-            ref={booleanFieldRef}
-            label="Boolean Field"
-            placeholder="Enter boolean field"
-          />
-          <FormField inputType="list" name="listField" ref={listFieldRef} label="List Field" listItems={sports} />
-          <FormField inputType="date" name="dateField" ref={dateFieldRef} label="Date Field" />
-          <FormField inputType="datetime" name="dateTimeField" ref={dateTimeFieldRef} label="Date Time Field" />
-          <FormButton title={'Save'} />
-          {data && (
-            <View>
-              {Object.keys(data).map((key, i) => {
-                return (
-                  <View key={i} style={styles.flexRow}>
-                    <Text style={styles.flexHalfBold}>{String(key)}: </Text>
-                    <Text style={styles.flex}>{String(data[key])}</Text>
-                  </View>
-                );
-              })}
-            </View>
-          )}
-        </Form>
-      </View>
+      <Form initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
+        <FormField
+          inputType="text"
+          name="stringField"
+          ref={stringFieldRef}
+          label="String Field"
+          placeholder="Enter string field"
+          autoCapitalize="none"
+        />
+        <FormField
+          inputType="boolean"
+          name="booleanField"
+          ref={booleanFieldRef}
+          label="Boolean Field"
+          placeholder="Enter boolean field"
+        />
+        <FormField inputType="list" name="listField" ref={listFieldRef} label="List Field" listItems={sports} />
+        <FormField inputType="date" name="dateField" ref={dateFieldRef} label="Date Field" />
+        <FormField inputType="datetime" name="dateTimeField" ref={dateTimeFieldRef} label="Date Time Field" />
+        <FormButton title={'Save'} />
+        {data && (
+          <View>
+            {Object.keys(data).map((key, i) => {
+              return (
+                <View key={i} style={styles.flexRow}>
+                  <Text style={styles.flexHalfBold}>{String(key)}: </Text>
+                  <Text style={styles.flex}>{String(data[key])}</Text>
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </Form>
     </KeyboardAwareScrollView>
   );
 }

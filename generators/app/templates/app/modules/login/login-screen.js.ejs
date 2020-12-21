@@ -44,34 +44,32 @@ function LoginScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} testID="loginScreen" keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <View style={styles.formContainer}>
-        <Text style={styles.errorText}>{error}</Text>
-        <Form initialValues={{ login: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
-          <FormField
-            name="login"
-            testID="loginScreenUsername"
-            label="Login"
-            placeholder="Enter login"
-            onSubmitEditing={() => passwordRef?.current?.focus()}
-            autoCapitalize="none"
-            textContentType="username"
-            autoFocus={true}
-          />
-          <FormField
-            ref={passwordRef}
-            name="password"
-            testID="loginScreenPassword"
-            label="Password"
-            placeholder="Enter password"
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={true}
-            onSubmitEditing={() => formRef?.current?.submitForm()}
-            textContentType="password"
-          />
-          <FormButton testID="loginScreenLoginButton" title={'Login'} />
-        </Form>
-      </View>
+      {!!error && <Text style={styles.errorText}>{error}</Text>}
+      <Form initialValues={{ login: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit} ref={formRef}>
+        <FormField
+          name="login"
+          testID="loginScreenUsername"
+          label="Login"
+          placeholder="Enter login"
+          onSubmitEditing={() => passwordRef?.current?.focus()}
+          autoCapitalize="none"
+          textContentType="username"
+          autoFocus={true}
+        />
+        <FormField
+          ref={passwordRef}
+          name="password"
+          testID="loginScreenPassword"
+          label="Password"
+          placeholder="Enter password"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry={true}
+          onSubmitEditing={() => formRef?.current?.submitForm()}
+          textContentType="password"
+        />
+        <FormButton testID="loginScreenLoginButton" title={'Login'} />
+      </Form>
     </KeyboardAwareScrollView>
   );
 }
