@@ -68,6 +68,7 @@
     "mocha": "8.2.1",
     "mockery": "2.1.0",
     "prettier": "2.1.2",
+    "patch-package": "6.2.2",
     "rimraf": "3.0.2"
   }
 }

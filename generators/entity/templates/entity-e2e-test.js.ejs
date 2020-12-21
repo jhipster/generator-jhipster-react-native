@@ -92,7 +92,6 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>InputPickerDone')).tap();
       <%_ } _%>
     <%_ }) _%>
-    await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
 
@@ -165,7 +164,6 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await element(by.id('<%= field.fieldName %>InputPickerDone')).tap();
       <%_ } _%>
     <%_ }) _%>
-    await Utils.closeKeyboard('<%= context.entityInstance %>EditScrollView')
     await Utils.scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await element(by.id('submitButton')).tap()
 

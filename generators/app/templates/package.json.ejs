@@ -14,6 +14,7 @@
     "e2e:build:android": "detox build --configuration android.emu.debug",
     "e2e:test:android": "./e2e/download-expo.sh && detox test --configuration android.emu.debug",
     <%_ } _%>
+    "postinstall": "patch-package",
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
   },
   "dependencies": {
@@ -92,6 +93,7 @@
     "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
+    "patch-package": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION"
   },
   <%_ if (!context.skipCommitHook) { _%>

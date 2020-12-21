@@ -56,12 +56,12 @@ const closeKeyboard = async (componentId = null) => {
   }
 };
 
-const scrollTo = async (fieldId, listId) => {
+const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 'slow') => {
   let attempts = 0;
   if (device.getPlatform() === 'ios') {
     let attributes = await element(by.id(fieldId)).getAttributes();
     while (!attributes.visible && attempts < 20) {
-      await element(by.id(listId)).swipe('up', 'slow', 0.25);
+      await element(by.id(listId)).swipe(direction, speed, size);
       attributes = await element(by.id(fieldId)).getAttributes();
       attempts += 1;
     }
