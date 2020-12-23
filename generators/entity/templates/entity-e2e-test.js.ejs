@@ -58,7 +58,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     // create
     await Utils.tapFirstElementByLabel(' New ')
     await Utils.waitForElementToBeVisible('<%= context.entityInstance %>EditScrollView');
-    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
@@ -98,7 +98,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
 
     // view - validate the creation
     await Utils.waitForElementToBeVisible('<%= context.entityInstance %>DetailScrollView');
-    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
@@ -132,7 +132,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.scrollTo('<%= context.entityInstance %>EditButton', '<%= context.entityInstance %>DetailScrollView')
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
     await Utils.waitForElementToBeVisible('<%= context.entityInstance %>EditScrollView');
-    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
@@ -172,7 +172,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
 
     // view - validate the update
     await Utils.waitForElementToBeVisible('<%= context.entityInstance %>DetailScrollView');
-    <%_ context.fieldsNoId.forEach((field, index) => { _%>
+    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
