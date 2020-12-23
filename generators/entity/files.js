@@ -29,7 +29,8 @@ const files = {
                 },
                 {
                     file: 'entity-flatlist.js',
-                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen.js`,
                 },
                 {
                     file: 'entity-flatlist-style.js',
@@ -38,7 +39,8 @@ const files = {
                 },
                 {
                     file: 'entity-reducer.js',
-                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.js`,
                 },
                 {
                     file: 'entity-reducer.spec.js',
@@ -47,11 +49,13 @@ const files = {
                 },
                 {
                     file: 'entity-sagas.js',
-                    renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.js`,
+                    renameTo: generator =>
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.js`,
                 },
                 {
                     file: 'entity-sagas.spec.js',
-                    renameTo: generator => `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.spec.js`,
+                    renameTo: generator =>
+                        `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.spec.js`,
                 },
             ],
         },
@@ -59,7 +63,10 @@ const files = {
     fixtures: [
         {
             templates: [
-                { file: 'fixtures/entity-get.json', renameTo: generator => `app/shared/fixtures/get-${generator.context.entityFileName}.json` },
+                {
+                    file: 'fixtures/entity-get.json',
+                    renameTo: generator => `app/shared/fixtures/get-${generator.context.entityFileName}.json`,
+                },
                 {
                     file: 'fixtures/entity-get-all.json',
                     renameTo: generator => `app/shared/fixtures/get-${generator.context.entityPluralFileName}.json`,

@@ -13,7 +13,6 @@ const {
     generateReactNativeApp,
     appendFiles,
     patchReactNativeNavigation,
-    patchDetox,
     patchWebsockets,
     patchOauth,
     patchInFile,
@@ -32,7 +31,7 @@ module.exports = class extends AppGenerator {
 
         this.patchInFile = patchInFile.bind(this);
         if (!this.context) {
-            this.context = {}
+            this.context = {};
         }
     }
 
@@ -69,7 +68,6 @@ module.exports = class extends AppGenerator {
             writeFiles: writeFiles.bind(this),
             patchUriScheme: patchUriScheme.bind(this),
             patchOauth: patchOauth.bind(this),
-            patchDetox: patchDetox.bind(this),
             patchWebsockets: patchWebsockets.bind(this),
             patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
             appendFiles: appendFiles.bind(this),
