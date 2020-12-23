@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 });
 
 function <%= context.entityNameCapitalized %>EntityDeleteModal(props) {
-    const { visible, setVisible, entity, navigation } = props;
+    const { visible, setVisible, entity, navigation, testID } = props;
 
     const deleteEntity = () => {
         props.delete<%= context.entityNameCapitalized %>(entity.id);
@@ -61,7 +61,7 @@ function <%= context.entityNameCapitalized %>EntityDeleteModal(props) {
     };
     return (
         <Modal animationType="slide" transparent={true} visible={visible}>
-            <View style={styles.centeredView}>
+            <View testID={testID} style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Delete <%= context.entityNameCapitalized %> {entity.id}?</Text>
 

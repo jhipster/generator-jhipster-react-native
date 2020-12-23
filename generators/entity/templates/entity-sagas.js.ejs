@@ -1,8 +1,15 @@
 import { call, put } from 'redux-saga/effects'
 import { callApi } from '../../../shared/sagas/call-api.saga'
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
-<%_ if (context.fieldsContainLocalDate) { _%>
-import { localDateToJsDate } from '../../../shared/util/date-transforms'
+<%_ if (context.fieldsContainDate) { _%>
+import {
+  <%_ if (context.fieldsContainZonedDateTime || context.fieldsContainInstant) { _%>
+  convertDateTimeFromServer,
+  <%_ } _%>
+  <%_ if (context.fieldsContainLocalDate) { _%>
+  convertLocalDateFromServer,
+  <%_ } _%>
+} from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 export function * get<%= context.entityNameCapitalized %> (api, action) {
@@ -86,13 +93,9 @@ export function * delete<%= context.entityNameCapitalized %> (api, action) {
 function mapDateFields (data) {
 <%_ context.fieldsNoId.forEach(function (field) { _%>
 <%_ if (field.fieldType === 'LocalDate') { _%>
-  if (data.<%= field.fieldName %>) {
-    data.<%= field.fieldName %> = localDateToJsDate(data.<%= field.fieldName %>)
-  }
+  data.<%= field.fieldName %> = convertLocalDateFromServer(data.<%= field.fieldName %>)
 <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
-  if (data.<%= field.fieldName %>) {
-    data.<%= field.fieldName %> = new Date(data.<%= field.fieldName %>)
-  }
+  data.<%= field.fieldName %> = convertDateTimeFromServer(data.<%= field.fieldName %>)
 <%_ } _%>
 <%_ }) _%>
   return data

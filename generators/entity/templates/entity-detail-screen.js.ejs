@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, Text, <% if (context.fieldsContainImageB
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native';
 <%_ if (context.fieldsContainLocalDate) { _%>
-import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
+import { convertLocalDateToString } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
@@ -47,7 +47,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
       {/* <%= field.fieldNameCapitalized %> Field */}
       <Text style={styles.label}><%= field.fieldNameCapitalized %>:</Text>
       <%_ if (field.fieldType === 'LocalDate') { _%>
-        <Text testID='<%= field.fieldName %>'>{jsDateToLocalDate(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
+        <Text testID='<%= field.fieldName %>'>{convertLocalDateToString(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
       <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant' || field.fieldType === 'Boolean') { _%>
         <Text testID='<%= field.fieldName %>'>{String(props.<%= context.entityInstance %>.<%= field.fieldName %>)}</Text>
       <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'any') { _%>
@@ -64,14 +64,25 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
       <%_ } _%>
       <%_ }) _%>
       <View style={styles.entityButtons}>
-        <RoundedButton text="Edit" onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>EntityEdit', { entityId: props.<%= context.entityInstance %>.id })} accessibilityLabel={'<%= context.entityNameCapitalized %> Edit Button'} />
-        <RoundedButton text="Delete" onPress={() => setDeleteModalVisible(true)} accessibilityLabel={'<%= context.entityNameCapitalized %> Delete Button'} />
+        <RoundedButton
+          text="Edit"
+          onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>EntityEdit', { entityId: props.<%= context.entityInstance %>.id })}
+          accessibilityLabel={'<%= context.entityNameCapitalized %> Edit Button'}
+          testID="<%= context.entityInstance %>EditButton"
+        />
+        <RoundedButton
+          text="Delete"
+          onPress={() => setDeleteModalVisible(true)}
+          accessibilityLabel={'<%= context.entityNameCapitalized %> Delete Button'}
+          testID="<%= context.entityInstance %>DeleteButton"
+        />
         {deleteModalVisible && (
           <<%= context.entityNameCapitalized %>EntityDeleteModal
             navigation={navigation}
             visible={deleteModalVisible}
             setVisible={setDeleteModalVisible}
             entity={props.<%= context.entityInstance %>}
+            testID="<%= context.entityInstance %>DeleteModal"
           />
         )}
       </View>

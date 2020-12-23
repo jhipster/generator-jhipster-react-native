@@ -14,9 +14,6 @@ import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase
 <%_ } _%>
 <%_ }) _%>
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-<%_ if (context.fieldsContainLocalDate) { _%>
-import { jsDateToLocalDate } from '../../../shared/util/date-transforms'
-<%_ } _%>
 import FormButton from '../../../shared/components/form/jhi-form-button';
 import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
@@ -221,7 +218,7 @@ const formValueToEntity = (value) => {
     id: value.id || null,
     <%_ context.fieldsNoId.forEach((field, index) => { _%>
       <%_ if (field.fieldType === 'Boolean') { _%>
-    <%= field.fieldName %>: value.<%= field.fieldName %> === null ? null : Boolean(value.<%= field.fieldName %>),
+    <%= field.fieldName %>: value.<%= field.fieldName %> === null ? false : Boolean(value.<%= field.fieldName %>),
       <%_ } else { _%>
     <%= field.fieldName %>: value.<%= field.fieldName %> || null,
       <%_ } _%>
