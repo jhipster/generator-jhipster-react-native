@@ -57,6 +57,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
 
     // create
     await Utils.tapFirstElementByLabel(' New ')
+    await Utils.waitForElementToBeVisible('<%= context.entityInstance %>EditScrollView');
     <%_ context.fieldsNoId.forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
@@ -128,7 +129,9 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     <%_ }) _%>
 
     // update
+    await Utils.scrollTo('<%= context.entityInstance %>EditButton', '<%= context.entityInstance %>DetailScrollView')
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
+    await Utils.waitForElementToBeVisible('<%= context.entityInstance %>EditScrollView');
     <%_ context.fieldsNoId.forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
     await Utils.scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
@@ -200,7 +203,9 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     <%_ }) _%>
 
     // delete
+    await Utils.scrollTo('<%= context.entityInstance %>DeleteButton', '<%= context.entityInstance %>DetailScrollView')
     await Utils.tapFirstElementByLabel('<%= context.entityNameCapitalized %> Delete Button');
+    await Utils.waitForElementToBeVisible('<%= context.entityInstance %>DeleteModal');
     await Utils.tapFirstElementByLabel('Delete');
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
 

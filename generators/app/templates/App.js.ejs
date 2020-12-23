@@ -1,16 +1,10 @@
 import * as React from 'react';
-import { SafeAreaView, StyleSheet, } from 'react-native';
 import { Provider } from 'react-redux';
 import createStore from './app/shared/reducers';
 import * as SplashScreen from 'expo-splash-screen';
 
 import NavContainer from './app/navigation/nav-container';
 
-const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1
-  }
-});
 const store = createStore();
 
 export default function App() {
@@ -25,10 +19,8 @@ export default function App() {
   }, [displayApp, setDisplayApp]);
 
   return displayApp ? (
-    <SafeAreaView style={styles.safeAreaView}>
-      <Provider store={store}>
-        <NavContainer />
-      </Provider>
-    </SafeAreaView>
+    <Provider store={store}>
+      <NavContainer />
+    </Provider>
   ) : null;
 }

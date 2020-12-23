@@ -32,9 +32,9 @@ export default React.forwardRef((props, ref) => {
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
       {/* render the text input */}
 
-      <TouchableOpacity onPress={toggleDatePickerButton} testID={testID}>
+      <TouchableOpacity onPress={toggleDatePickerButton}>
         <View pointerEvents="none">
-          <TextInput editable={false} style={styles.input} value={displayValue} />
+          <TextInput editable={false} style={styles.input} value={displayValue} testID={testID} />
         </View>
       </TouchableOpacity>
       <DateTimePickerModal
