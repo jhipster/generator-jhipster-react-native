@@ -38,9 +38,20 @@ module.exports = class extends EntitiesGenerator {
     }
 
     get composing() {
-        const composeEachEntity = this._composing().composeEachEntity;
         return {
-            composeEachEntity,
+            composeEachEntity() {
+                const context = this.context;
+                this.getExistingEntityNames().forEach(entityName => {
+                    if (this.options.composedEntities && this.options.composedEntities.includes(entityName)) return;
+                    this.composeWithJHipster('jhipster-react-native:entity', {
+                        regenerate: true,
+                        skipDbChangelog: this.jhipsterConfig.databaseType === 'sql' || this.options.skipDbChangelog,
+                        skipInstall: true,
+                        arguments: [entityName],
+                        context,
+                    });
+                });
+            },
         };
     }
 
