@@ -41,7 +41,7 @@ function askForBackendJson() {
             when: !this.options.fromJdl,
             type: 'input',
             name: 'backendPath',
-            message: "Enter the path to your app's root directory:",
+            message: 'Enter the directory where your JHipster app is located:',
             store: true,
             default: '../backend',
             validate: input => {

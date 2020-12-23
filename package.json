@@ -44,7 +44,7 @@
     "dependencies": {
         "chalk": "4.1.0",
         "fs-extra": "9.0.1",
-        "generator-jhipster": "git://github.com/jhipster/generator-jhipster.git#176a28c2d4e4469d4b466219e0ef90921f69215e",
+        "generator-jhipster": "7.0.0-beta.0",
         "pluralize": "8.0.0",
         "semver": "7.3.2",
         "lodash": "4.17.20",

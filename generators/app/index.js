@@ -79,7 +79,7 @@ module.exports = class extends AppGenerator {
             },
             composeEntities() {
                 if (!this.withEntities) return;
-                this.composeWithJHipster('entities', { skipInstall: true }, true);
+                this.composeWithJHipster('jhipster-react-native:entities', { skipInstall: true }, true);
             },
         };
     }
@@ -93,12 +93,6 @@ module.exports = class extends AppGenerator {
                 if (!this.options.skipInstall) {
                     this.spawnCommandSync('npm', ['i']);
                 }
-            },
-            prettier() {
-                this.info('Running prettier...');
-                this.spawnCommandSync('npx', ['prettier', '--write', '{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}'], {
-                    stdio: 'ignore',
-                });
             },
         };
     }

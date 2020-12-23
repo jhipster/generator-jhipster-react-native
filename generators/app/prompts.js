@@ -79,6 +79,9 @@ function askBackendPrompt(meta) {
         this.directoryPath = path.resolve('../backend');
         return;
     }
+    if (this.options.fromJdl) {
+        return;
+    }
 
     const prompts = [
         {
