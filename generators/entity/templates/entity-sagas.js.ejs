@@ -91,7 +91,7 @@ export function * delete<%= context.entityNameCapitalized %> (api, action) {
 }
 <%_ if (context.fieldsContainDate) { _%>
 function mapDateFields (data) {
-<%_ context.fieldsNoId.forEach(function (field) { _%>
+<%_ context.fields.filter(field => !field.id).forEach(function (field) { _%>
 <%_ if (field.fieldType === 'LocalDate') { _%>
   data.<%= field.fieldName %> = convertLocalDateFromServer(data.<%= field.fieldName %>)
 <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>

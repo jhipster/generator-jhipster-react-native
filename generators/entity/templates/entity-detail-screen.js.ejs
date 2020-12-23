@@ -43,7 +43,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
     <ScrollView style={styles.container} testID="<%= context.entityInstance %>DetailScrollView">
       <Text style={styles.label}>Id:</Text>
       <Text>{props.<%= context.entityInstance %>.id}</Text>
-      <%_ context.fieldsNoId.forEach(function (field) { _%>
+      <%_ context.fields.filter(field => !field.id).forEach(function (field) { _%>
       {/* <%= field.fieldNameCapitalized %> Field */}
       <Text style={styles.label}><%= field.fieldNameCapitalized %>:</Text>
       <%_ if (field.fieldType === 'LocalDate') { _%>
