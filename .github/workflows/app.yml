@@ -33,7 +33,7 @@ jobs:
       PLATFORM: ios
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.2
+      - uses: actions/setup-node@v2.1.4
         with:
           node-version: ${{ matrix.node_version }}
         # for running pipelines locally with `act`
@@ -41,7 +41,7 @@ jobs:
           RUNNER_TEMP: "/tmp/"
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
         shell: bash
-      - uses: actions/setup-node@v2.1.2
+      - uses: actions/setup-node@v2.1.4
         with:
             node-version: ${{ matrix.node_version }}
       - name: Config git variables
