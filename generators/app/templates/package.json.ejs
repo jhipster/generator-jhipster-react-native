@@ -1,24 +1,21 @@
 {
   "version": "0.0.1",
   "scripts": {
-    "clean": "rimraf $TMPDIR/react-* && watchman watch-del-all && npm cache clean --force",
-    "clean:android": "cd android/ && ./gradlew clean && cd .. && npx react-native run-android",
-    "newclear": "rimraf $TMPDIR/react-* && watchman watch-del-all && rimraf ios/build && rimraf node_modules/ && npm cache clean --force && npm i",
     "test:watch": "jest --watch",
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
-    "android:build": "cd android && ./gradlew assembleRelease",
-    "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
-    "android:hockeyapp": "cd android && ./gradlew assembleRelease && puck -submit=auto app/build/outputs/apk/app-release.apk",
-    "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
-    "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
-    "android:shake": "$ANDROID_HOME/platform-tools/adb devices | grep '\\t' | awk '{print $1}' | sed 's/\\s//g' | xargs -I {} $ANDROID_HOME/platform-tools/adb -s {} shell input keyevent 82",
-    "lint": "eslint app test index.js --ext .js",
-    "prettier": "prettier --write \"app/**/*.js\" \"test/**/*.js\" index.js",
-    <%_ if (!props.skipCommitHook) { _%>
+    "lint": "eslint app test App.js --ext .js",
+    <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
-    "postinstall": "patch-package"
+    <%_ if (context.detox) { _%>
+    "e2e:build:ios": "detox build --configuration ios.sim.debug",
+    "e2e:test:ios": "./e2e/download-expo.sh && detox test --configuration ios.sim.debug",
+    "e2e:build:android": "detox build --configuration android.emu.debug",
+    "e2e:test:android": "./e2e/download-expo.sh && detox test --configuration android.emu.debug",
+    <%_ } _%>
+    "postinstall": "patch-package",
+    "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
   },
   "dependencies": {
     "@react-native-community/async-storage": "REPLACE_WITH_VERSION",
@@ -29,24 +26,43 @@
     "prop-types": "REPLACE_WITH_VERSION",
     "querystringify": "REPLACE_WITH_VERSION",
     "ramda": "REPLACE_WITH_VERSION",
-    "react-native-vector-icons": "REPLACE_WITH_VERSION",
     "react-native-keyboard-aware-scroll-view": "REPLACE_WITH_VERSION",
     "react-redux": "REPLACE_WITH_VERSION",
     "redux": "REPLACE_WITH_VERSION",
     "redux-persist": "REPLACE_WITH_VERSION",
     "redux-saga": "REPLACE_WITH_VERSION",
     "reduxsauce": "REPLACE_WITH_VERSION",
-    "react-native-navigation": "REPLACE_WITH_VERSION",
     "seamless-immutable": "REPLACE_WITH_VERSION",
-    <%_ if (props.authType === 'session' || props.authType === 'uaa' || props.authType === 'oauth2') { _%>
-    "@react-native-community/cookies": "REPLACE_WITH_VERSION",
-    <%_ } _%>
-    <%_ if (props.websockets) { _%>
+    <%_ if (context.websocket) { _%>
     "stompjs": "REPLACE_WITH_VERSION",
     "sockjs-client": "REPLACE_WITH_VERSION",
     "net": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    "tcomb-form-native": "REPLACE_WITH_VERSION"
+    "@react-native-community/masked-view": "REPLACE_WITH_VERSION",
+    "@react-navigation/drawer": "REPLACE_WITH_VERSION",
+    "@react-navigation/stack": "REPLACE_WITH_VERSION",
+    "@react-navigation/native": "REPLACE_WITH_VERSION",
+    "@react-navigation/devtools":"REPLACE_WITH_VERSION",
+    "react-native-gesture-handler": "REPLACE_WITH_VERSION",
+    "react-native-reanimated": "REPLACE_WITH_VERSION",
+    "react-native-safe-area-context": "REPLACE_WITH_VERSION",
+    "react-native-screens": "REPLACE_WITH_VERSION",
+    "react-native-web": "REPLACE_WITH_VERSION",
+    "@expo/vector-icons": "REPLACE_WITH_VERSION",
+    "expo-linking": "REPLACE_WITH_VERSION",
+    "expo-splash-screen": "REPLACE_WITH_VERSION",
+    "formik": "REPLACE_WITH_VERSION",
+    "@react-native-community/datetimepicker": "REPLACE_WITH_VERSION",
+    "@react-native-picker/picker": "REPLACE_WITH_VERSION",
+    "react-datepicker": "REPLACE_WITH_VERSION",
+    "react-native-modal-datetime-picker": "REPLACE_WITH_VERSION",
+    "react-native-picker-select": "REPLACE_WITH_VERSION",
+    <%_ if (context.authenticationType === 'oauth2') { _%>
+    "expo-auth-session": "REPLACE_WITH_VERSION",
+    "expo-web-browser": "REPLACE_WITH_VERSION",
+    "expo-random": "REPLACE_WITH_VERSION",
+    <%_ } _%>
+    "yup": "REPLACE_WITH_VERSION"
   },
   "devDependencies": {
     "@storybook/addons": "REPLACE_WITH_VERSION",
@@ -56,29 +72,31 @@
     "buffer": "REPLACE_WITH_VERSION",
     "enzyme": "REPLACE_WITH_VERSION",
     "enzyme-adapter-react-16": "REPLACE_WITH_VERSION",
+    "@react-native-community/eslint-config": "REPLACE_WITH_VERSION",
+    "babel-jest": "REPLACE_WITH_VERSION",
+    "jest": "REPLACE_WITH_VERSION",
+    "expect": "REPLACE_WITH_VERSION",
+    "jest-expo": "REPLACE_WITH_VERSION",
+    "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
-    "ignite-jhipster": "<%= props.packageVersion %>",
-    <%_ if (!props.skipCommitHook) { _%>
+    "generator-jhipster-react-native": "<%= context.packageVersion %>",
+    <%_ if (!context.skipCommitHook) { _%>
     "lint-staged": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    <%_ if (props.authType === 'oauth2') { _%>
-    "react-native-app-auth": "REPLACE_WITH_VERSION",
-    <%_ } _%>
-    <%_ if (props.detox) { _%>
+    <%_ if (context.detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
     "mocha": "REPLACE_WITH_VERSION",
+    "detox-expo-helpers": "REPLACE_WITH_VERSION",
+    "expo-detox-hook": "REPLACE_WITH_VERSION",
     <%_ } _%>
+    "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
-    "react-dom": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
-    "reactotron-react-native": "REPLACE_WITH_VERSION",
-    "reactotron-redux": "REPLACE_WITH_VERSION",
-    "reactotron-redux-saga": "REPLACE_WITH_VERSION",
     "patch-package": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION"
   },
-  <%_ if (!props.skipCommitHook) { _%>
+  <%_ if (!context.skipCommitHook) { _%>
   "lint-staged": {
     "{,app/**/,test/**/}*.{js}": [
       "prettier --write",
@@ -106,7 +124,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native-community|tcomb-form-native|react-native))"
+      "node_modules/(?!(@react-native-community|react-native))"
     ],
     "coveragePathIgnorePatterns": [
       "app/shared/services/api.js",
@@ -114,7 +132,7 @@
       "/storybook/",
       "/*\\.story\\.js"
     ],
-    "preset": "react-native"
+    "preset": "jest-expo"
   },
   "config": { }
 }

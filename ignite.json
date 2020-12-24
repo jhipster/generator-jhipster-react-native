@@ -1,7 +1,0 @@
-{
-  "generators": [
-    "entity",
-    "import-jdl",
-    "upgrade"
-  ]
-}

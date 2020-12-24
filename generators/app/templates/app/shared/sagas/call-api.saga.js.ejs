@@ -1,9 +1,9 @@
 import { put, take } from 'redux-saga/effects'
 
-<%_ if (props.authType === 'oauth2') { _%>
+<%_ if (context.authenticationType === 'oauth2') { _%>
 import LoginActions from '../../modules/login/login.reducer'
 <%_ } else { _%>
-import { loginScreen } from '../../navigation/layouts'
+import { navigate } from '../../navigation/nav-ref';
 <%_ } _%>
 
 // this saga is used for showing the LoginScreen when a 401 error is received
@@ -17,10 +17,10 @@ export function * callApi (apiCall) {
   // this triggers your UI to show a login form
   yield put({ type: 'RELOGIN' })
 
-  <%_ if (props.authType === 'oauth2') { _%>
+  <%_ if (context.authenticationType === 'oauth2') { _%>
   LoginActions.loginRequest()
   <%_ } else { _%>
-  loginScreen()
+  navigate('LoginScreen')
   <%_ } _%>
   const action = yield take(['RELOGIN_OK', 'RELOGIN_ABORT'])
 
