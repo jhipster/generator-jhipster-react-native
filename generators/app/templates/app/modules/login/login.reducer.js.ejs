@@ -8,7 +8,9 @@ const { Types, Creators } = createActions({
   loginFailure: ['error'],
   logoutRequest: null,
   logoutSuccess: null,
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   loginLoad: [],
+  <%_ } _%>
   loginLoadSuccess: []
 })
 
@@ -27,7 +29,7 @@ export const INITIAL_STATE = Immutable({
 /* ------------- Reducers ------------- */
 
 // we're attempting to login
-export const request = (state) => state.merge({ fetching: true, error: null })
+export const request = (state) => state.merge({ fetching: true })
 
 // we've successfully logged in
 export const success = (state, data) => {
@@ -38,11 +40,12 @@ export const success = (state, data) => {
 // we've had a problem logging in
 export const failure = (state, { error }) => state.merge({ fetching: false, error, authToken: null })
 
+<%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
 // we're attempting to load token from startup sagas
 export const load = (state) => state.merge({ loading: true })
 
 export const loadSuccess = (state) => state.merge({ loading: false })
-
+<%_ } _%>
 // we need to logout, meaning clear access tokens and account
 export const logoutRequest = state => INITIAL_STATE
 
@@ -55,8 +58,10 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
+  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   [Types.LOGIN_LOAD]: load,
   [Types.LOGIN_LOAD_SUCCESS]: loadSuccess,
+  <%_ } _%>
   [Types.LOGOUT_REQUEST]: logoutRequest,
   [Types.LOGOUT_SUCCESS]: logoutSuccess
 

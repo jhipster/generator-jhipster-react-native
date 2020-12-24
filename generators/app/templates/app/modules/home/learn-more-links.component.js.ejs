@@ -7,24 +7,24 @@
  */
 // slightly modified version of https://github.com/facebook/react-native/blob/e028ac7af2d5b48860f01055f3bbacf91f6b6956/Libraries/NewAppScreen/components/LearnMoreLinks.js
 
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import * as Linking from 'expo-linking';
+import openURLInBrowser from 'react-native/Libraries/Core/Devtools/openURLInBrowser'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Colors } from '../../shared/themes/'
 
 const links = [
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (props.authType === 'oauth2') { _%>
   {
     id: 0,
     title: 'OAuth2 Login Config',
-    link: 'https://github.com/ruddell/jhipster-react-native/blob/main/docs/oauth2-oidc.md',
+    link: 'https://github.com/ruddell/ignite-jhipster/blob/main/docs/oauth2-oidc.md',
     description: 'Configuring Keycloak or Okta for login.',
   },
   <%_ } _%>
   {
     id: 1,
     title: 'Project Structure',
-    link: 'https://github.com/ruddell/jhipster-react-native/blob/main/docs/project-structure.md',
+    link: 'https://github.com/ruddell/ignite-jhipster/blob/main/docs/project-structure.md',
     description: "Explains this app's project structure.",
   },
   {
@@ -60,14 +60,14 @@ const links = [
   {
     id: 7,
     title: 'Storybook',
-    link: 'https://github.com/ruddell/jhipster-react-native/blob/main/docs/storybook.md',
+    link: 'https://github.com/ruddell/ignite-jhipster/blob/main/docs/storybook.md',
     description: 'How to use Storybook with React Native.',
   },
-  <%_ if (context.websocket) { _%>
+  <%_ if (props.websockets) { _%>
   {
     id: 8,
     title: 'Websockets Demo',
-    link: 'https://github.com/ruddell/jhipster-react-native/blob/main/docs/websockets.md',
+    link: 'https://github.com/ruddell/ignite-jhipster/blob/main/docs/websockets.md',
     description: 'Websockets "chat" demo screen.',
   },
   <%_ } _%>
@@ -81,7 +81,7 @@ const LinkList = () => (
           <View style={styles.separator} />
           <TouchableOpacity
             accessibilityRole={'button'}
-            onPress={() => Linking.openURL(link)}
+            onPress={() => openURLInBrowser(link)}
             style={styles.linkContainer}>
             <Text style={styles.link}>{title}</Text>
             <Text style={styles.description}>{description}</Text>

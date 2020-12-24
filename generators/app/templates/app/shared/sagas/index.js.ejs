@@ -12,18 +12,18 @@ import { RegisterTypes } from '../../modules/account/register/register.reducer'
 import { ForgotPasswordTypes } from '../../modules/account/password-reset/forgot-password.reducer'
 import { ChangePasswordTypes } from '../../modules/account/password/change-password.reducer'
 import { UserTypes } from '../../shared/reducers/user.reducer'
-// jhipster-react-native-saga-redux-import-needle
+// ignite-jhipster-saga-redux-import-needle
 
 /* ------------- Sagas ------------- */
 
 import { startup } from './startup.saga'
-import { login, logout, loginLoad } from '../../modules/login/login.sagas'
+import { login, logout<% if (props.authType === 'jwt' || props.authType === 'oauth2') { %>, loginLoad<% } %> } from '../../modules/login/login.sagas'
 import { register } from '../../modules/account/register/register.sagas'
 import { forgotPassword } from '../../modules/account/password-reset/forgot-password.sagas'
 import { changePassword } from '../../modules/account/password/change-password.sagas'
 import { getAccount, updateAccount } from '../../shared/sagas/account.sagas'
 import { getUser, getUsers, updateUser, deleteUser } from '../../shared/sagas/user.sagas'
-// jhipster-react-native-saga-method-import-needle
+// ignite-jhipster-saga-method-import-needle
 
 /* ------------- API ------------- */
 
@@ -39,13 +39,15 @@ export default function * root () {
     takeLatest(StartupTypes.STARTUP, startup),
 
     // JHipster accounts
+    <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
     takeLatest(LoginTypes.LOGIN_LOAD, loginLoad, api),
+    <%_ } _%>
     takeLatest(LoginTypes.LOGIN_REQUEST, login, api),
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout, api),
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
     takeLatest(ChangePasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
-    // jhipster-react-native-saga-redux-connect-needle
+    // ignite-jhipster-saga-redux-connect-needle
 
     takeLatest(UserTypes.USER_REQUEST, getUser, api),
     takeLatest(UserTypes.USER_ALL_REQUEST, getUsers, api),
