@@ -2,7 +2,7 @@ export default {
   // Functions return fixtures
 
   // entity fixtures
-  // ignite-jhipster-api-fixture-needle
+  // jhipster-react-native-api-fixture-needle
 
   // user fixtures
   updateUser: (user) => {
@@ -29,32 +29,15 @@ export default {
     }
   },
   // auth fixtures
-  <%_ if (props.authType === 'jwt' || props.authType === 'oauth2') { _%>
   setAuthToken: () => {
 
   },
   removeAuthToken: () => {
 
   },
-  <%_ } _%>
-  <%_ if (props.authType === 'session' || props.authType === 'uaa') { _%>
-  logout: () => {
-    return {
-      ok: true
-    }
-  },
-  <%_ } _%>
-  <%_ if (props.authType !== 'oauth2') { _%>
+  <%_ if (context.authenticationType === 'jwt') { _%>
   login: (authObj) => {
-    <%_ if (props.authType === 'session') { _%>
-      <%_ if (props.oldSessionAuthParameters) { _%>
-    if (authObj === 'j_username=user&j_password=user&remember-me=true') {
-      <%_ } else { _%>
-    if (authObj === 'username=user&password=user&remember-me=true') {
-      <%_ }_%>
-    <%_ } else if (props.authType === 'jwt' || props.authType === 'uaa') { _%>
     if (authObj.username === 'user' && authObj.password === 'user') {
-    <%_ } _%>
       return {
         ok: true,
         data: require('../fixtures/login.json')
@@ -67,7 +50,7 @@ export default {
       }
     }
   },
-  <%_ } else { _%>
+  <%_ } else if (context.authenticationType === 'oauth2') { _%>
   getOauthInfo: () => {
     return {
       ok: true,
