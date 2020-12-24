@@ -35,8 +35,8 @@ Check out the [Sample Application for Android](https://play.google.com/store/app
 - Node v8+
   - Verify version with `node -v`
 - [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
-- [ignite-cli](https://github.com/infinitered/ignite) installed (>= v2.0.0)
-  - Install with `npm install -g ignite-cli`
+- [ignite-cli](https://github.com/infinitered/ignite) v3.x installed
+  - Install with `npm install -g ignite-cli@3`
   - Verify version with `ignite --version`
 - Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
   - Verify `pod` installation with `pod install`

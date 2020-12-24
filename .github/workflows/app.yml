@@ -31,7 +31,7 @@ jobs:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
         shell: bash
-      - run: npm install -g ignite-cli
+      - run: npm install -g ignite-cli@3
       - run: npm link
       - name: Gen/lint app
         run: npx jest test/auth-tests/${JHI_AUTH_TYPE}-integration.test.js
