@@ -27,6 +27,9 @@ function askNamePrompt(meta) {
         this.context.reactNativeAppName = 'RnApp';
         return;
     }
+    if (this.context.reactNativeAppName) {
+        return;
+    }
 
     const prompts = [
         {
@@ -50,6 +53,9 @@ function askNamePrompt(meta) {
 function askDetoxPrompt(meta) {
     if (this.options.defaults) {
         this.context.detox = true;
+        return;
+    }
+    if (this.context.detox !== null && this.context.detox !== undefined) {
         return;
     }
     // if (!meta) return;
