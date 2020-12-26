@@ -54,6 +54,10 @@ module.exports = class extends EntitiesGenerator {
         };
     }
 
+    get loading() {
+        return super._loading();
+    }
+
     get default() {
         return {};
     }

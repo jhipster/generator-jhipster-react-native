@@ -58,6 +58,10 @@ module.exports = class extends AppGenerator {
         return {};
     }
 
+    get loading() {
+        return super._loading();
+    }
+
     get writing() {
         // force overwriting of files since prompting will confuse developers on initial install
         return {
