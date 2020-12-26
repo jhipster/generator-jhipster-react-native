@@ -197,13 +197,13 @@ const entityToFormValue = (value) => {
       <%_ } _%>
     <%_ }) _%>
     <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-    <%_ if (entityInfo.dto === 'no') { _%>
+    <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
     <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null,
       <%_ } _%>
-    <%_ } else if (entityInfo.dto === 'mapstruct') { _%>
+    <%_ } else if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
@@ -227,7 +227,7 @@ const formValueToEntity = (value) => {
       <%_ } _%>
     <%_ }) _%>
     <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-    <%_  if (entityInfo.dto === 'mapstruct') { _%>
+    <%_  if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
@@ -237,7 +237,7 @@ const formValueToEntity = (value) => {
   <%_ }) _%>
   }
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-    <%_ if (entityInfo.dto === 'no') { _%>
+    <%_ if (context.dto === 'no' || !useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
   entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
