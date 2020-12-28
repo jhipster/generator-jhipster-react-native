@@ -62,14 +62,30 @@ module.exports = class extends EntityGenerator {
                 this.context.useOldDTOCode = semver.major(semver.coerce(this.context.jhipsterVersion)) === '6' && this.context.dto === 'mapstruct';
                 // log the context for debugging purposes
                 if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
-                    console.log(this.context);
+                    // console.log(this.context);
                 }
             },
         };
     }
 
     get preparingRelationships() {
-        return super._preparingRelationships();
+        return {
+            ...super._preparingRelationships(),
+            differentRelationshipsWorkaround () {
+                // todo: remove this - need to figure out why context.differentRelationships
+                // todo: has a value here but is undefined in the templates.
+                const alreadyIncludedEntities = []
+                const uniqueEntityRelationships = []
+                this.context.relationships.forEach((relation) => {
+                    if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
+                        alreadyIncludedEntities.push(relation.otherEntityName)
+                        uniqueEntityRelationships.push(relation)
+                    }
+                })
+                this.context.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter((relation) => relation.ownerSide)
+                this.context.ownerSideRelationships = this.context.relationships.filter((relation) => relation.ownerSide)
+            }
+        };
     }
 
     get default() {
