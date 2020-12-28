@@ -6,11 +6,12 @@ import * as Yup from 'yup';
 <%_ } _%>
 
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
-<%_ context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
+<%_ /* context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
+<%_ context.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== context.entityName).forEach((relation) => { _%>
 <%_ if (relation.otherEntityName === 'user') { _%>
 import UserActions from '../../../shared/reducers/user.reducer'
 <%_ } else { _%>
-import <%= pascalCase(relation.otherEntityName) %>Actions from '../<%= kebabCase(relation.otherEntityName) %>/<%= kebabCase(relation.otherEntityName) %>.reducer'
+import <%= relation.otherEntityNameCapitalized %>Actions from '../<%= relation.otherEntityStateName %>/<%= relation.otherEntityStateName %>.reducer'
 <%_ } _%>
 <%_ }) _%>
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -168,15 +169,15 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
 <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation) => { _%>
   <%= relation.otherEntityName %>Id: {
   testID: '<%= relation.otherEntityName %>IdInput',
-  label: '<%= pascalCase(relation.relationshipName) %>'
+  label: '<%= relation.relationshipNameHumanized %>'
   },
 <%_ }) _%>
 
 <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-  get<%= pascalCase(relation.otherEntityNamePlural) %> = () => {
-    const <%= camelCase(relation.otherEntityNamePlural) %> = {}
-    this.props.<%= camelCase(relation.otherEntityNamePlural) %>.forEach(<%= camelCase(relation.otherEntityName) %> => {
-      <%= camelCase(relation.otherEntityNamePlural) %>[<%= camelCase(relation.otherEntityName) %>.id] = <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %> ? <%= camelCase(relation.otherEntityName) %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= camelCase(relation.otherEntityName) %>.id.toString()
+  get<%= relation.otherEntityNameCapitalizedPlural %> = () => {
+    const <%= relation.otherEntityNamePlural %> = {}
+    this.props.<%= relation.otherEntityNamePlural %>.forEach(<%= relation.otherEntityName %> => {
+      <%= relation.otherEntityNamePlural %>[<%= relation.otherEntityName %>.id] = <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %> ? <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= relation.otherEntityName %>.id.toString()
     })
     return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
   }
@@ -252,8 +253,9 @@ const formValueToEntity = (value) => {
 
 const mapStateToProps = (state) => {
   return {
-    <%_ context.differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { _%>
-    <%= camelCase(relation.otherEntityNamePlural) %>: state.<%= camelCase(relation.otherEntityNamePlural) %>.<%= camelCase(relation.otherEntityNamePlural) %> || [],
+    <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { */ _%>
+    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    <%= relation.otherEntityNamePlural %>: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityNamePlural %> || [],
     <%_ }) _%>
     <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
     fetching: state.<%= context.entityInstancePlural %>.fetchingOne,
@@ -265,8 +267,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { _%>
-    getAll<%= pascalCase(relation.otherEntityNamePlural) %>: (options) => dispatch(<%= pascalCase(relation.otherEntityName) %>Actions.<%= camelCase(relation.otherEntityName) %>AllRequest(options)),
+    <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
+    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>: (options) => dispatch(<%= relation.otherEntityNameCapitalized %>Actions.<%= relation.otherEntityName %>AllRequest(options)),
     <%_ }) _%>
     get<%= context.entityNameCapitalized %>: (id) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Request(id)),
     getAll<%= context.entityNamePlural %>: (options) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>AllRequest(options)),
