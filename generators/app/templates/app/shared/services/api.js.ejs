@@ -52,7 +52,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const changePassword = (currentPassword, newPassword) => api.post('api/account/change-password', { currentPassword, newPassword }, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain, */*' } })
 
   const getUser = (userId) => api.get('api/users/' + userId)
-  const getUsers = (options) => api.get('api/users', options)
+  const getAllUsers = (options) => api.get('api/users', options)
   const createUser = (user) => api.post('api/users', user)
   const updateUser = (user) => api.put('api/users', user)
   const deleteUser = (userId) => api.delete('api/users/' + userId)
@@ -74,7 +74,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
     // a list of the API functions from step 2
     createUser,
     updateUser,
-    getUsers,
+    getAllUsers,
     getUser,
     deleteUser,
     // jhipster-react-native-api-export-needle

@@ -69,7 +69,7 @@ const files = {
                 },
                 {
                     file: 'fixtures/entity-get-all.json',
-                    renameTo: generator => `app/shared/fixtures/get-${generator.context.entityPluralFileName}.json`,
+                    renameTo: generator => `app/shared/fixtures/get-all-${generator.context.entityPluralFileName}.json`,
                 },
                 {
                     file: 'fixtures/entity-update.json',
@@ -78,7 +78,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.searchEngine,
+            condition: generator => generator.context.searchEngine,
             templates: [
                 {
                     file: 'fixtures/entity-get-all.json',

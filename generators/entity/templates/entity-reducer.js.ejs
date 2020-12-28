@@ -17,10 +17,10 @@ const { Types, Creators } = createActions({
   <%= context.entityInstance %>DeleteRequest: ['<%= context.entityInstance %>Id'],
 
   <%= context.entityInstance %>Success: ['<%= context.entityInstance %>'],
-  <%= context.entityInstance %>AllSuccess: ['<%= context.entityInstancePlural %>', 'headers'],
+  <%= context.entityInstance %>AllSuccess: ['<%= context.entityInstance %>List', 'headers'],
   <%= context.entityInstance %>UpdateSuccess: ['<%= context.entityInstance %>'],
   <%_ if (context.searchEngine) { _%>
-  <%= context.entityInstance %>SearchSuccess: ['<%= context.entityInstancePlural %>'],
+  <%= context.entityInstance %>SearchSuccess: ['<%= context.entityInstance %>List'],
   <%_ } _%>
   <%= context.entityInstance %>DeleteSuccess: [],
 
@@ -50,7 +50,7 @@ export const INITIAL_STATE = Immutable({
   deleting: false,
   updateSuccess: false,
   <%= context.entityInstance %>: null,
-  <%= context.entityInstancePlural %>: [],
+  <%= context.entityInstance %>List: [],
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
@@ -111,7 +111,7 @@ export const success = (state, action) => {
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { <%= context.entityInstancePlural %><%_ if (context.pagination !== 'no') { _%>, headers<%_ } _%> } = action
+  const { <%= context.entityInstance %>List<%_ if (context.pagination !== 'no') { _%>, headers<%_ } _%> } = action
   <%_ if (context.pagination !== 'no') { _%>
   const links = parseHeaderForLinks(headers.link)
   <%_ } _%>
@@ -121,9 +121,9 @@ export const allSuccess = (state, action) => {
     <%_ if (context.pagination !== 'no') { _%>
     links,
     totalItems: parseInt(headers['x-total-count'], 10),
-    <%= context.entityInstancePlural %>: loadMoreDataWhenScrolled(state.<%= context.entityInstancePlural %>, <%= context.entityInstancePlural %>, links),
+    <%= context.entityInstance %>List: loadMoreDataWhenScrolled(state.<%= context.entityInstance %>List, <%= context.entityInstance %>List, links),
     <%_ } else { _%>
-    <%= context.entityInstancePlural %>
+    <%= context.entityInstance %>List
     <%_ } _%>
   })
 }
@@ -140,11 +140,11 @@ export const updateSuccess = (state, action) => {
 <%_ if (context.searchEngine) { _%>
 // successful api search
 export const searchSuccess = (state, action) => {
-  const { <%= context.entityInstancePlural %> } = action
+  const { <%= context.entityInstance %>List } = action
   return state.merge({
     searching: false,
     errorSearching: null,
-    <%= context.entityInstancePlural %>
+    <%= context.entityInstance %>List
   })
 }
 <%_ } _%>
@@ -172,7 +172,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    <%= context.entityInstancePlural %>: []
+    <%= context.entityInstance %>List: []
   })
 }
 // Something went wrong updating.
@@ -201,7 +201,7 @@ export const searchFailure = (state, action) => {
   return state.merge({
     searching: false,
     errorSearching: error,
-    <%= context.entityInstancePlural %>: []
+    <%= context.entityInstance %>List: []
   })
 }
 <%_ } _%>
