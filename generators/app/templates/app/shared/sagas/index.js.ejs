@@ -22,7 +22,7 @@ import { register } from '../../modules/account/register/register.sagas'
 import { forgotPassword } from '../../modules/account/password-reset/forgot-password.sagas'
 import { changePassword } from '../../modules/account/password/change-password.sagas'
 import { getAccount, updateAccount } from '../../shared/sagas/account.sagas'
-import { getUser, getUsers, updateUser, deleteUser } from '../../shared/sagas/user.sagas'
+import UserSagas from '../../shared/sagas/user.sagas'
 // jhipster-react-native-saga-method-import-needle
 
 /* ------------- API ------------- */
@@ -47,10 +47,10 @@ export default function * root () {
     takeLatest(ChangePasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),
     // jhipster-react-native-saga-redux-connect-needle
 
-    takeLatest(UserTypes.USER_REQUEST, getUser, api),
-    takeLatest(UserTypes.USER_ALL_REQUEST, getUsers, api),
-    takeLatest(UserTypes.USER_UPDATE_REQUEST, updateUser, api),
-    takeLatest(UserTypes.USER_DELETE_REQUEST, deleteUser, api),
+    takeLatest(UserTypes.USER_REQUEST, UserSagas.getUser, api),
+    takeLatest(UserTypes.USER_ALL_REQUEST, UserSagas.getAllUsers, api),
+    takeLatest(UserTypes.USER_UPDATE_REQUEST, UserSagas.updateUser, api),
+    takeLatest(UserTypes.USER_DELETE_REQUEST, UserSagas.deleteUser, api),
 
     takeLatest(AccountTypes.ACCOUNT_REQUEST, getAccount, api),
     takeLatest(AccountTypes.ACCOUNT_UPDATE_REQUEST, updateAccount, api)

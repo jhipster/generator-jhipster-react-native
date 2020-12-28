@@ -17,7 +17,7 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
   const [searchTerm, setSearchTerm] = React.useState('');
   <%_ } _%>
 
-  const { <%= context.entityInstance %>, getAll<%= context.entityNamePlural %>, fetching } = props;
+  const { <%= context.entityInstance %>, <%= context.entityInstance %>List, getAll<%= context.entityNamePlural %>, fetching } = props;
 
   useFocusEffect(
     React.useCallback(() => {
@@ -76,7 +76,7 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
 
   const handleLoadMore = () => {
     <%_ if (context.pagination === 'no') { _%>
-    if (props.<%= context.entityInstancePlural %>.length) {
+    if (<%= context.entityInstance %>List.length) {
     <%_ } else { _%>
     if (page < props.links.next || props.links.next === undefined || fetching) {
     <%_ } _%>
@@ -89,7 +89,7 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
     <View style={styles.container} testID='<%= context.entityInstance %>Screen'>
       <FlatList
         contentContainerStyle={styles.listContent}
-        data={props.<%= context.entityInstancePlural %>}
+        data={<%= context.entityInstance %>List}
         renderItem={renderRow}
         keyExtractor={keyExtractor}
         initialNumToRender={oneScreensWorth}
@@ -106,7 +106,7 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
 const mapStateToProps = (state) => {
   return {
     // ...redux state to props here
-    <%= context.entityInstancePlural %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstancePlural %>,
+    <%= context.entityInstance %>List: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>List,
     <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
     fetching: state.<%= context.entityInstancePlural %>.fetchingAll,
     error: state.<%= context.entityInstancePlural %>.errorAll,

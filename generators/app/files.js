@@ -163,7 +163,7 @@ const files = {
     ],
     websockets: [
         {
-            condition: generator => generator.websocket,
+            condition: generator => generator.context.websocket,
             templates: [
                 'app/modules/chat/chat-screen.js',
                 'app/modules/chat/chat-screen.styles.js',
@@ -178,11 +178,11 @@ const files = {
     ],
     loginScreen: [
         {
-            condition: generator => generator.authenticationType !== 'oauth2',
+            condition: generator => generator.context.authenticationType !== 'oauth2',
             templates: ['app/modules/login/login-screen.js'],
         },
         {
-            condition: generator => generator.authenticationType === 'oauth2',
+            condition: generator => generator.context.authenticationType === 'oauth2',
             templates: [
                 {
                     file: 'app/modules/login/login-screen.oauth2.js',
@@ -193,7 +193,7 @@ const files = {
     ],
     oauth: [
         {
-            condition: generator => generator.authenticationType === 'oauth2',
+            condition: generator => generator.context.authenticationType === 'oauth2',
             templates: ['app/shared/fixtures/get-oauth-info.json', 'app/modules/login/login.utils.ts'],
         },
     ],
@@ -210,7 +210,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.context.detox === true && generator.authenticationType !== 'oauth2',
+            condition: generator => generator.context.detox === true && generator.context.authenticationType !== 'oauth2',
             templates: [
                 'e2e/account/change-password-screen.spec.js',
                 'e2e/account/login-screen.spec.js',
@@ -218,7 +218,7 @@ const files = {
             ],
         },
         {
-            condition: generator => generator.context.detox === true && generator.websocket,
+            condition: generator => generator.context.detox === true && generator.context.websocket,
             templates: ['e2e/websockets/chat-screen.spec.js'],
         },
     ],

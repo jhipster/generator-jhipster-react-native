@@ -10,7 +10,7 @@ const { Types, Creators } = createActions({
   userDeleteRequest: ['userId'],
 
   userSuccess: ['user'],
-  userAllSuccess: ['users'],
+  userAllSuccess: ['userList'],
   userUpdateSuccess: ['user'],
   userDeleteSuccess: [],
 
@@ -31,7 +31,7 @@ export const INITIAL_STATE = Immutable({
   updating: null,
   deleting: null,
   user: null,
-  users: null,
+  userList: null,
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
@@ -51,7 +51,7 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    users: null
+    userList: null
   })
 
 // request to update from an api
@@ -76,11 +76,11 @@ export const success = (state, action) => {
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { users } = action
+  const { userList } = action
   return state.merge({
     fetchingAll: false,
     errorAll: null,
-    users
+    userList
   })
 }
 // successful api update
@@ -116,7 +116,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    users: null
+    userList: null
   })
 }
 // Something went wrong updating.

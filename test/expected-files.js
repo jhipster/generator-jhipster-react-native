@@ -200,7 +200,7 @@ const expectedFiles = {
         'app/modules/entities/foo/foo.sagas.js',
         'test/spec/modules/entities/foo/foo.sagas.spec.js',
         'app/shared/fixtures/get-foo.json',
-        'app/shared/fixtures/get-foos.json',
+        'app/shared/fixtures/get-all-foos.json',
         'app/shared/fixtures/update-foo.json',
     ],
     entitySearchEngine: ['app/shared/fixtures/search-foos.json'],

@@ -175,11 +175,11 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
 
 <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
   get<%= relation.otherEntityNameCapitalizedPlural %> = () => {
-    const <%= relation.otherEntityNamePlural %> = {}
-    this.props.<%= relation.otherEntityNamePlural %>.forEach(<%= relation.otherEntityName %> => {
-      <%= relation.otherEntityNamePlural %>[<%= relation.otherEntityName %>.id] = <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %> ? <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= relation.otherEntityName %>.id.toString()
+    const <%= relation.otherEntityName %>List = {}
+    props.<%= relation.otherEntityName %>List.forEach(<%= relation.otherEntityName %> => {
+      <%= relation.otherEntityName %>List[<%= relation.otherEntityName %>.id] = <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %> ? <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= relation.otherEntityName %>.id.toString()
     })
-    return t.maybe(t.enums(<%= relation.otherEntityNamePlural %>))
+    return t.maybe(t.enums(<%= relation.otherEntityName %>List))
   }
 <%_ }) _%>
 */
@@ -255,7 +255,7 @@ const mapStateToProps = (state) => {
   return {
     <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { */ _%>
     <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
-    <%= relation.otherEntityNamePlural %>: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityNamePlural %> || [],
+    <%= relation.otherEntityName %>List: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityName %>List || [],
     <%_ }) _%>
     <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
     fetching: state.<%= context.entityInstancePlural %>.fetchingOne,

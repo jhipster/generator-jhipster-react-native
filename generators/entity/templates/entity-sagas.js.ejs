@@ -12,7 +12,7 @@ import {
 } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
-export function * get<%= context.entityNameCapitalized %> (api, action) {
+function * get<%= context.entityNameCapitalized %> (api, action) {
   const { <%= context.entityInstance %>Id } = action
   // make the call to the api
   const apiCall = call(api.get<%= context.entityNameCapitalized %>, <%= context.entityInstance %>Id)
@@ -29,10 +29,10 @@ export function * get<%= context.entityNameCapitalized %> (api, action) {
   }
 }
 
-export function * get<%= context.entityNamePlural %> (api, action) {
+function * getAll<%= context.entityNamePlural %> (api, action) {
   const { options } = action
   // make the call to the api
-  const apiCall = call(api.get<%= context.entityNamePlural %>, options)
+  const apiCall = call(api.getAll<%= context.entityNamePlural %>, options)
   const response = yield call(callApi, apiCall)
 
   // success?
@@ -43,7 +43,7 @@ export function * get<%= context.entityNamePlural %> (api, action) {
   }
 }
 
-export function * update<%= context.entityNameCapitalized %> (api, action) {
+function * update<%= context.entityNameCapitalized %> (api, action) {
   const { <%= context.entityInstance %> } = action
   // make the call to the api
   const idIsNotNull = !!<%= context.entityInstance %>.id
@@ -62,7 +62,7 @@ export function * update<%= context.entityNameCapitalized %> (api, action) {
 }
 
 <%_ if (context.searchEngine) { _%>
-export function * search<%= context.entityNamePlural %> (api, action) {
+function * search<%= context.entityNamePlural %> (api, action) {
   const { query } = action
   // make the call to the api
   const apiCall = call(api.search<%= context.entityNamePlural %>, query)
@@ -76,7 +76,7 @@ export function * search<%= context.entityNamePlural %> (api, action) {
   }
 }
 <%_ } _%>
-export function * delete<%= context.entityNameCapitalized %> (api, action) {
+function * delete<%= context.entityNameCapitalized %> (api, action) {
   const { <%= context.entityInstance %>Id } = action
   // make the call to the api
   const apiCall = call(api.delete<%= context.entityNameCapitalized %>, <%= context.entityInstance %>Id)
@@ -101,3 +101,14 @@ function mapDateFields (data) {
   return data
 }
 <%_ } _%>
+
+export default {
+  getAll<%= context.entityNamePlural %>,
+  get<%= context.entityNameCapitalized %>,
+  delete<%= context.entityNameCapitalized %>,
+  <%_ if (context.searchEngine) { _%>
+  search<%= context.entityNamePlural %>,
+  <%_ } _%>
+  update<%= context.entityNameCapitalized %>,
+};
+
