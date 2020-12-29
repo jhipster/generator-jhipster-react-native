@@ -63,6 +63,11 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
         <Text testID='<%= field.fieldName %>'>{props.<%= context.entityInstance %>.<%= field.fieldName %>}</Text>
       <%_ } _%>
       <%_ }) _%>
+      <%_ context.relationships.filter(relation => relation.ownerSide).forEach(function (relation) { _%>
+        <Text style={styles.label}><%= relation.relationshipNameHumanized %>:</Text>
+        <Text testID='<%= relation.otherEntityField %>'>{String(props.<%= context.entityInstance %>.<%= relation.otherEntityName %> ? props.<%= context.entityInstance %>.<%= relation.otherEntityName %>.<%= relation.otherEntityField %> : '')}</Text>
+      <%_ }) _%>
+
       <View style={styles.entityButtons}>
         <RoundedButton
           text="Edit"

@@ -7,8 +7,6 @@ import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
 <%_ if (context.authenticationType === 'oauth2') { _%>
 import { doOauthPkceFlow } from './login.utils';
-
-const oauthClientId = 'PUT-YOUR-OAUTH-CLIENT-ID-HERE';
 <%_ } _%>
 
 export const selectAuthToken = (state) => state.login.authToken
@@ -19,7 +17,9 @@ export function * login (api) {
   const authInfo = yield call(api.getOauthInfo)
   if (authInfo.ok) {
     try {
-      const { issuer } = authInfo.data;
+      const { issuer, clientId } = authInfo.data;
+      // if using Okta for auth, configure clientId here
+      // const clientId = '0favl263f83H1kxJk0h7';
       const { accessToken } = yield call(doOauthPkceFlow, oauthClientId, issuer);
       if (accessToken) {
         yield call(api.setAuthToken, accessToken);
