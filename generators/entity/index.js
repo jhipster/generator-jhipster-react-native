@@ -58,11 +58,12 @@ module.exports = class extends EntityGenerator {
                 this.context.getRelationshipFormField = getRelationshipFormField.bind(this);
                 this.context.getFieldValidateType = getFieldValidateType.bind(this);
                 this.context.getEntityFormFieldType = getEntityFormFieldType.bind(this);
+                this.context.entityNameSnakeCase = this._.snakeCase(this.context.entityNameCapitalized);
                 // DTO compatability for v6
                 this.context.useOldDTOCode = semver.major(semver.coerce(this.context.jhipsterVersion)) === '6' && this.context.dto === 'mapstruct';
                 // log the context for debugging purposes
                 if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
-                    // console.log(this.context);
+                    console.log(this.context);
                 }
             },
         };

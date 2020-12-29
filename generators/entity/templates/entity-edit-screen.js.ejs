@@ -176,13 +176,7 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
                 <%- formField %>
           <%_ }) _%>
             <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-              <%_
-                let nextFieldName = null
-                if (index !== context.fields.filter(field => !field.id).length - 1) {
-                  nextFieldName = context.fields.filter(field => !field.id)[index + 1].fieldName
-                }
-                const formField = context.getRelationshipFormField(relation, index, context.relationships.filter(relation => relation.ownerSide).length, context);
-              _%>
+              <%_ const formField = context.getRelationshipFormField(relation, index, context.relationships.filter(relation => relation.ownerSide).length, context); _%>
               <%- formField %>
             <%_ }) _%>
 
@@ -250,7 +244,7 @@ const formValueToEntity = (value) => {
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-  entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>
+  entity.<%= relation.relationshipNamePlural %> = value.<%= relation.relationshipNamePlural %>
       <%_ } else { _%>
   entity.<%= relation.otherEntityName %> = value.<%= relation.otherEntityName %> ? { id: value.<%= relation.otherEntityName %> } : null
       <%_ } _%>
