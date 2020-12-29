@@ -9,7 +9,7 @@ export default React.forwardRef((props, ref) => {
       {/* if there's a label, render it */}
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
 
-      {/* render the text input */}
+      {/* render the switch */}
       <Switch style={[styles.input]} {...otherProps} />
 
       {/* if there's an error, render it */}

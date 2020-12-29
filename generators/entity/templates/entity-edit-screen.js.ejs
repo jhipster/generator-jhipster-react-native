@@ -76,6 +76,10 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
     updateSuccess,
     navigation,
     reset,
+    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>,
+    <%= relation.otherEntityName %>List,
+    <%_ }) _%>
   } = props;
 
   const [formValue, setFormValue] = React.useState();
@@ -97,6 +101,17 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
     }
   }, [<%= context.entityInstance %>, fetching]);
 
+  // fetch related entities
+  React.useEffect(() => {
+    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>();
+    <%_ }) _%>
+  }, [
+    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>,
+    <%_ }) _%>
+  ]);
+
   useDidUpdateEffect(() => {
     if (updating === false) {
       if (errorUpdating) {
@@ -107,7 +122,7 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
           // send to the detail screen on new entity, otherwise pop (to the detail screen)
           navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
         } else {
-          navigation.pop();
+          navigation.canGoBack() ? navigation.goBack() : navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
         }
       }
     }
@@ -132,7 +147,11 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
     <%_ } _%>
   <%_ }) _%>
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+    <%_ if (relation.relationshipType === 'many-to-many') { _%>
   const <%= relation.relationshipNamePlural %>Ref = createRef();
+    <%_ } else { _%>
+  const <%= relation.relationshipName %>Ref = createRef();
+    <%_ } _%>
   <%_ }) _%>
 
   return (
@@ -156,6 +175,17 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
           _%>
                 <%- formField %>
           <%_ }) _%>
+            <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+              <%_
+                let nextFieldName = null
+                if (index !== context.fields.filter(field => !field.id).length - 1) {
+                  nextFieldName = context.fields.filter(field => !field.id)[index + 1].fieldName
+                }
+                const formField = context.getRelationshipFormField(relation, index, context.relationships.filter(relation => relation.ownerSide).length, context);
+              _%>
+              <%- formField %>
+            <%_ }) _%>
+
             <FormButton title={'Save'} testID={'submitButton'} />
           </Form>
         )}
@@ -163,26 +193,6 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
     </View>
   );
 }
-/*
-
-// generate entity form fields...
-<%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation) => { _%>
-  <%= relation.otherEntityName %>Id: {
-  testID: '<%= relation.otherEntityName %>IdInput',
-  label: '<%= relation.relationshipNameHumanized %>'
-  },
-<%_ }) _%>
-
-<%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-  get<%= relation.otherEntityNameCapitalizedPlural %> = () => {
-    const <%= relation.otherEntityName %>List = {}
-    props.<%= relation.otherEntityName %>List.forEach(<%= relation.otherEntityName %> => {
-      <%= relation.otherEntityName %>List[<%= relation.otherEntityName %>.id] = <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %> ? <%= relation.otherEntityName %>.<%= relation.otherEntityField || 'id' %>.toString() : <%= relation.otherEntityName %>.id.toString()
-    })
-    return t.maybe(t.enums(<%= relation.otherEntityName %>List))
-  }
-<%_ }) _%>
-*/
 
 // convenience methods for customizing the mapping of the entity to/from the form value
 const entityToFormValue = (value) => {
@@ -202,7 +212,7 @@ const entityToFormValue = (value) => {
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
     <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
       <%_ } else { _%>
-    <%= relation.otherEntityName %>Id: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null,
+    <%= relation.otherEntityName %>: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null,
       <%_ } _%>
     <%_ } else if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
@@ -238,13 +248,11 @@ const formValueToEntity = (value) => {
   <%_ }) _%>
   }
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
-    <%_ if (context.dto === 'no' || !useOldDTOCode) { _%>
+    <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-  entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
+  entity.<%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>
       <%_ } else { _%>
-  if (value.<%= relation.otherEntityName %>Id) {
-    entity.<%= relation.otherEntityName %> = { id: value.<%= relation.otherEntityName %>Id }
-  }
+  entity.<%= relation.otherEntityName %> = value.<%= relation.otherEntityName %> ? { id: value.<%= relation.otherEntityName %> } : null
       <%_ } _%>
     <%_ } _%>
   <%_ }) _%>

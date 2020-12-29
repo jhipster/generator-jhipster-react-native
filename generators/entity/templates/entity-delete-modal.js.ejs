@@ -57,7 +57,7 @@ function <%= context.entityNameCapitalized %>EntityDeleteModal(props) {
 
     const deleteEntity = () => {
         props.delete<%= context.entityNameCapitalized %>(entity.id);
-        navigation.pop();
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>Entity');
     };
     return (
         <Modal animationType="slide" transparent={true} visible={visible}>
