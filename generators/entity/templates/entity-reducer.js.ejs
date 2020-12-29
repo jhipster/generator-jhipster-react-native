@@ -211,28 +211,28 @@ export const reset = (state) => INITIAL_STATE
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.<%= context.entityTableName.toUpperCase() %>_REQUEST]: request,
-  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_REQUEST]: allRequest,
-  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_REQUEST]: request,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_ALL_REQUEST]: allRequest,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
   <%_ if (context.searchEngine) { _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
   <%_ } _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
 
-  [Types.<%= context.entityTableName.toUpperCase() %>_SUCCESS]: success,
-  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
-  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_SUCCESS]: success,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
   <%_ if (context.searchEngine) { _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
   <%_ } _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
 
-  [Types.<%= context.entityTableName.toUpperCase() %>_FAILURE]: failure,
-  [Types.<%= context.entityTableName.toUpperCase() %>_ALL_FAILURE]: allFailure,
-  [Types.<%= context.entityTableName.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_FAILURE]: failure,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_ALL_FAILURE]: allFailure,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
   <%_ if (context.searchEngine) { _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
   <%_ } _%>
-  [Types.<%= context.entityTableName.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
-  [Types.<%= context.entityTableName.toUpperCase() %>_RESET]: reset
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,
+  [Types.<%= context.entityNameSnakeCase.toUpperCase() %>_RESET]: reset
 })
