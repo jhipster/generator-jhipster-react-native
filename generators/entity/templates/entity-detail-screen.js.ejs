@@ -9,7 +9,7 @@ import { convertLocalDateToString } from '../../../shared/util/date-transforms'
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
 import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
 import <%= context.entityNameCapitalized %>EntityDeleteModal from './<%= context.entityFileName %>-entity-delete-modal';
-import styles from './<%= context.entityFileName %>-entity-detail-screen-style'
+import styles from './<%= context.entityFileName %>-entity-styles'
 
 function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
   const { route, get<%= context.entityNameCapitalized %>, navigation } = props;
@@ -65,7 +65,13 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
       <%_ }) _%>
       <%_ context.relationships.filter(relation => relation.ownerSide).forEach(function (relation) { _%>
         <Text style={styles.label}><%= relation.relationshipNameHumanized %>:</Text>
-        <Text testID='<%= relation.otherEntityField %>'>{String(props.<%= context.entityInstance %>.<%= relation.otherEntityName %> ? props.<%= context.entityInstance %>.<%= relation.otherEntityName %>.<%= relation.otherEntityField %> : '')}</Text>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+        {props.<%= context.entityInstance %>.<%= relation.relationshipNamePlural %> && props.<%= context.entityInstance %>.<%= relation.relationshipNamePlural %>.map((entity, index) => (
+          <Text key={index} testID={`<%= relation.relationshipNamePlural %>-${index}`}>{String(entity.<%= relation.otherEntityField %> || '')}</Text>
+        ))}
+        <%_ } else { _%>
+        <Text testID='<%= relation.relationshipName %>'>{String(props.<%= context.entityInstance %>.<%= relation.relationshipName %> ? props.<%= context.entityInstance %>.<%= relation.relationshipName %>.<%= relation.otherEntityField %> : '')}</Text>
+        <%_ } _%>
       <%_ }) _%>
 
       <View style={styles.entityButtons}>

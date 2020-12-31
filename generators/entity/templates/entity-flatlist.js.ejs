@@ -6,7 +6,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import SearchBar from '../../../shared/components/search-bar/search-bar'
 <%_ } _%>
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
-import styles from './<%= context.entityFileName %>-entity-screen-style'
+import styles from './<%= context.entityFileName %>-entity-styles'
 import AlertMessage from '../../../shared/components/alert-message/alert-message'
 
 function <%= context.entityNameCapitalized %>EntityScreen(props) {
@@ -31,8 +31,8 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
   const renderRow = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => props.navigation.navigate('<%= context.entityNameCapitalized %>EntityDetail', { entityId: item.id })}>
-        <View style={styles.row}>
-          <Text style={styles.boldLabel}>{item.id}</Text>
+        <View style={styles.listRow}>
+          <Text style={styles.whiteLabel}>{item.id}</Text>
           {/* <Text style={styles.label}>{item.description}</Text> */}
         </View>
       </TouchableOpacity>

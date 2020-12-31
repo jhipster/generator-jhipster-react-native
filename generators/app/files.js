@@ -65,6 +65,7 @@ const files = {
                 'app/shared/components/form/inputs/jhi-date-input.js',
                 'app/shared/components/form/inputs/jhi-date-input.web.js',
                 'app/shared/components/form/inputs/jhi-list-input.js',
+                'app/shared/components/form/inputs/jhi-multi-list-input.js',
                 'app/shared/components/form/inputs/jhi-switch-input.js',
                 'app/shared/components/form/inputs/jhi-text-input.js',
                 'app/shared/components/form/jhi-form.js',

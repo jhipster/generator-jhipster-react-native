@@ -6,24 +6,24 @@ export default React.forwardRef((props, ref) => {
   const { children, initialValues = {}, onSubmit = (d) => console.log(d), validationSchema = Yup.object().shape({}) } = props;
 
   // get list of field names
-  const fields = children.filter((c) => c && c.props && c.props.name).map((c) => c.props.name);
-  const dateFields = children
-    .filter((c) => c && c.props && c.props.inputType && (c.props.inputType === 'date' || c.props.inputType === 'datetime'))
-    .map((c) => c.props.name);
+  const fields = children.filter((c) => c && c.props && c.props.name).map((c) => ({ name: c.props.name, inputType: c.props.inputType }));
+  const fieldNames = fields.map((field) => field.name);
 
   // ensure an initial value is provided for each field
-  fields.forEach((fieldName) => {
-    if (!initialValues[fieldName]) {
-      if (dateFields.includes(fieldName)) {
-        initialValues[fieldName] = new Date();
+  fields.forEach(({ name, inputType }) => {
+    if (!initialValues[name]) {
+      if (inputType === 'date' || inputType === 'datetime') {
+        initialValues[name] = new Date();
+      } else if (inputType === 'select-multiple') {
+        initialValues[name] = [];
       } else {
-        initialValues[fieldName] = '';
+        initialValues[name] = '';
       }
     }
   });
   // ensure that the validationSchema does not contain validation for non-existent fields, causing submit to fail
   if (validationSchema && validationSchema.fields) {
-    const missingValidatedFields = Object.keys(validationSchema.fields).filter((f) => !fields.includes(f));
+    const missingValidatedFields = Object.keys(validationSchema.fields).filter((f) => !fieldNames.includes(f));
     if (missingValidatedFields.length) {
       console.warn(
         `Validating field(s) '${missingValidatedFields.join(', ')}', but no Input is present in the form. It will fail to submit`,

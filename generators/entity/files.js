@@ -13,19 +13,9 @@ const files = {
                         `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-detail-screen.js`,
                 },
                 {
-                    file: 'entity-detail-screen-style.js',
-                    renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-detail-screen-style.js`,
-                },
-                {
                     file: 'entity-edit-screen.js',
                     renameTo: generator =>
                         `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-edit-screen.js`,
-                },
-                {
-                    file: 'entity-edit-screen-style.js',
-                    renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-edit-screen-style.js`,
                 },
                 {
                     file: 'entity-flatlist.js',
@@ -33,9 +23,9 @@ const files = {
                         `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen.js`,
                 },
                 {
-                    file: 'entity-flatlist-style.js',
+                    file: 'entity-styles.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen-style.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-styles.js`,
                 },
                 {
                     file: 'entity-reducer.js',

@@ -1,6 +1,6 @@
-import Fonts from './fonts'
-import Metrics from './metrics'
-import Colors from './colors'
+import Fonts from './fonts';
+import Metrics from './metrics';
+import Colors from './colors';
 
 // This file is for a reusable grouping of Theme items.
 // Similar to an XML fragment layout in Android
@@ -10,29 +10,29 @@ const ApplicationStyles = {
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: Colors.transparent
+      backgroundColor: Colors.transparent,
     },
     section: {
       margin: Metrics.section,
-      padding: Metrics.baseMargin
+      padding: Metrics.baseMargin,
     },
     sectionText: {
       ...Fonts.style.normal,
       paddingVertical: Metrics.doubleBaseMargin,
       color: Colors.snow,
       marginVertical: Metrics.smallMargin,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     subtitle: {
       color: Colors.snow,
       padding: Metrics.smallMargin,
       marginBottom: Metrics.smallMargin,
-      marginHorizontal: Metrics.smallMargin
+      marginHorizontal: Metrics.smallMargin,
     },
     titleText: {
       ...Fonts.style.h2,
       fontSize: 14,
-      color: Colors.text
+      color: Colors.text,
     },
     loading: {
       flex: 1,
@@ -62,44 +62,78 @@ const ApplicationStyles = {
       color: 'green',
       fontSize: 14,
     },
+    darkLabel: {
+      fontWeight: 'bold',
+      color: Colors.snow,
+    },
+    label: {
+      fontWeight: 'bold',
+    },
   },
   entity: {
-    entityContainer: {
+    listRow: {
       flex: 1,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.jhipsterBlue,
+      marginVertical: Metrics.smallMargin,
+      justifyContent: 'center',
+    },
+    whiteLabel: {
+      color: 'white',
+      fontWeight: 'bold',
+    },
+    listContent: {
+      marginTop: Metrics.baseMargin,
     },
     entityScrollView: { padding: 20 },
-    entityButtons: {marginBottom: 20},
+    entityButtons: { marginBottom: 20 },
   },
-  darkLabelContainer: {
-    padding: Metrics.smallMargin,
-    paddingBottom: Metrics.doubleBaseMargin,
-    borderBottomColor: Colors.border,
-    borderBottomWidth: 1,
-    marginBottom: Metrics.baseMargin
+  entityDeleteModal: {
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 22,
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+    openButton: {
+      backgroundColor: 'grey',
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2,
+    },
+    cancelButton: {
+      backgroundColor: 'grey',
+    },
+    submitButton: {
+      backgroundColor: 'red',
+    },
+    textStyle: {
+      color: 'white',
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: 'center',
+    },
+    flex: {
+      flex: 1,
+    },
   },
-  darkLabel: {
-    fontFamily: Fonts.type.bold,
-    color: Colors.snow
-  },
-  groupContainer: {
-    margin: Metrics.smallMargin,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center'
-  },
-  sectionTitle: {
-    ...Fonts.style.h4,
-    color: Colors.coal,
-    backgroundColor: Colors.ricePaper,
-    padding: Metrics.smallMargin,
-    marginTop: Metrics.smallMargin,
-    marginHorizontal: Metrics.baseMargin,
-    borderWidth: 1,
-    borderColor: Colors.ember,
-    alignItems: 'center',
-    textAlign: 'center'
-  }
-}
+};
 
-export default ApplicationStyles
+export default ApplicationStyles;
