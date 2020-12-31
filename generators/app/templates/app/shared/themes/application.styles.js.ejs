@@ -69,10 +69,13 @@ const ApplicationStyles = {
     label: {
       fontWeight: 'bold',
     },
+    paddedScrollView: { paddingBottom: 30 },
   },
   entity: {
     listRow: {
       flex: 1,
+      padding: 10,
+      borderRadius: 7,
       backgroundColor: Colors.jhipsterBlue,
       marginVertical: Metrics.smallMargin,
       justifyContent: 'center',
@@ -84,7 +87,6 @@ const ApplicationStyles = {
     listContent: {
       marginTop: Metrics.baseMargin,
     },
-    entityScrollView: { padding: 20 },
     entityButtons: { marginBottom: 20 },
   },
   entityDeleteModal: {
@@ -108,10 +110,11 @@ const ApplicationStyles = {
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
+      maxHeight: 300,
     },
     openButton: {
       backgroundColor: 'grey',
-      borderRadius: 20,
+      borderRadius: 15,
       padding: 10,
       elevation: 2,
     },
@@ -132,6 +135,9 @@ const ApplicationStyles = {
     },
     flex: {
       flex: 1,
+    },
+    flexRow: {
+      flexDirection: 'row',
     },
   },
 };
