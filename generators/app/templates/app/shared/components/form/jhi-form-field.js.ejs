@@ -4,6 +4,7 @@ import { useFormikContext } from 'formik';
 import AppTextInput from './inputs/jhi-text-input';
 import AppSwitchInput from './inputs/jhi-switch-input';
 import AppListInput from './inputs/jhi-list-input';
+import AppMultiListInput from './inputs/jhi-multi-list-input';
 import AppDateInput from './inputs/jhi-date-input';
 import { StyleSheet, Text } from 'react-native';
 import ApplicationStyles from '../../themes/application.styles';
@@ -19,7 +20,7 @@ export default React.forwardRef((props, ref) => {
   if (!inputType) {
     inputType = 'text';
   }
-  if (!['text', 'boolean', 'number', 'date', 'datetime', 'list'].includes(inputType)) {
+  if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple'].includes(inputType)) {
     return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
   }
 
@@ -75,11 +76,21 @@ export default React.forwardRef((props, ref) => {
           {...otherProps}
         />
       )}
-      {inputType === 'list' && (
+      {inputType === 'select-one' && (
         <AppListInput
           ref={ref}
           value={values[name]}
           onValueChange={(value) => setFieldValue(name, value)}
+          onBlur={() => setFieldTouched(name)}
+          error={hasError}
+          {...otherProps}
+        />
+      )}
+      {inputType === 'select-multiple' && (
+        <AppMultiListInput
+          ref={ref}
+          value={values[name]}
+          onSelectedItemsChange={(value) => setFieldValue(name, value)}
           onBlur={() => setFieldTouched(name)}
           error={hasError}
           {...otherProps}

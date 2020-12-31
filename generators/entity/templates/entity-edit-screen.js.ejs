@@ -19,7 +19,7 @@ import FormButton from '../../../shared/components/form/jhi-form-button';
 import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
-import styles from './<%= context.entityFileName %>-entity-edit-screen-style'
+import styles from './<%= context.entityFileName %>-entity-styles'
 
 <%_ if (context.validation) { // start of validation if statement _%>
 // set up validation schema for the form
@@ -42,9 +42,15 @@ const validationSchema = Yup.object().shape({
     .max(<%= field.fieldValidateRulesMax %>)
       <%_ }_%>
     <%_ }) // end of fieldValidateRules loop _%>
-,
   <%_ } // end of fieldValidate if statement _%>
   <%_ }) // end of fields loop _%>
+  <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation) => { // start of relationships loop
+  if (relation.relationshipRequired) {  // start of relationshipRequired if statement_%>
+  <%= relation.relationshipName %>: Yup.mixed().required(),
+  <%_ } // end of relationshipValidate if statement _%>
+  <%_ }) // end of relationships loop _%>
+
+
 });
 <%_ } // end of validation if statement _%>
 
@@ -155,7 +161,7 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
   <%_ }) _%>
 
   return (
-    <View style={styles.entityContainer}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView
         enableResetScrollToCoords={false}
         testID="<%= context.entityInstance %>EditScrollView"
@@ -194,25 +200,25 @@ const entityToFormValue = (value) => {
     return {}
   }
   return {
-    id: value.id || null,
+    id: value.id ?? null,
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
-    <%= field.fieldName %>: value.<%= field.fieldName %> || null,
+    <%= field.fieldName %>: value.<%= field.fieldName %> ?? null,
       <%_  if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
-    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType || null,
+    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType ?? null,
       <%_ } _%>
     <%_ }) _%>
     <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => i.id),
       <%_ } else { _%>
-    <%= relation.otherEntityName %>: (value.<%= relation.otherEntityName %> && value.<%= relation.otherEntityName %>.id) ? value.<%= relation.otherEntityName %>.id : null,
+    <%= relation.relationshipName %>: (value.<%= relation.relationshipName %> && value.<%= relation.relationshipName %>.id) ? value.<%= relation.relationshipName %>.id : null,
       <%_ } _%>
     <%_ } else if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => i.id),
       <%_ } else { _%>
-    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null,
+    <%= relation.relationshipName %>Id: value.<%= relation.relationshipName %>Id ?? null,
       <%_ } _%>
     <%_ } _%>
     <%_ }) _%>
@@ -220,23 +226,23 @@ const entityToFormValue = (value) => {
 }
 const formValueToEntity = (value) => {
   const entity = {
-    id: value.id || null,
+    id: value.id ?? null,
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ if (field.fieldType === 'Boolean') { _%>
     <%= field.fieldName %>: value.<%= field.fieldName %> === null ? false : Boolean(value.<%= field.fieldName %>),
       <%_ } else { _%>
-    <%= field.fieldName %>: value.<%= field.fieldName %> || null,
+    <%= field.fieldName %>: value.<%= field.fieldName %> ?? null,
       <%_ } _%>
       <%_  if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
-    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType || null,
+    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType ?? null,
       <%_ } _%>
     <%_ }) _%>
     <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_  if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>,
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => ({ id: i })),
       <%_ } else { _%>
-    <%= relation.otherEntityName %>Id: value.<%= relation.otherEntityName %>Id || null,
+    <%= relation.relationshipName %>Id: value.<%= relation.relationshipName %>Id ?? null,
       <%_ } _%>
     <%_ } _%>
   <%_ }) _%>
@@ -244,9 +250,9 @@ const formValueToEntity = (value) => {
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-  entity.<%= relation.relationshipNamePlural %> = value.<%= relation.relationshipNamePlural %>
+  entity.<%= relation.relationshipNamePlural %> = value.<%= relation.relationshipNamePlural %>.map((id) => ({ id }));
       <%_ } else { _%>
-  entity.<%= relation.otherEntityName %> = value.<%= relation.otherEntityName %> ? { id: value.<%= relation.otherEntityName %> } : null
+  entity.<%= relation.relationshipName %> = value.<%= relation.relationshipName %> ? { id: value.<%= relation.relationshipName %> } : null
       <%_ } _%>
     <%_ } _%>
   <%_ }) _%>
@@ -257,7 +263,7 @@ const mapStateToProps = (state) => {
   return {
     <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { */ _%>
     <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
-    <%= relation.otherEntityName %>List: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityName %>List || [],
+    <%= relation.otherEntityName %>List: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityName %>List ?? [],
     <%_ }) _%>
     <%= context.entityInstance %>: state.<%= context.entityInstancePlural %>.<%= context.entityInstance %>,
     fetching: state.<%= context.entityInstancePlural %>.fetchingOne,
