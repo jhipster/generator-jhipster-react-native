@@ -9,7 +9,7 @@ import styles from './entities-screen.styles'
 class EntitiesScreen extends React.Component {
   render () {
     return (
-      <ScrollView style={styles.container} testID="entityScreenScrollList">
+      <ScrollView style={styles.container} contentContainerStyle={styles.paddedScrollView} testID="entityScreenScrollList">
         <Text style={styles.centerText}>JHipster Entities will appear below</Text>
         {/* jhipster-react-native-entity-screen-needle */}
       </ScrollView>

@@ -40,7 +40,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
     );
   }
   return (
-    <ScrollView style={styles.container} testID="<%= context.entityInstance %>DetailScrollView">
+    <ScrollView style={styles.container} contentContainerStyle={styles.paddedScrollView} testID="<%= context.entityInstance %>DetailScrollView">
       <Text style={styles.label}>Id:</Text>
       <Text>{props.<%= context.entityInstance %>.id}</Text>
       <%_ context.fields.filter(field => !field.id).forEach(function (field) { _%>

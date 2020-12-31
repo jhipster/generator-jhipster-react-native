@@ -167,7 +167,7 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
         testID="<%= context.entityInstance %>EditScrollView"
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
-        contentContainerStyle={styles.entityScrollView}>
+        contentContainerStyle={styles.paddedScrollView}>
         {!!error && <Text style={styles.errorText}>{error}</Text>}
         {formValue && (
           <Form initialValues={formValue} <%_ if (context.validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
