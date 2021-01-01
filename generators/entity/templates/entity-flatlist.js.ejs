@@ -6,10 +6,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import SearchBar from '../../../shared/components/search-bar/search-bar'
 <%_ } _%>
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
-import styles from './<%= context.entityFileName %>-entity-styles'
+import styles from './<%= context.entityFileName %>-styles'
 import AlertMessage from '../../../shared/components/alert-message/alert-message'
 
-function <%= context.entityNameCapitalized %>EntityScreen(props) {
+function <%= context.entityNameCapitalized %>Screen(props) {
   const [page, setPage] = React.useState(0);
   const [sort /*, setSort*/] = React.useState('id,asc');
   const [size /*, setSize*/] = React.useState(20);
@@ -30,7 +30,7 @@ function <%= context.entityNameCapitalized %>EntityScreen(props) {
 
   const renderRow = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => props.navigation.navigate('<%= context.entityNameCapitalized %>EntityDetail', { entityId: item.id })}>
+      <TouchableOpacity onPress={() => props.navigation.navigate('<%= context.entityNameCapitalized %>Detail', { entityId: item.id })}>
         <View style={styles.listRow}>
           <Text style={styles.whiteLabel}>{item.id}</Text>
           {/* <Text style={styles.label}>{item.description}</Text> */}
@@ -125,4 +125,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>Screen)
