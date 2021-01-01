@@ -4,16 +4,18 @@ import { connect } from 'react-redux';
 import LoginActions from '../../modules/login/login.reducer';
 
 function DrawerContent(props) {
-  return (
+  const { loaded, account, logout } = props;
+  return !loaded ? null : (
     <DrawerContentScrollView {...props}>
       <DrawerItemList {...props} />
-      {props.account && <DrawerItem label="Logout" onPress={() => props.logout()} />}
+      {account && <DrawerItem label="Logout" onPress={logout} />}
     </DrawerContentScrollView>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
+    loaded: state.appState.rehydrationComplete,
     account: state.account.account,
   };
 };
