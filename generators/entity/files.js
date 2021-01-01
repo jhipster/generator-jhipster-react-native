@@ -5,27 +5,27 @@ const files = {
                 {
                     file: 'entity-delete-modal.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-delete-modal.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-delete-modal.js`,
                 },
                 {
                     file: 'entity-detail-screen.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-detail-screen.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-detail-screen.js`,
                 },
                 {
                     file: 'entity-edit-screen.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-edit-screen.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-edit-screen.js`,
                 },
                 {
                     file: 'entity-flatlist.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-screen.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-screen.js`,
                 },
                 {
                     file: 'entity-styles.js',
                     renameTo: generator =>
-                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-entity-styles.js`,
+                        `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-styles.js`,
                 },
                 {
                     file: 'entity-reducer.js',

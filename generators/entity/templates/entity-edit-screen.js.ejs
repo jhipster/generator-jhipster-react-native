@@ -19,7 +19,7 @@ import FormButton from '../../../shared/components/form/jhi-form-button';
 import FormField from '../../../shared/components/form/jhi-form-field';
 import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
-import styles from './<%= context.entityFileName %>-entity-styles'
+import styles from './<%= context.entityFileName %>-styles'
 
 <%_ if (context.validation) { // start of validation if statement _%>
 // set up validation schema for the form
@@ -70,7 +70,7 @@ _%>
 <%_ } // end of if statement
 }) // end of field loop _%>
 
-function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
+function <%= context.entityNameCapitalized %>EditScreen(props) {
   const {
     get<%= context.entityNameCapitalized %>,
     update<%= context.entityNameCapitalized %>,
@@ -126,9 +126,9 @@ function <%= context.entityNameCapitalized %>EntityEditScreen(props) {
         setError('');
         if (isNewEntity) {
           // send to the detail screen on new entity, otherwise pop (to the detail screen)
-          navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
+          navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
         } else {
-          navigation.canGoBack() ? navigation.goBack() : navigation.replace('<%= context.entityNameCapitalized %>EntityDetail', { entityId: <%= context.entityInstance %>?.id });
+          navigation.canGoBack() ? navigation.goBack() : navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
         }
       }
     }
@@ -286,4 +286,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityEditScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EditScreen)

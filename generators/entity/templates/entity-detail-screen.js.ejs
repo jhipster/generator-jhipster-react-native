@@ -8,17 +8,17 @@ import { convertLocalDateToString } from '../../../shared/util/date-transforms'
 
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
 import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
-import <%= context.entityNameCapitalized %>EntityDeleteModal from './<%= context.entityFileName %>-entity-delete-modal';
-import styles from './<%= context.entityFileName %>-entity-styles'
+import <%= context.entityNameCapitalized %>DeleteModal from './<%= context.entityFileName %>-delete-modal';
+import styles from './<%= context.entityFileName %>-styles'
 
-function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
+function <%= context.entityNameCapitalized %>DetailScreen(props) {
   const { route, get<%= context.entityNameCapitalized %>, navigation } = props;
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
       if (!route.params || !route.params.entityId) {
-        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>Entity');
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>');
       } else {
         get<%= context.entityNameCapitalized %>(route.params.entityId);
       }
@@ -77,7 +77,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
       <View style={styles.entityButtons}>
         <RoundedButton
           text="Edit"
-          onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>EntityEdit', { entityId: props.<%= context.entityInstance %>.id })}
+          onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>Edit', { entityId: props.<%= context.entityInstance %>.id })}
           accessibilityLabel={'<%= context.entityNameCapitalized %> Edit Button'}
           testID="<%= context.entityInstance %>EditButton"
         />
@@ -88,7 +88,7 @@ function <%= context.entityNameCapitalized %>EntityDetailScreen(props) {
           testID="<%= context.entityInstance %>DeleteButton"
         />
         {deleteModalVisible && (
-          <<%= context.entityNameCapitalized %>EntityDeleteModal
+          <<%= context.entityNameCapitalized %>DeleteModal
             navigation={navigation}
             visible={deleteModalVisible}
             setVisible={setDeleteModalVisible}
@@ -120,4 +120,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityDetailScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>DetailScreen)

@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer';
 
-import styles from './<%= context.entityFileName %>-entity-styles'
+import styles from './<%= context.entityFileName %>-styles'
 
-function <%= context.entityNameCapitalized %>EntityDeleteModal(props) {
+function <%= context.entityNameCapitalized %>DeleteModal(props) {
     const { visible, setVisible, entity, navigation, testID } = props;
 
     const deleteEntity = () => {
         props.delete<%= context.entityNameCapitalized %>(entity.id);
-        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>Entity');
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= context.entityNameCapitalized %>');
     };
     return (
         <Modal animationType="slide" transparent={true} visible={visible}>
@@ -56,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>EntityDeleteModal);
+export default connect(mapStateToProps, mapDispatchToProps)(<%= context.entityNameCapitalized %>DeleteModal);
