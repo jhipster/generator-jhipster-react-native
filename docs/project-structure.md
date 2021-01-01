@@ -14,7 +14,6 @@ Let's walk through them in more detail. Start with the `config` folder and work 
 Initialize and configure things in this folder.
 
 -   `app-config.js` - configuration for your React Native app, contains the JHipster API url and app URL scheme
--   `debug-config.js` - define how you want your debug environment to act
 -   `redux-persist.js` - configures Redux Persist
 
 ### modules
@@ -57,7 +56,7 @@ Your primary and other navigation components reside here.
 
 #### components
 
-Contains shared components such as `alert-message`, `full-button`, `rounded-button`, and `search-bar`.
+Contains shared components such as `alert-message`, `rounded-button`, and `search-bar`.
 
 #### fixtures
 
