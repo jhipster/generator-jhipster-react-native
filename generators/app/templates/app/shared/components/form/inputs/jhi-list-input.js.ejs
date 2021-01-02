@@ -4,22 +4,26 @@ import RNPickerSelect from 'react-native-picker-select';
 import { Fonts } from '../../../themes';
 
 export default React.forwardRef((props, ref) => {
-  const { label, labelStyle, error, listItems = [], placeholder, listItemLabelField, testID, ...otherProps } = props;
+  const { label, labelStyle, error, value, listItems = [], placeholder, listItemLabelField, testID, ...otherProps } = props;
   const actualPlaceholder = {
     label: placeholder ? placeholder : 'Select an item...',
     value: '',
     color: 'black',
   };
 
-  // map the list items to the expected Picker format
-  const mapListItems = () => {
-    return listItems.map((listItem) => {
-      const itemLabel = listItem[listItemLabelField] || listItem.label || listItem.id || '';
-      const value = listItem.value || listItem.id || '';
-      const itemKey = listItem.itemKey || listItem.id || '';
-      return { label: `${itemLabel}`, value: value, itemKey: itemKey };
-    });
-  };
+  const memoizedItems = React.useMemo(() => {
+    // map the list items to the expected Picker format
+    const mapListItems = () => {
+      return listItems.map((listItem) => {
+        const itemLabel = listItem[listItemLabelField] || listItem.label || listItem.id || '';
+        const itemValue = listItem.value || listItem.id || '';
+        const itemKey = listItem.itemKey || listItem.id || '';
+        return { label: `${itemLabel}`, value: itemValue, key: itemKey.toString() };
+      });
+    };
+
+    return mapListItems(listItems);
+  }, [listItemLabelField, listItems]);
 
   return (
     <View style={styles.container}>
@@ -28,9 +32,11 @@ export default React.forwardRef((props, ref) => {
       {/* render the picker */}
       <RNPickerSelect
         placeholder={actualPlaceholder}
-        items={mapListItems(listItems)}
+        items={memoizedItems}
         style={pickerStyles}
         ref={ref}
+        itemKey={value.toString()}
+        value={value}
         touchableWrapperProps={{ testID }}
         pickerProps={{ testID: `${testID}Picker` }}
         touchableDoneProps={{ testID: `${testID}PickerDone` }}

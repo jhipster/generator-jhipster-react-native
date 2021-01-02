@@ -1,0 +1,14 @@
+diff --git a/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js b/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
+index 83f5b93..10a3191 100644
+--- a/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
++++ b/node_modules/react-native-sectioned-multi-select/lib/sectioned-multi-select.js
+@@ -400,8 +400,7 @@ class SectionedMultiSelect extends PureComponent {
+ 
+     if (!single && alwaysShowSelectText) {
+       label = selectText
+-    }
+-    if (!selectedItems || selectedItems.length === 0) {
++    } else if (!selectedItems || selectedItems.length === 0) {
+       label = selectText
+     } else if (single || selectedItems.length === 1) {
+       const item = selectedItems[0]

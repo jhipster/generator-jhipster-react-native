@@ -102,10 +102,12 @@ function <%= context.entityNameCapitalized %>EditScreen(props) {
   }, [isNewEntity, get<%= context.entityNameCapitalized %>, route, reset]);
 
   React.useEffect(() => {
-    if (!fetching) {
+    if (isNewEntity) {
+      setFormValue(entityToFormValue({}));
+    } else if (!fetching) {
       setFormValue(entityToFormValue(<%= context.entityInstance %>));
     }
-  }, [<%= context.entityInstance %>, fetching]);
+  }, [<%= context.entityInstance %>, fetching, isNewEntity]);
 
   // fetch related entities
   React.useEffect(() => {
@@ -124,12 +126,7 @@ function <%= context.entityNameCapitalized %>EditScreen(props) {
         setError(errorUpdating && errorUpdating.detail ? errorUpdating.detail : 'Something went wrong updating the entity');
       } else {
         setError('');
-        if (isNewEntity) {
-          // send to the detail screen on new entity, otherwise pop (to the detail screen)
-          navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
-        } else {
-          navigation.canGoBack() ? navigation.goBack() : navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
-        }
+        navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
       }
     }
   }, [updateSuccess, errorUpdating, navigation]);
@@ -210,13 +207,13 @@ const entityToFormValue = (value) => {
     <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
     <%_ if (context.dto === 'no' || !context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => i.id),
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>?.map((i) => i.id),
       <%_ } else { _%>
     <%= relation.relationshipName %>: (value.<%= relation.relationshipName %> && value.<%= relation.relationshipName %>.id) ? value.<%= relation.relationshipName %>.id : null,
       <%_ } _%>
     <%_ } else if (context.useOldDTOCode) { _%>
       <%_ if (relation.relationshipType === 'many-to-many') { _%>
-    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => i.id),
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>?.map((i) => i.id),
       <%_ } else { _%>
     <%= relation.relationshipName %>Id: value.<%= relation.relationshipName %>Id ?? null,
       <%_ } _%>

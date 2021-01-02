@@ -1,12 +1,14 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose as composeWithoutDevTools } from 'redux';
 import createSagaMiddleware from 'redux-saga'
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
+import Constants from 'expo-constants';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
 <%_ if (context.websocket) { _%>
 import WebsocketService from '../websockets/websocket.service'
 <%_ } _%>
+const compose = Constants.debugMode ? composeWithDevTools : composeWithoutDevTools;
 // creates the store
 export default (rootReducer, rootSaga) => {
   /* ------------- Redux Configuration ------------- */
@@ -28,7 +30,7 @@ export default (rootReducer, rootSaga) => {
 
   enhancers.push(applyMiddleware(...middleware))
 
-  const store = createStore(rootReducer, composeWithDevTools(...enhancers));
+  const store = createStore(rootReducer, compose(...enhancers));
 
   // configure persistStore and check reducer version number
   if (ReduxPersist.active) {

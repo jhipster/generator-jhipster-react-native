@@ -8,20 +8,23 @@ export default React.forwardRef((props, ref) => {
   const { value, label, labelStyle, error, listItems = [], placeholder, listItemLabelField, testID, ...otherProps } = props;
   const actualPlaceholder = placeholder ? placeholder : 'Select an item...';
 
-  // map the list items to the expected Picker format
-  const mapListItems = () => {
-    const children = listItems.map((listItem) => {
-      const itemLabel = listItem[listItemLabelField] || listItem.id || '';
-      return { name: `${itemLabel}`, id: listItem.id };
-    });
-    return [
-      {
-        name: label,
-        id: 0,
-        children,
-      },
-    ];
-  };
+  const memoizedItems = React.useMemo(() => {
+    // map the list items to the expected Picker format
+    const mapListItems = () => {
+      const children = listItems.map((listItem) => {
+        const itemLabel = listItem[listItemLabelField] || listItem.id || '';
+        return { name: `${itemLabel}`, id: listItem.id };
+      });
+      return [
+        {
+          name: label,
+          id: 0,
+          children,
+        },
+      ];
+    };
+    return mapListItems(listItems);
+  }, [label, listItemLabelField, listItems]);
 
   if (!listItems.length) {
     return <Text>Loading...</Text>;
@@ -34,7 +37,8 @@ export default React.forwardRef((props, ref) => {
       {/* render the picker */}
       <SectionedMultiSelect
         IconRenderer={MaterialIcons}
-        items={mapListItems()}
+        items={memoizedItems}
+        alwaysShowSelectText={true}
         expandDropDowns={true}
         uniqueKey="id"
         subKey="children"

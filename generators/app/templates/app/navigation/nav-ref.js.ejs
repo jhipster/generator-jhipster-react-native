@@ -21,9 +21,10 @@ export function toggleDrawer() {
 
 export function goBackOrIfParamsOrDefault(targetScreen, defaultScreen) {
   const currentRoute = navigationRef.current.getCurrentRoute();
+  const hasDefinedParams = Object.values(currentRoute.params).some(v => v);
   if (navigationRef.current.canGoBack()) {
     navigationRef.current.goBack();
-  } else if (currentRoute && currentRoute.params) {
+  } else if (currentRoute && hasDefinedParams) {
     navigate(targetScreen, currentRoute.params);
   } else {
     navigate(defaultScreen);
