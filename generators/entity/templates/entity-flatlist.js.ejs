@@ -32,7 +32,7 @@ function <%= context.entityNameCapitalized %>Screen(props) {
     return (
       <TouchableOpacity onPress={() => props.navigation.navigate('<%= context.entityNameCapitalized %>Detail', { entityId: item.id })}>
         <View style={styles.listRow}>
-          <Text style={styles.whiteLabel}>{item.id}</Text>
+          <Text style={styles.whiteLabel}>ID: {item.id}</Text>
           {/* <Text style={styles.label}>{item.description}</Text> */}
         </View>
       </TouchableOpacity>
