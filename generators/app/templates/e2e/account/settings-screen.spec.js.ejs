@@ -24,13 +24,17 @@ describe('Settings Screen Tests', () => {
     await element(by.id('emailInput')).replaceText('user@localhost.com');
     await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
-    await expect(element(by.label('Settings updated'))).toBeVisible();
+    const expectedLabel = 'Settings updated';
+    await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
+    await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 
   it('should display a popup on settings update failure', async () => {
     await element(by.id('emailInput')).replaceText('invalid-email');
     await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
-    await expect(element(by.label('Email must be a valid email'))).toBeVisible();
+    const expectedLabel = 'Email must be a valid email';
+    await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
+    await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 });

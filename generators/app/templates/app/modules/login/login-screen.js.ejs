@@ -30,7 +30,10 @@ function LoginScreen(props) {
   }, [props.fetching]);
 
   // submit handler
-  const onSubmit = (data) => props.attemptLogin(data.login, data.password);
+  const onSubmit = (data) => {
+    setError('');
+    props.attemptLogin(data.login, data.password);
+  };
 
   // create refs for handling onSubmit functionality
   const passwordRef = createRef();

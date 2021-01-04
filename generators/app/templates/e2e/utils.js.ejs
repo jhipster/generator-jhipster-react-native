@@ -67,14 +67,16 @@ const tapFirstElementByLabel = async (label) => {
   await element(by.label(label)).atIndex(0).tap();
 };
 
-const waitForElementToBeVisible = async (elementId, timeout = 3000) => {
-  await waitFor(element(by.id(elementId)))
-    .toBeVisible()
-    .withTimeout(timeout);
+const waitForElementToBeVisibleByLabel = async (elementLabel, timeout = 3000) => {
+  await waitFor(element(by.label(elementLabel))).toBeVisible().withTimeout(timeout);
+}
+
+const waitForElementToBeVisibleById = async (elementId, timeout = 3000) => {
+  await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
 const waitForSplashScreen = async () => {
-  await waitForElementToBeVisible('launchScreen')
+  await waitForElementToBeVisibleById('launchScreen')
 };
 
 const reloadApp = async () => {
@@ -92,7 +94,8 @@ module.exports = {
   scrollTo,
   tapFirstElementByLabel,
   waitForSplashScreen,
-  waitForElementToBeVisible,
+  waitForElementToBeVisibleById,
+  waitForElementToBeVisibleByLabel,
   closeKeyboard,
   toggleSwitchToValue,
   reloadApp,

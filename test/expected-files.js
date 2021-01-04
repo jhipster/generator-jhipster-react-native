@@ -2,7 +2,7 @@ const expectedFiles = {
     defaultApp: [
         '.prettierrc.js',
         '.editorconfig',
-        '.env.example',
+        '.env',
         '.eslintrc.js',
         '.gitattributes',
         'App.js',
@@ -52,7 +52,6 @@ const expectedFiles = {
         'app/modules/login/login-screen.styles.js',
         'app/navigation/drawer/drawer-button.js',
         'app/navigation/drawer/touchable-item.tsx',
-        'app/navigation/drawer/drawer-content.styles.js',
         'app/shared/components/alert-message/alert-message.js',
         'app/shared/components/alert-message/alert-message.story.js',
         'app/shared/components/alert-message/alert-message.styles.js',
@@ -162,10 +161,7 @@ const expectedFiles = {
         'e2e/.mocharc.json',
         'e2e/launch-screen.spec.js',
         'e2e/utils.js',
-        {
-            file: 'e2e/download-expo.sh',
-            method: 'copy',
-        },
+        'e2e/download-expo.sh',
     ],
     detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
     detoxAndNotOauth: [

@@ -15,26 +15,28 @@ function <%= context.entityNameCapitalized %>DetailScreen(props) {
   const { route, get<%= context.entityNameCapitalized %>, navigation, <%= context.entityInstance %>, fetching, error } = props;
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
   // prevents display of stale reducer data
-  const correctEntityLoaded = route.params?.entityId?.toString() === <%= context.entityInstance %>.id?.toString();
+  const entityId = <%= context.entityInstance %>?.id ?? null;
+  const routeEntityId = route.params?.entityId ?? null;
+  const correctEntityLoaded = routeEntityId && entityId && routeEntityId.toString() === entityId.toString();
 
   useFocusEffect(
     React.useCallback(() => {
-      if (!route.params || !route.params.entityId) {
+      if (!routeEntityId) {
         navigation.navigate('<%= context.entityNameCapitalized %>');
       } else {
-        get<%= context.entityNameCapitalized %>(route.params.entityId);
+        get<%= context.entityNameCapitalized %>(routeEntityId);
       }
-    }, [route, get<%= context.entityNameCapitalized %>, navigation]),
+    }, [routeEntityId, get<%= context.entityNameCapitalized %>, navigation]),
   );
 
-  if (!<%= context.entityInstance %>.id && !fetching && error) {
+  if (!entityId && !fetching && error) {
     return (
       <View style={styles.loading}>
         <Text>Something went wrong fetching the <%= context.entityNameCapitalized %>.</Text>
       </View>
     );
   }
-  if (!<%= context.entityInstance %>.id || fetching || !correctEntityLoaded) {
+  if (!entityId || fetching || !correctEntityLoaded) {
     return (
       <View style={styles.loading}>
         <ActivityIndicator size="large" />
@@ -79,7 +81,7 @@ function <%= context.entityNameCapitalized %>DetailScreen(props) {
       <View style={styles.entityButtons}>
         <RoundedButton
           text="Edit"
-          onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>Edit', { entityId: <%= context.entityInstance %>.id })}
+          onPress={() => navigation.navigate('<%= context.entityNameCapitalized %>Edit', { entityId })}
           accessibilityLabel={'<%= context.entityNameCapitalized %> Edit Button'}
           testID="<%= context.entityInstance %>EditButton"
         />

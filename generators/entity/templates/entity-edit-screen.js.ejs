@@ -42,6 +42,7 @@ const validationSchema = Yup.object().shape({
     .max(<%= field.fieldValidateRulesMax %>)
       <%_ }_%>
     <%_ }) // end of fieldValidateRules loop _%>
+    ,
   <%_ } // end of fieldValidate if statement _%>
   <%_ }) // end of fields loop _%>
   <%_ context.relationships.filter(relation => relation.ownerSide).forEach((relation) => { // start of relationships loop
@@ -49,8 +50,6 @@ const validationSchema = Yup.object().shape({
   <%= relation.relationshipName %>: Yup.mixed().required(),
   <%_ } // end of relationshipValidate if statement _%>
   <%_ }) // end of relationships loop _%>
-
-
 });
 <%_ } // end of validation if statement _%>
 
@@ -126,7 +125,7 @@ function <%= context.entityNameCapitalized %>EditScreen(props) {
         setError(errorUpdating && errorUpdating.detail ? errorUpdating.detail : 'Something went wrong updating the entity');
       } else {
         setError('');
-        navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id });
+        isNewEntity ? navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id }) : navigation.pop();
       }
     }
   }, [updateSuccess, errorUpdating, navigation]);
