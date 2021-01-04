@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware, compose as composeWithoutDevTools } from 'redux';
 import createSagaMiddleware from 'redux-saga'
-import Constants from 'expo-constants';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
+import AppConfig from '../../config/app-config';
 import RehydrationServices from '../services/rehydration.service'
 import ReduxPersist from '../../config/redux-persist'
 <%_ if (context.websocket) { _%>
 import WebsocketService from '../websockets/websocket.service'
 <%_ } _%>
-const compose = Constants.debugMode ? composeWithDevTools : composeWithoutDevTools;
+const compose = AppConfig.debugMode ? composeWithDevTools : composeWithoutDevTools;
 // creates the store
 export default (rootReducer, rootSaga) => {
   /* ------------- Redux Configuration ------------- */

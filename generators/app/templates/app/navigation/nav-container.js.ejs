@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, useWindowDimensions, View } from 'react-native';
+import { AppState, Text, useWindowDimensions, View } from 'react-native';
 import * as Linking from 'expo-linking';
 import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +15,7 @@ import SettingsScreen from '../modules/account/settings/settings-screen';
 import RegisterScreen from '../modules/account/register/register-screen';
 import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen';
 import ChangePasswordScreen from '../modules/account/password/change-password-screen';
+import AccountActions from '../shared/reducers/account.reducer';
 import EntityStackScreen, { getEntityRoutes } from './entity-stack';
 import StorybookScreen from '../../storybook';
 <%_ if (context.websocket) { _%>
@@ -134,7 +135,8 @@ const getScreens = (props) => {
 };
 
 function NavContainer(props) {
-  const { loaded } = props;
+  const { loaded, getAccount } = props;
+  const lastAppState = 'active';
 
   React.useEffect(() => {
     return () => {
@@ -147,6 +149,16 @@ function NavContainer(props) {
       SplashScreen.hideAsync();
     }
   }, [loaded]);
+
+  React.useEffect(() => {
+    const handleChange = (nextAppState) => {
+      if (lastAppState.match(/inactive|background/) && nextAppState === 'active') {
+        getAccount();
+      }
+    };
+    AppState.addEventListener('change', handleChange);
+    return () => AppState.removeEventListener('change', handleChange);
+  }, [getAccount]);
 
   useReduxDevToolsExtension(navigationRef);
 
@@ -212,7 +224,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getAccount: () => dispatch(AccountActions.accountRequest()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavContainer);

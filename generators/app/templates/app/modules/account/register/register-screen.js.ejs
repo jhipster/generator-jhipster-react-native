@@ -24,6 +24,8 @@ function RegisterScreen(props) {
   });
 
   const onSubmit = (data) => {
+    setSuccess('');
+    setError('');
     if (data.password !== data.confirmPassword) {
       setError('Passwords do not match');
       return;
