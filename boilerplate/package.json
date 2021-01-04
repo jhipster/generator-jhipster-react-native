@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "dependencies": {
     "@react-native-community/async-storage": "1.12.1",
-    "apisauce": "2.0.0",
+    "apisauce": "2.0.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.20",
