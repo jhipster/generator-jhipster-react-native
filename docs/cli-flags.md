@@ -1,6 +1,4 @@
-## Advanced Usage
-
-### CLI Flags
+## CLI Flags
 
 You can pass flags for each of the options.
 

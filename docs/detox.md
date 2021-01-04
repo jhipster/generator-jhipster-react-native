@@ -7,18 +7,12 @@ If enabled during generation, [Detox](https://github.com/wix/Detox) is configure
 -   [`e2e/settings-screen.spec.js`](https://github.com/ruddell/jhipster-react-native/blob/main/generators/app/templates/e2e/account/settings-screen.spec.js.ejs)
 -   [`e2e/login-screen.spec.js`](https://github.com/ruddell/jhipster-react-native/blob/main/generators/app/templates/e2e/account/login-screen.spec.js.ejs)
 
-To run the tests, you need to build the app for debug or release:
+To run the Detox tests:
 
 ```sh
-detox build --configuration ios.sim.debug
-detox build --configuration ios.sim.release
+npm run e2e
 ```
 
-Then run the tests using the same configuration from above:
+To customize the build and test parameters (such as which device to test), modify the `.detoxrc.json` file found in the root of the project.
 
-```sh
-detox test --configuration ios.sim.debug --reuse
-detox test --configuration ios.sim.release --reuse
-```
-
-For more information on configuration and writing tests for Detox, check the [official Detox documentation](https://github.com/wix/Detox/blob/master/docs/README.md).
+For more information on Detox configuration and writing tests, check the [official Detox documentation](https://github.com/wix/Detox/blob/master/docs/README.md).

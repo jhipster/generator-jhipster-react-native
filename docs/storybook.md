@@ -8,7 +8,8 @@ Sample "stories" are available for the generated components. They allow you to p
 
 -   [`search-bar.story.js`](https://github.com/ruddell/jhipster-react-native/blob/main/generators/app/templates/app/shared/components/search-bar/search-bar.story.js.ejs)
 -   [`alert-message.story.js`](https://github.com/ruddell/jhipster-react-native/blob/main/generators/app/templates/app/shared/components/alert-message/alert-message.story.js.ejs)
+-   [`jhi-form-field.story.js`](https://github.com/ruddell/jhipster-react-native/blob/main/generators/app/templates/app/shared/components/alert-message/alert-message.story.js.ejs)
 
 Use fixtures (JSON files containing sample data) to write stories for your own components.
 
-For more information on configuration and writing stories for Storybook, check the [official Storybook documentation](https://storybook.js.org/docs/guides/guide-react-native/).
+For more information on Storybook configuration and writing stories, check the [official Storybook documentation](https://storybook.js.org/docs/guides/guide-react-native/).

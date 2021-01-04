@@ -18,7 +18,7 @@ export function * login (api) {
   if (authInfo.ok) {
     try {
       const { issuer, clientId } = authInfo.data;
-      // if using Okta for auth, configure clientId here
+      // if using Okta for auth, configure clientId here and remove from above
       // const clientId = '0favl263f83H1kxJk0h7';
       const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
       if (accessToken) {

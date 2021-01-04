@@ -81,7 +81,7 @@ class ChatScreen extends React.PureComponent {
                 this.messageText = c
               }}
               placeholder='Type a message...'
-              placeholderTextColor={Colors.snow}
+              placeholderTextColor={Colors.white}
               underlineColorAndroid='transparent'
               style={styles.messageInput}
               value={this.state.message}
@@ -90,7 +90,7 @@ class ChatScreen extends React.PureComponent {
               onSubmitEditing={this.sendMessage}
               returnKeyType={'send'}
               autoCorrect={false}
-              selectionColor={Colors.snow}
+              selectionColor={Colors.white}
               testID='chatScreenInput'
             />
             <RoundedButton style={styles.button} onPress={this.sendMessage} text={'Send'} testID='chatScreenSendButton' />

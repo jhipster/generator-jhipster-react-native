@@ -1,6 +1,6 @@
 ### Fixtures folder
 
-All key API responses are housed here.
+All important API responses are housed here.
 
 These API responses can be used for several reasons. For example:
 
