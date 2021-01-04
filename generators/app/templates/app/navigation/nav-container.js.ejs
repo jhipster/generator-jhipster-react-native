@@ -9,7 +9,7 @@ import { useReduxDevToolsExtension } from '@react-navigation/devtools';
 import { connect } from 'react-redux';
 
 // import screens
-import LaunchScreen from '../modules/home/launch-screen';
+import HomeScreen from '../modules/home/home-screen';
 import LoginScreen from '../modules/login/login-screen';
 import SettingsScreen from '../modules/account/settings/settings-screen';
 import RegisterScreen from '../modules/account/register/register-screen';
@@ -24,12 +24,12 @@ import ChatScreen from '../modules/chat/chat-screen'
 import DrawerContent from './drawer/drawer-content';
 import { isReadyRef, navigationRef } from './nav-ref';
 import NotFound from './not-found-screen';
-import { ModalScreen } from './modal.screen';
+import { ModalScreen } from './modal-screen';
 
 export const drawerScreens = [
   {
     name: 'Home',
-    component: LaunchScreen,
+    component: HomeScreen,
     auth: null,
   },
   {

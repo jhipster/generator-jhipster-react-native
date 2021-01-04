@@ -20,7 +20,7 @@ describe('Settings Screen Tests', () => {
     await Utils.tapFirstElementByLabel('Settings');
   };
 
-  it('should display a popup on settings update success', async () => {
+  it('should display a success message on settings update success', async () => {
     await element(by.id('emailInput')).replaceText('user@localhost.com');
     await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
@@ -29,7 +29,7 @@ describe('Settings Screen Tests', () => {
     await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 
-  it('should display a popup on settings update failure', async () => {
+  it('should display an error message on settings update failure', async () => {
     await element(by.id('emailInput')).replaceText('invalid-email');
     await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();

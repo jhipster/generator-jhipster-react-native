@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const chalk = require('chalk');
 const path = require('path');
+const fs = require('fs');
 const AppGenerator = require('generator-jhipster/generators/app');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
@@ -102,6 +103,13 @@ module.exports = class extends AppGenerator {
     get end() {
         const gitCommit = super._end().gitCommit.bind(this);
         return {
+            modifyExpoDownloadScriptPermission() {
+                try {
+                    fs.chmodSync('e2e/download-expo.sh', '755');
+                } catch (err) {
+                    this.log(`${chalk.yellow.bold('WARNING!')}Failed to make 'e2e/download-expo.sh' executable, you may need to run 'chmod +x e2e/download-expo.sh'`);
+                }
+            },
             gitCommit,
         };
     }

@@ -1,12 +1,12 @@
 const Utils = require('./utils')
 
-describe('Launch Screen Tests', () => {
+describe('Home Screen Tests', () => {
   beforeEach(async () => {
     await Utils.reloadApp()
   })
 
   it('should have welcome screen', async () => {
     await Utils.waitForSplashScreen();
-    await expect(element(by.id('launchScreen'))).toBeVisible()
+    await expect(element(by.id('homeScreen'))).toBeVisible()
   })
 })

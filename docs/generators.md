@@ -18,4 +18,4 @@ rnhipster import-jdl <jdl-filename>
 
 -   Import several entities at once using JDL
 -   Runs the entity generator for each entity present in the JDL
--   Can also generate a full application with entities, if the config is present
+-   Can also generate a full application with entities, if the JDL contains application config

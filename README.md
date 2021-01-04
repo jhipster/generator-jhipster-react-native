@@ -8,7 +8,7 @@
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
-**Note:** The intial version of this blueprint (v4) generates the same application as [Ignite JHipster v3](https://github.com/ruddell/ignite-jhipster/tree/2d84fb2956fc62d6dea29e07c314838689c55f67)
+[![JHipster React Native Logo](docs/images/jh-rn-logo-150h.png)](#)
 
 ## Docs
 
@@ -19,11 +19,12 @@
     -   [OAuth2 OIDC Login](docs/oauth2-oidc.md)
     -   [Websockets](docs/websockets.md)
 -   React Native Library Integrations
+    -   [Expo](https://docs.expo.io/workflow/expo-cli/) - A framework and platform for universal React application
     -   [Storybook](docs/storybook.md) - Develop UI components in isolation
     -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
-    -   [React Native Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
+    -   [React Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
     -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
--   [Advanced Usage](docs/advanced-usage.md)
+-   [CLI Flags](docs/cli-flags.md)
 
 ## Getting Started
 
@@ -34,8 +35,7 @@
 -   [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
 -   [jhipster-react-native](https://github.com/ruddell/jhipster-react-native) installed
     -   Install with `npm install -g generator-jhipster-react-native`
--   Mac users require [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) to be installed
-    -   Verify `pod` installation with `pod install`
+-   JHipster backend must use JWT or OAuth2 auth types.
 
 Create a directory for your app:
 
@@ -46,26 +46,27 @@ mkdir SampleApp && cd SampleApp
 To generate an app, run the following command:
 
 ```sh
+# JHipster v6.x
 rnhipster
 
-# Acceptable with JHipster v7+
+# JHipster v7+
 jhipster --blueprints react-native
+
+# JHipster v7+ JDL Application
+jhipster --blueprints react-native import-jdl ./path-to-your-app-config.jdl
 ```
 
-Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for both iOS and Android).
+Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for iOS, Android, and Web support).
 
-After generating, you can use the [entity generator and JDL importer](docs/generators.md).
+After generating, you can import entities with the [entity generator and JDL importer](docs/generators.md).
 
 ### Configuration
 
-`app/config/app-config.js` contains several important variables:
-
--   `apiUrl`: Your JHipster app's API url
+`app/config/app-config.js` contains your JHipster API URL, which defaults to `http://localhost:8080/`
 
 #### Notes for Android
 
 -   When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
--   When building the Android app manually, prepend `app:` to the command (due to React Native Navigation). For example: `./gradlew app:bundleRelease`
 
 # License
 

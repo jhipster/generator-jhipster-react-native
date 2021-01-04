@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 
 import LearnMoreLinks from './learn-more-links.component.js';
 import { Images } from '../../shared/themes';
-import styles from './launch-screen.styles';
+import styles from './home-screen.styles';
 
-function LaunchScreen(props) {
+function HomeScreen(props) {
   const { account } = props;
   return (
-    <View style={[styles.container, styles.mainContainer]} testID="launchScreen">
+    <View style={[styles.container, styles.mainContainer]} testID="homeScreen">
       <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollView}>
         <View style={styles.centered}>
           <Image source={Images.logoJhipster} style={styles.logo} />
@@ -50,7 +50,7 @@ function LaunchScreen(props) {
           <View style={styles.sectionContainer}>
             <Text style={styles.sectionTitle}>Make Some Changes</Text>
             <Text style={styles.sectionDescription}>
-              Edit <Text style={styles.highlight}>app/modules/home/launch-screen.js</Text> to change this screen and then come back to see
+              Edit <Text style={styles.highlight}>app/modules/home/home-screen.js</Text> to change this screen and then come back to see
               your edits.
             </Text>
           </View>
@@ -66,4 +66,4 @@ function LaunchScreen(props) {
 
 const mapStateToProps = (state) => ({ account: state.account.account });
 const mapDispatchToProps = (dispatch) => ({});
-export default connect(mapStateToProps, mapDispatchToProps)(LaunchScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);

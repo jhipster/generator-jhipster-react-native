@@ -9,10 +9,7 @@
     "precommit": "lint-staged",
     <%_ } _%>
     <%_ if (context.detox) { _%>
-    "e2e:build:ios": "detox build --configuration ios.sim.debug",
-    "e2e:test:ios": "./e2e/download-expo.sh && detox test --configuration ios.sim.debug",
-    "e2e:build:android": "detox build --configuration android.emu.debug",
-    "e2e:test:android": "./e2e/download-expo.sh && detox test --configuration android.emu.debug",
+    "e2e": "./e2e/download-expo.sh && detox test --configuration ios.sim.debug",
     <%_ } _%>
     "postinstall": "patch-package",
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
