@@ -130,7 +130,7 @@ const files = {
                 'test/spec/shared/components/alert-message/alert-message.spec.js',
                 'test/spec/shared/components/rounded-button/rounded-button.spec.js',
                 'test/spec/shared/components/search-bar/search-bar.spec.js',
-                'test/spec/shared/navigation/drawer/drawer-button.spec.js',
+                // 'test/spec/shared/navigation/drawer/drawer-button.spec.js',
                 'test/spec/shared/reducers/account.reducer.spec.js',
                 'test/spec/shared/reducers/app-state.reducer.spec.js',
                 'test/spec/shared/reducers/user.reducer.spec.js',

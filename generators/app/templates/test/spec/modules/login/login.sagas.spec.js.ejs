@@ -66,7 +66,7 @@ test('login failure path', () => {
   // Attempt to login and fail
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   // Send the error
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad credentials')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad Credentials')))
   <%_ } _%>
 })
 test('login load path with no token', () => {

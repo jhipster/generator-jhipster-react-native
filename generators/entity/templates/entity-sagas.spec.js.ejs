@@ -13,7 +13,7 @@ test('get success path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Success({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Success(response.data)))
 })
 
 test('get failure path', () => {
@@ -49,7 +49,7 @@ test('update success path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>UpdateSuccess({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>UpdateSuccess(response.data)))
 })
 
 test('update failure path', () => {
@@ -86,7 +86,7 @@ test('delete success path', () => {
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>DeleteSuccess({ id: 1 })))
+  expect(step(response)).toEqual(put(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>DeleteSuccess(response.data)))
 })
 
 test('delete failure path', () => {

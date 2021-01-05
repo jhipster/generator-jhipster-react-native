@@ -11,7 +11,7 @@ test('attempt retrieving a list of user', () => {
   const state = reducer(INITIAL_STATE, Actions.userAllRequest({ id: 1 }))
 
   expect(state.fetchingAll).toBe(true)
-  expect(state.users).toBe(null)
+  expect(state.userList).toEqual([])
 })
 
 test('attempt updating a user', () => {
@@ -38,7 +38,7 @@ test('success retrieving a list of user', () => {
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toBe(null)
-  expect(state.users).toEqual([{ id: 1 }, { id: 2 }])
+  expect(state.userList).toEqual([{ id: 1 }, { id: 2 }])
 })
 
 test('success updating a user', () => {
@@ -69,7 +69,7 @@ test('failure retrieving a list of user', () => {
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toEqual({ error: 'Not found' })
-  expect(state.users).toEqual(null)
+  expect(state.userList).toEqual([])
 })
 
 test('failure updating a user', () => {

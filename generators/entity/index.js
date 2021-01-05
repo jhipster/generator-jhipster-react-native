@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const EntityGenerator = require('generator-jhipster/generators/entity');
-const semver = require('semver')
+const semver = require('semver');
 const { askForBackendJson } = require('./prompts');
 const { writeFiles } = require('./files');
 const {
@@ -60,7 +60,8 @@ module.exports = class extends EntityGenerator {
                 this.context.getEntityFormFieldType = getEntityFormFieldType.bind(this);
                 this.context.entityNameSnakeCase = this._.snakeCase(this.context.entityNameCapitalized);
                 // DTO compatability for v6
-                this.context.useOldDTOCode = semver.major(semver.coerce(this.context.jhipsterVersion)) === '6' && this.context.dto === 'mapstruct';
+                this.context.useOldDTOCode =
+                    semver.major(semver.coerce(this.context.jhipsterVersion)) === '6' && this.context.dto === 'mapstruct';
                 // log the context for debugging purposes
                 if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
                     console.log(this.context);
@@ -72,20 +73,20 @@ module.exports = class extends EntityGenerator {
     get preparingRelationships() {
         return {
             ...super._preparingRelationships(),
-            differentRelationshipsWorkaround () {
+            differentRelationshipsWorkaround() {
                 // todo: remove this - need to figure out why context.differentRelationships
                 // todo: has a value here but is undefined in the templates.
-                const alreadyIncludedEntities = []
-                const uniqueEntityRelationships = []
-                this.context.relationships.forEach((relation) => {
+                const alreadyIncludedEntities = [];
+                const uniqueEntityRelationships = [];
+                this.context.relationships.forEach(relation => {
                     if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
-                        alreadyIncludedEntities.push(relation.otherEntityName)
-                        uniqueEntityRelationships.push(relation)
+                        alreadyIncludedEntities.push(relation.otherEntityName);
+                        uniqueEntityRelationships.push(relation);
                     }
-                })
-                this.context.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter((relation) => relation.ownerSide)
-                this.context.ownerSideRelationships = this.context.relationships.filter((relation) => relation.ownerSide)
-            }
+                });
+                this.context.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide);
+                this.context.ownerSideRelationships = this.context.relationships.filter(relation => relation.ownerSide);
+            },
         };
     }
 

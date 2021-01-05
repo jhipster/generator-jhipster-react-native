@@ -26,12 +26,12 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  fetchingOne: null,
-  fetchingAll: null,
-  updating: null,
-  deleting: null,
+  fetchingOne: false,
+  fetchingAll: false,
+  updating: false,
+  deleting: false,
   user: null,
-  userList: null,
+  userList: [],
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
@@ -51,7 +51,7 @@ export const request = (state) =>
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
-    userList: null
+    userList: []
   })
 
 // request to update from an api
@@ -116,7 +116,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    userList: null
+    userList: []
   })
 }
 // Something went wrong updating.
@@ -125,7 +125,6 @@ export const updateFailure = (state, action) => {
   return state.merge({
     updating: false,
     errorUpdating: error,
-    user: state.user
   })
 }
 // Something went wrong deleting.
@@ -134,7 +133,6 @@ export const deleteFailure = (state, action) => {
   return state.merge({
     deleting: false,
     errorDeleting: error,
-    user: state.user
   })
 }
 

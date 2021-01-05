@@ -4,14 +4,14 @@ test('attempt retrieving a single <%= context.entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= context.entityInstance %>Request({ id: 1 }))
 
   expect(state.fetchingOne).toBe(true)
-  expect(state.<%= context.entityInstance %>).toBe(null)
+  expect(state.<%= context.entityInstance %>).toEqual({ id: undefined })
 })
 
 test('attempt retrieving a list of <%= context.entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= context.entityInstance %>AllRequest({ id: 1 }))
 
   expect(state.fetchingAll).toBe(true)
-  expect(state.<%= context.entityInstancePlural %>).toEqual([])
+  expect(state.<%= context.entityInstance %>List).toEqual([])
 })
 
 test('attempt updating a <%= context.entityInstance %>', () => {
@@ -52,7 +52,7 @@ test('success retrieving a list of <%= context.entityInstance %>', () => {
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toBe(null)
-  expect(state.<%= context.entityInstancePlural %>).toEqual([{ id: 1 }, { id: 2 }])
+  expect(state.<%= context.entityInstance %>List).toEqual([{ id: 1 }, { id: 2 }])
   <%_ if (context.pagination !== 'no') { _%>
   expect(state.links).toEqual({ first: 0, last: 1 })
   expect(state.totalItems).toEqual(5)
@@ -72,7 +72,7 @@ test('success searching a <%= context.entityInstance %>', () => {
 
   expect(state.searching).toBe(false)
   expect(state.errorSearching).toBe(null)
-  expect(state.<%= context.entityInstancePlural %>).toEqual({ id: 1 })
+  expect(state.<%= context.entityInstance %>List).toEqual({ id: 1 })
 })
 <%_ } _%>
 test('success deleting a <%= context.entityInstance %>', () => {
@@ -80,7 +80,7 @@ test('success deleting a <%= context.entityInstance %>', () => {
 
   expect(state.deleting).toBe(false)
   expect(state.errorDeleting).toBe(null)
-  expect(state.<%= context.entityInstance %>).toEqual(null)
+  expect(state.<%= context.entityInstance %>).toEqual({ id: undefined })
 })
 
 test('failure retrieving a <%= context.entityInstance %>', () => {
@@ -88,7 +88,7 @@ test('failure retrieving a <%= context.entityInstance %>', () => {
 
   expect(state.fetchingOne).toBe(false)
   expect(state.errorOne).toEqual({ error: 'Not found' })
-  expect(state.<%= context.entityInstance %>).toEqual(null)
+  expect(state.<%= context.entityInstance %>).toEqual({ id: undefined })
 })
 
 test('failure retrieving a list of <%= context.entityInstance %>', () => {
@@ -96,7 +96,7 @@ test('failure retrieving a list of <%= context.entityInstance %>', () => {
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toEqual({ error: 'Not found' })
-  expect(state.<%= context.entityInstancePlural %>).toEqual([])
+  expect(state.<%= context.entityInstance %>List).toEqual([])
 })
 
 test('failure updating a <%= context.entityInstance %>', () => {
@@ -112,7 +112,7 @@ test('failure searching a <%= context.entityInstance %>', () => {
 
   expect(state.searching).toBe(false)
   expect(state.errorSearching).toEqual({ error: 'Not found' })
-  expect(state.<%= context.entityInstancePlural %>).toEqual([])
+  expect(state.<%= context.entityInstance %>List).toEqual([])
 })
 <%_ } _%>
 test('failure deleting a <%= context.entityInstance %>', () => {

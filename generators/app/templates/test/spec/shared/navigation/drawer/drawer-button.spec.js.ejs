@@ -5,12 +5,12 @@ import renderer from 'react-test-renderer'
 
 import DrawerButton from '../../../../../app/navigation/drawer/drawer-button'
 
-test('AlertMessage component renders correctly', () => {
+test('DrawerButton component renders correctly', () => {
   const tree = renderer.create(<DrawerButton onPress={() => {}} text='hi' />).toJSON()
   expect(tree).toMatchSnapshot()
 })
 
-test('onPress', () => {
+test('DrawerButton onPress works as expected', () => {
   let i = 0
   const onPress = () => i++
   const wrapperPress = shallow(<DrawerButton onPress={onPress} text='hi' />)
