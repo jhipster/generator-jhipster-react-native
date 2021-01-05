@@ -107,7 +107,11 @@ module.exports = class extends AppGenerator {
                 try {
                     fs.chmodSync('e2e/download-expo.sh', '755');
                 } catch (err) {
-                    this.log(`${chalk.yellow.bold('WARNING!')}Failed to make 'e2e/download-expo.sh' executable, you may need to run 'chmod +x e2e/download-expo.sh'`);
+                    this.log(
+                        `${chalk.yellow.bold(
+                            'WARNING!'
+                        )}Failed to make 'e2e/download-expo.sh' executable, you may need to run 'chmod +x e2e/download-expo.sh'`
+                    );
                 }
             },
             gitCommit,

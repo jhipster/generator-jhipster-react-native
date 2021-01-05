@@ -5,12 +5,12 @@ import renderer from 'react-test-renderer'
 
 import SearchBar from '../../../../../app/shared/components/search-bar/search-bar'
 
-test('SearchBar component renders correctly', () => {
+test('SearchBar component renders correctly', async () => {
   const tree = renderer.create(<SearchBar onSearch={() => {}} onCancel={() => {}} />).toJSON()
   expect(tree).toMatchSnapshot()
 })
 
-test('onSearch', () => {
+test('onSearch', async () => {
   const onSearch = () => {}
   const onCancel = () => {}
   const searchTerm = ''

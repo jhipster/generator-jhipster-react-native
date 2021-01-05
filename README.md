@@ -8,7 +8,7 @@
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
-[![JHipster React Native Logo](docs/images/jh-rn-logo-150h.png)](#)
+<img src="https://raw.githubusercontent.com/ruddell/ignite-jhipster/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
 
 ## Docs
 
@@ -19,7 +19,7 @@
     -   [OAuth2 OIDC Login](docs/oauth2-oidc.md)
     -   [Websockets](docs/websockets.md)
 -   React Native Library Integrations
-    -   [Expo](https://docs.expo.io/workflow/expo-cli/) - A framework and platform for universal React application
+    -   [Expo](https://docs.expo.io/) - A framework and platform for universal React application
     -   [Storybook](docs/storybook.md) - Develop UI components in isolation
     -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
     -   [React Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
@@ -32,9 +32,13 @@
 
 -   Node v12+
     -   Verify version with `node -v`
--   [React Native CLI setup](https://reactnative.dev/docs/environment-setup)
 -   [jhipster-react-native](https://github.com/ruddell/jhipster-react-native) installed
     -   Install with `npm install -g generator-jhipster-react-native`
+-   [expo-cli](https://docs.expo.io/get-started/installation/) installed
+    -   Install with `npm install -g expo-cli`
+    -   To run your app on an emulator instead of a device, follow the platform-specific instructions:
+        -   [Android](https://docs.expo.io/workflow/android-studio-emulator/)
+        -   [iOS](https://docs.expo.io/workflow/ios-simulator/)
 -   JHipster backend must use JWT or OAuth2 auth types.
 
 Create a directory for your app:
@@ -46,23 +50,26 @@ mkdir SampleApp && cd SampleApp
 To generate an app, run the following command:
 
 ```sh
-# JHipster v6.x
-rnhipster
-
 # JHipster v7+
 jhipster --blueprints react-native
 
 # JHipster v7+ JDL Application
 jhipster --blueprints react-native import-jdl ./path-to-your-app-config.jdl
+
+# JHipster v6.x
+rnhipster
 ```
 
-Answer the prompts, entering the path to your JHipster app and choosing any plugins you want. The generator will create a new directory containing the project (preconfigured for iOS, Android, and Web support).
+Answer the prompts:
+
+-   Enter the path to your JHipster app
+-   Choose whether you want to enable E2E Detox Tests
 
 After generating, you can import entities with the [entity generator and JDL importer](docs/generators.md).
 
 ### Configuration
 
-`app/config/app-config.js` contains your JHipster API URL, which defaults to `http://localhost:8080/`
+-   `app/config/app-config.js` contains your JHipster API URL (default: `http://localhost:8080/`)
 
 #### Notes for Android
 

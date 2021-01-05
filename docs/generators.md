@@ -3,7 +3,7 @@
 ### Entity
 
 ```sh
-rnhipster entity <name>
+jhipster --blueprints react-native entity <name>
 ```
 
 -   Prompts for the path to the entity's config (`.jhipster` folder in your app)
@@ -13,7 +13,7 @@ rnhipster entity <name>
 ### Import JDL
 
 ```sh
-rnhipster import-jdl <jdl-filename>
+jhipster --blueprints react-native import-jdl <jdl-filename>
 ```
 
 -   Import several entities at once using JDL

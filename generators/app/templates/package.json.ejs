@@ -5,6 +5,7 @@
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "lint": "eslint app test App.js --ext .js",
+    "test": "jest",
     <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
@@ -97,7 +98,7 @@
   },
   <%_ if (!context.skipCommitHook) { _%>
   "lint-staged": {
-    "{,app/**/,test/**/}*.{js}": [
+    "{,app/**/,test/**/}*.{js,json,yml,md,ts,tsx}": [
       "prettier --write",
       "eslint --fix --ext .js"
     ]
@@ -123,7 +124,7 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native-community|react-native))"
+      "node_modules/(?!(@react-native-community|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
     ],
     "coveragePathIgnorePatterns": [
       "app/shared/services/api.js",

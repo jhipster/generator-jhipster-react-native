@@ -34,7 +34,7 @@ npm link generator-jhipster
 Generating an app using your local `jhipster-react-native` blueprint is similar to normal.
 
 ```sh
-rnhipster
+jhipster --blueprints react-native
 ```
 
 ## Making Changes to the Generator
