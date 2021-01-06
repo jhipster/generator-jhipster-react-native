@@ -1,30 +1,29 @@
-## OAuth2 OIDC
+## OAuth 2.0 and OpenID Connect
 
-For a full walkthrough of generating and configuring OAuth2 with JHipster React Native, check out Matt Raible's post ["Build a Mobile App with React Native and Spring Boot"](https://developer.okta.com/blog/2018/10/10/react-native-spring-boot-mobile-app) or [YouTube video](https://www.youtube.com/watch?v=h7QcSe-LYZg) of the same.
+JHipster React Native uses [Expo's AuthSession library](https://docs.expo.io/versions/latest/sdk/auth-session/) for integrating with Keycloak and Okta.
 
-### Backend Generated Files
+### Redirect URI Configuration
 
-The blueprint generates several files in your JHipster backend's folder. See the changes in your JHipster app.
+Configure the redirect URIs for your app in your Identity Provider's authorized redirect URI list.
 
--   `src/main/docker/realm-config/jhipster-realm.json`
-    -   Adds your app's url scheme as an authorized redirect URI for the Keycloak docker container
+##### iOS and Android
+-   `https://auth.expo.io/@your-expo-username/reactNativeAppName`
+    -   Use the value for `reactNativeAppName` in your `.yo-rc.json`
+    -   Used for [Expo's Auth Proxy](https://docs.expo.io/versions/latest/sdk/auth-session/#what--authexpoio--does-for-you)
 
-**Note:** If you generate your JHipster React Native app from a JDL file, you will need to make these changes manually.
+##### Web
+-   `http://localhost:19006/`
+    -   For local development with `react-native-web`
+-   `https://your-app-domain.com/`
+    -   For production deployment with `react-native-web`
 
-### URL Scheme
+#### Okta
 
-The app's URL scheme is declared in `app.json`. By default it uses your app name.
+##### Create a New App
+Create a new Single Page App application in Okta's dashboard (or through `okta apps create` with the [Okta CLI](https://cli.okta.com/)).  Add the redirect URIs from above.
 
-Add the URL scheme from above as a valid redirect URI, followed by the word "authorize". For example, if your URL scheme is `oauth-app` then the redirect URI
-should look like `oauth-app://authorize`. This is patched in JHipster's Keycloak docker config, you may need to restart the docker container to update the config.
-
-### Keycloak
-
-When running the backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080 && adb reverse tcp:9080 tcp:9080` so the app can communicate with both Keycloak and your backend.
-
-### Okta
-
-To use Okta, you will need to create a new Native application in Okta's dashboard. Make sure PKCE support is enabled, then modify `app/modules/login/login.sagas.js` to use the new client ID:
+##### Configure your Client ID
+Once your Okta app is configured, modify `app/modules/login/login.sagas.js` to use the new app's client ID:
 
 ```js
 ...
@@ -33,4 +32,14 @@ To use Okta, you will need to create a new Native application in Okta's dashboar
   // const clientId = '0favl263f83H1kxJk0h7';
   const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
 ...
+```
+
+#### Keycloak
+
+Edit `src/main/docker/realm-config/jhipster-realm.json` and add the redirect URIs above to all instances of the `redirectUris` array.  Make sure to restart the Keycloak Docker container after making any changes.
+
+**Note:** When running the backend locally for Android, you will need to run the following commands so the app can communicate with both Keycloak and your backend on localhost:
+
+```bash
+adb reverse tcp:8080 tcp:8080 && adb reverse tcp:9080 tcp:9080
 ```
