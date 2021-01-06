@@ -86,9 +86,6 @@ jobs:
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
         shell: bash
-      - run: $SCRIPT_DIR/package-react-native-app.sh
-        name: 'PACKAGING: package react-native app for detox'
-        shell: bash
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
         shell: bash

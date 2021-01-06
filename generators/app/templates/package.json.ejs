@@ -6,6 +6,10 @@
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "lint": "eslint app test App.js --ext .js",
     "test": "jest",
+    "publish": "expo publish",
+    "build:ios": "expo build:ios",
+    "build:android": "expo build:android",
+    "build:web": "expo build:web",
     <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
@@ -90,6 +94,7 @@
     "detox-expo-helpers": "REPLACE_WITH_VERSION",
     "expo-detox-hook": "REPLACE_WITH_VERSION",
     <%_ } _%>
+    "@expo/webpack-config": "REPLACE_WITH_VERSION",
     "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
