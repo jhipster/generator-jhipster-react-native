@@ -46,7 +46,7 @@ function * getAll<%= context.entityNamePlural %> (api, action) {
 function * update<%= context.entityNameCapitalized %> (api, action) {
   const { <%= context.entityInstance %> } = action
   // make the call to the api
-  const idIsNotNull = !!<%= context.entityInstance %>.id
+  const idIsNotNull = !(<%= context.entityInstance %>.id === null || <%= context.entityInstance %>.id === undefined);
   const apiCall = call(idIsNotNull ? api.update<%= context.entityNameCapitalized %> : api.create<%= context.entityNameCapitalized %>, <%= context.entityInstance %>)
   const response = yield call(callApi, apiCall)
 

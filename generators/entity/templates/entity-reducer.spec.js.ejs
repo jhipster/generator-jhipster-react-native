@@ -122,3 +122,8 @@ test('failure deleting a <%= context.entityInstance %>', () => {
   expect(state.errorDeleting).toEqual({ error: 'Not found' })
   expect(state.<%= context.entityInstance %>).toEqual(INITIAL_STATE.<%= context.entityInstance %>)
 })
+
+test('resetting state for <%= context.entityInstance %>', () => {
+  const state = reducer({ ...INITIAL_STATE, deleting: true }, Actions.<%= context.entityInstance %>Reset())
+  expect(state).toEqual(INITIAL_STATE)
+})

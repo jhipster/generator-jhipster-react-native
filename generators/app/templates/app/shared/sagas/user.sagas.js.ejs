@@ -33,7 +33,7 @@ function * getAllUsers (api, action) {
 function * updateUser (api, action) {
   const { user } = action
   // make the call to the api
-  const idIsNotNull = !!user.id
+  const idIsNotNull = !(user.id === null || user.id === undefined);
   const apiCall = call(idIsNotNull ? api.updateUser : api.createUser, user)
   const response = yield call(callApi, apiCall)
 

@@ -15,16 +15,18 @@
 -   [Getting Started](README.md#getting-started)
 -   [Generators](docs/generators.md)
 -   [Project Structure](docs/project-structure.md)
+-   [Distributing and Updating Apps](docs/distributing-and-updating.md)
+-   [CLI Flags](docs/cli-flags.md)
 -   JHipster Integrations
-    -   [OAuth2 OIDC Login](docs/oauth2-oidc.md)
+    -   [OAuth 2.0 and OpenID Connect](docs/oauth2-oidc.md)
     -   [Websockets](docs/websockets.md)
 -   React Native Library Integrations
     -   [Expo](https://docs.expo.io/) - A framework and platform for universal React application
+    -   [React Native Web](https://docs.expo.io/workflow/web/) - Run your React Native application in a browser, including PWA support
     -   [Storybook](docs/storybook.md) - Develop UI components in isolation
     -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
     -   [React Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
     -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
--   [CLI Flags](docs/cli-flags.md)
 
 ## Getting Started
 
@@ -63,7 +65,7 @@ rnhipster
 Answer the prompts:
 
 -   Enter the path to your JHipster app
--   Choose whether you want to enable E2E Detox Tests
+-   Choose whether to enable E2E Detox Tests
 
 After generating, you can import entities with the [entity generator and JDL importer](docs/generators.md).
 
