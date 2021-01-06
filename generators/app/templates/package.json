@@ -66,6 +66,7 @@
     "detox": "17.14.6",
     "detox-expo-helpers": "0.6.0",
     "expo-detox-hook": "1.0.10",
+    "@expo/webpack-config": "^0.12.52",
     "redux-devtools-extension": "2.13.8",
     "mocha": "8.2.1",
     "mockery": "2.1.0",

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# start the expo react-native packager
+cd ../${JHI_REACT_NATIVE_APP_NAME}
+npm start --no-dev --minify &
+
 # start the backend
 cd ../backend
 
@@ -21,21 +25,29 @@ LOGGING_LEVEL_ROOT=OFF \
 # wait for the backend to start
 # see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh
 retryCount=1
-maxRetry=30
+maxRetry=60
 httpUrl="http://localhost:8080/management/health"
-
 rep=$(curl -v -f "$httpUrl")
 status=$?
 while [ "$status" -ne 0 ] && [ "$retryCount" -le "$maxRetry" ]; do
     echo "*** [$(date)] Application not reachable yet. Sleep and retry - retryCount =" $retryCount "/" $maxRetry
     retryCount=$((retryCount+1))
-    sleep 10
+    sleep 5
     rep=$(curl -v "$httpUrl")
     status=$?
 done
 
 if [ "$status" -ne 0 ]; then
-    echo "*** [$(date)] Not connected after" $retryCount " retries."
+    echo "*** [$(date)] Backend not connected after" $retryCount " retries."
+    return 1
+fi
+
+# verify the npm packager has started (takes less time than the backend, so should not be an issue)
+httpUrl="http://localhost:19000"
+curl -v -f "$httpUrl"
+status=$?
+if [ "$status" -ne 0 ]; then
+    echo "*** [$(date)] Expo Packager not connected"
     return 1
 fi
 
@@ -53,7 +65,7 @@ fi
 
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  detox test --configuration ios.sim.release --record-videos $DETOX_RECORD_VIDEO
+  npm run e2e
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release
