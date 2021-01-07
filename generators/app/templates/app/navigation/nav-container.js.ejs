@@ -76,12 +76,6 @@ export const drawerScreens = [
     },
     auth: true,
   },
-  {
-    name: 'Storybook',
-    route: 'storybook',
-    component: StorybookScreen,
-    auth: null,
-  },
   <%_ if (context.websocket) { _%>
   {
     name: 'Chat',
@@ -90,7 +84,14 @@ export const drawerScreens = [
   },
   <%_ } _%>
 ];
-
+if (__DEV__) {
+  drawerScreens.push({
+    name: 'Storybook',
+    route: 'storybook',
+    component: StorybookScreen,
+    auth: null,
+  });
+}
 export const getDrawerRoutes = () => {
   const routes = {};
   drawerScreens.forEach((screen) => {

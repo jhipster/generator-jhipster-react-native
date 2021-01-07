@@ -51,9 +51,9 @@ test('login failure path', () => {
 
   expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
 
-  // set response.ok to false as if the oauth issuer is down
+  // set response.ok to false as if the request failed
   response.ok = false
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('Could not connect to OAuth2 Provider')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad credentials')))
   <%_} else if (context.authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',
@@ -66,7 +66,7 @@ test('login failure path', () => {
   // Attempt to login and fail
   expect(step(response)).toEqual(call(FixtureAPI.login, authObj))
   // Send the error
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad Credentials')))
+  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad credentials')))
   <%_ } _%>
 })
 test('login load path with no token', () => {
