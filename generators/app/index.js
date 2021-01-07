@@ -67,6 +67,12 @@ module.exports = class extends AppGenerator {
         // force overwriting of files since prompting will confuse developers on initial install
         return {
             setUpVariables: setupVariables.bind(this),
+            setUpTemplateVariables() {
+                this.context.reactNativeAppNameKebabCase = this._.kebabCase(this.context.reactNativeAppName);
+                if (this.context.authenticationType === 'oauth2' || (this.context.databaseType === 'no' && this.context.authenticationType !== 'uaa')) {
+                    this.context.skipUserManagement = true;
+                }
+            },
             createEarlyFiles,
             generateReactNativeApp: generateReactNativeApp.bind(this),
             mergeRnPackageJson: mergeReactNativePackageJson.bind(this),
