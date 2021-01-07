@@ -1,4 +1,4 @@
-name: Generator
+name: Generator Tests
 on:
   push:
     branches:
@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [12.16.1]
+        node_version: [14.x]
         os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
@@ -28,10 +28,7 @@ jobs:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
         shell: bash
-#        using npm i instead of npm ci due to installing master of generator-jhipster
-      - name: npm i
-        run: npm i
-#      - name: npm ci
-#        run: npm ci
+      - name: npm ci
+        run: npm ci
       - name: lint and test
         run: npm run test

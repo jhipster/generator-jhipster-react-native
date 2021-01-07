@@ -34,6 +34,13 @@ module.exports = class extends AppGenerator {
         if (!this.context) {
             this.context = {};
         }
+
+        // regardless of the value of skipClient, we want to prettify JS/TS/TSX files
+        // this does not look to be configurable from blueprints (see getPrettierExtensions in generator-base.js)
+        // skipClient has no effect for jhipster-react-native since it only generates a client
+        this.skipClient = false;
+        this.jhipsterConfig.skipClient = false;
+        this.registerPrettierTransform();
     }
 
     get initializing() {
@@ -67,14 +74,16 @@ module.exports = class extends AppGenerator {
         // force overwriting of files since prompting will confuse developers on initial install
         return {
             setUpVariables: setupVariables.bind(this),
+            checkAppAuthType() {
+                // exit on invalid auth type
+                const authType = this.context.authenticationType;
+                if (!['jwt', 'oauth2'].includes(authType)) {
+                    this.error(`Unsupported authentication type ${authType} - Only JWT and OAuth2 authentication types are supported.`);
+                }
+            },
             setUpTemplateVariables() {
                 this.context.reactNativeAppNameKebabCase = this._.kebabCase(this.context.reactNativeAppName);
-                if (
-                    this.context.authenticationType === 'oauth2' ||
-                    (this.context.databaseType === 'no' && this.context.authenticationType !== 'uaa')
-                ) {
-                    this.context.skipUserManagement = true;
-                }
+                this.context.skipUserManagement = this.context.authenticationType === 'oauth2' || this.context.databaseType === 'no';
             },
             createEarlyFiles,
             generateReactNativeApp: generateReactNativeApp.bind(this),

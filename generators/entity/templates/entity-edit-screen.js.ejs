@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 import <%= context.entityNameCapitalized %>Actions from './<%= context.entityFileName %>.reducer'
 <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
-<%_ context.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== context.entityName).forEach((relation) => { _%>
+<%_ context.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== context.entityInstance).forEach((relation) => { _%>
 <%_ if (relation.otherEntityName === 'user') { _%>
 import UserActions from '../../../shared/reducers/user.reducer'
 <%_ } else { _%>
