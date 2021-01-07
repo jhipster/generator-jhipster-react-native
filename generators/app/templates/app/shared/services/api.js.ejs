@@ -40,7 +40,7 @@ const create = (baseURL = AppConfig.apiUrl) => {
   const removeAuthToken = () => api.deleteHeader('Authorization')
   <%_ if (context.authenticationType === 'oauth2') { _%>
   // use an empty Authorization header in the auth-info request to prevent an invalid token from returning 401
-  const getOauthInfo = () => api.get('api/auth-info', {}, { headers: {} });
+  const getOauthInfo = () => api.get('api/auth-info', {}, { headers: { Authorization: undefined } });
   const getOauthIssuerInfo = (issuerUrl) => api.get(`${issuerUrl}/.well-known/openid-configuration`)
   <%_ } else if (context.authenticationType === 'jwt') { _%>
   const login = (userAuth) => api.post('api/authenticate', userAuth)

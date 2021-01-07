@@ -91,6 +91,7 @@ test('logout success path', () => {
   expect(step()).toEqual(call(FixtureAPI.removeAuthToken))
   FixtureAPI.removeAuthToken()
   // Reset the account and logout
+  expect(step()).toEqual(put(AccountActions.accountReset()))
   expect(step()).toEqual(put(AccountActions.accountRequest()))
   expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))

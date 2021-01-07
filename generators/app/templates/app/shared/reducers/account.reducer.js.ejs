@@ -8,7 +8,8 @@ const { Types, Creators } = createActions({
   accountFailure: ['error'],
   accountUpdateRequest: ['account'],
   accountUpdateSuccess: [],
-  accountUpdateFailure: ['error']
+  accountUpdateFailure: ['error'],
+  accountReset: [],
 })
 
 export const AccountTypes = Types
@@ -46,6 +47,9 @@ export const updateSuccess = (state) => state.merge({ error: null, updating: fal
 // we've had a problem updating the account settings
 export const updateFailure = (state, { error }) => state.merge({ updating: false, error })
 
+// reset the account reducer
+export const reset = () => INITIAL_STATE
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
@@ -54,11 +58,12 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.ACCOUNT_FAILURE]: failure,
   [Types.ACCOUNT_UPDATE_REQUEST]: updateRequest,
   [Types.ACCOUNT_UPDATE_SUCCESS]: updateSuccess,
-  [Types.ACCOUNT_UPDATE_FAILURE]: updateFailure
+  [Types.ACCOUNT_UPDATE_FAILURE]: updateFailure,
+  [Types.ACCOUNT_RESET]: reset,
 })
 
 /* ------------- Selectors ------------- */
 // Is the current user logged in?
 export const isLoggedIn = accountState => accountState.account !== null
 
-export const getLogin = accountState => accountState.account !== null ? accountState.account.login : 'anonymousUser'
+export const getLogin = accountState => accountState.account !== null ? accountState.account.login : 'anonymoususer'

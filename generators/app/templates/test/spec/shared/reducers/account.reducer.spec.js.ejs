@@ -53,5 +53,12 @@ test('getLogin', () => {
 test('getLogin anonymous', () => {
   const state = reducer(INITIAL_STATE)
 
-  expect(getLogin(state)).toBe('anonymousUser')
+  expect(getLogin(state)).toBe('anonymoususer')
+})
+
+test('reset', () => {
+  const state = reducer({ ...INITIAL_STATE, login: 'user' }, Actions.accountReset())
+
+  expect(state).toEqual(INITIAL_STATE)
+  expect(getLogin(state)).toBe('anonymoususer')
 })
