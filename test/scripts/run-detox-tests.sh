@@ -11,43 +11,59 @@ cd ../backend
 MAVEN_OPTS="-Xmx512m -Xms256m"
 
 # disable sql logging
-sed -i.back "s~show-sql: true~show-sql: false~g" src/main/resources/config/application-dev.yml
+sed -i.back "s~org.hibernate.SQL: DEBUG~org.hibernate.SQL: WARN~g" src/main/resources/config/application-dev.yml
 
-# start jhipster backend with logging off
-LOGGING_LEVEL_ROOT=OFF \
-  LOGGING_LEVEL_ORG_ZALANDO=OFF \
-  LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF \
-  LOGGING_LEVEL_IO_GITHUB_JHIPSTER=OFF \
-  LOGGING_LEVEL_COM_MYCOMPANY_MYAPP=OFF  \
-  nohup \
-  ./mvnw -ntp &
+if [ "$JHI_AUTH_TYPE" = "jwt" ] ; then
+    # start jhipster backend with logging off
+    LOGGING_LEVEL_ROOT=OFF \
+      LOGGING_LEVEL_ORG_ZALANDO=OFF \
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=OFF \
+      LOGGING_LEVEL_IO_GITHUB_JHIPSTER=OFF \
+      LOGGING_LEVEL_COM_MYCOMPANY_MYAPP=OFF  \
+      nohup \
+      ./mvnw -ntp &
 
-# wait for the backend to start
-# see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh
+    # wait for the backend to start
+    # see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh
+    retryCount=1
+    maxRetry=60
+    httpUrl="http://localhost:8080/management/health"
+    rep=$(curl -fv "$httpUrl")
+    status=$?
+    while [ "$status" -ne 0 ] && [ "$retryCount" -le "$maxRetry" ]; do
+        echo "*** [$(date)] Backend not reachable yet. Sleep and retry - retryCount =" $retryCount "/" $maxRetry
+        retryCount=$((retryCount+1))
+        sleep 5
+        rep=$(curl -fv "$httpUrl")
+        status=$?
+        echo "."
+    done
+
+    if [ "$status" -ne 0 ]; then
+        echo "*** [$(date)] Backend not connected after" $retryCount " retries."
+        exit 1
+    fi
+else
+    echo "Skipping starting backend for OAuth2"
+    echo "TODO: Mock Auth so that the entity pages can be tested"
+fi
+
+# verify the npm packager has started (takes less time than the backend, so should not be an issue)
 retryCount=1
 maxRetry=60
-httpUrl="http://localhost:8080/management/health"
-rep=$(curl -v -f "$httpUrl")
+httpUrl="http://localhost:19000"
+rep=$(curl -fv "$httpUrl")
 status=$?
 while [ "$status" -ne 0 ] && [ "$retryCount" -le "$maxRetry" ]; do
-    echo "*** [$(date)] Application not reachable yet. Sleep and retry - retryCount =" $retryCount "/" $maxRetry
+    echo "*** [$(date)] Expo Packager not reachable yet. Sleep and retry - retryCount =" $retryCount "/" $maxRetry
     retryCount=$((retryCount+1))
     sleep 5
-    rep=$(curl -v "$httpUrl")
+    rep=$(curl -fv "$httpUrl")
     status=$?
 done
 
 if [ "$status" -ne 0 ]; then
-    echo "*** [$(date)] Backend not connected after" $retryCount " retries."
-    exit 1
-fi
-
-# verify the npm packager has started (takes less time than the backend, so should not be an issue)
-httpUrl="http://localhost:19000"
-curl -v -f "$httpUrl"
-status=$?
-if [ "$status" -ne 0 ]; then
-    echo "*** [$(date)] Expo Packager not connected"
+    echo "*** [$(date)] Expo Packager not connected after" $retryCount " retries."
     exit 1
 fi
 

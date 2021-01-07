@@ -94,7 +94,7 @@ const expectedFiles = {
         'app/shared/images/logo-jhipster@3x.png',
         'assets/icon.png',
         'assets/splash.png',
-        'assets/favicon.ico',
+        'assets/favicon.png',
         'assets/adaptive-icon.png',
         // other files
         'app/shared/reducers/account.reducer.js',

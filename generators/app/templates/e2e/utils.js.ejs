@@ -17,7 +17,7 @@ const loginAsUser = async () => {
   await closeKeyboard('loginScreen');
   await element(by.id('loginScreenLoginButton')).tap();
   try {
-    await waitForSplashScreen();
+    await waitForElementToBeVisibleById('homeScreen')
   } catch (e) {
     throw new Error('Logging in failed. Check backend status or credentials.');
   }
@@ -67,16 +67,16 @@ const tapFirstElementByLabel = async (label) => {
   await element(by.label(label)).atIndex(0).tap();
 };
 
-const waitForElementToBeVisibleByLabel = async (elementLabel, timeout = 3000) => {
+const waitForElementToBeVisibleByLabel = async (elementLabel, timeout = 5000) => {
   await waitFor(element(by.label(elementLabel))).toBeVisible().withTimeout(timeout);
 }
 
-const waitForElementToBeVisibleById = async (elementId, timeout = 3000) => {
+const waitForElementToBeVisibleById = async (elementId, timeout = 5000) => {
   await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
 const waitForSplashScreen = async () => {
-  await waitForElementToBeVisibleById('homeScreen')
+  await waitForElementToBeVisibleById('homeScreen', 15000)
 };
 
 const reloadApp = async () => {

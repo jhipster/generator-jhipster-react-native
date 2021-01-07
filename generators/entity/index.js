@@ -26,6 +26,13 @@ module.exports = class extends EntityGenerator {
         }
 
         this.patchInFile = patchInFile.bind(this);
+
+        // regardless of the value of skipClient, we want to prettify JS/TS/TSX files
+        // this does not look to be configurable from blueprints (see getPrettierExtensions in generator-base.js)
+        // skipClient has no effect for jhipster-react-native since it only generates a client
+        this.skipClient = false;
+        this.jhipsterConfig.skipClient = false;
+        this.registerPrettierTransform();
     }
 
     get initializing() {
@@ -96,6 +103,11 @@ module.exports = class extends EntityGenerator {
 
     get writing() {
         return {
+            setupTemplateVariables() {
+                const jhipsterConfig = this.config.getAll();
+                this.context.searchEngine = jhipsterConfig.searchEngine;
+                this.context.detox = jhipsterConfig.reactNative && jhipsterConfig.reactNative.detox;
+            },
             writeFiles: writeFiles.bind(this),
             patchNavigationForEntity: patchNavigationForEntity.bind(this, this.context.name),
             patchEntityApi: patchEntityApi.bind(this, this.context.name),
