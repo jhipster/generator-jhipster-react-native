@@ -4,20 +4,26 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  userRequest: ['userId'],
   userAllRequest: ['options'],
+<%_ if (!context.skipUserManagement) { _%>
+  userRequest: ['userId'],
   userUpdateRequest: ['user'],
   userDeleteRequest: ['userId'],
+<%_ } _%>
 
-  userSuccess: ['user'],
   userAllSuccess: ['userList'],
+<%_ if (!context.skipUserManagement) { _%>
+  userSuccess: ['user'],
   userUpdateSuccess: ['user'],
   userDeleteSuccess: [],
+<%_ } _%>
 
-  userFailure: ['error'],
   userAllFailure: ['error'],
+<%_ if (!context.skipUserManagement) { _%>
+  userFailure: ['error'],
   userUpdateFailure: ['error'],
   userDeleteFailure: ['error']
+<%_ } _%>
 })
 
 export const UserTypes = Types
@@ -26,32 +32,37 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
-  fetchingOne: false,
   fetchingAll: false,
+<%_ if (!context.skipUserManagement) { _%>
+  fetchingOne: false,
   updating: false,
   deleting: false,
   user: null,
+<%_ } _%>
   userList: [],
-  errorOne: null,
   errorAll: null,
+<%_ if (!context.skipUserManagement) { _%>
+  errorOne: null,
   errorUpdating: null,
   errorDeleting: null
+<%_ } _%>
 })
 
 /* ------------- Reducers ------------- */
-
-// request the data from an api
-export const request = (state) =>
-  state.merge({
-    fetchingOne: true,
-    user: null
-  })
 
 // request the data from an api
 export const allRequest = (state) =>
   state.merge({
     fetchingAll: true,
     userList: []
+  })
+
+<%_ if (!context.skipUserManagement) { _%>
+// request the data from an api
+export const request = (state) =>
+  state.merge({
+    fetchingOne: true,
+    user: null
   })
 
 // request to update from an api
@@ -64,16 +75,8 @@ export const deleteRequest = (state) =>
   state.merge({
     deleting: true
   })
+<%_ } _%>
 
-// successful api lookup for single entity
-export const success = (state, action) => {
-  const { user } = action
-  return state.merge({
-    fetchingOne: false,
-    errorOne: null,
-    user
-  })
-}
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
   const { userList } = action
@@ -83,6 +86,18 @@ export const allSuccess = (state, action) => {
     userList
   })
 }
+
+<%_ if (!context.skipUserManagement) { _%>
+// successful api lookup for single entity
+export const success = (state, action) => {
+  const { user } = action
+  return state.merge({
+    fetchingOne: false,
+    errorOne: null,
+    user
+  })
+}
+
 // successful api update
 export const updateSuccess = (state, action) => {
   const { user } = action
@@ -100,16 +115,8 @@ export const deleteSuccess = (state) => {
     user: null
   })
 }
+<%_ } _%>
 
-// Something went wrong fetching a single entity.
-export const failure = (state, action) => {
-  const { error } = action
-  return state.merge({
-    fetchingOne: false,
-    errorOne: error,
-    user: null
-  })
-}
 // Something went wrong fetching all entities.
 export const allFailure = (state, action) => {
   const { error } = action
@@ -119,6 +126,18 @@ export const allFailure = (state, action) => {
     userList: []
   })
 }
+
+<%_ if (!context.skipUserManagement) { _%>
+// Something went wrong fetching a single entity.
+export const failure = (state, action) => {
+  const { error } = action
+  return state.merge({
+    fetchingOne: false,
+    errorOne: error,
+    user: null
+  })
+}
+
 // Something went wrong updating.
 export const updateFailure = (state, action) => {
   const { error } = action
@@ -135,22 +154,29 @@ export const deleteFailure = (state, action) => {
     errorDeleting: error,
   })
 }
+<%_ } _%>
 
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
-  [Types.USER_REQUEST]: request,
   [Types.USER_ALL_REQUEST]: allRequest,
+<%_ if (!context.skipUserManagement) { _%>
+  [Types.USER_REQUEST]: request,
   [Types.USER_UPDATE_REQUEST]: updateRequest,
   [Types.USER_DELETE_REQUEST]: deleteRequest,
+<%_ } _%>
 
-  [Types.USER_SUCCESS]: success,
   [Types.USER_ALL_SUCCESS]: allSuccess,
+<%_ if (!context.skipUserManagement) { _%>
+  [Types.USER_SUCCESS]: success,
   [Types.USER_UPDATE_SUCCESS]: updateSuccess,
   [Types.USER_DELETE_SUCCESS]: deleteSuccess,
+<%_ } _%>
 
-  [Types.USER_FAILURE]: failure,
   [Types.USER_ALL_FAILURE]: allFailure,
+<%_ if (!context.skipUserManagement) { _%>
+  [Types.USER_FAILURE]: failure,
   [Types.USER_UPDATE_FAILURE]: updateFailure,
   [Types.USER_DELETE_FAILURE]: deleteFailure
+<%_ } _%>
 })
