@@ -39,7 +39,7 @@ done
 
 if [ "$status" -ne 0 ]; then
     echo "*** [$(date)] Backend not connected after" $retryCount " retries."
-    return 1
+    exit 1
 fi
 
 # verify the npm packager has started (takes less time than the backend, so should not be an issue)
@@ -48,7 +48,7 @@ curl -v -f "$httpUrl"
 status=$?
 if [ "$status" -ne 0 ]; then
     echo "*** [$(date)] Expo Packager not connected"
-    return 1
+    exit 1
 fi
 
 cd ../${JHI_REACT_NATIVE_APP_NAME}

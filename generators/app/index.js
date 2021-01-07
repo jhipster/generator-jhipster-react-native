@@ -69,7 +69,10 @@ module.exports = class extends AppGenerator {
             setUpVariables: setupVariables.bind(this),
             setUpTemplateVariables() {
                 this.context.reactNativeAppNameKebabCase = this._.kebabCase(this.context.reactNativeAppName);
-                if (this.context.authenticationType === 'oauth2' || (this.context.databaseType === 'no' && this.context.authenticationType !== 'uaa')) {
+                if (
+                    this.context.authenticationType === 'oauth2' ||
+                    (this.context.databaseType === 'no' && this.context.authenticationType !== 'uaa')
+                ) {
                     this.context.skipUserManagement = true;
                 }
             },
