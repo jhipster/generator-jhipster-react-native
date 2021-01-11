@@ -9,19 +9,16 @@ describe('Login Screen Tests', () => {
     await Utils.navigateToLoginScreen();
     await element(by.id('loginScreenUsername')).replaceText('invalid');
     await element(by.id('loginScreenPassword')).replaceText('invalid');
-    await Utils.closeKeyboard('loginScreen');
     await element(by.id('loginScreenLoginButton')).tap();
-    await expect(element(by.label('Bad credentials'))).toBeVisible();
+    const expectedLabel = 'Bad credentials';
+    await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
+    await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 
-  it('should log in as user successfully', async () => {
+  it('should log in and log out as user successfully', async () => {
     await Utils.loginAsUser();
     await Utils.tapFirstElementByLabel('Menu Button');
     await expect(element(by.label('Logout'))).toExist();
-  });
-
-  it('should log out successfully', async () => {
-    await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Logout');
     await expect(element(by.label('Login'))).toExist();
   });
