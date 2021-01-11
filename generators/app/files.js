@@ -182,7 +182,12 @@ const files = {
     oauth: [
         {
             condition: generator => generator.context.authenticationType === 'oauth2',
-            templates: ['app/shared/fixtures/get-oauth-info.json', 'app/modules/login/login.utils.ts'],
+            templates: [
+                'app/shared/fixtures/get-oauth-info.json',
+                'app/modules/login/login.utils.ts',
+                'app/shared/sagas/auth-info.saga.js',
+                'app/shared/reducers/auth-info.reducer.js',
+            ],
         },
     ],
     detox: [

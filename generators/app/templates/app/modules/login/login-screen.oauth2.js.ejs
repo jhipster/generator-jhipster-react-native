@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Text } from 'react-native';
+import { Button, Text, ActivityIndicator, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ import { useDidUpdateEffect } from '../../shared/util/use-did-update-effect';
 import styles from './login-screen.styles';
 
 function LoginScreen(props) {
-  const { navigation, account, fetching, error, attemptLogin, fetchingAccount } = props;
+  const { navigation, account, fetching, error, attemptLogin, fetchingAccount, fetchingAuthInfo } = props;
   // setup error state for displaying error messages
   const [loginError, setLoginError] = React.useState('');
 
@@ -28,8 +28,14 @@ function LoginScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-        <Text style={styles.errorText}>{loginError}</Text>
-        <Button title={'Login'} onPress={attemptLogin} disabled={fetchingAccount} />
+      <Button title={'Login'} onPress={attemptLogin} disabled={fetchingAuthInfo || fetchingAccount} />
+      <Text style={styles.errorText}>{loginError}</Text>
+      {(fetchingAuthInfo || fetchingAccount) && (
+        <View style={styles.loading}>
+          <Text>Loading...</Text>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
     </KeyboardAwareScrollView>
   );
 }
@@ -37,6 +43,7 @@ function LoginScreen(props) {
 const mapStateToProps = (state) => {
   return {
     account: state.account.account,
+    fetchingAuthInfo: state.authInfo.fetching,
     fetchingAccount: state.account.fetching,
     fetching: state.login.fetching,
     error: state.login.error,

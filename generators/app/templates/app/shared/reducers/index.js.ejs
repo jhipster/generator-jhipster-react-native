@@ -13,6 +13,9 @@ export const reducers = combineReducers({
   <%_ if (context.websocket) { _%>
   chat: require('../../modules/chat/chat.reducer').reducer,
   <%_ } _%>
+  <%_ if (context.authenticationType === 'oauth2') { _%>
+  authInfo: require('./auth-info.reducer').reducer,
+  <%_ } _%>
   account: require('./account.reducer').reducer,
   login: require('../../modules/login/login.reducer').reducer,
 <%_ if (!context.skipUserManagement) { _%>
