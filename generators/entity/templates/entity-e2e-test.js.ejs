@@ -1,4 +1,6 @@
+<%_ if (context.fieldsContainDate) { _%>
 const jestExpect = require('expect');
+<%_ } _%>
 const Utils = require('../utils')
 <%_
 context.resetFakerSeed(`entity-cypress-${context.entityNameCapitalized}`);

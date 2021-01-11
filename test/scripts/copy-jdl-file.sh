@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 if [ "$JHI_DTO" = true ] ; then
   DTO_SUFFIX="-dto"
