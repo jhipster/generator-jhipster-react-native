@@ -147,7 +147,7 @@ const expectedFiles = {
         'e2e/account/login-screen.spec.js',
         'e2e/account/settings-screen.spec.js',
     ],
-    oauth: ['app/shared/fixtures/get-oauth-info.json'],
+    oauth: ['app/shared/fixtures/get-oauth-info.json', 'app/shared/sagas/auth-info.saga.js', 'app/shared/reducers/auth-info.reducer.js'],
     websockets: [
         'app/modules/chat/chat-screen.js',
         'app/modules/chat/chat-screen.styles.js',

@@ -6,41 +6,34 @@ import AccountActions from '../../shared/reducers/account.reducer'
 import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
 <%_ if (context.authenticationType === 'oauth2') { _%>
+import AuthInfoActions from '../../shared/reducers/auth-info.reducer';
 import { doOauthPkceFlow } from './login.utils';
 <%_ } _%>
 
+<%_ if (context.authenticationType === 'oauth2') { _%>
+export const selectAuthInfo = (state) => state.authInfo.authInfo;
+<%_ } _%>
 export const selectAuthToken = (state) => state.login.authToken
 // attempts to login
 <%_ if (context.authenticationType === 'oauth2') { _%>
 export function * login (api) {
-  // get the oauth issuer information from the backend
-  const authInfo = yield call(api.getOauthInfo)
-  if (authInfo.ok) {
-    try {
-      const { issuer, clientId } = authInfo.data;
-      // if using Okta for auth, configure clientId here and remove from above
-      // const clientId = '0favl263f83H1kxJk0h7';
-      const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
-      if (accessToken) {
-        yield call(api.setAuthToken, accessToken);
-        yield put(LoginActions.loginSuccess(accessToken));
-        yield put(AccountActions.accountRequest());
-        <%_ if (context.websocket) { _%>
-        WebsocketService.setToken(authToken)
-        <%_ } _%>
-        yield put({ type: 'RELOGIN_OK' });
-      }
-    } catch (e) {
-      console.log(e);
-      <%_ // todo get expected error format _%>
-      yield put(LoginActions.loginFailure('Login failed'))
+  try {
+    const authInfo = yield select(selectAuthInfo);
+    if (authInfo === null) {
+      yield put(AuthInfoActions.authInfoRequest());
     }
-  } else {
-    const errorMessage = !authInfo.data
-      ? 'Failed to reach backend API'
-      : authInfo.data && authInfo.data.detail
-      ? authInfo.data.detail
-      : 'Bad credentials';
+    const { issuer } = authInfo;
+    // if using Okta for auth, configure clientId here and remove from above
+    const clientId = '0oaw96ef1afyZPiMr0h7';
+    const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
+    if (accessToken) {
+      yield call(api.setAuthToken, accessToken);
+      yield put(LoginActions.loginSuccess(accessToken));
+      yield put(AccountActions.accountRequest());
+      yield put({ type: 'RELOGIN_OK' });
+    }
+  } catch (e) {
+    let errorMessage = e.type === 'Dismiss' ? 'Login Modal dismissed' : 'Login failed, please try again';
     yield put(LoginActions.loginFailure(errorMessage));
   }
 }
