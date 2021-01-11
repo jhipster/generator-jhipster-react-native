@@ -151,7 +151,7 @@ const files = {
     ],
     websockets: [
         {
-            condition: generator => generator.context.websocket,
+            condition: generator => generator.context.websocket === 'spring-websocket',
             templates: [
                 'app/modules/chat/chat-screen.js',
                 'app/modules/chat/chat-screen.styles.js',
