@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 # switch to a directory to generate the backend in
 rm -rf ../backend

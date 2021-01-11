@@ -29,7 +29,6 @@
         "clientThemeVariant": "primary",
         "creationTimestamp": 1604601028779,
         "dtoSuffix": "DTO",
-        "jhipsterVersion": "6.10.4",
         "jwtSecretKey": "N2NhMzI3YzdmNmM5YjRmNDBkZWE4N2Y2ODFmYjU0MjVhYzBmYzM0MmM2MjU2ZDFiMTU4NWNiZmVmMTU4MTViM2IyMzZkNWQxNzc5NDk2YTRhMjYyNWVhZTcxNTVmOTRkY2QyOTIwZmYyODA3MDUzMGEyMDljMjA2ZWUyMTE1YjE=",
         "otherModules": [],
         "packageName": "com.mycompany.myapp",

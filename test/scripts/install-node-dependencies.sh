@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 npm i -g expo-cli generator-jhipster@beta

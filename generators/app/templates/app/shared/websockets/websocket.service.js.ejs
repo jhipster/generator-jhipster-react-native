@@ -40,7 +40,7 @@ function onConnect () {
 }
 
 function onError (error) {
-  console.tron.error(`Error connecting to websockets ${error}`)
+  console.error(`Error connecting to websockets ${error}`)
   const time = generateInterval(attempts)
   alreadyConnectedOnce = false
   connected = false
@@ -49,7 +49,7 @@ function onError (error) {
     attempts++
     connect()
   }, time)
-  console.tron.error(`STOMP: Reconnecting in ${Math.round(time / 1000)} seconds`)
+  console.error(`STOMP: Reconnecting in ${Math.round(time / 1000)} seconds`)
 }
 
 function createConnection () {
@@ -120,8 +120,8 @@ function onMessage (subscription, fullMessage) {
   try {
     msg = JSON.parse(fullMessage.body)
   } catch (e) {
-    console.tron.error(`Error parsing : ${fullMessage}`)
-    console.tron.error(e)
+    console.error(`Error parsing : ${fullMessage}`)
+    console.error(e)
   }
   if (msg) {
     return em({ subscription, msg })

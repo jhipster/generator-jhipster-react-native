@@ -1,7 +1,7 @@
 import FixtureAPI from '../../../../app/shared/services/fixture-api'
 import { call, put, select } from 'redux-saga/effects'
 
-import { login, logout, loginLoad, selectAuthToken } from '../../../../app/modules/login/login.sagas'
+import { login, logout, loginLoad, selectAuthToken<%_ if (context.authenticationType === 'oauth2') { _%>, selectAuthInfo<%_ } _%> } from '../../../../app/modules/login/login.sagas'
 import LoginActions from '../../../../app/modules/login/login.reducer'
 import AccountActions from '../../../../app/shared/reducers/account.reducer'
 
@@ -15,7 +15,7 @@ test('login success path', () => {
     accessToken: 'test-access-token',
     refreshToken: 'test-refresh-token'
   }
-  expect(step(oauthInfo)).toEqual(call(FixtureAPI.getOauthInfo))
+  expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
   // await the response from the oauth2 issuer
   step(oauthInfo)
   expect(step(sampleOauthResponse)).toEqual(call(FixtureAPI.setAuthToken, 'test-access-token'))
@@ -49,11 +49,8 @@ test('login failure path', () => {
   const response = FixtureAPI.getOauthInfo()
   const step = stepper(login(FixtureAPI))
 
-  expect(step(response)).toEqual(call(FixtureAPI.getOauthInfo))
-
-  // set response.ok to false as if the request failed
-  response.ok = false
-  expect(step(response)).toEqual(put(LoginActions.loginFailure('Bad credentials')))
+  expect(step()).toEqual(select(selectAuthInfo));
+  expect(step()).toEqual(put(LoginActions.loginFailure('Login failed, please try again')));
   <%_} else if (context.authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',

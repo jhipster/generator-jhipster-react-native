@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 adb -s emulator-5554 emu kill

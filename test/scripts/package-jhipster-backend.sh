@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 # switch to the directory the backend was generated in
 cd ../backend

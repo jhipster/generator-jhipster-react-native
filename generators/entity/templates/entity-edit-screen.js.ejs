@@ -272,7 +272,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     <%_ /* context.differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
-    <%_ context.uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    <%_ context.uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== context.entityInstance).forEach((relation) => { _%>
     getAll<%= relation.otherEntityNameCapitalizedPlural %>: (options) => dispatch(<%= relation.otherEntityNameCapitalized %>Actions.<%= relation.otherEntityName %>AllRequest(options)),
     <%_ }) _%>
     get<%= context.entityNameCapitalized %>: (id) => dispatch(<%= context.entityNameCapitalized %>Actions.<%= context.entityInstance %>Request(id)),

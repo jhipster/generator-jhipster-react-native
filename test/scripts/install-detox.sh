@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -ex
 
 if [ "$PLATFORM" = "ios" ]; then
   brew tap wix/brew
