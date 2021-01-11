@@ -22,7 +22,6 @@ describe('Settings Screen Tests', () => {
 
   it('should display a success message on settings update success', async () => {
     await element(by.id('emailInput')).replaceText('user@localhost.com');
-    await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
     const expectedLabel = 'Settings updated';
     await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
@@ -31,7 +30,6 @@ describe('Settings Screen Tests', () => {
 
   it('should display an error message on settings update failure', async () => {
     await element(by.id('emailInput')).replaceText('invalid-email');
-    await Utils.closeKeyboard('settingsScreen');
     await element(by.id('settingsSubmitButton')).tap();
     const expectedLabel = 'Email must be a valid email';
     await Utils.waitForElementToBeVisibleByLabel(expectedLabel);

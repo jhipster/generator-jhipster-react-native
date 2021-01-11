@@ -52,6 +52,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.tapFirstElementByLabel('Entities');
     await Utils.scrollTo('<%= context.entityInstance %>EntityScreenButton', 'entityScreenScrollList')
     await element(by.id('<%= context.entityInstance %>EntityScreenButton')).tap()
+    await Utils.waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
   }
 
   it('should allow you to create, update, and delete the <%= context.entityNameCapitalized %> entity', async () => {

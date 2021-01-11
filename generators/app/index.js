@@ -74,8 +74,8 @@ module.exports = class extends AppGenerator {
         return {
             loadConfig() {
                 // load config after prompting to allow loading from backend .yo-rc.json
-                this.loadAppConfig(this.config.getAll(), this.context)
-                this.loadServerConfig(this.config.getAll(), this.context)
+                this.loadAppConfig(this.config.getAll(), this.context);
+                this.loadServerConfig(this.config.getAll(), this.context);
             },
             setUpVariables: setupVariables.bind(this),
             checkAppAuthType() {

@@ -14,7 +14,6 @@ const loginAsUser = async () => {
   await navigateToLoginScreen();
   await element(by.id('loginScreenUsername')).replaceText(username);
   await element(by.id('loginScreenPassword')).replaceText(password);
-  await closeKeyboard('loginScreen');
   await element(by.id('loginScreenLoginButton')).tap();
   try {
     await waitForElementToBeVisibleById('homeScreen')
@@ -41,18 +40,6 @@ const toggleSwitchToValue = async (switchId, targetValue) => {
   while (!!+attributes.value !== targetValue) {
     await element(by.id(switchId)).longPress();
     attributes = await element(by.id(switchId)).getAttributes();
-  }
-};
-
-const closeKeyboard = async (componentId = null) => {
-  try {
-    if (device.getPlatform() === 'ios') {
-      await element(by.id(componentId)).tap();
-    } else {
-      await closeSoftKeyboard();
-    }
-  } catch (e) {
-    console.warn(e);
   }
 };
 
@@ -96,7 +83,6 @@ module.exports = {
   waitForSplashScreen,
   waitForElementToBeVisibleById,
   waitForElementToBeVisibleByLabel,
-  closeKeyboard,
   toggleSwitchToValue,
   reloadApp,
 };
