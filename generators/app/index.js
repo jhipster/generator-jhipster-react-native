@@ -71,8 +71,12 @@ module.exports = class extends AppGenerator {
     }
 
     get writing() {
-        // force overwriting of files since prompting will confuse developers on initial install
         return {
+            loadConfig() {
+                // load config after prompting to allow loading from backend .yo-rc.json
+                this.loadAppConfig(this.config.getAll(), this.context)
+                this.loadServerConfig(this.config.getAll(), this.context)
+            },
             setUpVariables: setupVariables.bind(this),
             checkAppAuthType() {
                 // exit on invalid auth type
@@ -83,7 +87,6 @@ module.exports = class extends AppGenerator {
             },
             setUpTemplateVariables() {
                 this.context.reactNativeAppNameKebabCase = this._.kebabCase(this.context.reactNativeAppName);
-                this.context.skipUserManagement = this.context.authenticationType === 'oauth2' || this.context.databaseType === 'no';
             },
             createEarlyFiles,
             generateReactNativeApp: generateReactNativeApp.bind(this),
