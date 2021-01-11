@@ -45,7 +45,6 @@ jobs:
       JHI_WEBSOCKETS: ${{ matrix.jhi_websockets }}
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
-      CP_HOME_DIR: ~/.cocoapods
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
     steps:
       - uses: actions/checkout@v2
@@ -63,13 +62,6 @@ jobs:
       - uses: actions/setup-node@v2.1.4
         with:
             node-version: ${{ matrix.node_version }}
-      - name: Cache Cocoapods
-        uses: actions/cache@v2.1.3
-        with:
-          path: ~/.cocoapods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
       - name: Config git variables
         run: $SCRIPT_DIR/git-config.sh
         shell: bash
@@ -83,7 +75,7 @@ jobs:
         name: 'TOOLS: display tools'
         shell: bash
       - run: npm i && npm link
-        name: 'TOOLS: npm install and link in jhipster-react-native'
+        name: 'TOOLS: npm install and link in generator-jhipster-react-native'
         shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
@@ -101,4 +93,4 @@ jobs:
         if: failure()
         with:
             name: detox-failures-${{ matrix.app_type }}
-            path: /Users/runner/work/jhipster-react-native/${{ matrix.app_type }}/.artifacts/**/*
+            path: ${{ runner.workspace }}/${{ matrix.app_type }}/.artifacts/**/*

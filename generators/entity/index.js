@@ -29,7 +29,7 @@ module.exports = class extends EntityGenerator {
 
         // regardless of the value of skipClient, we want to prettify JS/TS/TSX files
         // this does not look to be configurable from blueprints (see getPrettierExtensions in generator-base.js)
-        // skipClient has no effect for jhipster-react-native since it only generates a client
+        // skipClient has no effect for generator-jhipster-react-native since it only generates a client
         this.skipClient = false;
         this.jhipsterConfig.skipClient = false;
         this.registerPrettierTransform();

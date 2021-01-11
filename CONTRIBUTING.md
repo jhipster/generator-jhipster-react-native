@@ -5,7 +5,7 @@
 Fork the repository and clone it to your workspace. Then add this repository as the upstream repository:
 
 ```sh
-git remote add upstream https://github.com/ruddell/jhipster-react-native.git
+git remote add upstream https://github.com/ruddell/generator-jhipster-react-native.git
 ```
 
 ## Running Local Blueprint for Development
@@ -15,7 +15,7 @@ During development of blueprint, please note the below steps. They are very impo
 1. Link your blueprint globally
 
 ```bash
-cd jhipster-react-native
+cd generator-jhipster-react-native
 npm link
 ```
 
@@ -25,13 +25,13 @@ npm link
 cd generator-jhipster
 npm link
 
-cd jhipster-react-native
+cd generator-jhipster-react-native
 npm link generator-jhipster
 ```
 
 ## Generating an App
 
-Generating an app using your local `jhipster-react-native` blueprint is similar to normal.
+Generating an app using your local `generator-jhipster-react-native` blueprint is similar to normal.
 
 ```sh
 jhipster --blueprints react-native

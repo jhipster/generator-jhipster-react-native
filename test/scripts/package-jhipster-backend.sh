@@ -5,7 +5,7 @@ set -ex
 cd ../backend
 ls -al
 
-# show files modified by jhipster-react-native
+# show files modified by generator-jhipster-react-native
 git status
 
 # package the app into a WAR

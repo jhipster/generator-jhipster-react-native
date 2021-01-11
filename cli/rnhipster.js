@@ -55,7 +55,7 @@ if (!process.argv.includes('react-native') && process.argv.includes('--blueprint
 }
 
 /* eslint-disable */
-// load JHipster from jhipster-react-native dependencies - uses a v7 version
+// load JHipster from generator-jhipster-react-native dependencies - uses the version specified in package.json
 const jhipsterPackageJson = require('generator-jhipster/package.json');
 const packageFrom = jhipsterPackageJson._from;
 logger.info('Using JHipster version installed in React Native');
