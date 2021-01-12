@@ -8,11 +8,10 @@ import { processWebsocketMessage } from './websocket.sagas'
 const webstomp = require('stompjs')
 
 let em
-let connection = createConnection()
+let connectedPromise = null;
+let connection = null;
 let alreadyConnectedOnce = false
 let connected = false
-let initialConnect = true
-let connectedPromise = null
 let socket = null
 let stompClient = null
 let wsSessionId = null
@@ -21,22 +20,11 @@ let attempts = 0
 
 let chatSubscriber
 
-const subscriptions = {}
 function onConnect () {
   setWsSessionId(socket)
-  connectedPromise('success')
+  connectedPromise.resolve('success');
   connectedPromise = null
   connected = true
-
-  if (!initialConnect) {
-    console.log('Resubscribing...')
-    Object.keys(subscriptions).forEach(function (key) {
-      if (key === 'chat') {
-        subscribeToChat()
-      }
-    })
-  }
-  initialConnect = false
 }
 
 function onError (error) {
@@ -44,6 +32,7 @@ function onError (error) {
   const time = generateInterval(attempts)
   alreadyConnectedOnce = false
   connected = false
+  connectedPromise.reject('Error');
   connectedPromise = null
   setTimeout(function () {
     attempts++
@@ -54,12 +43,11 @@ function onError (error) {
 
 function createConnection () {
   return new Promise((resolve, reject) => {
-    connectedPromise = resolve
+    connectedPromise = { resolve, reject };
   })
 }
 // methods for connecting/disconnecting
 function connect () {
-  // connection
   if (!alreadyConnectedOnce) {
     if (connectedPromise === null) connection = createConnection()
     var url = AppConfig.apiUrl + 'websocket/chat'
@@ -79,7 +67,6 @@ function connect () {
 function disconnect () {
   console.log('Disconnecting')
   if (stompClient !== null && connected) {
-    connectedPromise = null
     stompClient.disconnect()
     stompClient = null
   }
@@ -90,17 +77,13 @@ function disconnect () {
 // methods for subscribing
 function subscribeToChat () {
   console.log('Subscribing to Chat')
-  if (!Object.prototype.hasOwnProperty.call(subscriptions, 'chat')) {
-    subscriptions.chat = { subscribed: true }
-    connection.then(() => {
-      chatSubscriber = stompClient.subscribe('/topic/chat', onMessage.bind(this, 'chat'))
-    })
-  }
+  connection?.then(() => {
+    chatSubscriber = stompClient.subscribe('/topic/chat', onMessage.bind(this, 'chat'))
+  })
 }
 
 // methods for unsubscribing
 function unsubscribeChat () {
-  delete subscriptions.chat
   if (chatSubscriber) {
     chatSubscriber.unsubscribe()
   }
@@ -141,10 +124,6 @@ function setToken (jwtToken) {
   }
 }
 
-function getSubscriptions () {
-  return subscriptions
-}
-
 function getWsSessionId () {
   return wsSessionId
 }
@@ -180,7 +159,6 @@ export default {
   disconnect,
   createConnection,
   sendChat,
-  getSubscriptions,
   getToken,
   setToken,
   getWsSessionId,
