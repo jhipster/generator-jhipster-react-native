@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# start the expo react-native packager
-cd ../${JHI_REACT_NATIVE_APP_NAME}
-npm run start:e2e &
-set -x
-
 # start the backend
 cd ../backend
 
@@ -49,6 +44,12 @@ else
     echo "TODO: Mock Auth so that the entity pages can be tested"
 fi
 
+# switch to react-native app directory
+cd ../${JHI_REACT_NATIVE_APP_NAME}
+
+# start the expo react-native packager
+npm run start:e2e &
+
 # verify the npm packager has started (takes less time than the backend, so should not be an issue)
 retryCount=1
 maxRetry=60
@@ -68,9 +69,6 @@ if [ "$status" -ne 0 ]; then
     exit 1
 fi
 
-# switch to react-native app directory
-cd ../${JHI_REACT_NATIVE_APP_NAME}
-
 # if oauth, only run the launch screen since you need to authenticate for entities
 if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
   rm -rf e2e/entities
@@ -83,7 +81,7 @@ fi
 
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  npm run test:e2e -- --record-videos failing
+  npm run test:e2e
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release

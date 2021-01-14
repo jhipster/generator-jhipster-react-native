@@ -86,9 +86,14 @@ jobs:
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
         shell: bash
-      - run: $SCRIPT_DIR/run-detox-tests.sh
+      - uses: nick-invision/retry@v2
         name: 'TESTING: run detox tests'
-        shell: bash
+        with:
+            max_attempts: 4
+            timeout_minutes: 60
+            shell: bash
+            command: $SCRIPT_DIR/run-detox-tests.sh
+            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
