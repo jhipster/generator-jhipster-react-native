@@ -1,3 +1,11 @@
+import Constants from 'expo-constants';
+<%_ if (context.detox) { _%>
+import { DevSettings } from 'react-native';
+<%_ } _%>
+
+// load extra config from the app.json file
+const extra = Constants.manifest?.extra ?? {};
+
 export default {
   // use 10.0.2.2 for Android to connect to host machine
   apiUrl: 'http://localhost:8080/',
@@ -5,4 +13,12 @@ export default {
   useFixtures: false,
   // debug mode
   debugMode: __DEV__,
+  extra,
 };
+
+<%_ if (context.detox) { _%>
+// disable hot reload for detox tests (by using e2e/app.e2e.js
+if (extra.detox && DevSettings?._nativeModule?.setHotLoadingEnabled) {
+  DevSettings._nativeModule.setHotLoadingEnabled(false);
+}
+<%_ } _%>

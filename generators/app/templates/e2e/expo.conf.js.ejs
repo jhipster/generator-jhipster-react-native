@@ -1,0 +1,10 @@
+const appJson = require('../app.json');
+
+const originalExtraConstants = appJson.expo.extra ?? {};
+
+appJson.expo.extra = {
+    ...originalExtraConstants,
+    detox: true,
+};
+
+module.exports = appJson;

@@ -196,6 +196,7 @@ const files = {
             templates: [
                 '.detoxrc.json',
                 'e2e/init.js',
+                'e2e/expo.conf.js',
                 'e2e/.mocharc.json',
                 'e2e/home-screen.spec.js',
                 'e2e/utils.js',
