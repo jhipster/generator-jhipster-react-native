@@ -2,13 +2,14 @@
 
 # start the expo react-native packager
 cd ../${JHI_REACT_NATIVE_APP_NAME}
-npm start --no-dev --minify &
+npm run start:e2e &
+set -x
 
 # start the backend
 cd ../backend
 
 # set backend memory limits
-MAVEN_OPTS="-Xmx512m -Xms256m"
+export MAVEN_OPTS="-Xmx512m -Xms256m"
 
 # disable sql logging
 sed -i.back "s~org.hibernate.SQL: DEBUG~org.hibernate.SQL: WARN~g" src/main/resources/config/application-dev.yml
@@ -67,9 +68,10 @@ if [ "$status" -ne 0 ]; then
     exit 1
 fi
 
+# switch to react-native app directory
 cd ../${JHI_REACT_NATIVE_APP_NAME}
 
-# if oauth, only run the launch screen since you need to authenticate for entities (todo: mock auth for entities)
+# if oauth, only run the launch screen since you need to authenticate for entities
 if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
   rm -rf e2e/entities
 fi
@@ -81,7 +83,7 @@ fi
 
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  npm run e2e -- --record-videos failing
+  npm run test:e2e -- --record-videos failing
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release

@@ -10,7 +10,7 @@ If enabled during generation, [Detox](https://github.com/wix/Detox) is configure
 To run the Detox tests:
 
 ```sh
-npm run e2e
+npm run test:e2e
 ```
 
 To customize the build and test parameters (such as which device to test), modify the `.detoxrc.json` file found in the root of the project.

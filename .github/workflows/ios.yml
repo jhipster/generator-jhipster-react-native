@@ -92,5 +92,8 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
-            name: detox-failures-${{ matrix.app_type }}
-            path: ${{ runner.workspace }}/${{ matrix.app_type }}/.artifacts/**/*
+            name: expo-app-${{ matrix.app_type }}
+            path: |
+              ${{ runner.workspace }}/${{ matrix.app_type }}/**/*
+              !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
+              !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app

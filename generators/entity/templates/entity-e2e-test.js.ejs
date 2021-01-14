@@ -50,6 +50,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Entities');
+    await Utils.waitForElementToBeVisibleById('entityScreenScrollList')
     await Utils.scrollTo('<%= context.entityInstance %>EntityScreenButton', 'entityScreenScrollList')
     await element(by.id('<%= context.entityInstance %>EntityScreenButton')).tap()
     await Utils.waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
