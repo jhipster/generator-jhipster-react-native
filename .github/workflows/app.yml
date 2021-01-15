@@ -1,5 +1,6 @@
 name: App Tests
 on:
+  workflow_dispatch:
   push:
     branches:
   pull_request:
