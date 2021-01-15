@@ -95,7 +95,6 @@ jobs:
             command: $SCRIPT_DIR/run-detox-tests.sh
             on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
       - uses: actions/upload-artifact@v2
-        if: failure()
         with:
             name: expo-app-${{ matrix.app_type }}
             path: |
