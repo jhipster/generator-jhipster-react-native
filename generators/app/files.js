@@ -199,7 +199,8 @@ const files = {
                 'e2e/.mocharc.json',
                 'e2e/home-screen.spec.js',
                 'e2e/utils.js',
-                'e2e/download-expo.sh',
+                'e2e/scripts/download-expo.sh',
+                'e2e/scripts/setup.sh',
             ],
         },
         {

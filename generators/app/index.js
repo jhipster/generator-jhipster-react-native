@@ -125,12 +125,13 @@ module.exports = class extends AppGenerator {
         return {
             modifyExpoDownloadScriptPermission() {
                 try {
-                    fs.chmodSync('e2e/download-expo.sh', '755');
+                    fs.chmodSync('e2e/scripts/download-expo.sh', '755');
+                    fs.chmodSync('e2e/scripts/setup.sh', '755');
                 } catch (err) {
                     this.log(
                         `${chalk.yellow.bold(
                             'WARNING!'
-                        )}Failed to make 'e2e/download-expo.sh' executable, you may need to run 'chmod +x e2e/download-expo.sh'`
+                        )}Failed to make 'e2e/scripts/*.sh' executable, you may need to run 'chmod +x e2e/scripts/*.sh'`
                     );
                 }
             },
