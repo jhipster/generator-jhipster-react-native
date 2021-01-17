@@ -89,7 +89,7 @@ jobs:
       - uses: nick-invision/retry@v2
         name: 'TESTING: run detox tests'
         with:
-            max_attempts: 4
+            max_attempts: 3
             timeout_minutes: 60
             shell: bash
             command: $SCRIPT_DIR/run-detox-tests.sh
