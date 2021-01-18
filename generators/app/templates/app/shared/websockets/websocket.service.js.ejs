@@ -1,11 +1,10 @@
 import { call, take } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
 import SockJS from 'sockjs-client'
+import * as Stomp from 'webstomp-client';
 
 import AppConfig from '../../config/app-config'
 import { processWebsocketMessage } from './websocket.sagas'
-
-const webstomp = require('stompjs')
 
 let em
 let connectedPromise = null;
@@ -28,7 +27,7 @@ function onConnect () {
 }
 
 function onError (error) {
-  console.error(`Error connecting to websockets ${error}`)
+  console.warn(error);
   const time = generateInterval(attempts)
   alreadyConnectedOnce = false
   connected = false
@@ -38,7 +37,7 @@ function onError (error) {
     attempts++
     connect()
   }, time)
-  console.error(`STOMP: Reconnecting in ${Math.round(time / 1000)} seconds`)
+  console.warn(`STOMP: Reconnecting in ${Math.round(time / 1000)} seconds`)
 }
 
 function createConnection () {
@@ -50,12 +49,12 @@ function createConnection () {
 function connect () {
   if (!alreadyConnectedOnce) {
     if (connectedPromise === null) connection = createConnection()
-    var url = AppConfig.apiUrl + 'websocket/chat'
+    var url = AppConfig.apiUrl + 'websocket/tracker'
     if (token) {
       url += '?access_token=' + token
     }
     socket = new SockJS(url)
-    stompClient = webstomp.over(socket)
+    stompClient = Stomp.over(socket, { protocols: ['v12.stomp'] });
     // stompClient.debug = null
     console.log(`Connecting to ${url}`)
     var headers = {}
@@ -89,11 +88,10 @@ function unsubscribeChat () {
   }
 }
 
-// methods for sending
-function sendChat (ev) {
+// method for sending
+function sendChat (message) {
   if (stompClient !== null && stompClient.connected) {
-    var p = '/topic/chat'
-    stompClient.send(p, {}, JSON.stringify(ev))
+    stompClient.send('/topic/chat', JSON.stringify(message), {});
   }
 }
 
@@ -103,8 +101,8 @@ function onMessage (subscription, fullMessage) {
   try {
     msg = JSON.parse(fullMessage.body)
   } catch (e) {
-    console.error(`Error parsing : ${fullMessage}`)
-    console.error(e)
+    console.warn(`Error parsing : ${fullMessage}`)
+    console.warn(e)
   }
   if (msg) {
     return em({ subscription, msg })
