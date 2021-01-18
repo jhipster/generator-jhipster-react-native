@@ -17,7 +17,7 @@
     "reduxsauce": "1.2.0",
     "react-native-navigation": "7.3.0",
     "seamless-immutable": "7.1.4",
-    "stompjs": "2.3.3",
+    "webstomp-client": "1.2.6",
     "sockjs-client": "1.5.0",
     "net": "1.0.2",
     "@react-native-community/masked-view": "0.1.10",
