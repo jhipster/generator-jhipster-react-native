@@ -13,11 +13,7 @@ const {
     createEarlyFiles,
     generateReactNativeApp,
     appendFiles,
-    patchReactNativeNavigation,
-    patchWebsockets,
-    patchOauth,
     patchInFile,
-    patchUriScheme,
 } = require('../../lib');
 
 module.exports = class extends AppGenerator {
@@ -92,10 +88,12 @@ module.exports = class extends AppGenerator {
             generateReactNativeApp: generateReactNativeApp.bind(this),
             mergeRnPackageJson: mergeReactNativePackageJson.bind(this),
             writeFiles: writeFiles.bind(this),
-            patchUriScheme: patchUriScheme.bind(this),
-            patchOauth: patchOauth.bind(this),
-            patchWebsockets: patchWebsockets.bind(this),
-            patchReactNativeNavigation: patchReactNativeNavigation.bind(this),
+            patchUriScheme() {
+                const appConfig = this.fs.readJSON('app.json');
+                appConfig.expo.scheme = this.context.reactNativeAppName.toLowerCase();
+                appConfig.expo.extra = {};
+                this.fs.writeJSON('app.json', appConfig);
+            },
             appendFiles: appendFiles.bind(this),
             replacePackageJsonVersions() {
                 this.debug('Replacing Package.json Versions');
