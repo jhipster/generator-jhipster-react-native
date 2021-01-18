@@ -72,12 +72,12 @@ module.exports = class extends AppGenerator {
 
     get writing() {
         return {
+            setUpVariables: setupVariables.bind(this),
             loadConfig() {
                 // load config after prompting to allow loading from backend .yo-rc.json
                 this.loadAppConfig(this.config.getAll(), this.context);
                 this.loadServerConfig(this.config.getAll(), this.context);
             },
-            setUpVariables: setupVariables.bind(this),
             checkAppAuthType() {
                 // exit on invalid auth type
                 const authType = this.context.authenticationType;
@@ -124,15 +124,17 @@ module.exports = class extends AppGenerator {
         const gitCommit = super._end().gitCommit.bind(this);
         return {
             modifyExpoDownloadScriptPermission() {
-                try {
-                    fs.chmodSync('e2e/scripts/download-expo.sh', '755');
-                    fs.chmodSync('e2e/scripts/setup.sh', '755');
-                } catch (err) {
-                    this.log(
-                        `${chalk.yellow.bold(
-                            'WARNING!'
-                        )}Failed to make 'e2e/scripts/*.sh' executable, you may need to run 'chmod +x e2e/scripts/*.sh'`
-                    );
+                if (this.context.detox) {
+                    try {
+                        fs.chmodSync('e2e/scripts/download-expo.sh', '755');
+                        fs.chmodSync('e2e/scripts/setup.sh', '755');
+                    } catch (err) {
+                        this.log(
+                            `${chalk.yellow.bold(
+                                'WARNING!'
+                            )}Failed to make 'e2e/scripts/*.sh' executable, you may need to run 'chmod +x e2e/scripts/*.sh'`
+                        );
+                    }
                 }
             },
             gitCommit,

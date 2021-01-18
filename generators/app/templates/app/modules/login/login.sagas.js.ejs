@@ -22,9 +22,9 @@ export function * login (api) {
     if (authInfo === null) {
       yield put(AuthInfoActions.authInfoRequest());
     }
-    const { issuer } = authInfo;
+    const { issuer, clientId } = authInfo;
     // if using Okta for auth, configure clientId here and remove from above
-    const clientId = '0oaw96ef1afyZPiMr0h7';
+    // const clientId = '0oaw96ef1afyZPiMr0h7';
     const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
     if (accessToken) {
       yield call(api.setAuthToken, accessToken);
