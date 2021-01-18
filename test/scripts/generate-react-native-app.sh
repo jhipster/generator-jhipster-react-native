@@ -7,12 +7,13 @@ cd ../
 # clear the folder (todo: may not be needed?)
 rm -rf ${JHI_REACT_NATIVE_APP_NAME} && mkdir ${JHI_REACT_NATIVE_APP_NAME} && cd ${JHI_REACT_NATIVE_APP_NAME}
 
+# for the GITHUB_WORKFLOW = app, we always use JDL
 if [ "$GITHUB_WORKFLOW" = "iOS-E2E" ] && [ "$JHI_WEBSOCKETS" = true ]; then
     echo "Using Backend Path for Generation"
 # generate the app using the backend directory
 #  use JHipster directory for oauth2 and websocket apps since they change backend files
   jhipster --blueprints react-native \
-  --defaults --no-insight --skip-git
+  --defaults --no-insight --skip-git --with-entities
 else
     echo "Using JDL for Generation"
 # generate the app using the same JDL as the backend

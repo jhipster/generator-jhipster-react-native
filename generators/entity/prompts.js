@@ -29,8 +29,13 @@ function askForBackendJson() {
     const context = this.context;
     this.context.filename = `.jhipster/${context.name}.json`;
 
-    if (this.context.entityExisted) {
+    if (this.context.entityExisted || this.context.configExisted) {
         context.entityJSON = this.entityStorage.getAll();
+        return;
+    }
+
+    if (this.options.defaults) {
+        this.directoryPath = path.resolve('../backend');
         return;
     }
 
