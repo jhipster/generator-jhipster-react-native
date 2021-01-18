@@ -8,7 +8,7 @@ import { useDidUpdateEffect } from '../../shared/util/use-did-update-effect';
 import styles from './login-screen.styles';
 
 function LoginScreen(props) {
-  const { navigation, account, fetching, error, attemptLogin, fetchingAccount, fetchingAuthInfo } = props;
+  const { navigation, account, fetching, error, attemptLogin, fetchingAccount, fetchingAuthInfo, authInfoError } = props;
   // setup error state for displaying error messages
   const [loginError, setLoginError] = React.useState('');
 
@@ -29,7 +29,8 @@ function LoginScreen(props) {
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
       <Button title={'Login'} onPress={attemptLogin} disabled={fetchingAuthInfo || fetchingAccount} />
-      <Text style={styles.errorText}>{loginError}</Text>
+      {authInfoError ? <Text style={styles.errorText}>Error fetching auth info from backend.</Text> : null}
+      {loginError ? <Text style={styles.errorText}>{loginError}</Text> : null}
       {(fetchingAuthInfo || fetchingAccount) && (
         <View style={styles.loading}>
           <Text>Loading...</Text>
@@ -44,6 +45,7 @@ const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     fetchingAuthInfo: state.authInfo.fetching,
+    authInfoError: state.authInfo.error,
     fetchingAccount: state.account.fetching,
     fetching: state.login.fetching,
     error: state.login.error,
