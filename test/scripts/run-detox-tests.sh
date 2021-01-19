@@ -46,9 +46,14 @@ if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
   rm -rf e2e/entities
 fi
 
+DETOX_RECORD_VIDEO="none"
+if [ "$JHI_RECORD_VIDEO" = "true" ] ; then
+  DETOX_RECORD_VIDEO="failing"
+fi
+
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  detox test --configuration ios.sim.release
+  detox test --configuration ios.sim.release --record-videos $DETOX_RECORD_VIDEO
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release

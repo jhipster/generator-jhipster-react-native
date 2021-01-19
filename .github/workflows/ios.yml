@@ -1,5 +1,11 @@
 name: iOS-E2E
 on:
+  workflow_dispatch:
+    inputs:
+      recordVideo:
+        description: 'Record E2E Tests'
+        required: true
+        default: 'false'
   push:
     branches:
       - main
@@ -37,6 +43,7 @@ jobs:
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
       CP_HOME_DIR: ~/.cocoapods
+      JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2.1.4
