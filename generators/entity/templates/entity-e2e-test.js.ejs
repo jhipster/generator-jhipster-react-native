@@ -47,7 +47,6 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
   })
 
   const navigateTo<%= context.entityNameCapitalized %>Screen = async () => {
-    await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Entities');
     await Utils.waitForElementToBeVisibleById('entityScreenScrollList')

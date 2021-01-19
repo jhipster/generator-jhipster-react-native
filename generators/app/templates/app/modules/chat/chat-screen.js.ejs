@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TextInput } from 'react-native';
+import { View, Text, KeyboardAvoidingView, TextInput, ScrollView, Platform } from 'react-native';
 import { connect } from 'react-redux';
 
 import WebsocketService from '../../shared/websockets/websocket.service';
@@ -25,50 +25,30 @@ function ChatScreen(props) {
     }
   }, [username]);
 
-  const renderRow = ({ item }) => {
+  const renderRow = (item, index) => {
     return (
-      <View style={styles.row}>
+      <View style={styles.row} key={index}>
         <Text style={styles.boldLabel}>{item.user}</Text>
         <Text>{item.message}</Text>
       </View>
     );
   };
 
-  // componentDidUpdate(prevProps) {
-  //   this.;
-  // }
-
   const updateMessage = (newMessage) => setMessage(newMessage);
-
-  const sendMessage = () => {
-    if (message.length > 0) {
-      WebsocketService.sendChat({ user: username, message });
-      setMessage('');
-    }
-  };
-
-  // The default function if no Key is provided is index
-  // an identifiable key is important if you plan on
-  // item reordering.  Otherwise index is fine
-  const keyExtractor = (item, index) => `${index}`;
 
   // How many items should be kept im memory as we scroll?
   const oneScreensWorth = 21;
 
-  const memoizedChat = React.useMemo(() => [...chat].reverse(), [chat]);
+  const memoizedChat = React.useMemo(() => <View style={styles.flex}>{chat.map((c, i) => renderRow(c, i))}</View>, [chat]);
+  const memoizedForm = React.useMemo(() => {
+    const sendMessage = () => {
+      if (message.length > 0) {
+        WebsocketService.sendChat({ user: username, message });
+        setMessage('');
+      }
+    };
 
-  return (
-    <View style={styles.container} testID="chatScreen">
-      <FlatList
-        style={styles.flex}
-        contentContainerStyle={styles.listContent}
-        data={memoizedChat}
-        inverted={true}
-        renderItem={renderRow}
-        keyExtractor={keyExtractor}
-        initialNumToRender={oneScreensWorth}
-        testID="chatScreenFlatList"
-      />
+    return (
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Type a message..."
@@ -77,12 +57,32 @@ function ChatScreen(props) {
           onChangeText={updateMessage}
           autoCapitalize="none"
           onSubmitEditing={sendMessage}
-          returnKeyType={'send'}
+          returnKeyType={message.length > 0 ? 'send' : 'done'}
           autoCorrect={false}
           testID="chatScreenInput"
         />
         <RoundedButton style={styles.button} onPress={sendMessage} text={'Send'} testID="chatScreenSendButton" />
       </View>
+    );
+  }, [message, username]);
+
+  const scrollViewRef = React.useRef();
+
+  return (
+    <View style={styles.container}>
+      <KeyboardAvoidingView keyboardVerticalOffset={75} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
+        <ScrollView
+          ref={scrollViewRef}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
+          testID="chatScreen"
+          renderItem={renderRow}
+          onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+          initialNumToRender={oneScreensWorth}>
+          {memoizedChat}
+        </ScrollView>
+        {memoizedForm}
+      </KeyboardAvoidingView>
     </View>
   );
 }

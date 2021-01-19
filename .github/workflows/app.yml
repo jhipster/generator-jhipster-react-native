@@ -17,19 +17,25 @@ jobs:
         app_type:
           - OauthDtoApp
           - JwtWebsocketsApp
+          - OauthHealthPointsApp
         include:
-          - app_type: OauthDtoApp
-            auth_type: oauth2
-            jhi_dto: true
           - app_type: JwtWebsocketsApp
             auth_type: jwt
-            jhi_dto: false
-            jhi_websockets: true
+            dto: false
+            websockets: true
+          - app_type: OauthDtoApp
+            auth_type: oauth2
+            dto: true
+          - app_type: OauthHealthPointsApp
+            auth_type: oauth2
+            dto: false
+            entity_jdl: entities-21points.jdl
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
-      JHI_DTO: ${{ matrix.jhi_dto }}
-      JHI_WEBSOCKETS: ${{ matrix.jhi_websockets }}
+      JHI_DTO: ${{ matrix.dto }}
+      JHI_WEBSOCKETS: ${{ matrix.websockets }}
+      JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
     steps:

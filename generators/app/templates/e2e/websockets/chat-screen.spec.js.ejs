@@ -6,7 +6,6 @@ describe('Chat Screen Tests', () => {
     await Utils.loginAsUser()
   })
   after(async () => {
-    await Utils.goBack()
     await Utils.logout()
   })
 
@@ -16,7 +15,6 @@ describe('Chat Screen Tests', () => {
   })
 
   const navigateToChatScreen = async () => {
-    await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Chat');
   }
@@ -28,6 +26,6 @@ describe('Chat Screen Tests', () => {
 
   it('should send a chat message then display it', async () => {
     await sendChat('Java Hipster')
-    await expect(element(by.text('Java Hipster'))).toBeVisible()
+    await expect(element(by.label('Java Hipster'))).toBeVisible()
   })
 })
