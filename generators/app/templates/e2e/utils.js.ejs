@@ -61,15 +61,20 @@ const waitForElementToBeVisibleById = async (elementId, timeout = 5000) => {
   await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
-const waitForSplashScreen = async () => {
-  await waitForElementToBeVisibleById('homeScreen', 15000)
-};
-
-const reloadApp = async () => {
-  await DetoxExpoHelpers.reloadApp();
-  // if you eject from expo, you should replace the line above with:
-  // device.reloadReactNative()
-  await waitForSplashScreen();
+const reloadApp = async (bailOnFailure) => {
+  try {
+    await DetoxExpoHelpers.reloadApp();
+    // if you eject from expo, you should replace the line above with:
+    // device.reloadReactNative()
+    await waitForElementToBeVisibleById('homeScreen', 15000);
+    await waitForElementToBeVisibleByLabel('Menu Button', 15000);
+  } catch (e) {
+    console.warn('Reloading app failed, retrying once');
+    console.warn(e);
+    if (!bailOnFailure) {
+      await reloadApp(true);
+    }
+  }
 };
 
 module.exports = {
@@ -79,7 +84,6 @@ module.exports = {
   logout,
   scrollTo,
   tapFirstElementByLabel,
-  waitForSplashScreen,
   waitForElementToBeVisibleById,
   waitForElementToBeVisibleByLabel,
   toggleSwitchToValue,

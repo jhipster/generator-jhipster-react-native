@@ -23,26 +23,32 @@ jobs:
           - JwtApp
           - JwtDtoApp
           - JwtWebsocketsApp
+          - JwtHealthPoints
           - OauthApp
         include:
           - app_type: JwtApp
             auth_type: jwt
-            jhi_dto: false
+            dto: false
           - app_type: JwtDtoApp
             auth_type: jwt
-            jhi_dto: true
+            dto: true
           - app_type: JwtWebsocketsApp
             auth_type: jwt
-            jhi_dto: false
-            jhi_websockets: true
+            dto: false
+            websockets: true
+          - app_type: JwtHealthPoints
+            auth_type: jwt
+            dto: false
+            entity_jdl: entities-21points.jdl
           - app_type: OauthApp
             auth_type: oauth2
-            jhi_dto: false
+            dto: false
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
-      JHI_DTO: ${{ matrix.jhi_dto }}
-      JHI_WEBSOCKETS: ${{ matrix.jhi_websockets }}
+      JHI_DTO: ${{ matrix.dto }}
+      JHI_WEBSOCKETS: ${{ matrix.websockets }}
+      JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
@@ -86,14 +92,17 @@ jobs:
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
         shell: bash
-      - uses: nick-invision/retry@v2
+#      - uses: nick-invision/retry@v2
+#        name: 'TESTING: run detox tests'
+#        with:
+#            max_attempts: 3
+#            timeout_minutes: 60
+#            shell: bash
+#            command: $SCRIPT_DIR/run-detox-tests.sh
+#            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
+      - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
-        with:
-            max_attempts: 3
-            timeout_minutes: 60
-            shell: bash
-            command: $SCRIPT_DIR/run-detox-tests.sh
-            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
+        shell: bash
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:

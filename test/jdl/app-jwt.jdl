@@ -1,7 +1,0 @@
-application {
-	config {
-		skipClient true
-		authenticationType jwt
-	}
-	entities *
-}

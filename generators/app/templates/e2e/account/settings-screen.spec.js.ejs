@@ -15,7 +15,6 @@ describe('Settings Screen Tests', () => {
   });
 
   const navigateToSettingsScreen = async () => {
-    await Utils.waitForSplashScreen();
     await Utils.tapFirstElementByLabel('Menu Button');
     await Utils.tapFirstElementByLabel('Settings');
   };
