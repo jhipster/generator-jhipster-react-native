@@ -3,7 +3,8 @@ const config = require('../.detoxrc.json')
 const adapter = require('detox/runners/mocha/adapter')
 
 before(async () => {
-  await detox.init(config)
+  await detox.init(config, { launchApp: false });
+  await device.launchApp();
 })
 
 beforeEach(async function () {
