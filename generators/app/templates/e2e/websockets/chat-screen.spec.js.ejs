@@ -1,27 +1,24 @@
-const Utils = require('../utils')
+const { reloadApp, loginAsUser, logout, tapFirstElementById, tapFirstElementByLabel, openAndTapDrawerMenuItemByLabel, waitThenTapButton, waitForElementToBeVisibleById } = require('../utils');
 
 describe('Chat Screen Tests', () => {
-  before(async () => {
-    await Utils.reloadApp()
-    await Utils.loginAsUser()
+  beforeAll(async () => {
+    await reloadApp()
+    await loginAsUser()
   })
-  after(async () => {
-    await Utils.logout()
+
+  afterAll(async () => {
+    await logout()
   })
 
   beforeEach(async () => {
-    await Utils.reloadApp()
-    await navigateToChatScreen()
+    await reloadApp()
+    await openAndTapDrawerMenuItemByLabel('Chat')
+    await waitForElementToBeVisibleById('chatScreen');
   })
-
-  const navigateToChatScreen = async () => {
-    await Utils.tapFirstElementByLabel('Menu Button');
-    await Utils.tapFirstElementByLabel('Chat');
-  }
 
   const sendChat = async (message) => {
     await element(by.id('chatScreenInput')).replaceText(message)
-    await element(by.id('chatScreenSendButton')).tap()
+    await waitThenTapButton('chatScreenSendButton')
   }
 
   it('should send a chat message then display it', async () => {

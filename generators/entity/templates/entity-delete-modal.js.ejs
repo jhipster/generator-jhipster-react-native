@@ -28,7 +28,7 @@ function <%= context.entityNameCapitalized %>DeleteModal(props) {
                             }}>
                             <Text style={styles.textStyle}>Cancel</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style={[styles.openButton, styles.submitButton]} onPress={deleteEntity}>
+                        <TouchableHighlight style={[styles.openButton, styles.submitButton]} onPress={deleteEntity} testID="deleteButton">
                             <Text style={styles.textStyle}>Delete</Text>
                         </TouchableHighlight>
                     </View>

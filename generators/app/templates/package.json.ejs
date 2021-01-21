@@ -15,8 +15,8 @@
     "precommit": "lint-staged",
     <%_ } _%>
     <%_ if (context.detox) { _%>
-    "start:e2e": "expo start --no-dev --minify",
-    "test:e2e": "./e2e/scripts/setup.sh && detox test --configuration ios.sim.debug",
+    "start:e2e": "expo start --no-dev --minify --ios",
+    "test:e2e": "./e2e/scripts/setup.sh && detox test --configuration ios.sim.release --retries 3",
     <%_ } _%>
     "postinstall": "patch-package",
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
@@ -92,9 +92,9 @@
     <%_ } _%>
     <%_ if (context.detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
-    "mocha": "REPLACE_WITH_VERSION",
     "detox-expo-helpers": "REPLACE_WITH_VERSION",
     "expo-detox-hook": "REPLACE_WITH_VERSION",
+    "jest-circus": "REPLACE_WITH_VERSION",
     <%_ } _%>
     "@expo/webpack-config": "REPLACE_WITH_VERSION",
     "redux-devtools-extension": "REPLACE_WITH_VERSION",

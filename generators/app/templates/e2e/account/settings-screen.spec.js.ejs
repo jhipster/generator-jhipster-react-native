@@ -1,37 +1,34 @@
-const Utils = require('../utils');
+const { reloadApp, loginAsUser, logout, tapFirstElementById, tapFirstElementByLabel, waitForElementToBeVisibleByLabel, openAndTapDrawerMenuItemByLabel, waitForElementToBeVisibleById, waitThenTapButton } = require('../utils');
 
 describe('Settings Screen Tests', () => {
-  before(async () => {
-    await Utils.reloadApp();
-    await Utils.loginAsUser();
+  beforeAll(async () => {
+    await reloadApp();
+    await loginAsUser();
   });
-  after(async () => {
-    await Utils.logout();
+
+  afterAll(async () => {
+    await logout();
   });
 
   beforeEach(async () => {
-    await Utils.reloadApp();
-    await navigateToSettingsScreen();
+    await reloadApp();
+    await openAndTapDrawerMenuItemByLabel('Settings');
+    await waitForElementToBeVisibleById('settingsScreen');
   });
-
-  const navigateToSettingsScreen = async () => {
-    await Utils.tapFirstElementByLabel('Menu Button');
-    await Utils.tapFirstElementByLabel('Settings');
-  };
 
   it('should display a success message on settings update success', async () => {
     await element(by.id('emailInput')).replaceText('user@localhost.com');
-    await element(by.id('settingsSubmitButton')).tap();
+    await waitThenTapButton('settingsSubmitButton')
     const expectedLabel = 'Settings updated';
-    await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
+    await waitForElementToBeVisibleByLabel(expectedLabel);
     await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 
   it('should display an error message on settings update failure', async () => {
     await element(by.id('emailInput')).replaceText('invalid-email');
-    await element(by.id('settingsSubmitButton')).tap();
+    await waitThenTapButton('settingsSubmitButton')
     const expectedLabel = 'Email must be a valid email';
-    await Utils.waitForElementToBeVisibleByLabel(expectedLabel);
+    await waitForElementToBeVisibleByLabel(expectedLabel);
     await expect(element(by.label(expectedLabel))).toBeVisible();
   });
 });

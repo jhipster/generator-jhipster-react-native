@@ -26,15 +26,16 @@ export const DrawerButton = (props) => {
   return largeScreen ? null : (
     <View style={styles.wrapper}>
       <TouchableItem
+        testID={'drawerButton'}
         onPress={toggleDrawer}
-        accessibilityLabel={'Menu Button'}
+        accessibilityLabel={'Drawer Button Wrapper'}
         style={styles.touchableItem}
         hitSlop={Platform.select({
           ios: undefined,
           default: { top: 16, right: 16, bottom: 16, left: 16 },
         })}>
         {/* Button Image */}
-        <Image source={Images.toggleDrawerIcon} accessibilityLabel={'Menu Button'} style={styles.image} />
+        <Image source={Images.toggleDrawerIcon} accessibilityLabel={'Drawer Button'} style={styles.image} />
       </TouchableItem>
     </View>
   );
