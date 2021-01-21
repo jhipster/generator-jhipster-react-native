@@ -1,12 +1,5 @@
 {
   "configurations": {
-    "ios.sim.debug": {
-      "binaryPath": "e2e/Exponent.app",
-      "type": "ios.simulator",
-      "device": {
-        "type": "iPhone 11"
-      }
-    },
     "ios.sim.release": {
       "binaryPath": "e2e/Exponent.app",
       "type": "ios.simulator",
@@ -27,6 +20,6 @@
       }
     }
   },
-  "test-runner": "mocha",
-  "runner-config": "./e2e/.mocharc.json"
+  "test-runner": "jest",
+  "runner-config": "./e2e/config.json"
 }

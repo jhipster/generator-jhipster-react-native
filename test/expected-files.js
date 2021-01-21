@@ -142,8 +142,8 @@ const expectedFiles = {
     ],
     detox: [
         '.detoxrc.json',
-        'e2e/init.js',
-        'e2e/.mocharc.json',
+        'e2e/environment.js',
+        'e2e/config.json',
         'e2e/home-screen.spec.js',
         'e2e/utils.js',
         'e2e/scripts/download-expo.sh',

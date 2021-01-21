@@ -27,6 +27,7 @@ import DrawerContent from './drawer/drawer-content';
 import { isReadyRef, navigationRef } from './nav-ref';
 import NotFound from './not-found-screen';
 import { ModalScreen } from './modal-screen';
+import { DrawerButton } from './drawer/drawer-button';
 
 export const drawerScreens = [
   {
@@ -90,7 +91,7 @@ if (__DEV__) {
     name: 'Storybook',
     route: 'storybook',
     component: StorybookScreen,
-    auth: null,
+    auth: false,
   });
 }
 export const getDrawerRoutes = () => {
@@ -187,7 +188,7 @@ function NavContainer(props) {
               drawerContent={(p) => <DrawerContent {...p} />}
               initialRouteName={drawerScreens[0].name}
               drawerType={dimensions.width >= 768 ? 'permanent' : 'front'}
-              screenOptions={{ headerShown: true, headerLeftAccessibilityLabel: 'Menu Button' }}>
+              screenOptions={{ headerShown: true, headerLeft: DrawerButton }}>
               {getScreens(props)}
             </Drawer.Navigator>
           )}

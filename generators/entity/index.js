@@ -109,6 +109,7 @@ module.exports = class extends EntityGenerator {
                 const jhipsterConfig = this.config.getAll();
                 this.context.searchEngine = jhipsterConfig.searchEngine;
                 this.context.detox = jhipsterConfig.reactNative && jhipsterConfig.reactNative.detox;
+                this.context.fieldsContainEnum = this.context.fields.filter(field => field.fieldIsEnum).length > 0;
             },
             writeFiles: writeFiles.bind(this),
             patchNavigationForEntity: patchNavigationForEntity.bind(this, this.context.name),

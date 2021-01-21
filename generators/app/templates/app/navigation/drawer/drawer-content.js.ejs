@@ -4,11 +4,17 @@ import { connect } from 'react-redux';
 import LoginActions from '../../modules/login/login.reducer';
 
 function DrawerContent(props) {
-  const { loaded, account, logout } = props;
+  const { loaded, account, logout, navigation } = props;
+
+  const logoutAndCloseDrawer = () => {
+    logout();
+    navigation.closeDrawer();
+  };
+
   return !loaded ? null : (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props} testID="drawerContentScrollView">
       <DrawerItemList {...props} />
-      {account && <DrawerItem label="Logout" onPress={logout} />}
+      {account && <DrawerItem label="Logout" onPress={logoutAndCloseDrawer} />}
     </DrawerContentScrollView>
   );
 }
