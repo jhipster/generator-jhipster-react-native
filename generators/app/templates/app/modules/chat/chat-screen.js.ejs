@@ -27,7 +27,7 @@ function ChatScreen(props) {
 
   const renderRow = (item, index) => {
     return (
-      <View style={styles.row} key={index}>
+      <View style={styles.row} key={index} testID={`message-${index}`}>
         <Text style={styles.boldLabel}>{item.user}</Text>
         <Text>{item.message}</Text>
       </View>

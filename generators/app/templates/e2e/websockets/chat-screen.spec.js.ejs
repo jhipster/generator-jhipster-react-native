@@ -1,4 +1,11 @@
-const { reloadApp, loginAsUser, logout, tapFirstElementById, tapFirstElementByLabel, openAndTapDrawerMenuItemByLabel, waitThenTapButton, waitForElementToBeVisibleById } = require('../utils');
+const {
+  reloadApp,
+  loginAsUser,
+  logout,
+  openAndTapDrawerMenuItemByLabel,
+  waitThenTapButton,
+  waitForElementToBeVisibleById,
+} = require('../utils');
 
 describe('Chat Screen Tests', () => {
   beforeAll(async () => {
@@ -23,6 +30,7 @@ describe('Chat Screen Tests', () => {
 
   it('should send a chat message then display it', async () => {
     await sendChat('Java Hipster')
+    await waitForElementToBeVisibleById('message-0');
     await expect(element(by.label('Java Hipster'))).toBeVisible()
   })
 })
