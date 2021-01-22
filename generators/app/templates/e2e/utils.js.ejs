@@ -27,6 +27,7 @@ const setDateTimePickerValue = async (elementId, dateString, dateFormat) => {
 
 const setPickerValue = async (elementId, value) => {
     await waitThenTapButton(elementId);
+    await waitForElementToBeVisibleById(`${elementId}Picker`);
     await element(by.id(`${elementId}Picker`)).setColumnToValue(0, value);
     await waitThenTapButton(`${elementId}PickerDone`);
 };
