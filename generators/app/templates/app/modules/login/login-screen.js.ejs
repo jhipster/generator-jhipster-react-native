@@ -12,27 +12,28 @@ import Form from '../../shared/components/form/jhi-form';
 import styles from './login-screen.styles';
 
 function LoginScreen(props) {
+  const { account, navigation, fetching, loginError, attemptLogin } = props;
   // setup error state for displaying error messages
   const [error, setError] = React.useState('');
 
   // if the user is already logged in, send them home
   React.useEffect(() => {
-    if (props.account !== null) {
-      props.navigation.navigate('Home');
+    if (account !== null) {
+      navigation.navigate('Home');
     }
-  }, [props.account, props.navigation]);
+  }, [account, navigation]);
 
   // skip the first render but check for API responses and show error if not fetching
   useDidUpdateEffect(() => {
-    if (!props.fetching && props.error) {
-      setError(props.error);
+    if (!fetching && loginError) {
+      setError(loginError);
     }
-  }, [props.fetching]);
+  }, [fetching]);
 
   // submit handler
   const onSubmit = (data) => {
     setError('');
-    props.attemptLogin(data.login, data.password);
+    attemptLogin(data.login, data.password);
   };
 
   // create refs for handling onSubmit functionality
@@ -80,7 +81,7 @@ const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     fetching: state.login.fetching,
-    error: state.login.error,
+    loginError: state.login.error,
   };
 };
 
