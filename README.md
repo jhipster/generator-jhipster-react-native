@@ -24,7 +24,7 @@
     -   [React Native Web](https://docs.expo.io/workflow/web/) - Run your React Native application in a browser, including PWA support
     -   [Storybook](docs/storybook.md) - Develop UI components in isolation
     -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
-    -   [React Navigation](https://github.com/wix/react-native-navigation) - A complete native navigation solution
+    -   [React Navigation](https://reactnavigation.org/docs/getting-started) - Routing and navigation for your React Native apps
     -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
 
 ## Getting Started

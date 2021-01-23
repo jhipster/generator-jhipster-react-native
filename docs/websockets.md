@@ -1,14 +1,8 @@
 ## Websockets
 
-A websockets example is present under "Chat" in the Drawer Menu. To enable this in your JHipster backend, JHipster React Native makes the following changes to your JHipster app's WebsocketConfiguration.java:
+A websockets example is present under "Chat" in the Drawer Menu. JHipster React Native uses the existing `/websocket/tracker` endpoint to connect. It sends and receives chat messages using the `/topic/chat` message mapping.
 
-```text
-src/main/java/.../config/WebsocketConfiguration.java
--registry.addEndpoint("/websocket/tracker")
-+registry.addEndpoint("/websocket/tracker", "/websocket/chat")
-```
-
-The default JHipster websockets configuration requires users to authenticate before connecting.
+**Note:** The default JHipster websockets configuration requires users to authenticate before connecting.
 
 For a more advanced websockets example, see the [tracker.service.ts][1] and [ActivityService.java][2] in the generated JHipster webapp.
 
