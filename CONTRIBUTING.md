@@ -48,4 +48,4 @@ When generating an app, make sure to link the blueprint after installing `node_m
 npm link generator-jhipster-react-native
 ```
 
-After linking `generator-jhipster-react-native`, running any of the subgenerators (such as `entity` or `import-jdl`) will use your local blueprint code.
+After linking `generator-jhipster-react-native`, running any of the subgenerators (such as `entity` or `jdl`) will use your local blueprint code.

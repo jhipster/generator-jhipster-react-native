@@ -19,7 +19,7 @@
 const chalk = require('chalk');
 const EntitiesGenerator = require('generator-jhipster/generators/entities');
 
-// overriding this generator enables us to use import-jdl without other side-effects
+// overriding this generator enables us to import jdl without other side-effects
 module.exports = class extends EntitiesGenerator {
     constructor(args, opts) {
         super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
