@@ -13,7 +13,7 @@ jhipster --blueprints react-native entity <name>
 ### Import JDL
 
 ```sh
-jhipster --blueprints react-native import-jdl <jdl-filename>
+jhipster --blueprints react-native jdl <jdl-filename>
 ```
 
 -   Import several entities at once using JDL

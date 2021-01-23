@@ -55,7 +55,7 @@ To generate an app, run the following command:
 jhipster --blueprints react-native
 
 # JHipster v7+ JDL Application
-jhipster --blueprints react-native import-jdl ./path-to-your-app-config.jdl
+jhipster --blueprints react-native jdl ./path-to-your-app-config.jdl
 
 # JHipster v6.x
 rnhipster
