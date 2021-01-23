@@ -6,6 +6,9 @@ cd ../backend
 # set backend memory limits
 export MAVEN_OPTS="-Xmx512m -Xms256m"
 
+# turn on colors for Jest output
+export FORCE_COLOR=true
+
 # disable sql logging
 sed -i.back "s~org.hibernate.SQL: DEBUG~org.hibernate.SQL: WARN~g" src/main/resources/config/application-dev.yml
 

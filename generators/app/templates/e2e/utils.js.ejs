@@ -12,7 +12,7 @@ const waitThenTapButton = async (buttonId, ms = 1000) => {
 };
 
 const openAndTapDrawerMenuItemByLabel = async (label) => {
-  await tapFirstElementById('drawerButton');
+  await element(by.id('drawerButtonWrapper')).atIndex(0).swipe('right', 'fast', 0.7, 0.01);
   await waitForElementToBeVisibleById('drawerContentScrollView');
   await tapFirstElementByLabel(label);
 };
@@ -22,14 +22,15 @@ const setDateTimePickerValue = async (elementId, dateString, dateFormat) => {
   await waitForElementToBeVisibleById(`${elementId}Modal`);
   await element(by.id(`${elementId}Modal`)).setDatePickerDate(dateString, dateFormat);
   await tapFirstElementByLabel('Confirm');
-  await tapFirstElementByLabel('Confirm');
+  await waitForElementToBeVisibleById(elementId);
 };
 
 const setPickerValue = async (elementId, value) => {
-    await waitThenTapButton(elementId);
-    await waitForElementToBeVisibleById(`${elementId}Picker`);
-    await element(by.id(`${elementId}Picker`)).setColumnToValue(0, value);
-    await waitThenTapButton(`${elementId}PickerDone`);
+  await waitThenTapButton(elementId);
+  await waitForElementToBeVisibleById(`${elementId}Picker`);
+  await element(by.id(`${elementId}Picker`)).setColumnToValue(0, value);
+  await waitThenTapButton(`${elementId}PickerDone`);
+  await waitForElementToBeVisibleById(elementId);
 };
 
 const navigateToLoginScreen = async () => {
@@ -54,6 +55,7 @@ const logout = async () => {
 };
 
 const goBack = async () => {
+  await wait(1000);
   if (device.getPlatform() === 'ios') {
     await tapFirstElementByLabel('Back');
   } else {
@@ -73,7 +75,7 @@ const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 
   await waitFor(element(by.id(fieldId)))
     .toBeVisible()
     .whileElement(by.type('ABI40_0_0RCTCustomScrollView').withAncestor(by.id(listId)))
-    .scroll(600, 'down');
+    .scroll(500, 'down');
 };
 
 const tapFirstElementById = async (id) => {
