@@ -12,6 +12,7 @@ const waitThenTapButton = async (buttonId, ms = 1000) => {
 };
 
 const openAndTapDrawerMenuItemByLabel = async (label) => {
+  // matching the drawer button is flaky, so open it with a swipe from the left
   await element(by.id('drawerButtonWrapper')).atIndex(0).swipe('right', 'fast', 0.7, 0.01);
   await waitForElementToBeVisibleById('drawerContentScrollView');
   await tapFirstElementByLabel(label);
@@ -21,6 +22,8 @@ const setDateTimePickerValue = async (elementId, dateString, dateFormat) => {
   await waitThenTapButton(elementId);
   await waitForElementToBeVisibleById(`${elementId}Modal`);
   await element(by.id(`${elementId}Modal`)).setDatePickerDate(dateString, dateFormat);
+  // the first tap can be flaky, so tap it again if it still exists
+  await tapFirstElementByLabel('Confirm');
   await tapFirstElementByLabel('Confirm');
   await waitForElementToBeVisibleById(elementId);
 };
