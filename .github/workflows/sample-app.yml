@@ -1,0 +1,76 @@
+name: Sample App
+on:
+    push:
+        tags:
+            - '*'
+defaults:
+    run:
+        shell: bash
+jobs:
+    sample-app:
+        name: update-sample-app
+        runs-on: ${{ matrix.os }}
+        timeout-minutes: 20
+        strategy:
+            fail-fast: false
+            matrix:
+                node_version: [14.15.0]
+                os: [ubuntu-latest]
+        env:
+            SCRIPT_DIR: ./generator-jhipster-react-native/test/scripts
+            OS: ${{ matrix.os }}
+            HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+            EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        steps:
+            - uses: actions/checkout@v2
+              name: 'SETUP: checkout generator-react-native'
+              with:
+                  path: generator-jhipster-react-native
+            - uses: actions/checkout@v2
+              name: 'SETUP: checkout jhipster-sample-app-react-native'
+              with:
+                  token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
+                  repository: ruddell/jhipster-sample-app-react-native
+                  path: sample-app
+            - run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
+              name: 'TOOLS: git history'
+            - uses: actions/setup-node@v2.1.4
+              with:
+                  node-version: ${{ matrix.node_version }}
+            - run: $SCRIPT_DIR/git-config.sh
+              name: 'TOOLS: configure git'
+            - name: 'SETUP: install heroku'
+              run: $SCRIPT_DIR/install-heroku-cli.sh
+            - run: $SCRIPT_DIR/install-node-dependencies.sh
+              name: 'TOOLS: install node dependencies'
+            - run: cd generator-jhipster-react-native && npm i && npm link
+              name: 'TOOLS: npm install and link in generator-jhipster-react-native'
+            - name: 'TOOLS: link blueprint in sample app'
+              run: |
+                  cd sample-app
+                  npm link generator-jhipster-react-native
+            - name: 'GENERATING: cleanup and generate sample app'
+              run: |
+                  cd sample-app
+                  find . -not -name ".yo-rc.json" -type f -maxdepth 1 -delete
+                  rm .git/index
+                  rm -rf src
+                  rm -rf node_modules
+                  jhipster --no-insight --skip-checks --skip-install --force --with-entities
+                  jhipster heroku --no-insight --skip-install --force --skip-deploy
+                  sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
+                  rm app/config/app-config.js.backup
+                  npm install
+                  git add .
+                  git status
+                  git commit -m "Generate the application with the ${{ github.ref }} version"
+            - name: 'PUSH: push the updated sample app to Expo'
+              run: |
+                cd sample-app
+                expo publish
+            - name: 'PUSH: push the updated sample app to GitHub'
+              uses: ad-m/github-push-action@master
+              with:
+                  repository: ruddell/jhipster-sample-app-react-native
+                  github_token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
+                  directory: sample-app
