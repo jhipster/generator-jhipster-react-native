@@ -4,6 +4,9 @@ on:
   push:
     branches:
   pull_request:
+defaults:
+  run:
+    shell: bash
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}
@@ -47,25 +50,18 @@ jobs:
         env:
           RUNNER_TEMP: "/tmp/"
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-        shell: bash
       - uses: actions/setup-node@v2.1.4
         with:
             node-version: ${{ matrix.node_version }}
       - name: Config git variables
         run: $SCRIPT_DIR/git-config.sh
-        shell: bash
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
-        shell: bash
       - run: npm i && npm link
         name: 'TOOLS: npm install and link in generator-jhipster-react-native'
-        shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
-        shell: bash
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-        shell: bash
       - run: $SCRIPT_DIR/run-react-native-tests.sh
         name: 'TESTING: npm run test'
-        shell: bash

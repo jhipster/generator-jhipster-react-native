@@ -4,6 +4,9 @@ on:
   push:
     branches:
   pull_request:
+defaults:
+  run:
+    shell: bash
 jobs:
   lint-and-test:
     runs-on: ${{ matrix.os }}
@@ -23,12 +26,10 @@ jobs:
         env:
           RUNNER_TEMP: "/tmp/"
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-        shell: bash
       - name: Config git variables
         env:
           JHI_SCRIPTS: ./test/scripts
         run: $JHI_SCRIPTS/git-config.sh
-        shell: bash
       - name: npm ci
         run: npm ci
       - name: lint and test

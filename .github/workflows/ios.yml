@@ -9,6 +9,9 @@ on:
   push:
     branches:
   pull_request:
+defaults:
+  run:
+    shell: bash
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}
@@ -64,45 +67,34 @@ jobs:
         with:
           java-version: '11.x'
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-        shell: bash
       - uses: actions/setup-node@v2.1.4
         with:
             node-version: ${{ matrix.node_version }}
       - name: Config git variables
         run: $SCRIPT_DIR/git-config.sh
-        shell: bash
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
-        shell: bash
       - run: $SCRIPT_DIR/install-detox.sh || $SCRIPT_DIR/install-detox.sh
         name: 'TOOLS: installing Detox and its dependencies'
-        shell: bash
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
-        shell: bash
       - run: npm i && npm link
         name: 'TOOLS: npm install and link in generator-jhipster-react-native'
-        shell: bash
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
-        shell: bash
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
         name: 'GENERATING: generate jhipster backend'
-        shell: bash
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-        shell: bash
 #      - uses: nick-invision/retry@v2
 #        name: 'TESTING: run detox tests'
 #        with:
 #            max_attempts: 3
 #            timeout_minutes: 60
-#            shell: bash
 #            command: $SCRIPT_DIR/run-detox-tests.sh
 #            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
-        shell: bash
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:

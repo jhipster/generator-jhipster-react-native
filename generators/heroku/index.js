@@ -70,7 +70,7 @@ module.exports = class extends HerokuGenerator {
                     ];
 
                     this.prompt(prompts).then(props => {
-                        this.herokuAppName = _.kebabCase(props.herokuAppName);
+                        this.herokuAppName = this._.kebabCase(props.herokuAppName);
                         this.herokuRegion = props.herokuRegion;
                         this.herokuAppExists = false;
                         done();
@@ -122,7 +122,7 @@ module.exports = class extends HerokuGenerator {
         return {
             npmInstall() {
                 if (!this.options.skipInstall) {
-                    this.log(chalk.bold(`\nInstalling dependencies to ensure lock files match package.json`));
+                    this.log(chalk.bold('\nInstalling dependencies to ensure lock files match package.json'));
                     this.spawnCommandSync('npm', ['i']);
                 }
             },
