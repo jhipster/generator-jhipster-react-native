@@ -20,13 +20,63 @@ module.exports = class extends HerokuGenerator {
     }
 
     get initializing() {
-        return {};
+        return super._initializing();
     }
 
     get prompting() {
-        const { askForApp } = super._prompting();
+        // todo replace with main generator prompt once PR to fix existing app is in
+        // const { askForApp } = super._prompting();
         return {
-            askForApp,
+            askForApp() {
+                const done = this.async();
+
+                if (this.herokuAppName) {
+                    ChildProcess.exec(`heroku apps:info --json ${this.herokuAppName}`, (err, stdout) => {
+                        if (err) {
+                            this.abort = true;
+                            this.log.error(`Could not find application: ${chalk.cyan(this.herokuAppName)}`);
+                            this.log.error('Run the generator again to create a new application.');
+                            this.herokuAppName = null;
+                        } else {
+                            const json = JSON.parse(stdout);
+                            this.herokuAppName = json.app.name;
+                            if (json.dynos.length > 0) {
+                                this.dynoSize = json.dynos[0].size;
+                            }
+                            this.log(`Deploying as existing application: ${chalk.bold(this.herokuAppName)}`);
+                            this.herokuAppExists = true;
+                            this.config.set({
+                                herokuAppName: this.herokuAppName,
+                                herokuDeployType: this.herokuDeployType,
+                            });
+                        }
+                        done();
+                    });
+                } else {
+                    const prompts = [
+                        {
+                            type: 'input',
+                            name: 'herokuAppName',
+                            message: 'Name to deploy as:',
+                            default: this.baseName,
+                        },
+                        {
+                            type: 'list',
+                            name: 'herokuRegion',
+                            message: 'On which region do you want to deploy ?',
+                            choices: ['us', 'eu'],
+                            default: 0,
+                        },
+                    ];
+
+                    this.prompt(prompts).then(props => {
+                        this.herokuAppName = _.kebabCase(props.herokuAppName);
+                        this.herokuRegion = props.herokuRegion;
+                        this.herokuAppExists = false;
+                        done();
+                    });
+                }
+            },
         };
     }
 
@@ -70,10 +120,43 @@ module.exports = class extends HerokuGenerator {
 
     get end() {
         return {
+            npmInstall() {
+                if (!this.options.skipInstall) {
+                    this.log(chalk.bold(`\nInstalling dependencies to ensure lock files match package.json`));
+                    this.spawnCommandSync('npm', ['i']);
+                }
+            },
             async productionDeploy() {
-                if (this.abort) return;
+                if (this.abort || this.herokuSkipDeploy) return;
 
                 try {
+                    this.log(chalk.bold('\nUpdating Git repository'));
+                    const gitAddCmd = 'git add .';
+                    this.log(chalk.cyan(gitAddCmd));
+
+                    const gitAdd = execCmd(gitAddCmd);
+                    gitAdd.child.stdout.on('data', data => {
+                        this.log(data);
+                    });
+
+                    gitAdd.child.stderr.on('data', data => {
+                        this.log(data);
+                    });
+                    await gitAdd;
+
+                    const gitCommitCmd = 'git commit -m "Deploy to Heroku" --allow-empty';
+                    this.log(chalk.cyan(gitCommitCmd));
+
+                    const gitCommit = execCmd(gitCommitCmd);
+                    gitCommit.child.stdout.on('data', data => {
+                        this.log(data);
+                    });
+
+                    gitCommit.child.stderr.on('data', data => {
+                        this.log(data);
+                    });
+                    await gitCommit;
+
                     const buildpack = 'heroku/nodejs';
                     this.log(chalk.bold('\nConfiguring Heroku'));
                     await execCmd(`heroku buildpacks:add ${buildpack} --app ${this.herokuAppName}`);
