@@ -63,7 +63,7 @@ jobs:
                   npm install
                   git add .
                   git status
-                  git commit -m "Generate the application with the ${{ github.ref }} version"
+                  git commit -m "Generate the application with the ${{ github.ref }} version" --allow-empty
             - name: 'PUSH: push the updated sample app to Expo'
               run: |
                 cd sample-app

@@ -5,7 +5,6 @@ const files = {
                 '.prettierrc.js',
                 '.prettierignore',
                 '.editorconfig',
-                '.env',
                 '.eslintrc.js',
                 '.gitattributes',
                 'App.js',
