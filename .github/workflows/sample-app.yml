@@ -32,17 +32,17 @@ jobs:
           token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
           repository: ruddell/jhipster-sample-app-react-native
           path: sample-app
-      - run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-        name: 'TOOLS: git history'
+      - name: 'SETUP: git history'
+        run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
       - uses: actions/setup-node@v2.1.4
         with:
           node-version: ${{ matrix.node_version }}
-      - run: $SCRIPT_DIR/git-config.sh
-        name: 'TOOLS: configure git'
-      - name: 'SETUP: install heroku'
+      - name: 'TOOLS: configure git'
+        run: $SCRIPT_DIR/git-config.sh
+      - name: 'TOOLS: install heroku'
         run: $SCRIPT_DIR/install-heroku-cli.sh
-      - run: $SCRIPT_DIR/install-node-dependencies.sh
-        name: 'TOOLS: install node dependencies'
+      - name: 'TOOLS: install node dependencies'
+        run: $SCRIPT_DIR/install-node-dependencies.sh
       - run: cd generator-jhipster-react-native && npm i && npm link
         name: 'TOOLS: npm install and link in generator-jhipster-react-native'
       - name: 'TOOLS: link blueprint in sample app'
