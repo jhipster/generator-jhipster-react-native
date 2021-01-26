@@ -47,21 +47,19 @@ You can find out more about the Expo CLI and other Expo Features in the [Expo do
 To generate entities:
 
 ```bash
-jhipster --blueprints react-native entity <name>
+jhipster entity <name>
 ```
 
 Or to import JDL:
 
 ```bash
-jhipster --blueprints react-native jdl <file.jdl>
+jhipster jdl <file.jdl>
 ```
 
 <%_ if (context.authenticationType === 'oauth2') { _%>
 ## OAuth2 Configuration
 
-### Okta
-
-### Keycloak
+For configuring your redirect URIs, please see [the JHipster React Native OAuth2.0 docs](https://github.com/ruddell/generator-jhipster-react-native/blob/main/docs/oauth2-oidc.md).
 
 <%_ } _%>
 
