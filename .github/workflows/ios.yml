@@ -57,12 +57,6 @@ jobs:
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.4
-        with:
-          node-version: ${{ matrix.node_version }}
-        # for running pipelines locally with `act`
-        env:
-          RUNNER_TEMP: '/tmp/'
       - uses: actions/setup-java@v1
         with:
           java-version: '11.x'
