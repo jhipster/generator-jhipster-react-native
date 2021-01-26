@@ -11,36 +11,36 @@
 
 ## Docs
 
--   [Getting Started](README.md#getting-started)
--   [Generators](docs/generators.md)
--   [Project Structure](docs/project-structure.md)
--   [Distributing and Updating Apps](docs/distributing-and-updating.md)
--   [CLI Flags](docs/cli-flags.md)
--   JHipster Integrations
-    -   [OAuth 2.0 and OpenID Connect](docs/oauth2-oidc.md)
-    -   [Websockets](docs/websockets.md)
--   React Native Library Integrations
-    -   [Expo](https://docs.expo.io/) - A framework and platform for universal React application
-    -   [React Native Web](https://docs.expo.io/workflow/web/) - Run your React Native application in a browser, including PWA support
-    -   [Storybook](docs/storybook.md) - Develop UI components in isolation
-    -   [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
-    -   [React Navigation](https://reactnavigation.org/docs/getting-started) - Routing and navigation for your React Native apps
-    -   [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
+- [Getting Started](README.md#getting-started)
+- [Generators](docs/generators.md)
+- [Project Structure](docs/project-structure.md)
+- [Distributing and Updating Apps](docs/distributing-and-updating.md)
+- [CLI Flags](docs/cli-flags.md)
+- JHipster Integrations
+  - [OAuth 2.0 and OpenID Connect](docs/oauth2-oidc.md)
+  - [Websockets](docs/websockets.md)
+- React Native Library Integrations
+  - [Expo](https://docs.expo.io/) - A framework and platform for universal React application
+  - [React Native Web](https://docs.expo.io/workflow/web/) - Run your React Native application in a browser, including PWA support
+  - [Storybook](docs/storybook.md) - Develop UI components in isolation
+  - [Detox](docs/detox.md) - End-to-End Testing and Automation Framework for Mobile Apps
+  - [React Navigation](https://reactnavigation.org/docs/getting-started) - Routing and navigation for your React Native apps
+  - [Redux](https://redux.js.org/basics/usagewithreact) and [Sagas](https://redux-saga.js.org/) - State management
 
 ## Getting Started
 
 ### Requirements
 
--   Node LTS v14+
-    -   Verify version with `node -v`
--   [generator-jhipster-react-native](https://github.com/ruddell/generator-jhipster-react-native) installed
-    -   Install with `npm install -g generator-jhipster-react-native`
--   [expo-cli](https://docs.expo.io/get-started/installation/) installed
-    -   Install with `npm install -g expo-cli`
-    -   To run your app on an emulator instead of a device, follow the platform-specific instructions:
-        -   [Android](https://docs.expo.io/workflow/android-studio-emulator/)
-        -   [iOS](https://docs.expo.io/workflow/ios-simulator/)
--   JHipster backend must use JWT or OAuth2 auth types.
+- Node LTS v14+
+  - Verify version with `node -v`
+- [generator-jhipster-react-native](https://github.com/ruddell/generator-jhipster-react-native) installed
+  - Install with `npm install -g generator-jhipster-react-native`
+- [expo-cli](https://docs.expo.io/get-started/installation/) installed
+  - Install with `npm install -g expo-cli`
+  - To run your app on an emulator instead of a device, follow the platform-specific instructions:
+    - [Android](https://docs.expo.io/workflow/android-studio-emulator/)
+    - [iOS](https://docs.expo.io/workflow/ios-simulator/)
+- JHipster backend must use JWT or OAuth2 auth types.
 
 Create a directory for your app:
 
@@ -63,18 +63,18 @@ rnhipster
 
 Answer the prompts:
 
--   Enter the path to your JHipster app
--   Choose whether to enable E2E Detox Tests
+- Enter the path to your JHipster app
+- Choose whether to enable E2E Detox Tests
 
 After generating, you can import entities with the [entity generator and JDL importer](docs/generators.md).
 
 ### Configuration
 
--   `app/config/app-config.js` contains your JHipster API URL (default: `http://localhost:8080/`)
+- `app/config/app-config.js` contains your JHipster API URL (default: `http://localhost:8080/`)
 
 #### Notes for Android
 
--   When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
+- When running your JHipster backend locally for Android, make sure to run `adb reverse tcp:8080 tcp:8080` so the app can communicate with your backend.
 
 # License
 

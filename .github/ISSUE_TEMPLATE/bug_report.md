@@ -21,5 +21,5 @@ about: Create a report to help us improve
 
 **Versions (please complete the following information):**
 
--   JHipster React Native Version:
--   `jhipster info` output:
+- JHipster React Native Version:
+- `jhipster info` output:

@@ -25,33 +25,33 @@ const currentNodeVersion = process.versions.node;
 const minimumNodeVersion = packageJson.engines.node;
 
 if (!semver.satisfies(currentNodeVersion, minimumNodeVersion)) {
-    /* eslint-disable no-console */
-    logger.error(
-        `You are running Node version ${currentNodeVersion}\nRNHipster requires Node version ${minimumNodeVersion}\nPlease update your version of Node.`
-    );
-    /* eslint-enable  */
+  /* eslint-disable no-console */
+  logger.error(
+    `You are running Node version ${currentNodeVersion}\nRNHipster requires Node version ${minimumNodeVersion}\nPlease update your version of Node.`
+  );
+  /* eslint-enable  */
 }
 
 // Pass in react-native as a blueprint module.
 // User passes in blueprints flag but without react-native :> append react-native
 if (!process.argv.includes('react-native') && process.argv.includes('--blueprints')) {
-    for (let i = 0; i < process.argv.length; i++) {
-        if (process.argv[i] === '--blueprints') {
-            process.argv[i + 1] = `${process.argv[i + 1].split(',')},react-native`;
-        }
+  for (let i = 0; i < process.argv.length; i++) {
+    if (process.argv[i] === '--blueprints') {
+      process.argv[i + 1] = `${process.argv[i + 1].split(',')},react-native`;
     }
-    // User passes in blueprint flag but without react-native :> append react-native
+  }
+  // User passes in blueprint flag but without react-native :> append react-native
 } else if (!process.argv.includes('react-native') && process.argv.includes('--blueprint')) {
-    for (let i = 0; i < process.argv.length; i++) {
-        if (process.argv[i] === '--blueprint') {
-            process.argv[i] = '--blueprints';
-            process.argv[i + 1] = `${process.argv[i + 1]},react-native`;
-        }
+  for (let i = 0; i < process.argv.length; i++) {
+    if (process.argv[i] === '--blueprint') {
+      process.argv[i] = '--blueprints';
+      process.argv[i + 1] = `${process.argv[i + 1]},react-native`;
     }
-    // User donot pass in blueprints or blueprint flag but without react-native :> append react-native
+  }
+  // User donot pass in blueprints or blueprint flag but without react-native :> append react-native
 } else if (!process.argv.includes('react-native') && !process.argv.includes('--blueprint') && !process.argv.includes('--blueprints')) {
-    process.argv.push('--blueprints');
-    process.argv.push('react-native');
+  process.argv.push('--blueprints');
+  process.argv.push('react-native');
 }
 
 /* eslint-disable */

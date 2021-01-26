@@ -1,75 +1,75 @@
 {
-    "name": "generator-jhipster-react-native",
-    "version": "4.0.0-alpha.2",
-    "description": "React Native Blueprint for existing JHipster Apps",
-    "keywords": [],
-    "homepage": "https://github.com/ruddell/generator-jhipster-react-native",
-    "bugs": {
-        "url": "https://github.com/ruddell/generator-jhipster-react-native/issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ruddell/generator-jhipster-react-native.git"
-    },
-    "license": "Apache-2.0",
-    "author": {
-        "name": "Jon Ruddell",
-        "email": "jonathan.ruddell@gmail.com",
-        "url": "https://jruddell.com/"
-    },
-    "main": "generators/app/index.js",
-    "bin": {
-        "rnhipster": "./cli/rnhipster.js"
-    },
-    "files": [
-        "generators",
-        "lib",
-        "cli"
-    ],
-    "scripts": {
-        "jsdoc": "jsdoc --configure jsdoc-conf.json",
-        "lint": "eslint .",
-        "lint-fix": "npm run lint -- --fix",
-        "prettier": "prettier --write \"{,**/}*.{js,json,md}\"",
-        "release": "np",
-        "pretest": "npm run lint",
-        "test": "npm run test:unit -- test/*.spec.js",
-        "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
-    },
-    "lint-staged": {
-        "{,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md}": [
-            "prettier --write"
-        ]
-    },
-    "dependencies": {
-        "chalk": "4.1.0",
-        "fs-extra": "9.1.0",
-        "generator-jhipster": "7.0.0-beta.1",
-        "lodash": "4.17.20",
-        "pluralize": "8.0.0",
-        "semver": "7.3.4",
-        "shelljs": "0.8.4"
-    },
-    "devDependencies": {
-        "chai": "4.2.0",
-        "ejs-lint": "1.1.0",
-        "eslint": "7.18.0",
-        "eslint-config-airbnb-base": "14.2.1",
-        "eslint-config-prettier": "7.2.0",
-        "eslint-plugin-import": "2.22.1",
-        "eslint-plugin-prettier": "3.3.1",
-        "husky": "4.3.8",
-        "jsdoc": "3.6.6",
-        "lint-staged": "10.5.3",
-        "mocha": "8.2.1",
-        "np": "7.2.0",
-        "prettier": "2.2.1",
-        "sinon": "9.2.4",
-        "yeoman-assert": "3.1.1",
-        "yeoman-test": "4.0.0"
-    },
-    "engines": {
-        "node": ">=14",
-        "npm": ">=6"
-    }
+  "name": "generator-jhipster-react-native",
+  "version": "4.0.0-alpha.2",
+  "description": "React Native Blueprint for existing JHipster Apps",
+  "keywords": [],
+  "homepage": "https://github.com/ruddell/generator-jhipster-react-native",
+  "bugs": {
+    "url": "https://github.com/ruddell/generator-jhipster-react-native/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruddell/generator-jhipster-react-native.git"
+  },
+  "license": "Apache-2.0",
+  "author": {
+    "name": "Jon Ruddell",
+    "email": "jonathan.ruddell@gmail.com",
+    "url": "https://jruddell.com/"
+  },
+  "main": "generators/app/index.js",
+  "bin": {
+    "rnhipster": "./cli/rnhipster.js"
+  },
+  "files": [
+    "generators",
+    "lib",
+    "cli"
+  ],
+  "scripts": {
+    "jsdoc": "jsdoc --configure jsdoc-conf.json",
+    "lint": "eslint .",
+    "lint-fix": "npm run lint -- --fix",
+    "prettier": "prettier --write \"{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}\"",
+    "release": "np",
+    "pretest": "npm run lint",
+    "test": "npm run test:unit -- test/*.spec.js",
+    "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
+  },
+  "lint-staged": {
+    "{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "chalk": "4.1.0",
+    "fs-extra": "9.1.0",
+    "generator-jhipster": "7.0.0-beta.1",
+    "lodash": "4.17.20",
+    "pluralize": "8.0.0",
+    "semver": "7.3.4",
+    "shelljs": "0.8.4"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "ejs-lint": "1.1.0",
+    "eslint": "7.18.0",
+    "eslint-config-airbnb-base": "14.2.1",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-prettier": "3.3.1",
+    "husky": "4.3.8",
+    "jsdoc": "3.6.6",
+    "lint-staged": "10.5.3",
+    "mocha": "8.2.1",
+    "np": "7.2.0",
+    "prettier": "2.2.1",
+    "sinon": "9.2.4",
+    "yeoman-assert": "3.1.1",
+    "yeoman-test": "4.0.0"
+  },
+  "engines": {
+    "node": ">=14",
+    "npm": ">=6"
+  }
 }

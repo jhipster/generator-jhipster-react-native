@@ -62,14 +62,14 @@ jobs:
           node-version: ${{ matrix.node_version }}
         # for running pipelines locally with `act`
         env:
-          RUNNER_TEMP: "/tmp/"
+          RUNNER_TEMP: '/tmp/'
       - uses: actions/setup-java@v1
         with:
           java-version: '11.x'
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
       - uses: actions/setup-node@v2.1.4
         with:
-            node-version: ${{ matrix.node_version }}
+          node-version: ${{ matrix.node_version }}
       - name: Config git variables
         run: $SCRIPT_DIR/git-config.sh
       - run: $SCRIPT_DIR/install-node-dependencies.sh
@@ -86,20 +86,20 @@ jobs:
         name: 'GENERATING: generate jhipster backend'
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-#      - uses: nick-invision/retry@v2
-#        name: 'TESTING: run detox tests'
-#        with:
-#            max_attempts: 3
-#            timeout_minutes: 60
-#            command: $SCRIPT_DIR/run-detox-tests.sh
-#            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
+      #      - uses: nick-invision/retry@v2
+      #        name: 'TESTING: run detox tests'
+      #        with:
+      #            max_attempts: 3
+      #            timeout_minutes: 60
+      #            command: $SCRIPT_DIR/run-detox-tests.sh
+      #            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
-            name: expo-app-${{ matrix.app_type }}
-            path: |
-              ${{ runner.workspace }}/${{ matrix.app_type }}/**/*
-              !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
-              !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app
+          name: expo-app-${{ matrix.app_type }}
+          path: |
+            ${{ runner.workspace }}/${{ matrix.app_type }}/**/*
+            !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
+            !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app

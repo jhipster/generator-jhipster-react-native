@@ -8,17 +8,17 @@ Configure the redirect URIs for your app in your Identity Provider's authorized 
 
 #### iOS and Android
 
--   `https://auth.expo.io/@your-expo-username/reactNativeAppName`
-    -   Use the value for `reactNativeAppName` in your `.yo-rc.json`
-    -   Use your Expo username in place of `@your-expo-username` (run `expo whoami`)
-    -   Used for [Expo's Auth Proxy](https://docs.expo.io/versions/latest/sdk/auth-session/#what--authexpoio--does-for-you)
+- `https://auth.expo.io/@your-expo-username/reactNativeAppName`
+  - Use the value for `reactNativeAppName` in your `.yo-rc.json`
+  - Use your Expo username in place of `@your-expo-username` (run `expo whoami`)
+  - Used for [Expo's Auth Proxy](https://docs.expo.io/versions/latest/sdk/auth-session/#what--authexpoio--does-for-you)
 
 #### Web
 
--   `http://localhost:19006/`
-    -   For local development with `react-native-web`
--   `https://your-app-domain.com/`
-    -   For production deployment with `react-native-web`
+- `http://localhost:19006/`
+  - For local development with `react-native-web`
+- `https://your-app-domain.com/`
+  - For production deployment with `react-native-web`
 
 ### Keycloak
 
@@ -55,8 +55,6 @@ Once your Okta app is configured, modify `app/modules/login/login.sagas.js` to u
 
 In order to authentication successfully with your React Native app, you have to do a bit more configuration in Okta. Since the React Native client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
 
-
 Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
 
 Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
-
