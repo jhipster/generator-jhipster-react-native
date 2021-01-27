@@ -32,13 +32,15 @@ adb reverse tcp:8080 tcp:8080 && adb reverse tcp:9080 tcp:9080
 
 ### Okta
 
-#### Create a New App
+**Note:** You can do the following steps the Okta Dashboard if preferred.
 
-Create a new Single Page App application in Okta's dashboard (or through `okta apps create` with the [Okta CLI](https://cli.okta.com/)). Add the redirect URIs from above.
+Using the [Okta CLI](https://cli.okta.com/), run `okta apps create`
+- For "Type of Application" choose `Native`
+- For "Redirect URI" provide `http://localhost:19006/,https://auth.expo.io/@your-expo-username/reactNativeAppName`
+  - Change `@your-expo-username` to match your Expo username (run `expo whoami`)
+  - Change `reactNativeAppName` to the value provided during generation (look in your `.yo-rc.json`)
 
-#### Configure your Client ID
-
-Once your Okta app is configured, modify `app/modules/login/login.sagas.js` to use the new app's client ID:
+Open `app/modules/login/login.sagas.js` and set `clientId` to the provided Client ID.
 
 ```js
 ...
@@ -49,12 +51,11 @@ Once your Okta app is configured, modify `app/modules/login/login.sagas.js` to u
 ...
 ```
 
+You can now login to Okta through React Native clients on iOS, Android, and Web.
+
+
 #### Add Claims to Access Token
 
-**NOTE:** These steps are only necessary if you are using JHipster v6, or JHipster v7 with a Reactive JHipster backend.
+**Note:** These steps are only necessary if you are using JHipster v6, or JHipster v7 with a Reactive JHipster backend.
 
-In order to authentication successfully with your React Native app, you have to do a bit more configuration in Okta. Since the React Native client will only send an access token to JHipster, you need to 1) add a `groups` claim to the access token and 2) add a couple more claims so the user's name will be available in JHipster.
-
-Navigate to **API** > **Authorization Servers**, click the **Authorization Servers** tab and edit the **default** one. Click the **Claims** tab and **Add Claim**. Name it "groups" and include it in the Access Token. Set the value type to "Groups" and set the filter to be a Regex of `.*`. Click **Create**.
-
-Add another claim, name it `given_name`, include it in the access token, use `Expression` in the value type, and set the value to `user.firstName`. Optionally, include it in the `profile` scope. Perform the same actions to create a `family_name` claim and use expression `user.lastName`.
+Follow the instructions under "Add Claims to Access Token" in the [JHipster Ionic ReadMe](https://github.com/oktadeveloper/generator-jhipster-ionic/blob/6d1c64082fe8ca53e44656021b3549c5708764af/README.md#add-claims-to-access-token).
