@@ -6,6 +6,10 @@ const extra = Constants.manifest?.extra ?? {};
 export default {
   // use 10.0.2.2 for Android to connect to host machine
   apiUrl: 'http://localhost:8080/',
+  <%_ if (context.authenticationType === 'oauth2') { _%>
+  // leave blank if using Keycloak
+  oktaClientId: '',
+  <%_ } _%>
   // use fixtures instead of real API requests
   useFixtures: false,
   // debug mode

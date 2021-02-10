@@ -40,18 +40,9 @@ Using the [Okta CLI](https://cli.okta.com/), run `okta apps create`
   - Change `@your-expo-username` to match your Expo username (run `expo whoami`)
   - Change `reactNativeAppName` to the value provided during generation (look in your `.yo-rc.json`)
 
-Open `app/modules/login/login.sagas.js` and set `clientId` to the provided Client ID.
+Copy the provided `clientId` to `app/config/app-config.js`, and set `oktaClientId` to the copied value.  This is loaded in `login.sagas.js` during authentication.
 
-```js
-...
-  const { issuer, clientId } = authInfo.data;
-  // if using Okta for auth, configure clientId here and remove from above
-  // const clientId = '0favl263f83H1kxJk0h7';
-  const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
-...
-```
-
-You can now login to Okta through React Native clients on iOS, Android, and Web.
+You can now log in to Okta through React Native clients on iOS, Android, and Web.
 
 
 #### Add Claims to Access Token
