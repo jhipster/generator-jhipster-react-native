@@ -37,6 +37,12 @@ function askNamePrompt(meta) {
       name: 'appName',
       message: 'What do you want to name your React Native application?',
       default: 'RnApp',
+      validate: input => {
+        if (!/^([a-zA-Z0-9_]*)$/.test(input)) {
+          return 'Your base name cannot contain special characters or a blank space';
+        }
+        return true;
+      },
     },
   ];
 
