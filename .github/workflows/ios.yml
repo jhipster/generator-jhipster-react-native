@@ -14,13 +14,14 @@ defaults:
     shell: bash
 jobs:
   generate:
-    name: e2e-${{ matrix.app_type }}
+    name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
     runs-on: macos-10.15
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
-    timeout-minutes: 60
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
+        jhipster_version: [beta]
         node_version: [14.x]
         app_type:
           - JwtApp
@@ -52,6 +53,7 @@ jobs:
       JHI_DTO: ${{ matrix.dto }}
       JHI_WEBSOCKETS: ${{ matrix.websockets }}
       JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
+      JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
@@ -80,13 +82,6 @@ jobs:
         name: 'GENERATING: generate jhipster backend'
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-      #      - uses: nick-invision/retry@v2
-      #        name: 'TESTING: run detox tests'
-      #        with:
-      #            max_attempts: 3
-      #            timeout_minutes: 60
-      #            command: $SCRIPT_DIR/run-detox-tests.sh
-      #            on_retry_command: kill $(lsof -ti:8080,19000-19010); pushd ${{ runner.workspace }}/backend; ./mvnw clean -ntp; popd;
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
       - uses: actions/upload-artifact@v2
