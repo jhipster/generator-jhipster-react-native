@@ -97,9 +97,10 @@ module.exports = class extends AppGenerator {
         this.fs.writeJSON('app.json', appConfig);
       },
       appendFiles: appendFiles.bind(this),
-      replacePackageJsonVersions() {
+      replacePackageJsonVersionsInGeneratedApp() {
         this.debug('Replacing Package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));
+        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.expo.json'));
       },
       composeEntities() {
         if (!this.withEntities) return;
