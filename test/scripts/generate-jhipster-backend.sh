@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -exo pipefail
 
 # switch to a directory to generate the backend
 rm -rf ../backend && mkdir ../backend && cd ../backend

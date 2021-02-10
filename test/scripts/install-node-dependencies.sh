@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-set -ex
+set -exo pipefail
 
-npm i -g expo-cli generator-jhipster@beta detox-cli
+npm i -g expo-cli generator-jhipster@$JHIPSTER_VERSION detox-cli

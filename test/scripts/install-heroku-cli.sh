@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ex
+set -exo pipefail
 
 if [[ $OS == *"ubuntu"* ]]; then
     sudo snap install --classic heroku
