@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
 const AppGenerator = require('generator-jhipster/generators/app');
+const jhipsterUtils = require('generator-jhipster/generators/utils');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
 const {
@@ -73,6 +74,7 @@ module.exports = class extends AppGenerator {
         // load config after prompting to allow loading from backend .yo-rc.json
         this.loadAppConfig(this.config.getAll(), this.context);
         this.loadServerConfig(this.config.getAll(), this.context);
+        this.hipsterImage = jhipsterUtils.stringHashCode(this.context.baseName) % 4;
       },
       checkAppAuthType() {
         // exit on invalid auth type
