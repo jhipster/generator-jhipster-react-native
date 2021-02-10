@@ -22,7 +22,6 @@
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\""
   },
   "dependencies": {
-    "@react-native-community/async-storage": "REPLACE_WITH_VERSION",
     "apisauce": "REPLACE_WITH_VERSION",
     "format-json": "REPLACE_WITH_VERSION",
     "identity-obj-proxy": "REPLACE_WITH_VERSION",
@@ -46,28 +45,29 @@
     "@react-navigation/stack": "REPLACE_WITH_VERSION",
     "@react-navigation/native": "REPLACE_WITH_VERSION",
     "@react-navigation/devtools":"REPLACE_WITH_VERSION",
-    "react-native-gesture-handler": "REPLACE_WITH_VERSION",
-    "react-native-reanimated": "REPLACE_WITH_VERSION",
     "react-native-safe-area-context": "REPLACE_WITH_VERSION",
-    "react-native-screens": "REPLACE_WITH_VERSION",
     "react-native-sectioned-multi-select": "REPLACE_WITH_VERSION",
-    "react-native-web": "REPLACE_WITH_VERSION",
-    "@expo/vector-icons": "REPLACE_WITH_VERSION",
-    "expo-constants": "REPLACE_WITH_VERSION",
-    "expo-linking": "REPLACE_WITH_VERSION",
-    "expo-splash-screen": "REPLACE_WITH_VERSION",
     "formik": "REPLACE_WITH_VERSION",
-    "@react-native-community/datetimepicker": "REPLACE_WITH_VERSION",
-    "@react-native-picker/picker": "REPLACE_WITH_VERSION",
     "react-datepicker": "REPLACE_WITH_VERSION",
     "react-native-modal-datetime-picker": "REPLACE_WITH_VERSION",
     "react-native-picker-select": "REPLACE_WITH_VERSION",
+    "yup": "REPLACE_WITH_VERSION",
+    "@react-native-community/async-storage": "EXPO_REPLACE_WITH_VERSION",
+    "react-native-gesture-handler": "EXPO_REPLACE_WITH_VERSION",
+    "react-native-reanimated": "EXPO_REPLACE_WITH_VERSION",
+    "react-native-screens": "EXPO_REPLACE_WITH_VERSION",
+    "react-native-web": "EXPO_REPLACE_WITH_VERSION",
+    "@expo/vector-icons": "EXPO_REPLACE_WITH_VERSION",
+    "expo-constants": "EXPO_REPLACE_WITH_VERSION",
+    "expo-linking": "EXPO_REPLACE_WITH_VERSION",
+    "@react-native-community/datetimepicker": "EXPO_REPLACE_WITH_VERSION",
+    "@react-native-picker/picker": "EXPO_REPLACE_WITH_VERSION",
     <%_ if (context.authenticationType === 'oauth2') { _%>
-    "expo-auth-session": "REPLACE_WITH_VERSION",
-    "expo-web-browser": "REPLACE_WITH_VERSION",
-    "expo-random": "REPLACE_WITH_VERSION",
+    "expo-auth-session": "EXPO_REPLACE_WITH_VERSION",
+    "expo-web-browser": "EXPO_REPLACE_WITH_VERSION",
+    "expo-random": "EXPO_REPLACE_WITH_VERSION",
     <%_ } _%>
-    "yup": "REPLACE_WITH_VERSION"
+    "expo-splash-screen": "EXPO_REPLACE_WITH_VERSION"
   },
   "devDependencies": {
     "@storybook/addons": "REPLACE_WITH_VERSION",
@@ -81,7 +81,6 @@
     "babel-jest": "REPLACE_WITH_VERSION",
     "jest": "REPLACE_WITH_VERSION",
     "expect": "REPLACE_WITH_VERSION",
-    "jest-expo": "REPLACE_WITH_VERSION",
     "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
@@ -95,12 +94,14 @@
     "expo-detox-hook": "REPLACE_WITH_VERSION",
     "jest-circus": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    "@expo/webpack-config": "REPLACE_WITH_VERSION",
     "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
     "patch-package": "REPLACE_WITH_VERSION",
-    "rimraf": "REPLACE_WITH_VERSION"
+    "typescript": "REPLACE_WITH_VERSION",
+    "rimraf": "REPLACE_WITH_VERSION",
+    "jest-expo": "EXPO_REPLACE_WITH_VERSION",
+    "@expo/webpack-config": "EXPO_REPLACE_WITH_VERSION"
   },
   <%_ if (!context.skipCommitHook) { _%>
   "lint-staged": {
