@@ -1,5 +1,8 @@
 import { call, put, select } from 'redux-saga/effects'
 
+<%_ if (context.authenticationType === 'oauth2') { _%>
+import AppConfig from '../../config/app-config'
+<%_ } _%>
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
 <%_ if (context.websocket) { _%>
@@ -23,9 +26,7 @@ export function * login (api) {
       yield put(AuthInfoActions.authInfoRequest());
     }
     const { issuer, clientId } = authInfo;
-    // if using Okta for auth, configure clientId here and remove from above
-    // const clientId = '0oaw96ef1afyZPiMr0h7';
-    const { accessToken } = yield call(doOauthPkceFlow, clientId, issuer);
+    const { accessToken } = yield call(doOauthPkceFlow, AppConfig.oktaClientId || clientId, issuer);
     if (accessToken) {
       yield call(api.setAuthToken, accessToken);
       yield put(LoginActions.loginSuccess(accessToken));
