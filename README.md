@@ -51,14 +51,15 @@ mkdir SampleApp && cd SampleApp
 To generate an app, run the following command:
 
 ```sh
+# JHipster v6.x+
+rnhipster
+
 # JHipster v7+
 jhipster --blueprints react-native
 
 # JHipster v7+ JDL Application
 jhipster --blueprints react-native jdl ./path-to-your-app-config.jdl
 
-# JHipster v6.x
-rnhipster
 ```
 
 Answer the prompts:
@@ -71,6 +72,11 @@ After generating, you can import entities with the [entity generator and JDL imp
 ### Configuration
 
 - `app/config/app-config.js` contains your JHipster API URL (default: `http://localhost:8080/`)
+
+#### CORS
+
+- In dev, for the Web build, add `http://localhost:19006` as an allowed origin in the backend CORS config.
+- In production, you will need to enable CORS for your deployment domain.
 
 #### Notes for Android
 
