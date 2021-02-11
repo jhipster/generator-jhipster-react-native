@@ -7,7 +7,7 @@
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
-<img src="https://raw.githubusercontent.com/ruddell/ignite-jhipster/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
+<img src="https://raw.githubusercontent.com/ruddell/generator-jhipster-react-native/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
 
 ## Docs
 
