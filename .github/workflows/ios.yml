@@ -8,6 +8,7 @@ on:
         default: 'false'
   push:
     branches:
+      - main
   pull_request:
 defaults:
   run:
