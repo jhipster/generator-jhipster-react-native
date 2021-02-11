@@ -14,6 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        jhipster_version: [beta]
         node_version: [14.15.0]
         os: [ubuntu-latest]
     env:
@@ -21,6 +22,7 @@ jobs:
       OS: ${{ matrix.os }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
     steps:
       - uses: actions/checkout@v2
         name: 'SETUP: checkout generator-react-native'
