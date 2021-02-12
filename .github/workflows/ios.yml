@@ -71,8 +71,13 @@ jobs:
         run: $SCRIPT_DIR/git-config.sh
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
-      - run: $SCRIPT_DIR/install-detox.sh || $SCRIPT_DIR/install-detox.sh
+      - uses: nick-invision/retry@v2
         name: 'TOOLS: installing Detox and its dependencies'
+        with:
+          max_attempts: 3
+          timeout_minutes: 60
+          command: $SCRIPT_DIR/install-detox.sh
+          retry_wait_seconds: 15
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
       - run: npm i && npm link
