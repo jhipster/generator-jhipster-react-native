@@ -9,6 +9,8 @@
 
 <img src="https://raw.githubusercontent.com/ruddell/generator-jhipster-react-native/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
 
+> Check out the [blog post](https://dev.to/ruddell/jhipster-react-native-demo-1c54) or [YouTube](https://www.youtube.com/watch?v=zQMg1E7meHw) video for a full demo of JHipster React Native.
+
 ## Docs
 
 - [Getting Started](README.md#getting-started)
