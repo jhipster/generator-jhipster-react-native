@@ -93,7 +93,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: ${{ always() }}
         with:
-          name: expo-app-${{ matrix.app_type }}
+          name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
           path: |
             ${{ runner.workspace }}/${{ matrix.app_type }}/**/*
             !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
