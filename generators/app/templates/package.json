@@ -30,7 +30,7 @@
     "react-datepicker": "3.6.0",
     "react-native-modal-datetime-picker": "9.2.0",
     "react-native-picker-select": "8.0.4",
-    "yup": "0.32.8"
+    "yup": "0.32.9"
   },
   "devDependencies": {
     "@storybook/addons": "5.3.21",
