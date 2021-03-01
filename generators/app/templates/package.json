@@ -28,7 +28,7 @@
     "react-native-safe-area-context": "3.1.9",
     "formik": "2.2.6",
     "react-datepicker": "3.4.1",
-    "react-native-modal-datetime-picker": "9.1.0",
+    "react-native-modal-datetime-picker": "9.2.0",
     "react-native-picker-select": "8.0.4",
     "yup": "0.32.8"
   },
