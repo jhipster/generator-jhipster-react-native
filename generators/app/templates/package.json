@@ -27,10 +27,10 @@
     "@react-navigation/devtools":"5.1.20",
     "react-native-safe-area-context": "3.1.9",
     "formik": "2.2.6",
-    "react-datepicker": "3.4.1",
+    "react-datepicker": "3.6.0",
     "react-native-modal-datetime-picker": "9.2.0",
     "react-native-picker-select": "8.0.4",
-    "yup": "0.32.8"
+    "yup": "0.32.9"
   },
   "devDependencies": {
     "@storybook/addons": "5.3.21",
@@ -54,9 +54,9 @@
     "expo-detox-hook": "1.0.10",
     "redux-devtools-extension": "2.13.8",
     "mockery": "2.1.0",
-    "typescript": "4.1.5",
+    "typescript": "4.2.2",
     "prettier": "2.2.1",
-    "patch-package": "6.4.0",
+    "patch-package": "6.4.2",
     "rimraf": "3.0.2"
   }
 }
