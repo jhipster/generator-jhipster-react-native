@@ -23,7 +23,7 @@
     "@react-navigation/drawer": "5.12.3",
     "@react-navigation/stack": "5.14.3",
     "react-native-sectioned-multi-select": "0.8.1",
-    "@react-navigation/native": "5.9.2",
+    "@react-navigation/native": "5.9.3",
     "@react-navigation/devtools":"5.1.20",
     "react-native-safe-area-context": "3.1.9",
     "formik": "2.2.6",
