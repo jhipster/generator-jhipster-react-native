@@ -33,7 +33,7 @@
     "yup": "0.32.8"
   },
   "devDependencies": {
-    "@storybook/addons": "5.3.21",
+    "@storybook/addons": "6.1.20",
     "@storybook/react-native": "5.3.23",
     "@storybook/theming": "5.3.21",
     "babel-preset-env": "1.7.0",
