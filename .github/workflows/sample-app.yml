@@ -36,7 +36,7 @@ jobs:
           path: sample-app
       - name: 'SETUP: git history'
         run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v2.1.4
+      - uses: actions/setup-node@v2.1.5
         with:
           node-version: ${{ matrix.node_version }}
       - name: 'TOOLS: configure git'
