@@ -52,7 +52,7 @@
     "detox": "18.6.2",
     "detox-expo-helpers": "git+https://github.com/ruddell/detox-expo-helpers.git#9d02be37c9864dc470fd692f0d69075614b75b31",
     "expo-detox-hook": "1.0.10",
-    "redux-devtools-extension": "2.13.8",
+    "redux-devtools-extension": "2.13.9",
     "mockery": "2.1.0",
     "typescript": "4.2.3",
     "prettier": "2.2.1",
