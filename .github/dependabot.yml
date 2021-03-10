@@ -4,15 +4,21 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+      # Check for npm updates on Wednesday due to Expo updates
+      day: 'wednesday'
     open-pull-requests-limit: 30
   - package-ecosystem: 'npm'
     directory: '/generators/app/templates/'
     schedule:
       interval: 'weekly'
+      # Check for npm updates on Wednesday due to Expo updates
+      day: 'wednesday'
     open-pull-requests-limit: 30
     versioning-strategy: increase
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'weekly'
+      # Check for npm updates on Wednesday due to Expo updates
+      day: 'wednesday'
     open-pull-requests-limit: 30
