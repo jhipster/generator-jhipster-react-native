@@ -58,7 +58,7 @@
     "shelljs": "0.8.4"
   },
   "devDependencies": {
-    "chai": "4.3.3",
+    "chai": "4.3.4",
     "ejs-lint": "1.1.0",
     "eslint": "7.21.0",
     "eslint-config-airbnb-base": "14.2.1",
