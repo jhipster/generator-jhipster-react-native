@@ -80,3 +80,15 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // exchange the received code for an access token
   return exchangeCodeForToken(clientId, redirectUri, discovery, code, codeVerifier);
 }
+
+export async function logoutFromIdp(clientId: string, issuer: string, idToken: string) {
+  if (Platform.OS === 'web') {
+    const discovery = await getDiscovery(issuer);
+    const { endSessionEndpoint } = discovery;
+    // whether or not to use the expo proxy
+    const useProxy = Platform.select({ web: false, default: true });
+    // set up redirect uri
+    const redirectUri = makeRedirectUri({ useProxy });
+    window.location.href = `${endSessionEndpoint}?id_token_hint=${idToken}&client_id=${clientId}&post_logout_redirect_uri=${redirectUri}`;
+  }
+}

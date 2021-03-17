@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   loginRequest: ['username', 'password'],
-  loginSuccess: ['authToken'],
+  loginSuccess: ['authToken', 'idToken'],
   loginFailure: ['error'],
   logoutRequest: null,
   logoutSuccess: null,
@@ -19,6 +19,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   authToken: null,
+  idToken: null,
   error: null,
   fetching: false,
   loading: false
@@ -31,8 +32,8 @@ export const request = (state) => state.merge({ fetching: true, error: null })
 
 // we've successfully logged in
 export const success = (state, data) => {
-  const { authToken } = data
-  return state.merge({ fetching: false, error: null, authToken })
+  const { authToken, idToken } = data;
+  return state.merge({ fetching: false, error: null, authToken, idToken });
 }
 
 // we've had a problem logging in
@@ -44,7 +45,7 @@ export const load = (state) => state.merge({ loading: true })
 export const loadSuccess = (state) => state.merge({ loading: false })
 
 // we need to logout, meaning clear access tokens and account
-export const logoutRequest = state => INITIAL_STATE
+export const logoutRequest = (state) => state;
 
 // we've logged out
 export const logoutSuccess = state => INITIAL_STATE
