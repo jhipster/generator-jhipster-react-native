@@ -36,7 +36,7 @@ adb reverse tcp:8080 tcp:8080 && adb reverse tcp:9080 tcp:9080
 
 Using the [Okta CLI](https://cli.okta.com/), run `okta apps create`
 - For "Type of Application" choose `Native`
-- For "Redirect URI" provide `http://localhost:19006/,https://auth.expo.io/@your-expo-username/reactNativeAppName`
+- For "Redirect URI" and "Post Logout Redirect URI" provide `http://localhost:19006/,https://auth.expo.io/@your-expo-username/reactNativeAppName`
   - Change `@your-expo-username` to match your Expo username (run `expo whoami`)
   - Change `reactNativeAppName` to the value provided during generation (look in your `.yo-rc.json`)
 
