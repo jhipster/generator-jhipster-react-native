@@ -1,7 +1,7 @@
 import FixtureAPI from '../../../../app/shared/services/fixture-api'
 import { call, put, select } from 'redux-saga/effects'
 
-import { login, logout, loginLoad, selectAuthToken<%_ if (context.authenticationType === 'oauth2') { _%>, selectAuthInfo<%_ } _%> } from '../../../../app/modules/login/login.sagas'
+import { login, logout, loginLoad, selectAuthToken<%_ if (context.authenticationType === 'oauth2') { _%>, selectAuthInfo, selectIdToken<%_ } _%> } from '../../../../app/modules/login/login.sagas'
 import LoginActions from '../../../../app/modules/login/login.reducer'
 import AccountActions from '../../../../app/shared/reducers/account.reducer'
 
@@ -13,13 +13,14 @@ test('login success path', () => {
   const step = stepper(login(FixtureAPI, oauthInfo))
   const sampleOauthResponse = {
     accessToken: 'test-access-token',
+    idToken: 'test-id-token',
     refreshToken: 'test-refresh-token'
   }
   expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
   // await the response from the oauth2 issuer
   step(oauthInfo)
   expect(step(sampleOauthResponse)).toEqual(call(FixtureAPI.setAuthToken, 'test-access-token'))
-  expect(step()).toEqual(put(LoginActions.loginSuccess('test-access-token')))
+  expect(step()).toEqual(put(LoginActions.loginSuccess('test-access-token', 'test-id-token')));
   // Request the account details
   expect(step()).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
@@ -91,6 +92,13 @@ test('logout success path', () => {
   expect(step()).toEqual(put(AccountActions.accountReset()))
   expect(step()).toEqual(put(AccountActions.accountRequest()))
   expect(step()).toEqual(put(LoginActions.logoutSuccess()))
+  <%_ if (context.authenticationType === 'oauth2') { _%>
+  const oauthInfo = FixtureAPI.getOauthInfo();
+  expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
+  expect(step('test-id-token')).toEqual(select(selectIdToken));
+  // await the redirect from the oauth2 issuer logout endpoint
+  step();
+  <%_ } _%>
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
 test('selects the auth token', () => {
