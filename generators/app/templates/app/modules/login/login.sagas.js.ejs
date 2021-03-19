@@ -74,12 +74,12 @@ export function * logout (api) {
   yield call(api.removeAuthToken)
   yield put(AccountActions.accountReset())
   yield put(AccountActions.accountRequest())
+  yield put(LoginActions.logoutSuccess())
   <%_ if (context.authenticationType === 'oauth2') { _%>
   const { clientId, issuer } = yield select(selectAuthInfo);
   const idToken = yield select(selectIdToken);
   yield call(logoutFromIdp, AppConfig.oktaClientId || clientId, issuer, idToken);
   <%_ } _%>
-  yield put(LoginActions.logoutSuccess())
   yield put({ type: 'RELOGIN_ABORT' })
 }
 
