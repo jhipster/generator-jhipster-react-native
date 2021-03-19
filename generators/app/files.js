@@ -4,6 +4,7 @@ const files = {
       templates: [
         '.prettierrc.js',
         '.prettierignore',
+        '.npmrc',
         '.editorconfig',
         '.eslintrc.js',
         '.gitattributes',

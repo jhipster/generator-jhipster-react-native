@@ -1,5 +1,7 @@
 const expectedFiles = {
   defaultApp: [
+    '.npmrc',
+    '.prettierignore',
     '.prettierrc.js',
     '.editorconfig',
     '.eslintrc.js',
