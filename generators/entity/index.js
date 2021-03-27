@@ -32,7 +32,6 @@ module.exports = class extends EntityGenerator {
     // skipClient has no effect for generator-jhipster-react-native since it only generates a client
     this.skipClient = false;
     this.jhipsterConfig.skipClient = false;
-    this.registerPrettierTransform();
   }
 
   get initializing() {

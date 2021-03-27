@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jhipster_version: [beta]
+        jhipster_version: [7]
         node_version: [14.x]
         app_type:
           - JwtApp
