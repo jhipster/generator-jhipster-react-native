@@ -24,7 +24,7 @@ module.exports = class extends AppGenerator {
     const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
 
     if (!jhContext) {
-      this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprint react-native')}`);
+      this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
     }
 
     this.patchInFile = patchInFile.bind(this);

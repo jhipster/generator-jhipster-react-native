@@ -49,8 +49,11 @@ module.exports = class extends EntityGenerator {
   }
 
   get loading() {
+    // skipping composing
+    const { loadEntity, shareEntity } = super._loading();
     return {
-      ...super._loading(),
+      loadEntity,
+      shareEntity,
       loadVariables: loadVariables.bind(this),
     };
   }
@@ -76,6 +79,10 @@ module.exports = class extends EntityGenerator {
         }
       },
     };
+  }
+
+  get preparingFields() {
+    return super._preparingFields();
   }
 
   get preparingRelationships() {

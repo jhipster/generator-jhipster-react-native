@@ -42,7 +42,7 @@ module.exports = class extends EntitiesGenerator {
         const context = this.context;
         this.getExistingEntityNames().forEach(entityName => {
           if (this.options.composedEntities && this.options.composedEntities.includes(entityName)) return;
-          this.composeWithJHipster('jhipster-react-native:entity', {
+          this.composeWithJHipster('jhipster-react-native:entity', [entityName], {
             regenerate: true,
             skipDbChangelog: this.jhipsterConfig.databaseType === 'sql' || this.options.skipDbChangelog,
             skipInstall: true,
