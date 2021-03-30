@@ -69,10 +69,9 @@ module.exports = class extends EntityGenerator {
         this.context.getEntityFormFieldType = getEntityFormFieldType.bind(this);
         this.context.entityNameSnakeCase = this._.snakeCase(this.context.entityNameCapitalized);
         // DTO compatability for v6
-        this.context.useOldDTOCode =
-          this.context.jhipsterVersion &&
-          semver.major(semver.coerce(this.context.jhipsterVersion)) === '6' &&
-          this.context.dto === 'mapstruct';
+        const jhipsterVersion6 = this.context.jhipsterVersion && semver.major(semver.coerce(this.context.jhipsterVersion)) === '6';
+        this.context.useOldPutMappingCode = jhipsterVersion6;
+        this.context.useOldDTOCode = jhipsterVersion6 && this.context.dto === 'mapstruct';
         // log the context for debugging purposes
         if ((this.configOptions && this.configOptions.isDebugEnabled) || (this.options && this.options.debug)) {
           console.log(this.context);

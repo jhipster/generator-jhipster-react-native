@@ -125,7 +125,7 @@ function <%= context.entityNameCapitalized %>EditScreen(props) {
         setError(errorUpdating && errorUpdating.detail ? errorUpdating.detail : 'Something went wrong updating the entity');
       } else if (updateSuccess) {
         setError('');
-        isNewEntity ? navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id }) : navigation.pop();
+        isNewEntity || !navigation.canGoBack() ? navigation.replace('<%= context.entityNameCapitalized %>Detail', { entityId: <%= context.entityInstance %>?.id }) : navigation.pop();
       }
     }
   }, [updateSuccess, errorUpdating, navigation]);
