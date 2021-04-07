@@ -23,7 +23,7 @@
     "@react-navigation/drawer": "5.12.4",
     "@react-navigation/stack": "5.14.4",
     "react-native-sectioned-multi-select": "0.8.1",
-    "@react-navigation/native": "5.9.3",
+    "@react-navigation/native": "5.9.4",
     "@react-navigation/devtools":"5.1.21",
     "formik": "2.2.6",
     "react-datepicker": "3.6.0",
