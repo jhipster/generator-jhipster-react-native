@@ -20,7 +20,7 @@
     "sockjs-client": "1.5.1",
     "net": "1.0.2",
     "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/drawer": "5.12.4",
+    "@react-navigation/drawer": "5.12.5",
     "@react-navigation/stack": "5.14.3",
     "react-native-sectioned-multi-select": "0.8.1",
     "@react-navigation/native": "5.9.3",
