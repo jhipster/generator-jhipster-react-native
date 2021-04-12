@@ -50,7 +50,7 @@ function askForBackendJson() {
       store: true,
       default: '../backend',
       validate: input => {
-        let fromPath = '';
+        let fromPath;
         if (path.isAbsolute(input)) {
           fromPath = `${input}/${context.filename}`;
         } else {
