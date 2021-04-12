@@ -26,10 +26,10 @@ module.exports = {
 };
 
 function askForBackendJson() {
-  const context = this.context;
-  this.context.filename = `.jhipster/${context.name}.json`;
+  const { context } = this;
+  context.filename = `.jhipster/${context.name}.json`;
 
-  if (this.context.entityExisted || this.context.configExisted) {
+  if (context.entityExisted || context.configExisted) {
     context.entityJSON = this.entityStorage.getAll();
     return;
   }
