@@ -6,8 +6,6 @@ entity Country {
 	countryName String
 }
 
-// an ignored comment
-/** not an ignored comment */
 entity Location {
 	streetAddress String,
 	postalCode String,
@@ -19,22 +17,12 @@ entity Department {
 	departmentName String required
 }
 
-/**
- * Task entity.
- * @author The JHipster team.
- */
 entity Task {
 	title String,
 	description String
 }
 
-/**
- * The Employee entity.
- */
 entity Employee {
-	/**
-	* The firstname attribute.
-	*/
 	firstName String,
 	lastName String,
 	email String,
@@ -64,16 +52,9 @@ relationship ManyToMany {
 	Job{task(title)} to Task{job(jobTitle)}
 }
 
-// defining multiple OneToMany relationships with comments
 relationship OneToMany {
 	Employee{job(jobTitle)} to Job{employee(email)},
-	/**
-	* A relationship
-	*/
 	Department{employee(email)} to
-	/**
-	* Another side of the same relationship
-	*/
 	Employee{department(departmentName)}
 }
 
@@ -84,19 +65,13 @@ relationship ManyToOne {
   Employee{manager} to Employee
 }
 
-// defining multiple oneToOne relationships
 relationship OneToOne {
 	JobHistory{job} to Job,
 	JobHistory{department} to Department,
 	JobHistory{employee} to Employee
 }
 
-// Set pagination options
 paginate JobHistory, Employee with infinite-scroll
 paginate Job with pagination
 
-// Set service options to all except few
 service all with serviceClass
-
-// Set an angular suffix
-// angularSuffix * with mySuffix
