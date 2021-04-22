@@ -32,6 +32,7 @@
     "yup": "0.32.9"
   },
   "devDependencies": {
+    "expo": "41",
     "expo-cli": "4.3.5",
     "@storybook/addons": "5.3.21",
     "@storybook/react-native": "5.3.25",
