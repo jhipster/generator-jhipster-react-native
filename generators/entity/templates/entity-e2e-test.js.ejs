@@ -208,7 +208,7 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
 
     // delete
     await scrollTo('<%= context.entityInstance %>DeleteButton', '<%= context.entityInstance %>DetailScrollView')
-    await tapFirstElementByLabel('<%= context.entityNameCapitalized %> Delete Button');
+    await waitThenTapButton('<%= context.entityInstance %>DeleteButton');
     await waitForElementToBeVisibleById('<%= context.entityInstance %>DeleteModal');
     await waitThenTapButton('deleteButton')
     await waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
