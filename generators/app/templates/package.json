@@ -3,7 +3,7 @@
   "description": "Dependencies managed by Blueprint - use latest versions",
   "version": "0.0.1",
   "dependencies": {
-    "apisauce": "2.0.1",
+    "apisauce": "2.1.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.21",
