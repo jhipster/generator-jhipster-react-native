@@ -1,5 +1,5 @@
 const { DetoxCircusEnvironment, SpecReporter, WorkerAssignReporter } = require('detox/runners/jest-circus');
-const { init: initExpo } = require('detox-expo-helpers');
+const { init: initExpo } = require('@ruddell/detox-expo-helpers');
 
 class CustomDetoxEnvironment extends DetoxCircusEnvironment {
   constructor(config, context) {

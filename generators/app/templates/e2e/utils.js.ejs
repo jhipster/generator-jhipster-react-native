@@ -1,4 +1,4 @@
-const DetoxExpoHelpers = require('detox-expo-helpers');
+const DetoxExpoHelpers = require('@ruddell/detox-expo-helpers');
 
 const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
