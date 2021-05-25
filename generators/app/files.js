@@ -115,7 +115,7 @@ const files = {
         'app/shared/util/pagination-utils.js',
         'app/shared/util/snake-to-camel-case.js',
         'app/shared/util/url-utils.js',
-        'patches/react-native-keyboard-aware-scroll-view+0.9.3.patch',
+        'patches/react-native-keyboard-aware-scroll-view+0.9.4.patch',
         'patches/react-native-sectioned-multi-select+0.8.1.patch',
         'storybook/addons.js',
         'storybook/index.js',
