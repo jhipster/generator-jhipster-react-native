@@ -56,8 +56,7 @@ jobs:
           cd sample-app
           find . -not -name ".yo-rc.json" -type f -maxdepth 1 -delete
           rm .git/index
-          rm -rf src
-          rm -rf node_modules
+          rm -rf app assets e2e patches storybook test
           jhipster --no-insight --skip-checks --skip-install --force --with-entities
           jhipster heroku --no-insight --skip-install --force --skip-deploy
           sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
@@ -66,6 +65,7 @@ jobs:
           git add .
           git status
           git commit -m "Generate the application with the ${{ github.ref }} version" --allow-empty
+          git tag "${{ github.ref }}"
       - name: 'PUSH: push the updated sample app to Expo'
         run: |
           cd sample-app
@@ -76,3 +76,4 @@ jobs:
           repository: ruddell/jhipster-sample-app-react-native
           github_token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
           directory: sample-app
+          tags: true
