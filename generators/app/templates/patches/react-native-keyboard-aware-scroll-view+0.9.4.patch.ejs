@@ -1,10 +1,8 @@
-Fixes jumpiness during scroll to a focused input. See issue:
-https://github.com/APSL/react-native-keyboard-aware-scroll-view/issues/418
 diff --git a/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js b/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
-index 9710dda..f3eb554 100644
+index 3d94b82..05e5144 100644
 --- a/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
 +++ b/node_modules/react-native-keyboard-aware-scroll-view/lib/KeyboardAwareHOC.js
-@@ -298,18 +298,17 @@ function KeyboardAwareHOC(
+@@ -300,18 +300,17 @@ function KeyboardAwareHOC(
        if (keyboardOpeningTime === undefined) {
          keyboardOpeningTime = this.props.keyboardOpeningTime || 0
        }
@@ -32,5 +30,5 @@ index 9710dda..f3eb554 100644
 +          });
 +      }
      }
-
+ 
      scrollIntoView = async (
