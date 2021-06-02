@@ -82,9 +82,14 @@ if [ "$JHI_RECORD_VIDEO" = "true" ] ; then
   DETOX_RECORD_VIDEO="failing"
 fi
 
+DETOX_SCREENSHOTS="none"
+if [ "$JHI_SCREENSHOTS" = "true" ] ; then
+  DETOX_SCREENSHOTS="failing"
+fi
+
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  npm run test:e2e -- --record-videos $DETOX_RECORD_VIDEO
+  npm run test:e2e -- --record-videos $DETOX_RECORD_VIDEO --take-screenshots $DETOX_SCREENSHOTS
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release
