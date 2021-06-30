@@ -70,7 +70,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11.x'
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/setup-node@v2.2.0
         with:
           node-version: ${{ matrix.node_version }}
       - name: Config git variables
