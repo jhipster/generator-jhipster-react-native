@@ -77,7 +77,7 @@ const toggleSwitchToValue = async (switchId, targetValue) => {
 const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 'slow') => {
   await waitFor(element(by.id(fieldId)))
     .toBeVisible()
-    .whileElement(by.type('ABI41_0_0RCTCustomScrollView').withAncestor(by.id(listId)))
+    .whileElement(by.type('ABI42_0_0RCTCustomScrollView').withAncestor(by.id(listId)))
     .scroll(500, 'down');
 };
 

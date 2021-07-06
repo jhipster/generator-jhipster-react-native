@@ -19,7 +19,7 @@
     "webstomp-client": "1.2.6",
     "sockjs-client": "1.5.1",
     "net": "1.0.2",
-    "@react-native-community/masked-view": "0.1.11",
+    "@react-native-masked-view/masked-view": "0.2.5",
     "@react-navigation/drawer": "5.12.5",
     "@react-navigation/stack": "5.14.5",
     "react-native-sectioned-multi-select": "0.8.1",
@@ -32,8 +32,8 @@
     "yup": "0.32.9"
   },
   "devDependencies": {
-    "expo": "41",
-    "expo-cli": "4.7.2",
+    "expo": "42",
+    "expo-cli": "4.7.3",
     "@storybook/addons": "5.3.21",
     "@storybook/react-native": "5.3.25",
     "@storybook/theming": "5.3.21",
