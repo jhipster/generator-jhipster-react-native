@@ -1,6 +1,6 @@
 {
   "name": "generator-jhipster-react-native",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "description": "React Native Blueprint for existing JHipster Apps",
   "keywords": [
     "yeoman-generator",
