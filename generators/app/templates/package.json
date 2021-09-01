@@ -50,7 +50,7 @@
     "jest-circus": "26.6.3",
     "@react-native-community/eslint-config": "3.0.0",
     "lint-staged": "11.0.0",
-    "detox": "18.18.1",
+    "detox": "18.20.3",
     "@ruddell/detox-expo-helpers": "0.7.0",
     "expo-detox-hook": "1.0.10",
     "redux-devtools-extension": "2.13.9",
