@@ -44,7 +44,7 @@ jobs:
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v2.3.5
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
       - uses: actions/setup-node@v2.2.0
         with:
