@@ -4,8 +4,8 @@ Currently, Detox only supports iOS/macOS and does not support tests requiring au
 
 If enabled during generation, [Detox](https://github.com/wix/Detox) is configured for the project. Sample tests are available for the account screens, and are generated for entity screens when you add an entity. For example:
 
-- [`e2e/settings-screen.spec.js`](https://github.com/ruddell/generator-jhipster-react-native/blob/main/generators/app/templates/e2e/account/settings-screen.spec.js.ejs)
-- [`e2e/login-screen.spec.js`](https://github.com/ruddell/generator-jhipster-react-native/blob/main/generators/app/templates/e2e/account/login-screen.spec.js.ejs)
+- [`e2e/settings-screen.spec.js`](https://github.com/jhipster/generator-jhipster-react-native/blob/main/generators/app/templates/e2e/account/settings-screen.spec.js.ejs)
+- [`e2e/login-screen.spec.js`](https://github.com/jhipster/generator-jhipster-react-native/blob/main/generators/app/templates/e2e/account/login-screen.spec.js.ejs)
 
 To run the Detox tests:
 

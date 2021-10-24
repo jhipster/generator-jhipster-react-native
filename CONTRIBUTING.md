@@ -5,7 +5,7 @@
 Fork the repository and clone it to your workspace. Then add this repository as the upstream repository:
 
 ```sh
-git remote add upstream https://github.com/ruddell/generator-jhipster-react-native.git
+git remote add upstream https://github.com/jhipster/generator-jhipster-react-native.git
 ```
 
 ## Running Local Blueprint for Development

@@ -1,13 +1,13 @@
 # JHipster React Native
 
 [![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
-[![iOS-E2E](https://github.com/ruddell/generator-jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AiOS-E2E)
-[![Generator](https://github.com/ruddell/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
-[![App](https://github.com/ruddell/generator-jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/ruddell/generator-jhipster-react-native/actions?query=workflow%3AApp)
+[![iOS-E2E](https://github.com/jhipster/generator-jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AiOS-E2E)
+[![Generator](https://github.com/jhipster/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
+[![App](https://github.com/jhipster/generator-jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AApp)
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
-<img src="https://raw.githubusercontent.com/ruddell/generator-jhipster-react-native/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
+<img src="https://raw.githubusercontent.com/jhipster/generator-jhipster-react-native/9f7665e3cafd6032de4a73d469789855b55a4f33/docs/images/jh-rn-logo.png" alt="JHipster React Native" height="200">
 
 > Check out the [blog post](https://dev.to/ruddell/jhipster-react-native-demo-1c54) or [YouTube](https://www.youtube.com/watch?v=zQMg1E7meHw) video for a full demo of JHipster React Native.
 
@@ -35,7 +35,7 @@
 
 - Node LTS v14+
   - Verify version with `node -v`
-- [generator-jhipster-react-native](https://github.com/ruddell/generator-jhipster-react-native) installed
+- [generator-jhipster-react-native](https://github.com/jhipster/generator-jhipster-react-native) installed
   - Install with `npm install -g generator-jhipster-react-native`
 - [expo-cli](https://docs.expo.io/get-started/installation/) installed
   - Install with `npm install -g expo-cli`
