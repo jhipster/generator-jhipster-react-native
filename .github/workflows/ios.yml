@@ -73,8 +73,8 @@ jobs:
       - uses: actions/setup-node@v2.2.0
         with:
           node-version: ${{ matrix.node_version }}
-      - name: Config git variables
-        run: $SCRIPT_DIR/git-config.sh
+      - run: $SCRIPT_DIR/git-config.sh
+        name: Config git variables
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
       - uses: nick-invision/retry@v2.4.1

@@ -45,8 +45,8 @@ jobs:
         run: $SCRIPT_DIR/install-heroku-cli.sh
       - name: 'TOOLS: install node dependencies'
         run: $SCRIPT_DIR/install-node-dependencies.sh
-      - run: cd generator-jhipster-react-native && npm i && npm link
-        name: 'TOOLS: npm install and link in generator-jhipster-react-native'
+      - name: 'TOOLS: npm install and link in generator-jhipster-react-native'
+        run: cd generator-jhipster-react-native && npm i && npm link
       - name: 'TOOLS: link blueprint in sample app'
         run: |
           cd sample-app

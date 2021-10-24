@@ -42,7 +42,8 @@
     "pretest": "npm run lint",
     "test": "npm run test:unit -- test/*.spec.js",
     "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
   },
   "lint-staged": {
     "{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}": [
