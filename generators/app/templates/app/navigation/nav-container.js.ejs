@@ -26,6 +26,9 @@ import ChatScreen from '../modules/chat/chat-screen'
 import DrawerContent from './drawer/drawer-content';
 import { isReadyRef, navigationRef } from './nav-ref';
 import NotFound from './not-found-screen';
+<%_ if (context.authenticationType === 'oauth2') { _%>
+import OAuthRedirectScreen from './oauth-redirect-screen';
+<%_ } _%>
 import { ModalScreen } from './modal-screen';
 import { DrawerButton } from './drawer/drawer-button';
 
@@ -121,6 +124,7 @@ const linking = {
         },
       },
       ModalScreen: 'alert',
+      OAuthRedirect: 'start',
       NotFound: '*',
     },
   },
@@ -217,6 +221,9 @@ function NavContainer(props) {
             }),
           }}
         />
+        <%_ if (context.authenticationType === 'oauth2') { _%>
+        <Stack.Screen name="OAuthRedirect" component={OAuthRedirectScreen} options={{ title: 'Redirecting...' }} />
+        <%_ } _%>
         <Stack.Screen name="NotFound" component={NotFound} options={{ title: 'Oops!' }} />
       </Stack.Navigator>
     </NavigationContainer>
