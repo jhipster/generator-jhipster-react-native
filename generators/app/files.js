@@ -199,6 +199,7 @@ const files = {
         'app/modules/login/login.utils.ts',
         'app/shared/sagas/auth-info.saga.js',
         'app/shared/reducers/auth-info.reducer.js',
+        'app/navigation/oauth-redirect-screen.tsx',
       ],
     },
   ],

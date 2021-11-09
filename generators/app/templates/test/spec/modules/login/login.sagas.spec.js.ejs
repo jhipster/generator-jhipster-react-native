@@ -96,8 +96,6 @@ test('logout success path', () => {
   const oauthInfo = FixtureAPI.getOauthInfo();
   expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
   expect(step('test-id-token')).toEqual(select(selectIdToken));
-  // await the redirect from the oauth2 issuer logout endpoint
-  step();
   <%_ } _%>
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
