@@ -91,6 +91,13 @@ const ApplicationStyles = {
       marginTop: Metrics.baseMargin,
     },
     entityButtons: { marginBottom: 20 },
+    imageBlob: {
+      width: 200,
+      height: 100,
+      resizeMode: 'contain',
+      borderWidth: 1,
+      borderColor: 'lightgrey',
+    },
   },
   entityDeleteModal: {
     centeredView: {
