@@ -8,7 +8,7 @@ export default {
   apiUrl: 'http://localhost:8080/',
   <%_ if (context.authenticationType === 'oauth2') { _%>
   // leave blank if using Keycloak
-  oktaClientId: '',
+  nativeClientId: '',
   <%_ } _%>
   // use fixtures instead of real API requests
   useFixtures: false,
