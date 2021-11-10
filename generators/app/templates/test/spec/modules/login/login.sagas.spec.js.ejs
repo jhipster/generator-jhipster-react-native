@@ -91,12 +91,12 @@ test('logout success path', () => {
   // Reset the account and logout
   expect(step()).toEqual(put(AccountActions.accountReset()))
   expect(step()).toEqual(put(AccountActions.accountRequest()))
-  expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   <%_ if (context.authenticationType === 'oauth2') { _%>
   const oauthInfo = FixtureAPI.getOauthInfo();
   expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
   expect(step('test-id-token')).toEqual(select(selectIdToken));
   <%_ } _%>
+  expect(step()).toEqual(put(LoginActions.logoutSuccess()))
   expect(step()).toEqual(put({ type: 'RELOGIN_ABORT' }))
 })
 test('selects the auth token', () => {
