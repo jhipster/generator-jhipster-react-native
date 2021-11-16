@@ -47,7 +47,6 @@ test('login success path', () => {
 })
 test('login failure path', () => {
   <%_ if (context.authenticationType === 'oauth2') { _%>
-  const response = FixtureAPI.getOauthInfo()
   const step = stepper(login(FixtureAPI))
 
   expect(step()).toEqual(select(selectAuthInfo));
