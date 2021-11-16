@@ -68,10 +68,8 @@ export async function getDiscovery(issuer: string): Promise<DiscoveryDocument> {
 }
 
 export async function doOauthPkceFlow(clientId: string, issuer: string): Promise<AuthSession.TokenResponse> {
-  // whether or not to use the expo proxy
-  const useProxy = Platform.select({ web: false, default: AppConfig.useExpoAuthProxy });
   // set up redirect uri
-  const redirectUri = makeRedirectUri({ useProxy });
+  const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
   // fetch oauth issuer information from discovery endpoint
   const discovery = await getDiscovery(issuer);
   // set up the IDP url, prepare codeVerifier and state
@@ -86,13 +84,11 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
 
 export async function logoutFromIdp(clientId: string, issuer: string, idToken: string) {
   // logging out of IDP is not supported by the expo auth proxy
-  if (Platform.OS === 'web' || !AppConfig.useExpoAuthProxy) {
+  if (!AppConfig.useExpoAuthProxy) {
     const discovery = await getDiscovery(issuer);
     const { endSessionEndpoint } = discovery;
-    // whether or not to use the expo proxy
-    const useProxy = Platform.select({ web: false, default: AppConfig.useExpoAuthProxy });
     // set up redirect uri
-    const redirectUri = makeRedirectUri({ useProxy });
+    const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
     await WebBrowser.openAuthSessionAsync(`${endSessionEndpoint}?id_token_hint=${idToken}&client_id=${clientId}&post_logout_redirect_uri=${redirectUri}`, redirectUri);
   }
 }
