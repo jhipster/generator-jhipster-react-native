@@ -9,6 +9,8 @@ export default {
   <%_ if (context.authenticationType === 'oauth2') { _%>
   // leave blank if using Keycloak
   nativeClientId: '',
+  // use expo auth proxy with login, disable to log completely out of oauth provider
+  useExpoAuthProxy: true,
   <%_ } _%>
   // use fixtures instead of real API requests
   useFixtures: false,
