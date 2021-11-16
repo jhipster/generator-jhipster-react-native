@@ -50,3 +50,11 @@ You can now log in to Okta through React Native clients on iOS, Android, and Web
 **Note:** These steps are only necessary if you are using JHipster v6, or JHipster v7 with a Reactive JHipster backend.
 
 Follow the instructions under "Add Claims to Access Token" in the [JHipster Ionic ReadMe](https://github.com/oktadeveloper/generator-jhipster-ionic/blob/6d1c64082fe8ca53e44656021b3549c5708764af/README.md#add-claims-to-access-token).
+
+### Log Out from the Identity Provider (iOS/Android)
+
+Expo's auth proxy does not currently work with logging out from the identity provider (supported and enabled on Web).  If you want to completely sign out on native apps:
+- Change `useExpoAuthProxy` to `false` in `app-config.js`
+- Configure your redirect URLs for logout in your identity provider
+  - Usually something like `exp://127.0.0.1:19000` and `exp://10.0.0.114:19000`, where `10.0.0.114` is your local IP
+- A popup will appear on browser open, but will say "Expo wants to use identy-provider.com to sign in", but it will really be signing out.
