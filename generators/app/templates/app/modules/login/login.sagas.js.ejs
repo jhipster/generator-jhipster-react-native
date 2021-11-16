@@ -37,6 +37,9 @@ export function * login (api) {
   } catch (e) {
     let errorMessage = e.type === 'Dismiss' ? 'Login Modal dismissed' : 'Login failed, please try again';
     yield put(LoginActions.loginFailure(errorMessage));
+    if (AppConfig.debugMode) {
+      console.error(e);
+    }
   }
 }
 
