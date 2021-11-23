@@ -15,6 +15,9 @@ entity Location {
 
 entity Department {
 	departmentName String required
+	departmentPic ImageBlob
+	departmentDescription TextBlob
+	departmentInfoPdf FileBlob
 }
 
 entity Task {
