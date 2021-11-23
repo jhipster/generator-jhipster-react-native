@@ -17,7 +17,7 @@ entity Department {
 	departmentName String required
 	departmentPic ImageBlob
 	departmentDescription TextBlob
-	departmentInfoPdf FileBlob
+	departmentInfoPdf Blob
 }
 
 entity Task {

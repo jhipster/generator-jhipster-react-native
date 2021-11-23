@@ -37,13 +37,13 @@
     "jsdoc": "jsdoc --configure jsdoc-conf.json",
     "lint": "eslint .",
     "lint-fix": "npm run lint -- --fix",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install",
     "prettier": "prettier --write \"{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}\"",
     "release": "np",
     "pretest": "npm run lint",
     "test": "npm run test:unit -- test/*.spec.js",
-    "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
   },
   "lint-staged": {
     "{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}": [
@@ -53,7 +53,7 @@
   "dependencies": {
     "chalk": "4.1.2",
     "fs-extra": "10.0.0",
-    "generator-jhipster": "7.1.0",
+    "generator-jhipster": "7.3.1",
     "lodash": "4.17.21",
     "pluralize": "8.0.0",
     "semver": "7.3.5",
