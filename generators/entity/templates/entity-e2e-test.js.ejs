@@ -69,28 +69,36 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
   it('should allow you to create, update, and delete the <%= context.entityNameCapitalized %> entity', async () => {
     await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
 
-    // create
+    /*
+     * Create <%= context.entityNameCapitalized %>
+     */
     await tapFirstElementByLabel(' New ')
     await waitForElementToBeVisibleById('<%= context.entityInstance %>EditScrollView');
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    // <%= field.fieldName %>
     await scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
-    await scrollTo('<%= field.fieldName %>ContentTypeInput', '<%= context.entityInstance %>EditScrollView')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
     await element(by.id('<%= field.fieldName %>ContentTypeInput')).replaceText('image/gif')
+    await element(by.id('<%= field.fieldName %>ContentTypeInput')).tapReturnKey()
           <%_ } else { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('long-text-blob-content')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
           <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
         <%_ } else { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('PT12S')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
         <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
       <%_ } else if (formFieldType === 'date') { _%>
     await setDateTimePickerValue('<%= field.fieldName %>Input', '<%= new Date(createFakeData[field.fieldName]).toCustomLocalDate() %>', 'MM/dd/yy');
       <%_ } else if (formFieldType === 'datetime') { _%>
@@ -101,14 +109,17 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await setPickerValue('<%= field.fieldName %>Input', '<%= createFakeData[field.fieldName] %>');
       <%_ } _%>
     <%_ }) _%>
-    await element(by.id('<%= context.entityInstance %>EditScrollView')).swipe('down', 'slow');
+    // save
     await scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await waitThenTapButton('submitButton')
 
-    // view - validate the creation
+    /*
+    * View <%= context.entityNameCapitalized %> - validate the creation
+    */
     await waitForElementToBeVisibleById('<%= context.entityInstance %>DetailScrollView');
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    // <%= field.fieldName %>
     await scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
@@ -137,29 +148,37 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ } _%>
     <%_ }) _%>
 
-    // update
+    /*
+    * Update <%= context.entityNameCapitalized %>
+    */
     await scrollTo('<%= context.entityInstance %>EditButton', '<%= context.entityInstance %>DetailScrollView')
     await tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
     await waitForElementToBeVisibleById('<%= context.entityInstance %>EditScrollView');
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    // <%= field.fieldName %>
     await scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7')
-    await scrollTo('<%= field.fieldName %>ContentTypeInput', '<%= context.entityInstance %>EditScrollView')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
     await element(by.id('<%= field.fieldName %>ContentTypeInput')).replaceText('image/gif')
+    await element(by.id('<%= field.fieldName %>ContentTypeInput')).tapReturnKey()
           <%_ } else { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('long-text-blob-content-2')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
           <%_ }  _%>
         <%_ } else if (field.fieldType !== 'Duration') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= createFakeData[field.fieldName] %>')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
         <%_ } else { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('PT13S')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
         <%_ }  _%>
       <%_ } else if (formFieldType === 'number') { _%>
     await element(by.id('<%= field.fieldName %>Input')).replaceText('<%= updateFakeData[field.fieldName] %>')
+    await element(by.id('<%= field.fieldName %>Input')).tapReturnKey()
       <%_ } else if (formFieldType === 'date') { _%>
     await setDateTimePickerValue('<%= field.fieldName %>Input', '<%= new Date(updateFakeData[field.fieldName]).toCustomLocalDate() %>', 'MM/dd/yy');
       <%_ } else if (formFieldType === 'datetime') { _%>
@@ -170,14 +189,17 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     await setPickerValue('<%= field.fieldName %>Input', '<%= updateFakeData[field.fieldName] %>');
       <%_ } _%>
     <%_ }) _%>
-    await element(by.id('<%= context.entityInstance %>EditScrollView')).swipe('down', 'slow');
+    // save
     await scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
     await waitThenTapButton('submitButton')
 
-    // view - validate the update
+    /*
+    * View <%= context.entityNameCapitalized %> - validate the update
+    */
     await waitForElementToBeVisibleById('<%= context.entityInstance %>DetailScrollView');
     <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
       <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    // <%= field.fieldName %>
     await scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
@@ -206,14 +228,18 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ } _%>
     <%_ }) _%>
 
-    // delete
+    /*
+    * Delete
+    */
     await scrollTo('<%= context.entityInstance %>DeleteButton', '<%= context.entityInstance %>DetailScrollView')
     await waitThenTapButton('<%= context.entityInstance %>DeleteButton');
     await waitForElementToBeVisibleById('<%= context.entityInstance %>DeleteModal');
     await waitThenTapButton('deleteButton')
     await waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
 
-    // logout
+    /*
+    * Logout
+    */
     await goBack()
     await waitForElementToBeVisibleById('entityScreenScrollList');
     await logout()
