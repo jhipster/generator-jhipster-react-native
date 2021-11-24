@@ -19,17 +19,18 @@ jobs:
         jhipster_version: [7.3.1, 6]
         node_version: [14.x]
         app_type:
-          - OauthDtoApp
-          - JwtWebsocketsApp
+          - JwtDtoWebsocketsApp
+          - OauthFlickrApp
           - OauthHealthPointsApp
         include:
-          - app_type: JwtWebsocketsApp
+          - app_type: JwtDtoWebsocketsApp
             auth_type: jwt
-            dto: false
-            websockets: true
-          - app_type: OauthDtoApp
-            auth_type: oauth2
             dto: true
+            websockets: true
+          - app_type: OauthFlickrApp
+            auth_type: oauth2
+            dto: false
+            entity_jdl: entities-flickr2.jdl
           - app_type: OauthHealthPointsApp
             auth_type: oauth2
             dto: false

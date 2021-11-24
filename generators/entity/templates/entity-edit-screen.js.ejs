@@ -169,11 +169,11 @@ const onSubmit = (data) => update<%= context.entityNameCapitalized %>(formValueT
           <Form initialValues={formValue} <%_ if (context.validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
           <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
           <%_
-            let nextFieldName = null
+            let nextField = null;
             if (index !== context.fields.filter(field => !field.id).length - 1) {
-              nextFieldName = context.fields.filter(field => !field.id)[index + 1].fieldName
+              nextField = context.fields.filter(field => !field.id)[index + 1];
             }
-            const formField = context.getEntityFormField(field, nextFieldName, context.relationships.filter(relation => relation.ownerSide).length);
+            const formField = context.getEntityFormField(field, nextField, context.relationships.filter(relation => relation.ownerSide).length);
           _%>
                 <%- formField %>
           <%_ }) _%>

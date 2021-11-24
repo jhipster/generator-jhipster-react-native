@@ -30,15 +30,12 @@ jobs:
         jhipster_version: [7.3.1]
         node_version: [14.x]
         app_type:
-          - JwtApp
           - JwtDtoApp
           - JwtWebsocketsApp
-          - JwtHealthPoints
+          - JwtHealthPointsApp
+          - JwtFlickrApp
           - OauthApp
         include:
-          - app_type: JwtApp
-            auth_type: jwt
-            dto: false
           - app_type: JwtDtoApp
             auth_type: jwt
             dto: true
@@ -46,10 +43,14 @@ jobs:
             auth_type: jwt
             dto: false
             websockets: true
-          - app_type: JwtHealthPoints
+          - app_type: JwtHealthPointsApp
             auth_type: jwt
             dto: false
             entity_jdl: entities-21points.jdl
+          - app_type: JwtFlickrApp
+            auth_type: jwt
+            dto: false
+            entity_jdl: entities-flickr2.jdl
           - app_type: OauthApp
             auth_type: oauth2
             dto: false
