@@ -26,7 +26,7 @@
     "@react-navigation/native": "5.9.4",
     "@react-navigation/devtools":"5.1.22",
     "formik": "2.2.9",
-    "react-datepicker": "4.3.0",
+    "react-datepicker": "4.4.0",
     "react-native-modal-datetime-picker": "10.0.0",
     "react-native-picker-select": "8.0.4",
     "yup": "0.32.11"
