@@ -35,7 +35,12 @@ export function * login (api) {
       yield put({ type: 'RELOGIN_OK' });
     }
   } catch (e) {
-    let errorMessage = e.type === 'Dismiss' ? 'Login Modal dismissed' : 'Login failed, please try again';
+    let errorMessage = 'Login failed, please try again'
+    if (e.type === 'cancel' || e.type === 'dismiss') {
+      errorMessage = 'Login dismissed'
+    } else if (e.type === 'error') {
+      errorMessage += ` (code ${e.errorCode})`
+    }
     yield put(LoginActions.loginFailure(errorMessage));
     if (AppConfig.debugMode) {
       console.error(e);
