@@ -19,13 +19,7 @@ const {
 
 module.exports = class extends AppGenerator {
   constructor(args, opts) {
-    super(args, { fromBlueprint: true, ...opts }); // fromBlueprint variable is important
-
-    const jhContext = (this.jhipsterContext = this.options.jhipsterContext);
-
-    if (!jhContext) {
-      this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
-    }
+    super(args, { fromBlueprint: true, skipClient: false, ...opts }); // fromBlueprint variable is important
 
     this.patchInFile = patchInFile.bind(this);
     if (!this.context) {
@@ -36,7 +30,6 @@ module.exports = class extends AppGenerator {
     // this does not look to be configurable from blueprints (see getPrettierExtensions in generator-base.js)
     // skipClient has no effect for generator-jhipster-react-native since it only generates a client
     this.skipClient = false;
-    this.jhipsterConfig.skipClient = false;
   }
 
   get initializing() {
