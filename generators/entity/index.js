@@ -31,6 +31,12 @@ module.exports = class extends EntityGenerator {
     // this does not look to be configurable from blueprints (see getPrettierExtensions in generator-base.js)
     // skipClient has no effect for generator-jhipster-react-native since it only generates a client
     this.skipClient = false;
+    // another workaround for changed JHipster behavior.
+    if (!this.jhipsterConfig) {
+      this._config = this._getStorage('generator-jhipster');
+      this.jhipsterConfig = this.config.createProxy();
+    }
+    this.jhipsterConfig.skipClient = false;
   }
 
   get initializing() {
