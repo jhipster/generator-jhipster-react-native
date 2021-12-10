@@ -1,4 +1,3 @@
-const chalk = require('chalk');
 const EntityGenerator = require('generator-jhipster/generators/entity');
 const semver = require('semver');
 const { askForBackendJson } = require('./prompts');

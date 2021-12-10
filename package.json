@@ -48,7 +48,8 @@
   "lint-staged": {
     "{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}": [
       "prettier --write"
-    ]
+    ],
+    "*.js": "npm run lint --"
   },
   "dependencies": {
     "chalk": "4.1.2",

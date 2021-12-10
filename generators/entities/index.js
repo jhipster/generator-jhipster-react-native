@@ -16,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const chalk = require('chalk');
 const EntitiesGenerator = require('generator-jhipster/generators/entities');
 
 // overriding this generator enables us to import jdl without other side-effects

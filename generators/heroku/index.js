@@ -17,7 +17,10 @@ module.exports = class extends HerokuGenerator {
       // this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
     }
 
-    this.configOptions = jhContext.configOptions || {};
+    this.configOptions = {};
+    if (jhContext.configOptions) {
+      this.configOptions = jhContext.configOptions;
+    }
   }
 
   get initializing() {
