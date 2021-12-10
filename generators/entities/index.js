@@ -28,7 +28,7 @@ module.exports = class extends EntitiesGenerator {
 
     if (!jhContext) {
       console.log('No jhContext found after initializing blueprint (entities generator)');
-      this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
+      // this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
     }
   }
 
