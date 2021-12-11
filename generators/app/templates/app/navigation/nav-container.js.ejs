@@ -124,7 +124,9 @@ const linking = {
         },
       },
       ModalScreen: 'alert',
+<%_ if (context.authenticationType === 'oauth2') { _%>
       OAuthRedirect: 'start',
+<%_ } _%>
       NotFound: '*',
     },
   },

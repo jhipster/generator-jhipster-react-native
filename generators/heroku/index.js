@@ -18,7 +18,7 @@ module.exports = class extends HerokuGenerator {
     }
 
     this.configOptions = {};
-    if (jhContext.configOptions) {
+    if (jhContext && jhContext.configOptions) {
       this.configOptions = jhContext.configOptions;
     }
   }
