@@ -12,12 +12,17 @@ on:
         default: 'false'
   push:
     branches:
-      - main
-      - dependencies
+      - '*'
+      - '!dependabot/**'
   pull_request:
 defaults:
   run:
     shell: bash
+concurrency:
+  # Group by workflow and ref, limit to 1 for pull requests
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ startsWith(github.ref, 'refs/pull/') || github.run_number }}
+  # Cancel intermediate pull request builds
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}

@@ -3,38 +3,53 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - '*'
+      - '!dependabot/**'
   pull_request:
 defaults:
   run:
     shell: bash
+concurrency:
+  # Group by workflow and ref, limit to 1 for pull requests
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ startsWith(github.ref, 'refs/pull/') || github.run_number }}
+  # Cancel intermediate pull request builds
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
   generate:
-    name: app-tests-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
+    name: app-tests-${{ matrix.app_type }}
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        jhipster_version: [7, 6]
         node_version: [14.x]
         app_type:
           - JwtDtoWebsocketsApp
           - OauthFlickrApp
           - OauthHealthPointsApp
+          - JwtDtoWebsocketsAppV6
         include:
           - app_type: JwtDtoWebsocketsApp
             auth_type: jwt
             dto: true
             websockets: true
+            jhipster_version: 7
           - app_type: OauthFlickrApp
             auth_type: oauth2
             dto: false
             entity_jdl: entities-flickr2.jdl
+            jhipster_version: 7
           - app_type: OauthHealthPointsApp
             auth_type: oauth2
             dto: false
             entity_jdl: entities-21points.jdl
+            jhipster_version: 7
+          - app_type: JwtDtoWebsocketsAppV6
+            auth_type: jwt
+            dto: true
+            websockets: true
+            jhipster_version: 6
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}

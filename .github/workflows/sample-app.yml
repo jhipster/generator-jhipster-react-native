@@ -1,11 +1,18 @@
 name: Sample App
 on:
   push:
-    tags:
+    branches:
       - '*'
+      - '!dependabot/*'
+  pull_request:
 defaults:
   run:
     shell: bash
+concurrency:
+  # Group by workflow and ref, limit to 1 for pull requests
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ startsWith(github.ref, 'refs/pull/') || github.run_number }}
+  # Cancel intermediate pull request builds
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
   sample-app:
     name: update-sample-app
@@ -66,11 +73,22 @@ jobs:
           git status
           git commit -m "Generate the application with the ${{ github.ref }} version" --allow-empty
           git tag "${{ github.ref }}"
-      - name: 'PUSH: push the updated sample app to Expo'
+      - name: 'BUILD: run expo web build'
         run: |
           cd sample-app
+          npm run build:web
+      - name: 'DIFF: show diff for generated app (from latest release)'
+        run: |
+          cd sample-app
+          git -c color.ui=always diff -R --cached --exit-code -- . ':!package-lock.json'
+      - name: 'PUSH: push the updated sample app to Expo'
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          cd sample-app
+          npm install -g sharp-cli
           expo publish
       - name: 'PUSH: push the updated sample app to GitHub'
+        if: startsWith(github.ref, 'refs/tags/')
         uses: ad-m/github-push-action@master
         with:
           repository: ruddell/jhipster-sample-app-react-native
