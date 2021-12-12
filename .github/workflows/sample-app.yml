@@ -27,8 +27,8 @@ jobs:
     env:
       SCRIPT_DIR: ./generator-jhipster-react-native/test/scripts
       OS: ${{ matrix.os }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY || '' }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN || '' }}
       JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
     steps:
       - uses: actions/checkout@v2.4.0
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v2.4.0
         name: 'SETUP: checkout jhipster-sample-app-react-native'
         with:
-          token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
+          token: ${{ secrets.SAMPLE_GITHUB_TOKEN || github.token }}
           repository: ruddell/jhipster-sample-app-react-native
           path: sample-app
       - name: 'SETUP: git history'
