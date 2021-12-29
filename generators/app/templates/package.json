@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "expo": "42",
-    "expo-cli": "4.13.0",
+    "expo-cli": "5.0.3",
     "@storybook/addons": "5.3.21",
     "@storybook/react-native": "5.3.25",
     "@storybook/theming": "5.3.21",
