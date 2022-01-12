@@ -8,7 +8,7 @@
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.21",
     "querystringify": "2.2.0",
-    "ramda": "0.27.1",
+    "ramda": "0.27.2",
     "react-native-keyboard-aware-scroll-view": "0.9.4",
     "react-redux": "7.2.6",
     "redux": "4.1.2",
