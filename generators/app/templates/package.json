@@ -41,7 +41,7 @@
     "buffer": "6.0.3",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
-    "expect": "27.4.2",
+    "expect": "28.1.1",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint": "7.30.0",
