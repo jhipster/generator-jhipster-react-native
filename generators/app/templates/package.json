@@ -34,7 +34,7 @@
   "devDependencies": {
     "expo": "42",
     "expo-cli": "4.13.0",
-    "@storybook/addons": "5.3.21",
+    "@storybook/addons": "6.5.8",
     "@storybook/react-native": "5.3.25",
     "@storybook/theming": "5.3.21",
     "babel-preset-env": "1.7.0",
