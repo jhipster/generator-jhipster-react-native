@@ -3,7 +3,6 @@ import * as AuthSession from 'expo-auth-session';
 import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
 import { buildQueryString } from 'expo-auth-session/src/QueryParams';
 import * as WebBrowser from 'expo-web-browser';
-import * as Linking from 'expo-linking';
 import AppConfig from '../../config/app-config';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -74,7 +73,7 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // set up the IDP url, prepare codeVerifier and state
   const { authUrl, codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
   // redirect to the IDP
-  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: Linking.makeUrl('/') });
+  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: redirectUri });
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
