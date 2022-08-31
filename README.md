@@ -42,7 +42,6 @@
   - To run your app on an emulator instead of a device, follow the platform-specific instructions:
     - [Android](https://docs.expo.dev/workflow/android-studio-emulator/)
     - [iOS](https://docs.expo.dev/workflow/ios-simulator/)
-- [eas-cli](https://docs.expo.dev/build/introduction/) installed with `npm install -g eas-cli`
 - JHipster backend must use JWT or OAuth2 `authenticationType`
 
 Create a directory for your app:
