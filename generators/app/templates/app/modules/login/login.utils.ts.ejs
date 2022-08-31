@@ -4,6 +4,7 @@ import * as AuthSession from 'expo-auth-session';
 import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
 import { buildQueryString } from 'expo-auth-session/src/QueryParams';
 import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
 import AppConfig from '../../config/app-config';
 
 WebBrowser.maybeCompleteAuthSession();
