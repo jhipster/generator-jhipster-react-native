@@ -20,7 +20,7 @@
 - [CLI Flags](docs/cli-flags.md)
 - JHipster Integrations
   - [OAuth 2.0 and OpenID Connect](docs/oauth2-oidc.md)
-  - [Websockets](docs/websockets.md)
+  - [WebSockets](docs/websockets.md)
 - React Native Library Integrations
   - [Expo](https://docs.expo.io/) - A framework and platform for universal React application
   - [React Native Web](https://docs.expo.io/workflow/web/) - Run your React Native application in a browser, including PWA support

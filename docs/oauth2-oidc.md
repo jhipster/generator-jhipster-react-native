@@ -12,6 +12,7 @@ Configure the redirect URIs for your app in your Identity Provider's authorized 
   - Use the value for `reactNativeAppName` in your `.yo-rc.json`
   - Use your Expo username in place of `@your-expo-username` (run `expo whoami`)
   - Used for [Expo's Auth Proxy](https://docs.expo.io/versions/latest/sdk/auth-session/#what--authexpoio--does-for-you)
+- Some identity providers may require you to configure this value as a logout URL too
 
 #### Web
 
@@ -42,8 +43,13 @@ Using the [Okta CLI](https://cli.okta.com/), run `okta apps create`
 
 Copy the provided `clientId` to `app/config/app-config.js`, and set `nativeClientId` to the copied value.  This is loaded in `login.sagas.js` during authentication.
 
-You can now log in to Okta through React Native clients on iOS, Android, and Web.
+> If you're using Auth0, you'll also need to change the `audience` in `app/modules/login/login.utils.ts`. For example:
+>
+> ```
+> audience: 'https://dev-06bzs1cu.us.auth0.com/api/v2/',
+> ```
 
+You can now log in to Okta through React Native clients on iOS, Android, and Web.
 
 #### Add Claims to Access Token
 
@@ -57,4 +63,4 @@ Expo's auth proxy does not currently work with logging out from the identity pro
 - Change `useExpoAuthProxy` to `false` in `app-config.js`
 - Configure your redirect URLs for logout in your identity provider
   - Usually something like `exp://127.0.0.1:19000` and `exp://10.0.0.114:19000`, where `10.0.0.114` is your local IP
-- A popup will appear on browser open, but will say "Expo wants to use identy-provider.com to sign in", but it will really be signing out.
+- A popup will appear on browser open, but will say "Expo wants to use identity-provider.com to sign in", but it will really be signing out.
