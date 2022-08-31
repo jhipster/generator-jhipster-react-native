@@ -130,9 +130,6 @@
     "setupFiles": [
       "./test/setup"
     ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
-    },
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native-community|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
     ],
@@ -142,7 +139,7 @@
       "/storybook/",
       "/*\\.story\\.js"
     ],
-    "preset": "jest-expo"
+    "preset": "react-native"
   },
   "engines": {
     "node": ">=12.x",
