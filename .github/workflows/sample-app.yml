@@ -22,7 +22,7 @@ jobs:
       fail-fast: false
       matrix:
         jhipster_version: [7]
-        node_version: [14.15.0]
+        node_version: [16.17.0]
         os: [ubuntu-latest]
     env:
       SCRIPT_DIR: ./generator-jhipster-react-native/test/scripts
@@ -43,7 +43,7 @@ jobs:
           path: sample-app
       - name: 'SETUP: git history'
         run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v2.5.0
+      - uses: actions/setup-node@v3.4.1
         with:
           node-version: ${{ matrix.node_version }}
       - name: 'TOOLS: configure git'

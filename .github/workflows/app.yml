@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [14.x]
+        node_version: [16.x]
         app_type:
           - JwtDtoWebsocketsApp
           - OauthFlickrApp
@@ -62,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3.0.2
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v2.5.0
+      - uses: actions/setup-node@v3.4.1
         with:
           node-version: ${{ matrix.node_version }}
       - run: $SCRIPT_DIR/git-config.sh
