@@ -15,6 +15,7 @@ const {
   generateReactNativeApp,
   appendFiles,
   patchInFile,
+  patchBabel,
 } = require('../../lib');
 
 module.exports = class extends AppGenerator {
@@ -95,6 +96,7 @@ module.exports = class extends AppGenerator {
         this.fs.writeJSON('app.json', appConfig);
       },
       appendFiles: appendFiles.bind(this),
+      patchBabel: patchBabel.bind(this),
       replacePackageJsonVersionsInGeneratedApp() {
         this.debug('Replacing Package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));

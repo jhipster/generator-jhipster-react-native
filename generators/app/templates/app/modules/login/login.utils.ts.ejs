@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { DiscoveryDocument, makeRedirectUri } from 'expo-auth-session';
 import * as AuthSession from 'expo-auth-session';
 import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
@@ -73,7 +74,8 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // set up the IDP url, prepare codeVerifier and state
   const { authUrl, codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
   // redirect to the IDP
-  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: redirectUri });
+  const returnUri = Platform.OS === 'android' && !AppConfig.useExpoAuthProxy ? redirectUri : Linking.createURL('/');
+  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: returnUri });
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
