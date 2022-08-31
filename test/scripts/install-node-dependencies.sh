@@ -5,4 +5,4 @@ set -exo pipefail
 npm i -g npm@7
 
 # install expo, JHipster, and Detox CLIs
-npm i -g generator-jhipster@$JHIPSTER_VERSION detox-cli
+npm i -g sharp-cli generator-jhipster@$JHIPSTER_VERSION detox-cli
