@@ -96,6 +96,7 @@
     <%_ } _%>
     "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
+    "react-test-renderer": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
     "patch-package": "REPLACE_WITH_VERSION",
     "typescript": "REPLACE_WITH_VERSION",
@@ -130,9 +131,6 @@
     "setupFiles": [
       "./test/setup"
     ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
-    },
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native-community|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
     ],
