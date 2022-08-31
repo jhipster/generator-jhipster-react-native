@@ -22,8 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         jhipster_version: [7]
-        node_version: [14.15.0]
-        os: [ubuntu-latest]
+        node_version: [16.17.0]
+        os: [ubuntu-22.04]
     env:
       SCRIPT_DIR: ./generator-jhipster-react-native/test/scripts
       OS: ${{ matrix.os }}
