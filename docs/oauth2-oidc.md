@@ -12,7 +12,7 @@ Configure the redirect URIs for your app in your Identity Provider's authorized 
   - Use the value for `reactNativeAppName` in your `.yo-rc.json`
   - Use your Expo username in place of `@your-expo-username` (run `expo whoami`)
   - Used for [Expo's Auth Proxy](https://docs.expo.io/versions/latest/sdk/auth-session/#what--authexpoio--does-for-you)
-- Some identity providers may require you to configure this value as a logout URL too.
+- Some identity providers may require you to configure this value as a logout URL too
 
 #### Web
 
