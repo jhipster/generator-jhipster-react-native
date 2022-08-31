@@ -1,4 +1,4 @@
-## Websockets
+## WebSockets
 
 A websockets example is present under "Chat" in the Drawer Menu. JHipster React Native uses the existing `/websocket/tracker` endpoint to connect. It sends and receives chat messages using the `/topic/chat` message mapping.
 
