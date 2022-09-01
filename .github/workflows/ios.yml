@@ -84,7 +84,7 @@ jobs:
         name: Config git variables
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
-      - uses: nick-invision/retry@v2.5.1
+      - uses: nick-invision/retry@v2.8.1
         name: 'TOOLS: installing Detox and its dependencies'
         with:
           max_attempts: 3
