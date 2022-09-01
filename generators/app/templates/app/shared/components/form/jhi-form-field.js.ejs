@@ -6,6 +6,7 @@ import AppSwitchInput from './inputs/jhi-switch-input';
 import AppListInput from './inputs/jhi-list-input';
 import AppMultiListInput from './inputs/jhi-multi-list-input';
 import AppDateInput from './inputs/jhi-date-input';
+import AppImageInput from './inputs/jhi-image-input';
 import { StyleSheet, Text } from 'react-native';
 import ApplicationStyles from '../../themes/application.styles';
 
@@ -20,7 +21,7 @@ export default React.forwardRef((props, ref) => {
   if (!inputType) {
     inputType = 'text';
   }
-  if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple'].includes(inputType)) {
+  if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple', 'image', 'image-base64'].includes(inputType)) {
     return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
   }
 
@@ -102,6 +103,17 @@ export default React.forwardRef((props, ref) => {
           inputType={inputType}
           value={values[name]}
           selected={values[name]}
+          onChange={(value) => setFieldValue(name, value)}
+          onBlur={() => setFieldTouched(name)}
+          error={hasError}
+          {...otherProps}
+        />
+      )}
+      {(inputType === 'image-base64' || inputType === 'image') && (
+        <AppImageInput
+          ref={ref}
+          inputType={inputType}
+          value={values[name]}
           onChange={(value) => setFieldValue(name, value)}
           onBlur={() => setFieldTouched(name)}
           error={hasError}
