@@ -67,7 +67,7 @@ jobs:
       JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
       JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
       SCRIPT_DIR: ./test/scripts
-      PLATFORM: ios
+      PLATFORM: android
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
       JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
     steps:
