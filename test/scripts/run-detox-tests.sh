@@ -54,7 +54,7 @@ cd ../${JHI_REACT_NATIVE_APP_NAME}
 npm run start:e2e &
 
 # verify the npm packager has started (takes less time than the backend, so should not be an issue)
-retryCount=1
+retryCount=5
 maxRetry=60
 httpUrl="http://localhost:19000"
 rep=$(curl -fv "$httpUrl")
