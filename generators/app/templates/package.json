@@ -25,7 +25,7 @@
     "@react-navigation/stack": "5.14.5",
     "react-native-sectioned-multi-select": "0.9.1",
     "@react-navigation/native": "5.9.4",
-    "@react-navigation/devtools":"6.0.4",
+    "@react-navigation/devtools":"6.0.9",
     "formik": "2.2.9",
     "react-datepicker": "4.8.0",
     "react-native-modal-datetime-picker": "13.1.2",
