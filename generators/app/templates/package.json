@@ -57,7 +57,7 @@
     "redux-devtools-extension": "2.13.9",
     "mockery": "2.1.0",
     "typescript": "4.8.2",
-    "prettier": "2.5.1",
+    "prettier": "2.7.1",
     "react-test-renderer": "18.2.0",
     "patch-package": "6.4.7",
     "path-exists": "5.0.0",
