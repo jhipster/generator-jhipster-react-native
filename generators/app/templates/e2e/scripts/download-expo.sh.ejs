@@ -2,7 +2,7 @@
 
 set -euo pipefail
 # based on https://github.com/infinitered/ignite/blob/a7eade35a46e19bfa7bb28c2aa595d070e79a0a0/boilerplate/bin/downloadExpoApp.sh
-APP_PATH=./e2e/Exponent.app
+APP_PATH=./e2e/Exponent.apk
 
 if [ ! -d $APP_PATH ]; then
   echo "First time running Detox -- downloading Expo client app"
@@ -17,13 +17,12 @@ if [ ! -d $APP_PATH ]; then
   mkdir $APP_PATH
 
   # query expo.io to find most recent ipaUrl
-  IPA_URL=$(curl --silent --show-error https://expo.io/--/api/v2/versions | jq -r ".iosUrl")
+  IPA_URL=$(curl --silent --show-error https://expo.io/--/api/v2/versions | jq -r ".androidUrl")
 
-  # download tar.gz
-  TMP_PATH=./exponent.tar.gz
+  # download .apk
+  TMP_PATH=./Exponent.apk
   curl --silent --show-error --output $TMP_PATH $IPA_URL
 
-  # unzip tar.gz into APP_PATH
-  tar -C $APP_PATH -xzf $TMP_PATH
-  rm ./exponent.tar.gz
+  # move apk into APP_PATH
+  mv $TMP_PATH $APP_PATH
 fi
