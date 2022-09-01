@@ -104,8 +104,8 @@ module.exports = class extends HerokuGenerator {
       },
       addHerokuDependencies() {
         const packageJsonSource = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-        packageJsonSource.dependencies['http-server'] = '0.12.3';
-        packageJsonSource.scripts['heroku-prebuild'] = 'npm install -g expo-cli http-server gzipper generator-jhipster-react-native';
+        packageJsonSource.dependencies['http-server'] = '14.1.1';
+        packageJsonSource.scripts['heroku-prebuild'] = 'npm install -g sharp-cli http-server gzipper generator-jhipster-react-native';
         packageJsonSource.scripts['heroku-postbuild'] = 'npm run build:web && gzipper compress ./web-build --brotli';
         this.fs.writeJSON('package.json', packageJsonSource);
       },
