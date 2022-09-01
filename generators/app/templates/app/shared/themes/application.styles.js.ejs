@@ -92,9 +92,10 @@ const ApplicationStyles = {
     },
     entityButtons: { marginBottom: 20 },
     imageBlob: {
-      width: 200,
-      height: 100,
-      resizeMode: 'contain',
+      width: '50%',
+      height: undefined,
+      aspectRatio: 1,
+      resizeMode: 'cover',
       borderWidth: 1,
       borderColor: 'lightgrey',
     },
