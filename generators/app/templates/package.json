@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "dependencies": {
     "apisauce": "2.1.2",
+    "expo-image-picker": "13.3.1",
     "format-json": "1.0.3",
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.21",

@@ -21,7 +21,7 @@ export default React.forwardRef((props, ref) => {
   if (!inputType) {
     inputType = 'text';
   }
-  if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple'].includes(inputType)) {
+  if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple', 'image', 'image-base64'].includes(inputType)) {
     return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
   }
 
@@ -36,10 +36,6 @@ export default React.forwardRef((props, ref) => {
   if (inputType === 'number' && (typeof values[name]).toLowerCase() === 'number') {
     // number values have to be strings
     values[name] = String(values[name]);
-  }
-  if (inputType === 'image-base64' || inputType === 'image') {
-    // number values have to be strings
-    // values[name] = String(values[name]);
   }
 
   const hasError = errors[name] && touched[name];
