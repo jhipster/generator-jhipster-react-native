@@ -7,9 +7,10 @@
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
     "test": "jest",
-    "publish": "expo publish",
-    "build:ios": "expo build:ios",
-    "build:android": "expo build:android",
+    "prepublish": "eas update:configure",
+    "publish": "eas update",
+    "build:ios": "eas build -p ios",
+    "build:android": "eas build -p android",
     "build:web": "expo export:web",
     <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
