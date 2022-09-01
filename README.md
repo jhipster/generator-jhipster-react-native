@@ -37,12 +37,11 @@
   - Verify version with `node -v`
 - [generator-jhipster-react-native](https://github.com/jhipster/generator-jhipster-react-native) installed
   - Install with `npm install -g generator-jhipster-react-native`
-- [expo-cli](https://docs.expo.dev/get-started/installation/) installed
-  - Install with `npm install -g expo-cli`
-  - To run your app on an emulator instead of a device, follow the platform-specific instructions:
-    - [Android](https://docs.expo.dev/workflow/android-studio-emulator/)
-    - [iOS](https://docs.expo.dev/workflow/ios-simulator/)
-- JHipster backend must use JWT or OAuth2 `authenticationType`
+- [eas-cli](https://docs.expo.dev/build/introduction/) installed with `npm install -g eas-cli`
+- To run your app on an emulator instead of a device, follow the platform-specific instructions:
+  - [Android](https://docs.expo.dev/workflow/android-studio-emulator/)
+  - [iOS](https://docs.expo.dev/workflow/ios-simulator/)
+- JHipster backend must use `jwt` or `oauth2` for its `authenticationType`
 
 Create a directory for your app:
 
