@@ -5,9 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 /* eslint-disable react-native/no-inline-styles */
 
 export default React.forwardRef((props, ref) => {
-  const { label, labelStyle, error, onChange, inputType, contentType, value, testID, ...otherProps } = props;
-
-  const [photo, setPhoto] = React.useState(null);
+  const { label, labelStyle, error, onChange, inputType, contentType, value, ...otherProps } = props;
 
   useEffect(() => {
     (async () => {
@@ -50,6 +48,7 @@ export default React.forwardRef((props, ref) => {
             ref={ref}
             style={[styles.imageSize, { borderColor: error ? '#fc6d47' : '#c0cbd3' }]}
             source={{ uri: inputType === 'image-base64' ? `data:${contentType};base64,${value}` : value }}
+            {...otherProps}
           />
           <MaterialIcons name="delete" size={24} color="red" onPress={removePhoto}
                          style={styles.deleteIcon} />
