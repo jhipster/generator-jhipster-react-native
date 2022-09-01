@@ -10,7 +10,7 @@
     "publish": "expo publish",
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
-    "build:web": "expo build:web",
+    "build:web": "expo export:web",
     <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
@@ -96,6 +96,7 @@
     <%_ } _%>
     "redux-devtools-extension": "REPLACE_WITH_VERSION",
     "mockery": "REPLACE_WITH_VERSION",
+    "react-test-renderer": "REPLACE_WITH_VERSION",
     "prettier": "REPLACE_WITH_VERSION",
     "patch-package": "REPLACE_WITH_VERSION",
     "typescript": "REPLACE_WITH_VERSION",
@@ -130,11 +131,8 @@
     "setupFiles": [
       "./test/setup"
     ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
-    },
     "transformIgnorePatterns": [
-      "node_modules/(?!(@react-native-community|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
+      "node_modules/(?!(@react-native-community|@react-native|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
     ],
     "coveragePathIgnorePatterns": [
       "app/shared/services/api.js",
@@ -145,7 +143,7 @@
     "preset": "jest-expo"
   },
   "engines": {
-    "node": ">=12.x",
+    "node": ">=14.x",
     "npm": ">=6.x"
   }
 }

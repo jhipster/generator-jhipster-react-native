@@ -13,6 +13,8 @@ To run the Detox tests:
 npm run test:e2e
 ```
 
+You will need to have [`jq`](https://stedolan.github.io/jq/download/) installed for this command to work.
+
 To customize the build and test parameters (such as which device to test), modify the `.detoxrc.json` file found in the root of the project.
 
 For more information on Detox configuration and writing tests, check the [official Detox documentation](https://github.com/wix/Detox/blob/master/docs/README.md).

@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { DiscoveryDocument, makeRedirectUri } from 'expo-auth-session';
 import * as AuthSession from 'expo-auth-session';
 import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
@@ -74,7 +75,8 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // set up the IDP url, prepare codeVerifier and state
   const { authUrl, codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
   // redirect to the IDP
-  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: Linking.makeUrl('/') });
+  const returnUri = Platform.OS === 'android' && !AppConfig.useExpoAuthProxy ? redirectUri : Linking.createURL('/');
+  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: returnUri });
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
@@ -90,6 +92,10 @@ export async function logoutFromIdp(clientId: string, issuer: string, idToken: s
       // set up redirect uri
       const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
       await WebBrowser.openAuthSessionAsync(`${endSessionEndpoint}?id_token_hint=${idToken}&client_id=${clientId}&post_logout_redirect_uri=${redirectUri}`, redirectUri);
+    } else if (issuer.includes('auth0.com')) {
+      // Auth0 need special handling since end_session_endpoint is not in oidc-configuration
+      const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
+      await WebBrowser.openAuthSessionAsync(`${issuer}/v2/logout?client_id=${clientId}&returnTo=${redirectUri}`, redirectUri);
     }
   }
 }
