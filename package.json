@@ -54,7 +54,7 @@
   "dependencies": {
     "chalk": "4.1.2",
     "fs-extra": "10.1.0",
-    "generator-jhipster": "7.3.1",
+    "generator-jhipster": "7.9.2",
     "lodash": "4.17.21",
     "pluralize": "8.0.0",
     "semver": "7.3.7",
