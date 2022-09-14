@@ -36,7 +36,7 @@
     "@ruddell/detox-expo-helpers": "0.7.0",
     "@storybook/addons": "6.5.10",
     "@storybook/react-native": "5.3.25",
-    "@storybook/theming": "6.5.10",
+    "@storybook/theming": "6.5.12",
     "babel-jest": "29.0.2",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
