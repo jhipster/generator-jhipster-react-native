@@ -57,7 +57,7 @@
     "generator-jhipster": "7.9.3",
     "lodash": "4.17.21",
     "pluralize": "8.0.0",
-    "semver": "7.3.7",
+    "semver": "7.3.8",
     "shelljs": "0.8.5",
     "yeoman-environment": "^3.10.0"
   },
