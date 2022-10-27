@@ -54,7 +54,7 @@
     "jest-circus": "29.2.2",
     "lint-staged": "13.0.3",
     "mockery": "2.1.0",
-    "patch-package": "6.4.7",
+    "patch-package": "6.5.0",
     "path-exists": "5.0.0",
     "prettier": "2.7.1",
     "react-test-renderer": "18.2.0",
