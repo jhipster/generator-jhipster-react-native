@@ -44,7 +44,7 @@
     "detox": "20.0.3",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.7",
-    "eslint": "8.28.0",
+    "eslint": "8.29.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "expect": "29.3.1",
