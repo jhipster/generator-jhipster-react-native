@@ -34,7 +34,7 @@
   "devDependencies": {
     "@react-native-community/eslint-config": "3.2.0",
     "@ruddell/detox-expo-helpers": "0.7.0",
-    "@storybook/addons": "6.5.14",
+    "@storybook/addons": "6.5.15",
     "@storybook/react-native": "5.3.27",
     "@storybook/theming": "6.5.14",
     "babel-jest": "29.3.1",
