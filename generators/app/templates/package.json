@@ -40,7 +40,7 @@
     "babel-jest": "29.3.1",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
-    "create-expo-app": "1.1.4",
+    "create-expo-app": "1.1.5",
     "detox": "20.1.1",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.7",
