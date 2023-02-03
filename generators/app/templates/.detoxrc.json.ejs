@@ -2,10 +2,24 @@
   "configurations": {
     "ios.sim.release": {
       "binaryPath": "e2e/Exponent.app",
+      "device": "ios.simulator",
+      "app": "ios.release"
+    }
+  },
+  "apps": {
+    "ios.release": {
+      "type": "ios.app",
+      "binaryPath": "e2e/Exponent.app"
+    }
+  },
+  "devices": {
+    "ios.simulator": {
       "type": "ios.simulator",
-      "device": {
-        "type": "iPhone 12"
-      }
+      "device": { "type": "iPhone 12" }
+    },
+    "android.emulator": {
+      "type": "android.apk",
+      "device": { "avdName": "Pixel_30_API" }
     }
   },
   "artifacts": {
