@@ -76,7 +76,7 @@
     "mocha": "10.2.0",
     "np": "7.6.3",
     "prettier": "2.8.4",
-    "sinon": "14.0.2",
+    "sinon": "15.0.1",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "6.3.0"
   },
