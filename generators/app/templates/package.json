@@ -15,7 +15,7 @@
     "lodash": "4.17.21",
     "net": "1.0.2",
     "querystringify": "2.2.0",
-    "ramda": "0.28.0",
+    "ramda": "0.29.0",
     "react-datepicker": "4.10.0",
     "react-native-keyboard-aware-scroll-view": "0.9.5",
     "react-native-modal-datetime-picker": "14.0.1",
