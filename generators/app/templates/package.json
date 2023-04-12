@@ -29,7 +29,7 @@
     "seamless-immutable": "7.1.4",
     "sockjs-client": "1.6.1",
     "webstomp-client": "1.2.6",
-    "yup": "0.32.11"
+    "yup": "1.1.0"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "3.2.0",
