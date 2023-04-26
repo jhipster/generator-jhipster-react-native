@@ -75,7 +75,7 @@
     "mem-fs": "2.3.0",
     "mocha": "10.2.0",
     "np": "7.7.0",
-    "prettier": "2.8.7",
+    "prettier": "2.8.8",
     "sinon": "14.0.2",
     "yeoman-assert": "3.1.1",
     "yeoman-test": "6.3.0"
