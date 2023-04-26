@@ -48,7 +48,7 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "expect": "29.5.0",
-    "expo": "47.0.13",
+    "expo": "48.0.15",
     "expo-detox-hook": "1.0.10",
     "jest": "29.5.0",
     "jest-circus": "29.5.0",
