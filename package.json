@@ -78,7 +78,7 @@
     "prettier": "2.8.8",
     "sinon": "14.0.2",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "6.3.0"
+    "yeoman-test": "7.4.0"
   },
   "engines": {
     "node": ">=14",
