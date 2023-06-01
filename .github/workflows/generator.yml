@@ -22,11 +22,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [16.x]
+        node_version: [18.x]
         os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3.5.2
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
