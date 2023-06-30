@@ -21,8 +21,12 @@ const {
 } = require('../../lib');
 
 module.exports = class extends AppGenerator {
-  constructor(args, opts) {
-    super(args, { fromBlueprint: true, skipClient: false, ...opts }); // fromBlueprint variable is important
+  constructor(args, opts, features) {
+    super(args, { skipClient: false, ...opts }, features); // fromBlueprint variable is important
+
+    if (this.options.help) {
+      return;
+    }
 
     this.patchInFile = patchInFile.bind(this);
     if (!this.context) {
