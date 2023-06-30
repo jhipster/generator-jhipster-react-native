@@ -68,6 +68,7 @@ jobs:
           jhipster heroku --no-insight --skip-install --force --skip-deploy
           sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
           rm app/config/app-config.js.backup
+          rm -rf package-lock.json node_modules
           npm install
           git add .
           git status
