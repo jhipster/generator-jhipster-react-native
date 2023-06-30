@@ -2,10 +2,12 @@
 const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
+const semver = require('semver');
 const AppGenerator = require('generator-jhipster/generators/app');
 const jhipsterUtils = require('generator-jhipster/generators/utils');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
+const packageJson = require('../../package.json');
 const {
   printJHipsterLogo,
   loadVariables,
@@ -37,6 +39,11 @@ module.exports = class extends AppGenerator {
       this.jhipsterConfig = this.config.createProxy();
     }
     this.jhipsterConfig.skipClient = false;
+
+    this.reactNativeBlueprintVersion =
+      this.blueprintConfig.reactNativeBlueprintVersion ||
+      ((this.jhipsterConfig.blueprints || []).find(blueprint => blueprint.name === 'generator-jhipster-react-native') || {}).version;
+    this.blueprintConfig.reactNativeBlueprintVersion = packageJson.version;
   }
 
   get initializing() {
@@ -68,7 +75,12 @@ module.exports = class extends AppGenerator {
 
   get writing() {
     return {
-      setUpVariables: setupVariables.bind(this),
+      setupVariables,
+      cleanup() {
+        if (this._isReactNativeVersionLessThan('4.3.1')) {
+          this.removeFile('.npmrc');
+        }
+      },
       loadConfig() {
         // load config after prompting to allow loading from backend .yo-rc.json
         this.loadAppConfig(this.config.getAll(), this.context);
@@ -140,5 +152,9 @@ module.exports = class extends AppGenerator {
       },
       gitCommit,
     };
+  }
+
+  _isReactNativeVersionLessThan(version, fallback = false) {
+    return (this.reactNativeBlueprintVersion && semver.lt(version, this.reactNativeBlueprintVersion)) || fallback;
   }
 };
