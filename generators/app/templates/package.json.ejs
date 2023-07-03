@@ -77,6 +77,8 @@
     "@storybook/addons": "REPLACE_WITH_VERSION",
     "@storybook/react-native": "REPLACE_WITH_VERSION",
     "@storybook/theming": "REPLACE_WITH_VERSION",
+    "@testing-library/jest-native": "REPLACE_WITH_VERSION",
+    "@testing-library/react-native": "REPLACE_WITH_VERSION",
     "babel-jest": "REPLACE_WITH_VERSION",
     "babel-preset-env": "REPLACE_WITH_VERSION",
     "buffer": "REPLACE_WITH_VERSION",
@@ -86,8 +88,6 @@
     "expo-detox-hook": "REPLACE_WITH_VERSION",
     "jest-circus": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    "enzyme": "REPLACE_WITH_VERSION",
-    "enzyme-adapter-react-16": "REPLACE_WITH_VERSION",
     "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
@@ -132,6 +132,9 @@
     },
     "setupFiles": [
       "./test/setup"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native-community|@react-native|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"
