@@ -52,7 +52,7 @@
     "*.js": "npm run lint --"
   },
   "dependencies": {
-    "chalk": "4.1.2",
+    "chalk": "5.3.0",
     "fs-extra": "11.1.1",
     "generator-jhipster": "7.9.3",
     "lodash": "4.17.21",
