@@ -41,7 +41,7 @@
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
     "create-expo-app": "2.0.3",
-    "detox": "20.11.1",
+    "detox": "20.11.2",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.7",
     "eslint": "8.45.0",
