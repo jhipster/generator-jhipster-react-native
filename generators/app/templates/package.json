@@ -37,7 +37,7 @@
     "@storybook/addons": "7.2.0",
     "@storybook/react-native": "6.5.5",
     "@storybook/theming": "7.1.1",
-    "babel-jest": "29.6.1",
+    "babel-jest": "29.6.2",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
     "create-expo-app": "2.0.3",
