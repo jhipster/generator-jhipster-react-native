@@ -50,7 +50,7 @@
     "expect": "29.6.1",
     "expo": "47.0.13",
     "expo-detox-hook": "1.0.10",
-    "jest": "29.6.1",
+    "jest": "29.6.2",
     "jest-circus": "29.6.1",
     "lint-staged": "13.2.3",
     "mockery": "2.1.0",
