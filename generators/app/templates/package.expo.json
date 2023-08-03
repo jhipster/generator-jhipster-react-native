@@ -4,7 +4,7 @@
   "description": "Dependencies managed by Expo - need a specific version",
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "1.17.11",
+    "@react-native-async-storage/async-storage": "1.19.1",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-community/masked-view": "0.2.8",
     "@react-native-picker/picker": "2.4.8",
