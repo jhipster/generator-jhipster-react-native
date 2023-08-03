@@ -22,7 +22,7 @@
     "react-native-web": "^0.18.9"
   },
   "devDependencies": {
-    "@expo/webpack-config": "^18.0.1",
+    "expo-template-blank-typescript": "49.0.14",
     "jest-expo": "^49.0.0"
   }
 }
