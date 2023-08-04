@@ -121,7 +121,7 @@ module.exports = class extends AppGenerator {
       replacePackageJsonVersionsInGeneratedApp() {
         this.debug('Replacing Package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));
-        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.expo.json'));
+        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', path.join(__dirname, 'resources/expo/package.json'));
       },
       composeEntities() {
         if (!this.withEntities) return;
