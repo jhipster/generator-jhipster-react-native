@@ -9,6 +9,7 @@ const files = {
         '.gitattributes',
         'App.js',
         'README.md',
+        'metro.config.js',
         // templated files
         'app/config/app-config.js',
         'app/navigation/drawer/drawer-content.js',
