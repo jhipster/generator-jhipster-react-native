@@ -84,6 +84,9 @@ module.exports = class extends AppGenerator {
         if (this._isReactNativeVersionLessThan('4.3.1')) {
           this.removeFile('.npmrc');
         }
+        if (this._isReactNativeVersionLessThan('4.3.1')) {
+          this.removeFile('webpack.config.js');
+        }
       },
       loadConfig() {
         // load config after prompting to allow loading from backend .yo-rc.json
@@ -109,6 +112,8 @@ module.exports = class extends AppGenerator {
         const appConfig = this.fs.readJSON('app.json');
         appConfig.expo.scheme = this.context.reactNativeAppName.toLowerCase();
         appConfig.expo.extra = {};
+        appConfig.expo.web = appConfig.expo.web || {};
+        appConfig.expo.web.bundler = 'metro';
         this.fs.writeJSON('app.json', appConfig);
       },
       appendFiles: appendFiles.bind(this),
