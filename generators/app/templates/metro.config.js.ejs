@@ -8,7 +8,7 @@ const config = getDefaultConfig(__dirname, {
 });
 
 config.resolver.sourceExts = process.env.RN_SRC_EXT
-  ? [...process.env.RN_SRC_EXT.split(',').concat(config.resolver.sourceExts), 'cjs', 'mjs']
-  : [...config.resolver.sourceExts, 'cjs', 'mjs'];
+  ? [...process.env.RN_SRC_EXT.split(',').concat(config.resolver.sourceExts), 'mjs']
+  : [...config.resolver.sourceExts, 'mjs'];
 
 module.exports = config;
