@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 // https://github.com/oktadeveloper/generator-jhipster-ionic/blob/cbf8837b33629ab7a5269012eef1866059bd3ccb/generators/entity/prompts.js
-const chalk = require('chalk');
 const path = require('path');
+const chalk = require('chalk');
 const shelljs = require('shelljs');
 
 module.exports = {

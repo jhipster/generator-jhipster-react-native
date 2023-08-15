@@ -1,7 +1,7 @@
-const chalk = require('chalk');
 const fs = require('fs');
 const ChildProcess = require('child_process');
 const util = require('util');
+const chalk = require('chalk');
 const HerokuGenerator = require('generator-jhipster/generators/heroku');
 
 const execCmd = util.promisify(ChildProcess.exec);
