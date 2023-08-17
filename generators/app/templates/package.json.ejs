@@ -10,7 +10,7 @@
     "publish": "expo publish",
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
-    "build:web": "expo export:web",
+    "build:web": "expo export",
     <%_ if (!context.skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
@@ -48,6 +48,7 @@
     "querystringify": "REPLACE_WITH_VERSION",
     "ramda": "REPLACE_WITH_VERSION",
     "react-datepicker": "REPLACE_WITH_VERSION",
+    "react-dom": "REPLACE_WITH_VERSION",
     "react-native-gesture-handler": "EXPO_REPLACE_WITH_VERSION",
     "react-native-keyboard-aware-scroll-view": "REPLACE_WITH_VERSION",
     "react-native-modal-datetime-picker": "REPLACE_WITH_VERSION",
@@ -71,11 +72,12 @@
     "yup": "REPLACE_WITH_VERSION"
   },
   "devDependencies": {
-    "@expo/webpack-config": "EXPO_REPLACE_WITH_VERSION",
     "@react-native-community/eslint-config": "REPLACE_WITH_VERSION",
     "@storybook/addons": "REPLACE_WITH_VERSION",
     "@storybook/react-native": "REPLACE_WITH_VERSION",
     "@storybook/theming": "REPLACE_WITH_VERSION",
+    "@testing-library/jest-native": "REPLACE_WITH_VERSION",
+    "@testing-library/react-native": "REPLACE_WITH_VERSION",
     "babel-jest": "REPLACE_WITH_VERSION",
     "babel-preset-env": "REPLACE_WITH_VERSION",
     "buffer": "REPLACE_WITH_VERSION",
@@ -85,8 +87,6 @@
     "expo-detox-hook": "REPLACE_WITH_VERSION",
     "jest-circus": "REPLACE_WITH_VERSION",
     <%_ } _%>
-    "enzyme": "REPLACE_WITH_VERSION",
-    "enzyme-adapter-react-16": "REPLACE_WITH_VERSION",
     "eslint": "REPLACE_WITH_VERSION",
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
@@ -106,7 +106,7 @@
     "resolve": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION",
     "tapable": "REPLACE_WITH_VERSION",
-    "typescript": "REPLACE_WITH_VERSION"
+    "typescript": "EXPO_REPLACE_WITH_VERSION"
   },
   <%_ if (!context.skipCommitHook) { _%>
   "lint-staged": {
@@ -131,6 +131,9 @@
     },
     "setupFiles": [
       "./test/setup"
+    ],
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!(@react-native-community|@react-native|react-native|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|@storybook))"

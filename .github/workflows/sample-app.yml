@@ -31,11 +31,11 @@ jobs:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN || '' }}
       JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
         name: 'SETUP: checkout generator-react-native'
         with:
           path: generator-jhipster-react-native
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
         name: 'SETUP: checkout jhipster-sample-app-react-native'
         with:
           token: ${{ secrets.SAMPLE_GITHUB_TOKEN || github.token }}
@@ -43,7 +43,7 @@ jobs:
           path: sample-app
       - name: 'SETUP: git history'
         run: cd generator-jhipster-react-native && git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/setup-node@v3.8.0
         with:
           node-version: ${{ matrix.node_version }}
       - name: 'TOOLS: configure git'
@@ -65,9 +65,10 @@ jobs:
           rm .git/index
           rm -rf app assets e2e patches storybook test
           jhipster --no-insight --skip-checks --skip-install --force --with-entities
-          jhipster heroku --no-insight --skip-install --force --skip-deploy
-          sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
-          rm app/config/app-config.js.backup
+          # jhipster heroku --no-insight --skip-install --force --skip-deploy
+          # sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
+          # rm app/config/app-config.js.backup
+          rm -rf package-lock.json node_modules
           npm install
           git add .
           git status

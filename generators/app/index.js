@@ -1,11 +1,13 @@
 /* eslint-disable consistent-return */
-const chalk = require('chalk');
 const path = require('path');
 const fs = require('fs');
+const chalk = require('chalk');
+const semver = require('semver');
 const AppGenerator = require('generator-jhipster/generators/app');
 const jhipsterUtils = require('generator-jhipster/generators/utils');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
+const packageJson = require('../../package.json');
 const {
   printJHipsterLogo,
   loadVariables,
@@ -19,8 +21,12 @@ const {
 } = require('../../lib');
 
 module.exports = class extends AppGenerator {
-  constructor(args, opts) {
-    super(args, { fromBlueprint: true, skipClient: false, ...opts }); // fromBlueprint variable is important
+  constructor(args, opts, features) {
+    super(args, { skipClient: false, ...opts }, features); // fromBlueprint variable is important
+
+    if (this.options.help) {
+      return;
+    }
 
     this.patchInFile = patchInFile.bind(this);
     if (!this.context) {
@@ -37,6 +43,11 @@ module.exports = class extends AppGenerator {
       this.jhipsterConfig = this.config.createProxy();
     }
     this.jhipsterConfig.skipClient = false;
+
+    this.reactNativeBlueprintVersion =
+      this.blueprintConfig.reactNativeBlueprintVersion ||
+      ((this.jhipsterConfig.blueprints || []).find(blueprint => blueprint.name === 'generator-jhipster-react-native') || {}).version;
+    this.blueprintConfig.reactNativeBlueprintVersion = packageJson.version;
   }
 
   get initializing() {
@@ -68,7 +79,15 @@ module.exports = class extends AppGenerator {
 
   get writing() {
     return {
-      setUpVariables: setupVariables.bind(this),
+      setupVariables,
+      cleanup() {
+        if (this._isReactNativeVersionLessThan('4.3.1')) {
+          this.removeFile('.npmrc');
+        }
+        if (this._isReactNativeVersionLessThan('4.3.1')) {
+          this.removeFile('webpack.config.js');
+        }
+      },
       loadConfig() {
         // load config after prompting to allow loading from backend .yo-rc.json
         this.loadAppConfig(this.config.getAll(), this.context);
@@ -93,6 +112,8 @@ module.exports = class extends AppGenerator {
         const appConfig = this.fs.readJSON('app.json');
         appConfig.expo.scheme = this.context.reactNativeAppName.toLowerCase();
         appConfig.expo.extra = {};
+        appConfig.expo.web = appConfig.expo.web || {};
+        appConfig.expo.web.bundler = 'metro';
         this.fs.writeJSON('app.json', appConfig);
       },
       appendFiles: appendFiles.bind(this),
@@ -100,7 +121,7 @@ module.exports = class extends AppGenerator {
       replacePackageJsonVersionsInGeneratedApp() {
         this.debug('Replacing Package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.json'));
-        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', path.join(__dirname, 'templates/package.expo.json'));
+        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', path.join(__dirname, 'resources/expo/package.json'));
       },
       composeEntities() {
         if (!this.withEntities) return;
@@ -140,5 +161,9 @@ module.exports = class extends AppGenerator {
       },
       gitCommit,
     };
+  }
+
+  _isReactNativeVersionLessThan(version, fallback = false) {
+    return (this.reactNativeBlueprintVersion && semver.lt(version, this.reactNativeBlueprintVersion)) || fallback;
   }
 };

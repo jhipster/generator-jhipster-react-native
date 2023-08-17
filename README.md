@@ -33,7 +33,7 @@
 
 ### Requirements
 
-- Node LTS v14+
+- Node LTS v16+
   - Verify version with `node -v`
 - [generator-jhipster-react-native](https://github.com/jhipster/generator-jhipster-react-native) installed
   - Install with `npm install -g generator-jhipster-react-native`

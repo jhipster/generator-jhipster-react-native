@@ -60,9 +60,9 @@ jobs:
       SCRIPT_DIR: ./test/scripts
       PLATFORM: ios
     steps:
-      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.3
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
-      - uses: actions/setup-node@v3.6.0
+      - uses: actions/setup-node@v3.8.0
         with:
           node-version: ${{ matrix.node_version }}
       - run: $SCRIPT_DIR/git-config.sh
