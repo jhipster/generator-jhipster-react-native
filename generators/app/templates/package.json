@@ -40,7 +40,7 @@
     "@storybook/theming": "7.3.2",
     "@testing-library/jest-native": "5.4.3",
     "@testing-library/react-native": "12.2.2",
-    "babel-jest": "29.6.3",
+    "babel-jest": "29.6.4",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
     "create-expo-app": "2.0.3",
