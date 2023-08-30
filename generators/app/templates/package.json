@@ -20,7 +20,7 @@
     "react-dom": "18.2.0",
     "react-native-keyboard-aware-scroll-view": "0.9.5",
     "react-native-modal-datetime-picker": "17.1.0",
-    "react-native-picker-select": "8.0.4",
+    "react-native-picker-select": "8.1.0",
     "react-native-sectioned-multi-select": "0.10.0",
     "react-redux": "8.1.2",
     "redux": "4.2.1",
