@@ -62,7 +62,7 @@
     "yeoman-environment": "3.19.3"
   },
   "devDependencies": {
-    "chai": "4.3.7",
+    "chai": "4.3.8",
     "ejs-lint": "2.0.0",
     "eslint": "8.48.0",
     "eslint-config-airbnb-base": "15.0.0",
