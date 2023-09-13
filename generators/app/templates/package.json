@@ -51,7 +51,7 @@
     "expect": "29.6.4",
     "expo-detox-hook": "1.0.10",
     "jest": "29.6.4",
-    "jest-circus": "29.6.4",
+    "jest-circus": "29.7.0",
     "lint-staged": "14.0.1",
     "mockery": "2.1.0",
     "patch-package": "8.0.0",
