@@ -10,7 +10,7 @@
     "@react-navigation/stack": "6.3.17",
     "apisauce": "3.0.1",
     "format-json": "1.0.3",
-    "formik": "2.4.4",
+    "formik": "2.4.5",
     "identity-obj-proxy": "3.0.0",
     "lodash": "4.17.21",
     "net": "1.0.2",
