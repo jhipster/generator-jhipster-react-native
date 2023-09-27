@@ -5,7 +5,7 @@
   "dependencies": {
     "@react-native-masked-view/masked-view": "0.2.9",
     "@react-navigation/devtools": "6.0.19",
-    "@react-navigation/drawer": "6.6.3",
+    "@react-navigation/drawer": "6.6.4",
     "@react-navigation/native": "6.1.7",
     "@react-navigation/stack": "6.3.17",
     "apisauce": "3.0.1",
