@@ -31,11 +31,11 @@ jobs:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN || '' }}
       JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
     steps:
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.0
         name: 'SETUP: checkout generator-react-native'
         with:
           path: generator-jhipster-react-native
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.0
         name: 'SETUP: checkout jhipster-sample-app-react-native'
         with:
           token: ${{ secrets.SAMPLE_GITHUB_TOKEN || github.token }}
