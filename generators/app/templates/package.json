@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Dependencies managed by Blueprint - use latest versions",
   "dependencies": {
-    "@react-native-masked-view/masked-view": "0.2.9",
+    "@react-native-masked-view/masked-view": "0.3.0",
     "@react-navigation/devtools": "6.0.19",
     "@react-navigation/drawer": "6.6.4",
     "@react-navigation/native": "6.1.8",
