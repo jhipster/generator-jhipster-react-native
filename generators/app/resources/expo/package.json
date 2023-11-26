@@ -25,9 +25,9 @@
     "react-native-web": "~0.19.6"
   },
   "devDependencies": {
-    "expo": "49.0.6",
-    "expo-template-blank-typescript": "49.0.14",
-    "jest-expo": "^49.0.0",
+    "expo": "48.0.6",
+    "expo-template-blank-typescript": "48.0.6",
+    "jest-expo": "48.0.2",
     "typescript": "^5.1.3"
   }
 }
