@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "chalk": "4.1.2",
-    "fs-extra": "11.1.1",
+    "fs-extra": "11.2.0",
     "generator-jhipster": "7.9.4",
     "lodash": "4.17.21",
     "pluralize": "8.0.0",
@@ -74,7 +74,7 @@
     "lint-staged": "15.1.0",
     "mem-fs": "2.3.0",
     "mocha": "10.2.0",
-    "np": "8.0.4",
+    "np": "9.0.0",
     "prettier": "2.8.8",
     "sinon": "17.0.1",
     "yeoman-assert": "3.1.1",
