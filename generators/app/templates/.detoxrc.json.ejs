@@ -1,4 +1,10 @@
 {
+  "configurations": {
+    "ios.sim.release": {
+      "device": "simulator",
+      "app": "myApp.ios",
+    }
+  },
   "apps": {
     "myApp.ios": {
       "type": "ios.app",
@@ -13,12 +19,6 @@
       },
     },
   },
-  "configurations": {
-    "ios.sim.release": {
-      "device": "simulator",
-      "app": "myApp.ios",
-    }
-  },
   "artifacts": {
     "rootDir": ".artifacts",
     "plugins": {
@@ -31,10 +31,11 @@
       }
     }
   },
-  testRunner: {
-    $0: 'jest',
-    args: {
-      config: './e2e/config.json',
+  "testRunner": {
+    "$0": "jest",
+    "args": {
+      "config": "./e2e/config.json"
     },
-  },
+    "_": ["e2e"]
+  }
 }
