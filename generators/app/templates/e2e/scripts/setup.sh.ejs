@@ -5,7 +5,7 @@ echo 'Checking for Expo App...'
 ./e2e/scripts/download-expo.sh
 
 # get ios device name from detox config
-IOS_DEVICE_NAME=$(cat .detoxrc.json | jq -rc '.configurations | .[] | .device | .type')
+IOS_DEVICE_NAME=$(cat .detoxrc.json | jq -rc '.devices | .[] | .device | .type')
 # get simulator matching that name
 DEVICE_ID=$(xcrun simctl list devices -j | jq -rc ".[] | .[] | .[] | select( .name == \"$IOS_DEVICE_NAME\" )  | select( .isAvailable == true ) | .udid")
 
