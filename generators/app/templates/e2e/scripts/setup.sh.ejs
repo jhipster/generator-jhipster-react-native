@@ -18,7 +18,7 @@ xcrun simctl install $DEVICE_ID e2e/Exponent.app
 
 echo 'Fetching App Bundle from Expo Packager...'
 # warm up the app - prebuild the bundle with dev=false and minify=true, otherwise it times out at start of detox test
-rep=$(curl -fs "http://127.0.0.1:19000/node_modules/expo/AppEntry.bundle?platform=ios&dev=false&hot=false&minify=true")
+rep=$(curl -fs "http://127.0.0.1:8081/node_modules/expo/AppEntry.bundle?platform=ios&dev=false&hot=false&minify=true")
 status=$?
 
 if [ "$status" -ne 0 ]; then

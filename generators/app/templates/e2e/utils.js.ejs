@@ -1,8 +1,8 @@
-const DetoxExpoHelpers = require('@ruddell/detox-expo-helpers');
+const { device } = require('detox');
 
 const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
-const expoPublishedUrl = process.env.E2E_EXPO_URL || 'exp://localhost:19000';
+const expoPublishedUrl = process.env.E2E_EXPO_URL || 'exp://localhost:8081';
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -108,7 +108,7 @@ const waitForElementToBeVisibleById = async (elementId, timeout = 5000) => {
 const reloadApp = async (bailOnFailure) => {
   try {
     // disabling Detox synchronization - broken for Expo apps in Detox 18+, speeds up tests at the cost of using waitFor
-    await DetoxExpoHelpers.reloadApp({ url: expoPublishedUrl, launchArgs: { detoxEnableSynchronization: false } });
+    await device.launchApp({ url: expoPublishedUrl, launchArgs: { detoxEnableSynchronization: false } });
     // if you eject from expo, you should replace the line above with:
     // device.reloadReactNative()
     await waitForElementToBeVisibleById('homeScreen', 15000);
