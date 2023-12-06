@@ -8,17 +8,7 @@ const jhipsterUtils = require('generator-jhipster/generators/utils');
 const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
 const { writeFiles } = require('./files');
 const packageJson = require('../../package.json');
-const {
-  printJHipsterLogo,
-  loadVariables,
-  setupVariables,
-  mergeReactNativePackageJson,
-  createEarlyFiles,
-  generateReactNativeApp,
-  appendFiles,
-  patchInFile,
-  patchBabel,
-} = require('../../lib');
+const { printJHipsterLogo, loadVariables, setupVariables, createEarlyFiles, appendFiles, patchInFile, patchBabel } = require('../../lib');
 
 module.exports = class extends AppGenerator {
   constructor(args, opts, features) {
@@ -105,8 +95,6 @@ module.exports = class extends AppGenerator {
         this.context.reactNativeAppNameKebabCase = this._.kebabCase(this.context.reactNativeAppName);
       },
       createEarlyFiles,
-      generateReactNativeApp: generateReactNativeApp.bind(this),
-      mergeRnPackageJson: mergeReactNativePackageJson.bind(this),
       writeFiles: writeFiles.bind(this),
       patchUriScheme() {
         const appConfig = this.fs.readJSON('app.json');
