@@ -29,6 +29,6 @@
     "expo": "49.0.6",
     "expo-template-blank-typescript": "49.0.23",
     "jest-expo": "^49.0.0",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   }
 }
