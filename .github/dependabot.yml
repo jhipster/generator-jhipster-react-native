@@ -15,6 +15,16 @@ updates:
       day: 'wednesday'
     open-pull-requests-limit: 30
     versioning-strategy: increase
+    groups:
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
+      redux:
+        patterns:
+          - '@reduxjs/*'
+          - '*-redux'
+          - 'redux'
+          - 'redux-*'
   - package-ecosystem: 'npm'
     directory: '/generators/app/resources/expo/'
     schedule:
