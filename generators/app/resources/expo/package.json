@@ -32,7 +32,7 @@
     "react-native-web": "~0.19.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.23.6",
     "@react-native-community/cli-server-api": "13.0.0",
     "@types/react": "~18.2.45",
     "jest-expo": "^49.0.0",
