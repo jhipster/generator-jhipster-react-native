@@ -36,12 +36,13 @@ adb reverse tcp:8080 tcp:8080 && adb reverse tcp:9080 tcp:9080
 **Note:** You can do the following steps the Okta Dashboard if preferred.
 
 Using the [Okta CLI](https://cli.okta.com/), run `okta apps create`
+
 - For "Type of Application" choose `Native`
 - For "Redirect URI" and "Post Logout Redirect URI" provide `http://localhost:19006/,https://auth.expo.io/@your-expo-username/reactNativeAppName`
   - Change `@your-expo-username` to match your Expo username (run `expo whoami`)
   - Change `reactNativeAppName` to the value provided during generation (look in your `.yo-rc.json`)
 
-Copy the provided `clientId` to `app/config/app-config.js`, and set `nativeClientId` to the copied value.  This is loaded in `login.sagas.js` during authentication.
+Copy the provided `clientId` to `app/config/app-config.js`, and set `nativeClientId` to the copied value. This is loaded in `login.sagas.js` during authentication.
 
 > If you're using Auth0, you'll also need to change the `audience` in `app/modules/login/login.utils.ts`. For example:
 >
@@ -59,7 +60,8 @@ Follow the instructions under "Add Claims to Access Token" in the [JHipster Ioni
 
 ### Log Out from the Identity Provider (iOS/Android)
 
-Expo's auth proxy does not currently work with logging out from the identity provider (supported and enabled on Web).  If you want to completely sign out on native apps:
+Expo's auth proxy does not currently work with logging out from the identity provider (supported and enabled on Web). If you want to completely sign out on native apps:
+
 - Change `useExpoAuthProxy` to `false` in `app-config.js`
 - Configure your redirect URLs for logout in your identity provider
   - Usually something like `exp://127.0.0.1:19000` and `exp://10.0.0.114:19000`, where `10.0.0.114` is your local IP

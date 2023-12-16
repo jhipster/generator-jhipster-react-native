@@ -7,9 +7,13 @@ const files = {
         '.editorconfig',
         '.eslintrc.js',
         '.gitattributes',
+        '.gitignore',
         'App.js',
+        'app.json',
         'README.md',
+        'babel.config.js',
         'metro.config.js',
+        'package.json',
         // templated files
         'app/config/app-config.js',
         'app/navigation/drawer/drawer-content.js',
@@ -76,6 +80,7 @@ const files = {
         { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png', method: 'copy' },
         { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png', method: 'copy' },
         { file: 'app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png', method: 'copy' },
+
         {
           renameTo: () => 'app/shared/images/logo-jhipster.png',
           file: generator => `app/shared/images/jhipster_family_member_${generator.hipsterImage}_head.png`,
