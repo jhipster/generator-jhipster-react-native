@@ -105,9 +105,26 @@ const waitForElementToBeVisibleById = async (elementId, timeout = 5000) => {
   await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
+const closeDeveloperMenu = async () => {
+  await wait(3000);
+
+  await waitFor(element(by.text('Continue')))
+    .toBeVisible()
+    .withTimeout(3000);
+  await element(by.text('Continue')).tap();
+
+  await waitFor(element(by.text('Reload')))
+    .toBeVisible()
+    .withTimeout(3000);
+  await element(by.text('Reload')).tap();
+
+  await wait(3000);
+};
+
 const reloadApp = async (bailOnFailure) => {
   try {
-    await device.launchApp({ url: expoPublishedUrl });
+    await device.launchApp({ url: expoPublishedUrl, launchArgs: { detoxEnableSynchronization: false } });
+    await closeDeveloperMenu();
   } catch (e) {
     console.warn('Reloading app failed, retrying once');
     console.warn(e);
