@@ -16,8 +16,5 @@ else
   --defaults --no-insight --skip-git
 fi
 
-# pin specific version of expo
-npm i expo@48.0.6
-
 # list files
 ls -al
