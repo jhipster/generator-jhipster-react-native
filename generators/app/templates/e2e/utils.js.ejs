@@ -1,5 +1,4 @@
-const { device } = require('detox');
-
+const execSync = require('child_process').execSync;
 const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
 const expoPublishedUrl = process.env.E2E_EXPO_URL || 'exp://localhost:8081';
@@ -123,6 +122,18 @@ const closeDeveloperMenu = async () => {
 
 const reloadApp = async (bailOnFailure) => {
   try {
+    if (device.getPlatform() === 'ios') {
+      // disable password autofill
+      execSync(
+        `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/UserSettings.plist`,
+      );
+      execSync(
+        `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Library/UserConfigurationProfiles/EffectiveUserSettings.plist`,
+      );
+      execSync(
+        `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist`,
+      );
+    }
     await device.launchApp({ url: expoPublishedUrl, launchArgs: { detoxEnableSynchronization: false } });
     await closeDeveloperMenu();
   } catch (e) {
