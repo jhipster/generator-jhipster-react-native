@@ -134,7 +134,7 @@ const reloadApp = async (bailOnFailure) => {
         `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist`,
       );
     }
-    await device.launchApp({ url: expoPublishedUrl, launchArgs: { detoxEnableSynchronization: false } });
+    await device.launchApp({ url: expoPublishedUrl, newInstance: true, launchArgs: { detoxEnableSynchronization: false } });
     await closeDeveloperMenu();
   } catch (e) {
     console.warn('Reloading app failed, retrying once');
