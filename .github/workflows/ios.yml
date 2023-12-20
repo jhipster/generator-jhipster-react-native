@@ -105,7 +105,7 @@ jobs:
         name: 'TESTING: run detox tests'
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
