@@ -44,7 +44,7 @@
     "buffer": "6.0.3",
     "create-expo-app": "2.1.1",
     "detox": "20.14.3",
-    "eslint": "8.55.0",
+    "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "expect": "29.7.0",
