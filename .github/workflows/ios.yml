@@ -26,7 +26,7 @@ concurrency:
 jobs:
   generate:
     name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
-    runs-on: macos-12
+    runs-on: macos-13
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 90
     strategy:
@@ -84,6 +84,9 @@ jobs:
         name: Config git variables
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest
       - uses: nick-invision/retry@v2.9.0
         name: 'TOOLS: installing Detox and its dependencies'
         with:
