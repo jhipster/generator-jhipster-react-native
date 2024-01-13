@@ -48,11 +48,11 @@ export default class extends AppGenerator {
   }
 
   get [AppGenerator.PROMPTING]() {
-    return {
+    return this.asPromptingTaskGroup({
       askNamePrompt,
       askBackendPrompt: askBackendPrompt.bind(this),
       askDetoxPrompt,
-    };
+    });
   }
 
   get [AppGenerator.CONFIGURING]() {
@@ -131,7 +131,8 @@ export default class extends AppGenerator {
   }
 
   get [AppGenerator.END]() {
-    const gitCommit = super._end().gitCommit.bind(this);
+    //TODO: gitCommit
+    //const gitCommit = super.end().gitCommit.bind(this);
     return {
       modifyExpoDownloadScriptPermission() {
         if (this.context.detox) {
@@ -146,8 +147,7 @@ export default class extends AppGenerator {
             );
           }
         }
-      },
-      gitCommit,
+      }      
     };
   }
 

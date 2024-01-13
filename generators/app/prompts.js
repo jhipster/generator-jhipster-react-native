@@ -21,7 +21,7 @@ function checkForApp(input) {
   return `${path} is not a directory or doesn't exist`;
 }
 
-function askNamePrompt(meta) {
+async function askNamePrompt(meta) {
   // if (!meta) return;
   if (this.options.defaults) {
     this.context.reactNativeAppName = 'RnApp';
@@ -48,15 +48,10 @@ function askNamePrompt(meta) {
 
   // if (meta) return prompts; // eslint-disable-line consistent-return
 
-  const done = this.async();
-
-  const promise = this.prompt(prompts);
-  promise.then(props => {
-    this.context.reactNativeAppName = props.appName;
-    done();
-  });
+  const props = await this.prompt(prompts);
+  this.context.reactNativeAppName = props.appName;
 }
-function askDetoxPrompt(meta) {
+async function askDetoxPrompt(meta) {
   if (this.options.defaults) {
     this.context.detox = true;
     return;
@@ -75,15 +70,10 @@ function askDetoxPrompt(meta) {
   ];
   // if (meta) return prompts; // eslint-disable-line consistent-return
 
-  const done = this.async();
-
-  const promise = this.prompt(prompts);
-  promise.then(props => {
-    this.context.detox = props.detox;
-    done();
-  });
+  const props = await this.prompt(prompts);
+  this.context.detox = props.detox;
 }
-function askBackendPrompt(meta) {
+async function askBackendPrompt(meta) {
   // if (!meta) return;
   if (this.existingProject) return;
 
@@ -106,11 +96,6 @@ function askBackendPrompt(meta) {
   ];
   // if (meta) return prompts; // eslint-disable-line consistent-return
 
-  const done = this.async();
-
-  const promise = this.prompt(prompts);
-  promise.then(props => {
-    this.directoryPath = path.resolve(props.directoryPath);
-    done();
-  });
+  const props = await this.prompt(prompts);
+  this.directoryPath = path.resolve(props.directoryPath);
 }
