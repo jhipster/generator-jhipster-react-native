@@ -1,9 +1,9 @@
-const path = require('path');
-const shelljs = require('shelljs');
+import path from 'path';
+import shelljs from 'shelljs';
 
-const { getAppFolder } = require('../../lib');
+import { getAppFolder } from '../../lib/index.js';
 
-module.exports = {
+export {
   askNamePrompt,
   askDetoxPrompt,
   askBackendPrompt,

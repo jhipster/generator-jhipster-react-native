@@ -1,16 +1,16 @@
 /* eslint-disable consistent-return */
-const path = require('path');
-const fs = require('fs');
-const chalk = require('chalk');
-const semver = require('semver');
-const AppGenerator = require('generator-jhipster/generators/app');
-const jhipsterUtils = require('generator-jhipster/generators/utils');
-const { askDetoxPrompt, askNamePrompt, askBackendPrompt } = require('./prompts');
-const { writeFiles } = require('./files');
-const packageJson = require('../../package.json');
-const { printJHipsterLogo, loadVariables, setupVariables, createEarlyFiles, appendFiles, patchInFile, patchBabel } = require('../../lib');
+import path from 'path';
+import fs from 'fs';
+import chalk from 'chalk';
+import semver from 'semver';
+import AppGenerator from 'generator-jhipster/generators/app';
+import { stringHashCode } from 'generator-jhipster/generators/base/support';
+import { askDetoxPrompt, askNamePrompt, askBackendPrompt } from './prompts.js';
+import { writeFiles } from './files.js';
+import packageJson from '../../package.json' assert { type: 'json' };
+import { printJHipsterLogo, loadVariables, setupVariables, createEarlyFiles, appendFiles, patchInFile, patchBabel } from '../../lib/index.js';
 
-module.exports = class extends AppGenerator {
+export default class extends AppGenerator {
   constructor(args, opts, features) {
     super(args, { skipClient: false, ...opts }, features); // fromBlueprint variable is important
 
@@ -40,14 +40,14 @@ module.exports = class extends AppGenerator {
     this.blueprintConfig.reactNativeBlueprintVersion = packageJson.version;
   }
 
-  get initializing() {
+  get [AppGenerator.INITIALIZING]() {
     printJHipsterLogo(this);
     return {
       loadVariables: loadVariables.bind(this),
     };
   }
 
-  get prompting() {
+  get [AppGenerator.PROMPTING]() {
     return {
       askNamePrompt,
       askBackendPrompt: askBackendPrompt.bind(this),
@@ -55,19 +55,19 @@ module.exports = class extends AppGenerator {
     };
   }
 
-  get configuring() {
+  get [AppGenerator.CONFIGURING]() {
     return {};
   }
 
-  get default() {
+  get [AppGenerator.DEFAULT]() {
     return {};
   }
 
-  get loading() {
+  get [AppGenerator.LOADING]() {
     return super._loading();
   }
 
-  get writing() {
+  get [AppGenerator.WRITING]() {
     return {
       setupVariables,
       cleanup() {
@@ -82,7 +82,7 @@ module.exports = class extends AppGenerator {
         // load config after prompting to allow loading from backend .yo-rc.json
         this.loadAppConfig(this.config.getAll(), this.context);
         this.loadServerConfig(this.config.getAll(), this.context);
-        this.hipsterImage = jhipsterUtils.stringHashCode(this.context.baseName) % 4;
+        this.hipsterImage = stringHashCode(this.context.baseName) % 4;
       },
       checkAppAuthType() {
         // exit on invalid auth type
@@ -118,7 +118,7 @@ module.exports = class extends AppGenerator {
     };
   }
 
-  get install() {
+  get [AppGenerator.INSTALL]() {
     const { initGitRepo } = super._install();
     return {
       initGitRepo,
@@ -130,7 +130,7 @@ module.exports = class extends AppGenerator {
     };
   }
 
-  get end() {
+  get [AppGenerator.END]() {
     const gitCommit = super._end().gitCommit.bind(this);
     return {
       modifyExpoDownloadScriptPermission() {
@@ -154,4 +154,4 @@ module.exports = class extends AppGenerator {
   _isReactNativeVersionLessThan(version, fallback = false) {
     return (this.reactNativeBlueprintVersion && semver.lt(version, this.reactNativeBlueprintVersion)) || fallback;
   }
-};
+}

@@ -232,7 +232,7 @@ const files = {
   ],
 };
 
-module.exports = { files, writeFiles };
+export { files, writeFiles };
 
 function writeFiles() {
   this.writeFilesToDisk(files, this);

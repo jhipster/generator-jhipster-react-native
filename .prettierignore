@@ -1,4 +1,7 @@
-package-lock.json
 node_modules
+package-lock.json
+.git
+
+# blueprint rules:
 **/templates/**/
 e2e/Exponent.app

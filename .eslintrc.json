@@ -1,9 +1,13 @@
 {
   "env": {
     "node": true,
-    "es6": true
+    "es2020": true
   },
   "extends": ["airbnb-base", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
   "rules": {
     "prettier/prettier": "error",
     "indent": [2, 2, { "SwitchCase": 1 }],
@@ -32,8 +36,7 @@
   },
   "overrides": [
     {
-      "files": ["test/**/*.js"],
-      "env": { "mocha": true }
+      "files": ["**/*.spec.{c,m,}js", "test/**/*.{c,m,}js"]
     }
   ]
 }
