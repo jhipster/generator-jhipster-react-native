@@ -5,6 +5,8 @@ import chalk from 'chalk';
 import semver from 'semver';
 import AppGenerator from 'generator-jhipster/generators/app';
 import { stringHashCode } from 'generator-jhipster/generators/base/support';
+import { loadAppConfig } from 'generator-jhipster/generators/app/support';
+import { loadServerConfig } from 'generator-jhipster/generators/server/support';
 import { askDetoxPrompt, askNamePrompt, askBackendPrompt } from './prompts.js';
 import { writeFiles } from './files.js';
 import packageJson from '../../package.json' assert { type: 'json' };
@@ -52,6 +54,7 @@ export default class extends AppGenerator {
       askNamePrompt,
       askBackendPrompt: askBackendPrompt.bind(this),
       askDetoxPrompt,
+      setupVariables, // TODO Whether the prompt should always be executed. If you don't run it, it will not pass here.
     });
   }
 
@@ -69,7 +72,6 @@ export default class extends AppGenerator {
 
   get [AppGenerator.WRITING]() {
     return {
-      setupVariables,
       cleanup() {
         if (this._isReactNativeVersionLessThan('4.3.1')) {
           this.removeFile('.npmrc');
@@ -80,15 +82,15 @@ export default class extends AppGenerator {
       },
       loadConfig() {
         // load config after prompting to allow loading from backend .yo-rc.json
-        this.loadAppConfig(this.config.getAll(), this.context);
-        this.loadServerConfig(this.config.getAll(), this.context);
+        loadAppConfig({ config: this.config.getAll(), application: this.context });
+        loadServerConfig({ config: this.config.getAll(), application: this.context });
         this.hipsterImage = stringHashCode(this.context.baseName) % 4;
       },
       checkAppAuthType() {
         // exit on invalid auth type
         const authType = this.context.authenticationType;
         if (!['jwt', 'oauth2'].includes(authType)) {
-          this.error(`Unsupported authentication type ${authType} - Only JWT and OAuth2 authentication types are supported.`);
+          throw new Error(`Unsupported authentication type ${authType} - Only JWT and OAuth2 authentication types are supported.`);
         }
       },
       setUpTemplateVariables() {
