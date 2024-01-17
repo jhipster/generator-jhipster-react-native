@@ -2,7 +2,13 @@
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
  */
 const command = {
-  options: {},
+  options: {
+    reactNativeDir: {
+      desc: 'Directory of JHipster application',
+      type: String,
+      scope: 'blueprint',
+    },
+  },
 };
 
 export default command;
