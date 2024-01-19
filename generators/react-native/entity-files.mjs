@@ -81,8 +81,4 @@ const files = {
   ],
 };
 
-module.exports = { files, writeFiles };
-
-function writeFiles() {
-  this.writeFilesToDisk(files, this);
-}
+export default files;

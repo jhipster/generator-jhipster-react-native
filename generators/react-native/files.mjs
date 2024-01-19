@@ -83,17 +83,17 @@ const files = {
 
         {
           renameTo: () => 'app/shared/images/logo-jhipster.png',
-          file: generator => `app/shared/images/jhipster_family_member_${generator.hipsterImage}_head.png`,
+          file: context => `app/shared/images/jhipster_family_member_${context.hipster.slice(-1)}_head.png`,
           method: 'copy',
         },
         {
           renameTo: () => 'app/shared/images/logo-jhipster@2x.png',
-          file: generator => `app/shared/images/jhipster_family_member_${generator.hipsterImage}_head@2x.png`,
+          file: context => `app/shared/images/jhipster_family_member_${context.hipster.slice(-1)}_head@2x.png`,
           method: 'copy',
         },
         {
           renameTo: () => 'app/shared/images/logo-jhipster@3x.png',
-          file: generator => `app/shared/images/jhipster_family_member_${generator.hipsterImage}_head@3x.png`,
+          file: context => `app/shared/images/jhipster_family_member_${context.hipster.slice(-1)}_head@3x.png`,
           method: 'copy',
         },
         { file: 'assets/icon.png', method: 'copy' },
@@ -141,7 +141,7 @@ const files = {
   ],
   userManagement: [
     {
-      condition: generator => !generator.context.skipUserManagement,
+      condition: context => !context.skipUserManagement,
       templates: [
         'app/modules/account/password-reset/forgot-password-screen.js',
         'app/modules/account/password-reset/forgot-password-screen.styles.js',
@@ -168,7 +168,7 @@ const files = {
   ],
   websockets: [
     {
-      condition: generator => generator.context.websocket === 'spring-websocket',
+      condition: context => context.websocket === 'spring-websocket',
       templates: [
         'app/modules/chat/chat-screen.js',
         'app/modules/chat/chat-screen.styles.js',
@@ -183,11 +183,11 @@ const files = {
   ],
   loginScreen: [
     {
-      condition: generator => generator.context.authenticationType !== 'oauth2',
+      condition: context => context.authenticationType !== 'oauth2',
       templates: ['app/modules/login/login-screen.js'],
     },
     {
-      condition: generator => generator.context.authenticationType === 'oauth2',
+      condition: context => context.authenticationType === 'oauth2',
       templates: [
         {
           file: 'app/modules/login/login-screen.oauth2.js',
@@ -198,7 +198,7 @@ const files = {
   ],
   oauth: [
     {
-      condition: generator => generator.context.authenticationType === 'oauth2',
+      condition: context => context.authenticationType === 'oauth2',
       templates: [
         'app/shared/fixtures/get-oauth-info.json',
         'app/modules/login/login.utils.ts',
@@ -210,7 +210,7 @@ const files = {
   ],
   detox: [
     {
-      condition: generator => generator.context.detox === true,
+      condition: context => context.detox === true,
       templates: [
         '.detoxrc.json',
         'e2e/environment.js',
@@ -222,18 +222,14 @@ const files = {
       ],
     },
     {
-      condition: generator => generator.context.detox === true && !generator.context.skipUserManagement,
+      condition: context => context.detox === true && !context.skipUserManagement,
       templates: ['e2e/account/change-password-screen.spec.js', 'e2e/account/login-screen.spec.js', 'e2e/account/settings-screen.spec.js'],
     },
     {
-      condition: generator => generator.context.detox === true && generator.context.websocket,
+      condition: context => context.detox === true && context.websocket,
       templates: ['e2e/websockets/chat-screen.spec.js'],
     },
   ],
 };
 
-export { files, writeFiles };
-
-function writeFiles() {
-  this.writeFilesToDisk(files, this);
-}
+export default files;
