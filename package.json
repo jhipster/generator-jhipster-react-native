@@ -64,7 +64,7 @@
     "pluralize": "8.0.0",
     "semver": "7.5.4",
     "shelljs": "0.8.5",
-    "yeoman-environment": "3.19.3"
+    "yeoman-environment": "4.2.1"
   },
   "devDependencies": {
     "chai": "4.3.10",
@@ -89,8 +89,5 @@
   "engines": {
     "node": "^18.13.0 || >= 20.6.1",
     "npm": ">=7"
-  },
-  "overrides": {
-    "yeoman-environment": "3.19.3"
   }
 }
