@@ -1,5 +1,5 @@
 {
-  "name": "<%= context.reactNativeAppNameKebabCase %>",
+  "name": "<%= reactNativeAppNameKebabCase %>",
   "version": "0.0.1",
   "scripts": {
     "android": "expo start --android",
@@ -13,10 +13,10 @@
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
     "build:web": "expo export",
-    <%_ if (!context.skipCommitHook) { _%>
+    <%_ if (!skipCommitHook) { _%>
     "precommit": "lint-staged",
     <%_ } _%>
-    <%_ if (context.detox) { _%>
+    <%_ if (detox) { _%>
     "start:e2e": "expo start --no-dev --minify",
     "test:e2e": "./e2e/scripts/setup.sh && detox test --configuration ios.sim.release --retries 3 --loglevel trace --debug-synchronization 500",
     <%_ } _%>
@@ -38,7 +38,7 @@
     "apisauce": "REPLACE_WITH_VERSION",
     "expo": "EXPO_REPLACE_WITH_VERSION",
     "expo-status-bar": "EXPO_REPLACE_WITH_VERSION",
-    <%_ if (context.authenticationType === 'oauth2') { _%>
+    <%_ if (authenticationType === 'oauth2') { _%>
     "expo-auth-session": "EXPO_REPLACE_WITH_VERSION",
     "expo-random": "EXPO_REPLACE_WITH_VERSION",
     "expo-web-browser": "EXPO_REPLACE_WITH_VERSION",
@@ -72,7 +72,7 @@
     "redux-saga": "REPLACE_WITH_VERSION",
     "reduxsauce": "REPLACE_WITH_VERSION",
     "seamless-immutable": "REPLACE_WITH_VERSION",
-    <%_ if (context.websocket) { _%>
+    <%_ if (websocket) { _%>
     "webstomp-client": "REPLACE_WITH_VERSION",
     "sockjs-client": "REPLACE_WITH_VERSION",
     "net": "REPLACE_WITH_VERSION",
@@ -92,7 +92,7 @@
     "babel-jest": "REPLACE_WITH_VERSION",
     "babel-preset-env": "REPLACE_WITH_VERSION",
     "buffer": "REPLACE_WITH_VERSION",
-    <%_ if (context.detox) { _%>
+    <%_ if (detox) { _%>
     "detox": "REPLACE_WITH_VERSION",
     "@ruddell/detox-expo-helpers": "REPLACE_WITH_VERSION",
     "expo-detox-hook": "REPLACE_WITH_VERSION",
@@ -102,10 +102,10 @@
     "eslint-config-prettier": "REPLACE_WITH_VERSION",
     "eslint-plugin-prettier": "REPLACE_WITH_VERSION",
     "expect": "REPLACE_WITH_VERSION",
-    "generator-jhipster-react-native": "<%= context.packageVersion %>",
+    "generator-jhipster-react-native": "<%= packageVersion %>",
     "jest": "REPLACE_WITH_VERSION",
     "jest-expo": "EXPO_REPLACE_WITH_VERSION",
-    <%_ if (!context.skipCommitHook) { _%>
+    <%_ if (!skipCommitHook) { _%>
     "lint-staged": "REPLACE_WITH_VERSION",
     <%_ } _%>
     "mockery": "REPLACE_WITH_VERSION",
@@ -119,7 +119,7 @@
     "tapable": "REPLACE_WITH_VERSION",
     "typescript": "EXPO_REPLACE_WITH_VERSION"
   },
-  <%_ if (!context.skipCommitHook) { _%>
+  <%_ if (!skipCommitHook) { _%>
   "lint-staged": {
     "{,app/**/,test/**/}*.{js,json,yml,md,ts,tsx}": [
       "prettier --write",

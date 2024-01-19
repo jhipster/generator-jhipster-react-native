@@ -7,7 +7,7 @@ test('attempt retrieving a list of user', () => {
   expect(state.userList).toEqual([])
 })
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 test('attempt retrieving a single user', () => {
   const state = reducer(INITIAL_STATE, Actions.userRequest({ id: 1 }))
 
@@ -43,7 +43,7 @@ test('success retrieving a list of user', () => {
   expect(state.userList).toEqual([{ id: 1 }, { id: 2 }])
 })
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 test('success updating a user', () => {
   const state = reducer(INITIAL_STATE, Actions.userUpdateSuccess({ id: 1 }))
 
@@ -68,7 +68,7 @@ test('failure retrieving a list of user', () => {
   expect(state.errorAll).toEqual({ error: 'Not found' })
   expect(state.userList).toEqual([])
 })
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 test('failure retrieving a user', () => {
   const state = reducer(INITIAL_STATE, Actions.userFailure({ error: 'Not found' }))
 

@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 // import screens
 import HomeScreen from '../modules/home/home-screen';
 import LoginScreen from '../modules/login/login-screen';
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 import SettingsScreen from '../modules/account/settings/settings-screen';
 import RegisterScreen from '../modules/account/register/register-screen';
 import ForgotPasswordScreen from '../modules/account/password-reset/forgot-password-screen';
@@ -20,13 +20,13 @@ import ChangePasswordScreen from '../modules/account/password/change-password-sc
 import AccountActions from '../shared/reducers/account.reducer';
 import EntityStackScreen, { getEntityRoutes } from './entity-stack';
 import StorybookScreen from '../../storybook';
-<%_ if (context.websocket) { _%>
+<%_ if (websocket) { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
 import DrawerContent from './drawer/drawer-content';
 import { isReadyRef, navigationRef } from './nav-ref';
 import NotFound from './not-found-screen';
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import OAuthRedirectScreen from './oauth-redirect-screen';
 <%_ } _%>
 import { ModalScreen } from './modal-screen';
@@ -44,7 +44,7 @@ export const drawerScreens = [
     component: LoginScreen,
     auth: false,
   },
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   {
     name: 'Settings',
     route: 'settings',
@@ -80,7 +80,7 @@ export const drawerScreens = [
     },
     auth: true,
   },
-  <%_ if (context.websocket) { _%>
+  <%_ if (websocket) { _%>
   {
     name: 'Chat',
     route: 'chat',
@@ -124,7 +124,7 @@ const linking = {
         },
       },
       ModalScreen: 'alert',
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
       OAuthRedirect: 'start',
 <%_ } _%>
       NotFound: '*',
@@ -223,7 +223,7 @@ function NavContainer(props) {
             }),
           }}
         />
-        <%_ if (context.authenticationType === 'oauth2') { _%>
+        <%_ if (authenticationType === 'oauth2') { _%>
         <Stack.Screen name="OAuthRedirect" component={OAuthRedirectScreen} options={{ title: 'Redirecting...' }} />
         <%_ } _%>
         <Stack.Screen name="NotFound" component={NotFound} options={{ title: 'Oops!' }} />

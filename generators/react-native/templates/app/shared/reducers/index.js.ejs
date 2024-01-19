@@ -10,15 +10,15 @@ export const reducers = combineReducers({
   appState: require('./app-state.reducer').reducer,
   users: require('./user.reducer').reducer,
   // jhipster-react-native-redux-store-import-needle
-  <%_ if (context.websocket) { _%>
+  <%_ if (websocket) { _%>
   chat: require('../../modules/chat/chat.reducer').reducer,
   <%_ } _%>
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   authInfo: require('./auth-info.reducer').reducer,
   <%_ } _%>
   account: require('./account.reducer').reducer,
   login: require('../../modules/login/login.reducer').reducer,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   register: require('../../modules/account/register/register.reducer').reducer,
   changePassword: require('../../modules/account/password/change-password.reducer').reducer,
   forgotPassword: require('../../modules/account/password-reset/forgot-password.reducer').reducer

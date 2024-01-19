@@ -6,12 +6,12 @@ import AppConfig from '../../config/app-config'
 /* ------------- Types ------------- */
 
 import { StartupTypes } from '../reducers/startup.reducer'
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import { AuthInfoTypes } from '../reducers/auth-info.reducer';
 <%_ } _%>
 import { LoginTypes } from '../../modules/login/login.reducer'
 import { AccountTypes } from '../../shared/reducers/account.reducer'
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 import { RegisterTypes } from '../../modules/account/register/register.reducer'
 import { ForgotPasswordTypes } from '../../modules/account/password-reset/forgot-password.reducer'
 import { ChangePasswordTypes } from '../../modules/account/password/change-password.reducer'
@@ -22,11 +22,11 @@ import { UserTypes } from '../../shared/reducers/user.reducer'
 /* ------------- Sagas ------------- */
 
 import { startup } from './startup.saga'
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import { getAuthInfo } from './auth-info.saga';
 <%_ } _%>
 import { login, logout, loginLoad } from '../../modules/login/login.sagas'
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 import { register } from '../../modules/account/register/register.sagas'
 import { forgotPassword } from '../../modules/account/password-reset/forgot-password.sagas'
 import { changePassword } from '../../modules/account/password/change-password.sagas'
@@ -47,7 +47,7 @@ export default function * root () {
   yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
     takeLatest(AuthInfoTypes.AUTH_INFO_REQUEST, getAuthInfo, api),
 <%_ } _%>
 
@@ -57,7 +57,7 @@ export default function * root () {
     takeLatest(LoginTypes.LOGOUT_REQUEST, logout, api),
     // jhipster-react-native-saga-redux-connect-needle
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
     takeLatest(RegisterTypes.REGISTER_REQUEST, register, api),
     takeLatest(ForgotPasswordTypes.FORGOT_PASSWORD_REQUEST, forgotPassword, api),
     takeLatest(ChangePasswordTypes.CHANGE_PASSWORD_REQUEST, changePassword, api),

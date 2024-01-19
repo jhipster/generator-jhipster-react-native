@@ -23,7 +23,7 @@ test('getAll failure path', () => {
   expect(step(response)).toEqual(put(UserActions.userAllFailure()))
 })
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 test('get success path', () => {
   const response = FixtureAPI.getUser(1)
   const step = stepper(UserSagas.getUser(FixtureAPI, { userId: { id: 1 } }))

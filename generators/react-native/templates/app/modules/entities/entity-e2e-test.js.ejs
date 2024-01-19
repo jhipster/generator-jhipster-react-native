@@ -1,4 +1,4 @@
-<%_ if (context.fieldsContainDate) { _%>
+<%_ if (fieldsContainDate) { _%>
 const jestExpect = require('expect');
 <%_ } _%>
 const {
@@ -10,18 +10,18 @@ const {
     openAndTapDrawerMenuItemByLabel,
     waitThenTapButton,
     waitForElementToBeVisibleById,
-<%_ if (context.fieldsContainEnum) { _%>
+<%_ if (fieldsContainEnum) { _%>
     setPickerValue,
 <%_ } _%>
-<%_ if (context.fieldsContainDate) { _%>
+<%_ if (fieldsContainDate) { _%>
     setDateTimePickerValue,
 <%_ } _%>
     scrollTo,
 } = require('../utils');
 <%_
-context.resetFakerSeed(`entity-cypress-${context.entityNameCapitalized}`);
-const createFakeData = context.generateFakeData('cypress');
-const updateFakeData = context.generateFakeData('cypress');
+resetFakerSeed(`entity-cypress-${entityNameCapitalized}`);
+const createFakeData = generateFakeData('cypress');
+const updateFakeData = generateFakeData('cypress');
 
 // used for setting the datepicker date in the expected full ISO format (JS gives a compact version)
 Date.prototype.toFullISOString = function() {
@@ -51,33 +51,33 @@ Date.prototype.toCustomLocalDate = function() {
 }
 _%>
 
-describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
+describe('<%= entityNameCapitalized %> Screen Tests', () => {
   beforeEach(async () => {
     await reloadApp();
     await loginAsUser();
-    await navigateTo<%= context.entityNameCapitalized %>Screen();
+    await navigateTo<%= entityNameCapitalized %>Screen();
   });
 
-  const navigateTo<%= context.entityNameCapitalized %>Screen = async () => {
+  const navigateTo<%= entityNameCapitalized %>Screen = async () => {
     await openAndTapDrawerMenuItemByLabel('Entities');
     await waitForElementToBeVisibleById('entityScreenScrollList')
-    await scrollTo('<%= context.entityInstance %>EntityScreenButton', 'entityScreenScrollList')
-    await element(by.id('<%= context.entityInstance %>EntityScreenButton')).tap()
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
+    await scrollTo('<%= entityInstance %>EntityScreenButton', 'entityScreenScrollList')
+    await element(by.id('<%= entityInstance %>EntityScreenButton')).tap()
+    await waitForElementToBeVisibleById('<%= entityInstance %>Screen');
   }
 
-  it('should allow you to create, update, and delete the <%= context.entityNameCapitalized %> entity', async () => {
-    await expect(element(by.id('<%= context.entityInstance %>Screen'))).toBeVisible()
+  it('should allow you to create, update, and delete the <%= entityNameCapitalized %> entity', async () => {
+    await expect(element(by.id('<%= entityInstance %>Screen'))).toBeVisible()
 
     /*
-     * Create <%= context.entityNameCapitalized %>
+     * Create <%= entityNameCapitalized %>
      */
     await tapFirstElementByLabel(' New ')
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>EditScrollView');
-    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
-      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    await waitForElementToBeVisibleById('<%= entityInstance %>EditScrollView');
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+      <%_ let formFieldType = getEntityFormFieldType(field); _%>
     // <%= field.fieldName %>
-    await scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
+    await scrollTo('<%= field.fieldName %>Input', '<%= entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
@@ -110,17 +110,17 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ } _%>
     <%_ }) _%>
     // save
-    await scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
+    await scrollTo('submitButton', '<%= entityInstance %>EditScrollView')
     await waitThenTapButton('submitButton')
 
     /*
-    * View <%= context.entityNameCapitalized %> - validate the creation
+    * View <%= entityNameCapitalized %> - validate the creation
     */
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>DetailScrollView');
-    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
-      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    await waitForElementToBeVisibleById('<%= entityInstance %>DetailScrollView');
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+      <%_ let formFieldType = getEntityFormFieldType(field); _%>
     // <%= field.fieldName %>
-    await scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
+    await scrollTo('<%= field.fieldName %>', '<%= entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
@@ -149,15 +149,15 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     <%_ }) _%>
 
     /*
-    * Update <%= context.entityNameCapitalized %>
+    * Update <%= entityNameCapitalized %>
     */
-    await scrollTo('<%= context.entityInstance %>EditButton', '<%= context.entityInstance %>DetailScrollView')
-    await tapFirstElementByLabel('<%= context.entityNameCapitalized %> Edit Button');
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>EditScrollView');
-    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
-      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    await scrollTo('<%= entityInstance %>EditButton', '<%= entityInstance %>DetailScrollView')
+    await tapFirstElementByLabel('<%= entityNameCapitalized %> Edit Button');
+    await waitForElementToBeVisibleById('<%= entityInstance %>EditScrollView');
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+      <%_ let formFieldType = getEntityFormFieldType(field); _%>
     // <%= field.fieldName %>
-    await scrollTo('<%= field.fieldName %>Input', '<%= context.entityInstance %>EditScrollView')
+    await scrollTo('<%= field.fieldName %>Input', '<%= entityInstance %>EditScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
@@ -190,17 +190,17 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
       <%_ } _%>
     <%_ }) _%>
     // save
-    await scrollTo('submitButton', '<%= context.entityInstance %>EditScrollView')
+    await scrollTo('submitButton', '<%= entityInstance %>EditScrollView')
     await waitThenTapButton('submitButton')
 
     /*
-    * View <%= context.entityNameCapitalized %> - validate the update
+    * View <%= entityNameCapitalized %> - validate the update
     */
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>DetailScrollView');
-    <%_ context.fields.filter(field => !field.id).forEach((field, index) => { _%>
-      <%_ let formFieldType = context.getEntityFormFieldType(field); _%>
+    await waitForElementToBeVisibleById('<%= entityInstance %>DetailScrollView');
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+      <%_ let formFieldType = getEntityFormFieldType(field); _%>
     // <%= field.fieldName %>
-    await scrollTo('<%= field.fieldName %>', '<%= context.entityInstance %>DetailScrollView')
+    await scrollTo('<%= field.fieldName %>', '<%= entityInstance %>DetailScrollView')
       <%_ if (formFieldType === 'text') { _%>
         <%_ if (field.fieldType === 'byte[]') { _%>
           <%_ if (field.fieldTypeBlobContent !== 'text') { _%>
@@ -231,11 +231,11 @@ describe('<%= context.entityNameCapitalized %> Screen Tests', () => {
     /*
     * Delete
     */
-    await scrollTo('<%= context.entityInstance %>DeleteButton', '<%= context.entityInstance %>DetailScrollView')
-    await waitThenTapButton('<%= context.entityInstance %>DeleteButton');
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>DeleteModal');
+    await scrollTo('<%= entityInstance %>DeleteButton', '<%= entityInstance %>DetailScrollView')
+    await waitThenTapButton('<%= entityInstance %>DeleteButton');
+    await waitForElementToBeVisibleById('<%= entityInstance %>DeleteModal');
     await waitThenTapButton('deleteButton')
-    await waitForElementToBeVisibleById('<%= context.entityInstance %>Screen');
+    await waitForElementToBeVisibleById('<%= entityInstance %>Screen');
 
     /*
     * Logout

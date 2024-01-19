@@ -35,7 +35,7 @@ export default {
   removeAuthToken: () => {
 
   },
-  <%_ if (context.authenticationType === 'jwt') { _%>
+  <%_ if (authenticationType === 'jwt') { _%>
   login: (authObj) => {
     if (authObj.username === 'user' && authObj.password === 'user') {
       return {
@@ -50,7 +50,7 @@ export default {
       }
     }
   },
-  <%_ } else if (context.authenticationType === 'oauth2') { _%>
+  <%_ } else if (authenticationType === 'oauth2') { _%>
   getOauthInfo: () => {
     return {
       ok: true,

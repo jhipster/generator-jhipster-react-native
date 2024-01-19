@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "<%= context.reactNativeAppName %>",
-    "slug": "<%= context.reactNativeAppName %>",
+    "name": "<%= baseName %>",
+    "slug": "<%= baseName %>",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.anonymous.<%= context.reactNativeAppName %>",
+      "bundleIdentifier": "com.anonymous.<%= baseName %>",
       "supportsTablet": true
     },
     "android": {
@@ -23,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.<%= context.reactNativeAppName %>"
+      "package": "com.anonymous.<%= baseName %>"
     },
     "web": {
       "favicon": "./assets/favicon.png"

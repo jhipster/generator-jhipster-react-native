@@ -1,14 +1,14 @@
 import FixtureAPI from '../../../../app/shared/services/fixture-api'
 import { call, put, select } from 'redux-saga/effects'
 
-import { login, logout, loginLoad, selectAuthToken<%_ if (context.authenticationType === 'oauth2') { _%>, selectAuthInfo, selectIdToken<%_ } _%> } from '../../../../app/modules/login/login.sagas'
+import { login, logout, loginLoad, selectAuthToken<%_ if (authenticationType === 'oauth2') { _%>, selectAuthInfo, selectIdToken<%_ } _%> } from '../../../../app/modules/login/login.sagas'
 import LoginActions from '../../../../app/modules/login/login.reducer'
 import AccountActions from '../../../../app/shared/reducers/account.reducer'
 
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('login success path', () => {
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   const oauthInfo = FixtureAPI.getOauthInfo()
   const step = stepper(login(FixtureAPI, oauthInfo))
   const sampleOauthResponse = {
@@ -25,7 +25,7 @@ test('login success path', () => {
   expect(step()).toEqual(put(AccountActions.accountRequest()))
   // Close the relogin popup if needed
   expect(step()).toEqual(put({ type: 'RELOGIN_OK' }))
-  <%_} else if (context.authenticationType === 'jwt') { _%>
+  <%_} else if (authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',
     password: 'user',
@@ -46,12 +46,12 @@ test('login success path', () => {
   <%_ } _%>
 })
 test('login failure path', () => {
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   const step = stepper(login(FixtureAPI))
 
   expect(step()).toEqual(select(selectAuthInfo));
   expect(step()).toEqual(put(LoginActions.loginFailure('Login failed, please try again')));
-  <%_} else if (context.authenticationType === 'jwt') { _%>
+  <%_} else if (authenticationType === 'jwt') { _%>
   const authObj = {
     username: 'user',
     password: 'user2',
@@ -90,7 +90,7 @@ test('logout success path', () => {
   // Reset the account and logout
   expect(step()).toEqual(put(AccountActions.accountReset()))
   expect(step()).toEqual(put(AccountActions.accountRequest()))
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   const oauthInfo = FixtureAPI.getOauthInfo();
   expect(step(oauthInfo)).toEqual(select(selectAuthInfo));
   expect(step('test-id-token')).toEqual(select(selectIdToken));

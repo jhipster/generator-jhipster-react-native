@@ -5,21 +5,21 @@ import Immutable from 'seamless-immutable'
 
 const { Types, Creators } = createActions({
   userAllRequest: ['options'],
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   userRequest: ['userId'],
   userUpdateRequest: ['user'],
   userDeleteRequest: ['userId'],
 <%_ } _%>
 
   userAllSuccess: ['userList'],
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   userSuccess: ['user'],
   userUpdateSuccess: ['user'],
   userDeleteSuccess: [],
 <%_ } _%>
 
   userAllFailure: ['error'],
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   userFailure: ['error'],
   userUpdateFailure: ['error'],
   userDeleteFailure: ['error']
@@ -33,7 +33,7 @@ export default Creators
 
 export const INITIAL_STATE = Immutable({
   fetchingAll: false,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   fetchingOne: false,
   updating: false,
   deleting: false,
@@ -41,7 +41,7 @@ export const INITIAL_STATE = Immutable({
 <%_ } _%>
   userList: [],
   errorAll: null,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   errorOne: null,
   errorUpdating: null,
   errorDeleting: null
@@ -57,7 +57,7 @@ export const allRequest = (state) =>
     userList: []
   })
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 // request the data from an api
 export const request = (state) =>
   state.merge({
@@ -87,7 +87,7 @@ export const allSuccess = (state, action) => {
   })
 }
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 // successful api lookup for single entity
 export const success = (state, action) => {
   const { user } = action
@@ -127,7 +127,7 @@ export const allFailure = (state, action) => {
   })
 }
 
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
 // Something went wrong fetching a single entity.
 export const failure = (state, action) => {
   const { error } = action
@@ -160,21 +160,21 @@ export const deleteFailure = (state, action) => {
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.USER_ALL_REQUEST]: allRequest,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   [Types.USER_REQUEST]: request,
   [Types.USER_UPDATE_REQUEST]: updateRequest,
   [Types.USER_DELETE_REQUEST]: deleteRequest,
 <%_ } _%>
 
   [Types.USER_ALL_SUCCESS]: allSuccess,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   [Types.USER_SUCCESS]: success,
   [Types.USER_UPDATE_SUCCESS]: updateSuccess,
   [Types.USER_DELETE_SUCCESS]: deleteSuccess,
 <%_ } _%>
 
   [Types.USER_ALL_FAILURE]: allFailure,
-<%_ if (!context.skipUserManagement) { _%>
+<%_ if (!skipUserManagement) { _%>
   [Types.USER_FAILURE]: failure,
   [Types.USER_UPDATE_FAILURE]: updateFailure,
   [Types.USER_DELETE_FAILURE]: deleteFailure

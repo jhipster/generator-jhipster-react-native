@@ -1,25 +1,25 @@
 import { call, put, select } from 'redux-saga/effects'
 
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import AppConfig from '../../config/app-config'
 <%_ } _%>
 import LoginActions from './login.reducer'
 import AccountActions from '../../shared/reducers/account.reducer'
-<%_ if (context.websocket) { _%>
+<%_ if (websocket) { _%>
 import WebsocketService from '../../shared/websockets/websocket.service'
 <%_ } _%>
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import AuthInfoActions from '../../shared/reducers/auth-info.reducer';
 import { doOauthPkceFlow, logoutFromIdp } from './login.utils';
 <%_ } _%>
 
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 export const selectAuthInfo = (state) => state.authInfo.authInfo;
 export const selectIdToken = (state) => state.login.idToken;
 <%_ } _%>
 export const selectAuthToken = (state) => state.login.authToken
 // attempts to login
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 export function * login (api) {
   try {
     const authInfo = yield select(selectAuthInfo);
@@ -48,7 +48,7 @@ export function * login (api) {
   }
 }
 
-<%_ } else if (context.authenticationType === 'jwt') { _%>
+<%_ } else if (authenticationType === 'jwt') { _%>
 export function * login (api, { username, password }) {
   const authObj = {
     username: username,
@@ -63,7 +63,7 @@ export function * login (api, { username, password }) {
     yield call(api.setAuthToken, response.data.id_token)
     yield put(LoginActions.loginSuccess(response.data.id_token))
     yield put(AccountActions.accountRequest())
-    <%_ if (context.websocket) { _%>
+    <%_ if (websocket) { _%>
     WebsocketService.setToken(response.data.id_token)
     <%_ } _%>
     yield put({ type: 'RELOGIN_OK' })
@@ -82,7 +82,7 @@ export function * logout (api) {
   yield call(api.removeAuthToken)
   yield put(AccountActions.accountReset())
   yield put(AccountActions.accountRequest())
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   const { clientId, issuer } = yield select(selectAuthInfo);
   const idToken = yield select(selectIdToken);
   if (idToken) {
@@ -99,7 +99,7 @@ export function * loginLoad (api) {
   // only set the token if we have it
   if (authToken) {
     yield call(api.setAuthToken, authToken)
-    <%_ if (context.websocket) { _%>
+    <%_ if (websocket) { _%>
     WebsocketService.setToken(authToken)
     <%_ } _%>
   }

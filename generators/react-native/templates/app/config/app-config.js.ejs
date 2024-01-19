@@ -1,4 +1,4 @@
-<%_ if (context.authenticationType === 'oauth2') { _%>
+<%_ if (authenticationType === 'oauth2') { _%>
 import { Platform } from 'react-native';
 <%_ } _%>
 import Constants from 'expo-constants';
@@ -9,7 +9,7 @@ const extra = Constants.manifest?.extra ?? {};
 export default {
   // use 10.0.2.2 for Android to connect to host machine
   apiUrl: 'http://localhost:8080/',
-  <%_ if (context.authenticationType === 'oauth2') { _%>
+  <%_ if (authenticationType === 'oauth2') { _%>
   // leave blank if using Keycloak
   nativeClientId: '',
   // use expo auth proxy with login, disable to enable logout completely from oauth provider
