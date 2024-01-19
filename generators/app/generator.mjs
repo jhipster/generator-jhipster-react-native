@@ -53,7 +53,7 @@ export default class extends BaseApplicationGenerator {
         if (this.jhipsterConfig.applicationType === 'microservice') return;
         const reactNativeDir = this.destinationPath(this.blueprintConfig.reactNativeDir);
         const appDir = relative(reactNativeDir, this.destinationPath());
-        await this.composeWithJHipster(`${REACT_NATIVE_NAMESPACE}:reactNative`, {
+        await this.composeWithJHipster(`${REACT_NATIVE_NAMESPACE}:react-native`, {
           generatorOptions: {
             destinationRoot: reactNativeDir,
             appDir,
