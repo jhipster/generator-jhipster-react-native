@@ -1,4 +1,3 @@
-import * as _ from 'lodash-es';
 import { relative } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
@@ -6,7 +5,7 @@ import { generateTestEntity } from 'generator-jhipster/generators/client/support
 import { camelCase, kebabCase, startCase } from 'lodash-es';
 import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
 import command from './command.mjs';
-import { DEFAULT_BACKEND_PATH } from '../constants.mjs';
+import { DEFAULT_ENABLE_DETOX, DEFAULT_BACKEND_PATH } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
 
@@ -54,10 +53,16 @@ export default class extends BaseApplicationGenerator {
           message: 'Enter the directory where your JHipster app is located:',
           default: DEFAULT_BACKEND_PATH,
         },
+        {
+          name: 'detox',
+          type: 'confirm',
+          message: 'Do you want to enable end-to-end tests with Detox?',
+          default: DEFAULT_ENABLE_DETOX,
+        },
       ],
       this.reactNativeStorage,
     );
-    this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null });
+    this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null, detox: DEFAULT_ENABLE_DETOX });
 
     if (this.reactNativeConfig.appDir) {
       this.addBackendStorages();
@@ -125,14 +130,16 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
-        const reactNativePackageVersion = application.blueprints.find(bp => bp.name === 'generator-jhipster-react-native').version;
-        const reactNativeAppNameKebabCase = _.kebabCase(application.baseName);
+        const blueprintPackageVersion = application.blueprints.find(bp => bp.name === 'generator-jhipster-react-native').version;
+        const reactNativeAppNameKebabCase = kebabCase(application.baseName);
+        const { detox } = this.reactNativeConfig;
         await this.writeFiles({
           sections: files,
           context: {
             ...application,
-            reactNativePackageVersion,
+            blueprintPackageVersion,
             reactNativeAppNameKebabCase,
+            detox,
           },
         });
 
