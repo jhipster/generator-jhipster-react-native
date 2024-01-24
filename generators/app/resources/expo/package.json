@@ -14,7 +14,7 @@
     "@react-native-picker/picker": "2.4.10",
     "@react-navigation/devtools": "6.0.20",
     "expo": "49.0.21",
-    "expo-auth-session": "~5.0.2",
+    "expo-auth-session": "~5.4.0",
     "expo-constants": "~14.4.2",
     "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
