@@ -18,7 +18,7 @@
     "expo-constants": "~14.4.2",
     "expo-image-picker": "~14.3.2",
     "expo-linking": "~5.0.2",
-    "expo-random": "~13.2.0",
+    "expo-random": "~13.6.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-web-browser": "~12.3.2",
