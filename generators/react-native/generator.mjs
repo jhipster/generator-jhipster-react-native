@@ -2,12 +2,13 @@ import { relative } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
-import { camelCase, kebabCase, startCase } from 'lodash-es';
-import { createNeedleCallback } from 'generator-jhipster/generators/base/support';
+import { camelCase, kebabCase, startCase, snakeCase } from 'lodash-es';
+import semver from 'semver';
 import command from './command.mjs';
 import { DEFAULT_ENABLE_DETOX, DEFAULT_BACKEND_PATH } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
+import { getEntityFormField, getRelationshipFormField, getFieldValidateType, getEntityFormFieldType } from '../../lib/index.js';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -41,6 +42,10 @@ export default class extends BaseApplicationGenerator {
     }
     if (this.options.defaults || this.options.force) {
       this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
+    }
+
+    if (!this.reactNativeContext) {
+      this.reactNativeContext = {};
     }
   }
 
@@ -127,6 +132,30 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
+  get [BaseApplicationGenerator.PREPARING]() {
+    return this.asPreparingTaskGroup({
+      // preparing({ application }) {
+      //   application.myCustomConfigFoo = this.jhipsterConfig.myCustomConfig === 'foo';
+      //   application.myCustomConfigBar = this.jhipsterConfig.myCustomConfig === 'bar';
+      //   application.myCustomConfigNo = !this.jhipsterConfig.myCustomConfig || this.jhipsterConfig.myCustomConfig === 'no';
+      // },
+      // differentRelationshipsWorkaround(foo) {
+      //   // todo: remove this - need to figure out why context.differentRelationships
+      //   // todo: has a value here but is undefined in the templates.
+      //   const alreadyIncludedEntities = [];
+      //   const uniqueEntityRelationships = [];
+      //   this.context.relationships.forEach(relation => {
+      //     if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
+      //       alreadyIncludedEntities.push(relation.otherEntityName);
+      //       uniqueEntityRelationships.push(relation);
+      //     }
+      //   });
+      //   this.reactNativeContext.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide);
+      //   this.reactNativeContext.ownerSideRelationships = this.context.relationships.filter(relation => relation.ownerSide);
+      // },
+    });
+  }
+
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
@@ -142,18 +171,25 @@ export default class extends BaseApplicationGenerator {
             detox,
           },
         });
-
-        await this.copyTemplateAsync('../resources/base/{**,**/.*}', this.destinationPath());
-
-        if (application.authenticationTypeJwt) {
-          await this.copyTemplateAsync('../resources/jwt/{**,**/.*}', this.destinationPath());
-        }
-
-        if (application.authenticationTypeOauth2) {
-          await this.copyTemplateAsync('../resources/oauth2/{**,**/.*}', this.destinationPath());
-        }
       },
     });
+  }
+
+  differentRelationshipsWorkaround(entity) {
+    // todo: remove this - need to figure out why context.differentRelationships
+    // todo: has a value here but is undefined in the templates.
+    const alreadyIncludedEntities = [];
+    const uniqueEntityRelationships = [];
+    entity.relationships.forEach(relation => {
+      if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
+        alreadyIncludedEntities.push(relation.otherEntityName);
+        uniqueEntityRelationships.push(relation);
+      }
+    });
+    return {
+      uniqueOwnerSideRelationships: uniqueEntityRelationships.filter(relation => relation.ownerSide),
+      ownerSideRelationships: entity.relationships.filter(relation => relation.ownerSide),
+    };
   }
 
   get [BaseApplicationGenerator.WRITING_ENTITIES]() {
@@ -164,31 +200,24 @@ export default class extends BaseApplicationGenerator {
           entities
             .filter(entity => !entity.builtIn)
             .map(async entity => {
+              const { uniqueOwnerSideRelationships, ownerSideRelationships } = this.differentRelationshipsWorkaround(entity);
+              const jhipsterVersion6 = this.jhipsterVersion && semver.major(semver.coerce(this.jhipsterVersion)) === '6';
               await this.writeFiles({
                 sections: entityFiles,
                 context: {
                   ...entity,
                   enableTranslation,
+                  uniqueOwnerSideRelationships,
+                  ownerSideRelationships,
+                  getEntityFormField: getEntityFormField.bind(this),
+                  getRelationshipFormField: getRelationshipFormField.bind(this),
+                  getFieldValidateType: getFieldValidateType.bind(this),
+                  getEntityFormFieldType: getEntityFormFieldType.bind(this),
+                  entityNameSnakeCase: snakeCase(entity.entityNameCapitalized),
+                  useOldPutMappingCode: jhipsterVersion6,
+                  useOldDTOCode: jhipsterVersion6 && this.context.dto === 'mapstruct',
                 },
               });
-              // write client side files for angular
-              const { entityClassHumanized, entityAngularName, entityFileName, entityFolderName } = entity;
-              this.editFile(
-                'src/app/pages/entities/entities.page.ts',
-                createNeedleCallback({
-                  needle: 'jhipster-needle-add-entity-page',
-                  contentToAdd: `{ name: '${entityClassHumanized}', component: '${entityAngularName}Page', route: '${entityFileName}' },`,
-                  contentToCheck: `route: '${entityFileName}'`,
-                }),
-              );
-              this.editFile(
-                'src/app/pages/entities/entities.module.ts',
-                createNeedleCallback({
-                  needle: 'jhipster-needle-add-entity-route',
-                  contentToAdd: `{ path: '${entityFileName}', loadChildren: () => import('./${entityFolderName}/${entityFileName}.module').then(m => m.${entityAngularName}PageModule) },`,
-                  contentToCheck: `path: '${entityFileName}'`,
-                }),
-              );
             }),
         );
       },

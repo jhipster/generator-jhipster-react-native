@@ -3,45 +3,40 @@ const files = {
     {
       templates: [
         {
-          file: 'entity-delete-modal.js',
-          renameTo: generator =>
-            `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-delete-modal.js`,
+          file: 'app/modules/entities/entity-delete-modal.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-delete-modal.js`,
         },
         {
-          file: 'entity-detail-screen.js',
-          renameTo: generator =>
-            `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-detail-screen.js`,
+          file: 'app/modules/entities/entity-detail-screen.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-detail-screen.js`,
         },
         {
-          file: 'entity-edit-screen.js',
-          renameTo: generator =>
-            `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-edit-screen.js`,
+          file: 'app/modules/entities/entity-edit-screen.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-edit-screen.js`,
         },
         {
-          file: 'entity-flatlist.js',
-          renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-screen.js`,
+          file: 'app/modules/entities/entity-flatlist.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-screen.js`,
         },
         {
-          file: 'entity-styles.js',
-          renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}-styles.js`,
+          file: 'app/modules/entities/entity-styles.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-styles.js`,
         },
         {
-          file: 'entity-reducer.js',
-          renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.js`,
+          file: 'app/modules/entities/entity-reducer.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}.reducer.js`,
         },
         {
-          file: 'entity-reducer.spec.js',
-          renameTo: generator =>
-            `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.reducer.spec.js`,
+          file: 'app/modules/entities/entity-reducer.spec.js',
+          renameTo: generator => `test/spec/modules/entities/${generator.entityFileName}/${generator.entityFileName}.reducer.spec.js`,
         },
         {
-          file: 'entity-sagas.js',
-          renameTo: generator => `app/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.js`,
+          file: 'app/modules/entities/entity-sagas.js',
+          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}.sagas.js`,
         },
         {
-          file: 'entity-sagas.spec.js',
-          renameTo: generator =>
-            `test/spec/modules/entities/${generator.context.entityFileName}/${generator.context.entityFileName}.sagas.spec.js`,
+          file: 'app/modules/entities/entity-sagas.spec.js',
+          renameTo: generator => `test/spec/modules/entities/${generator.entityFileName}/${generator.entityFileName}.sagas.spec.js`,
         },
       ],
     },
@@ -50,33 +45,35 @@ const files = {
     {
       templates: [
         {
-          file: 'fixtures/entity-get.json',
-          renameTo: generator => `app/shared/fixtures/get-${generator.context.entityFileName}.json`,
+          file: 'app/modules/entities/fixtures/entity-get.json',
+          renameTo: generator => `app/shared/fixtures/get-${generator.entityFileName}.json`,
         },
         {
-          file: 'fixtures/entity-get-all.json',
-          renameTo: generator => `app/shared/fixtures/get-all-${generator.context.entityPluralFileName}.json`,
+          file: 'app/modules/entities/fixtures/entity-get-all.json',
+          renameTo: generator => `app/shared/fixtures/get-all-${generator.entityPluralFileName}.json`,
         },
         {
-          file: 'fixtures/entity-update.json',
-          renameTo: generator => `app/shared/fixtures/update-${generator.context.entityFileName}.json`,
+          file: 'app/modules/entities/fixtures/entity-update.json',
+          renameTo: generator => `app/shared/fixtures/update-${generator.entityFileName}.json`,
         },
       ],
     },
     {
-      condition: generator => generator.context.searchEngine,
+      condition: generator => generator.searchEngine,
       templates: [
         {
-          file: 'fixtures/entity-get-all.json',
-          renameTo: generator => `app/shared/fixtures/search-${generator.context.entityPluralFileName}.json`,
+          file: 'app/modules/entities/fixtures/entity-get-all.json',
+          renameTo: generator => `app/shared/fixtures/search-${generator.entityPluralFileName}.json`,
         },
       ],
     },
   ],
   detox: [
     {
-      condition: generator => generator.context.detox,
-      templates: [{ file: 'entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.context.entityFileName}.spec.js` }],
+      condition: generator => generator.detox,
+      templates: [
+        { file: 'app/modules/entities/entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.entityFileName}.spec.js` },
+      ],
     },
   ],
 };
