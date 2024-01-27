@@ -1,4 +1,5 @@
-import { relative } from 'node:path';
+import fs from 'fs';
+import { relative, join, dirname } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
@@ -172,7 +173,42 @@ export default class extends BaseApplicationGenerator {
           },
         });
       },
+      async replacePackageJsonVersionsInGeneratedApp() {
+        const srcDir = dirname(this.resolved);
+        this.debug('Replacing Package.json Versions');
+        this.replacePackageJsonVersions('REPLACE_WITH_VERSION', join(srcDir, 'templates/package.json'));
+        this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', join(srcDir, 'resources/expo/package.json'));
+      },
     });
+  }
+
+  /**
+   * From generator-jhipster@7.9.4/generators/base-application.js
+   * Replace placeholders with versions from packageJsonSourceFile.
+   * @param {string} keyToReplace - PlaceHolder name.
+   * @param {string} packageJsonSourceFile - Package json filepath with actual versions.
+   */
+  replacePackageJsonVersions(keyToReplace, packageJsonSourceFile) {
+    const packageJsonSource = JSON.parse(fs.readFileSync(packageJsonSourceFile, 'utf-8'));
+    const packageJsonTargetFile = this.destinationPath('package.json');
+    const packageJsonTarget = this.fs.readJSON(packageJsonTargetFile);
+    const replace = section => {
+      if (packageJsonTarget[section]) {
+        Object.entries(packageJsonTarget[section]).forEach(([dependency, dependencyReference]) => {
+          if (dependencyReference.startsWith(keyToReplace)) {
+            const [keyToReplaceAtSource, sectionAtSource = section, dependencyAtSource = dependency] = dependencyReference.split('#');
+            if (keyToReplaceAtSource !== keyToReplace) return;
+            if (!packageJsonSource[sectionAtSource] || !packageJsonSource[sectionAtSource][dependencyAtSource]) {
+              throw new Error(`Error setting ${dependencyAtSource} version, not found at ${sectionAtSource}.${dependencyAtSource}`);
+            }
+            packageJsonTarget[section][dependency] = packageJsonSource[sectionAtSource][dependencyAtSource];
+          }
+        });
+      }
+    };
+    replace('dependencies');
+    replace('devDependencies');
+    this.fs.writeJSON(packageJsonTargetFile, packageJsonTarget);
   }
 
   differentRelationshipsWorkaround(entity) {
