@@ -15,6 +15,7 @@ import {
   getFieldValidateType,
   getEntityFormFieldType,
   patchNavigationForEntity,
+  patchEntityApi,
   patchInFile,
 } from '../../lib/index.js';
 
@@ -270,6 +271,8 @@ export default class extends BaseApplicationGenerator {
         this.patchInFile = patchInFile.bind(this);
         for (const entity of entities) {
           patchNavigationForEntity.bind(this)(entity);
+          const entityNameSnakeCase = snakeCase(entity.entityNameCapitalized);
+          patchEntityApi.bind(this)({ entityNameSnakeCase, ...entity });
         }
       },
     });
