@@ -50,7 +50,8 @@ const files = {
         },
         {
           file: 'app/modules/entities/fixtures/entity-get-all.json',
-          renameTo: generator => `app/shared/fixtures/get-all-${generator.entityPluralFileName}.json`,
+          // Workaround for entityPluralFileName 'xxxundefined' due to angularSuffix == undefined
+          renameTo: generator => `app/shared/fixtures/get-all-${generator.entityNamePluralizedAndSpinalCased}.json`,
         },
         {
           file: 'app/modules/entities/fixtures/entity-update.json',
@@ -59,11 +60,12 @@ const files = {
       ],
     },
     {
-      condition: generator => generator.searchEngine,
+      condition: generator => generator.searchEngine && generator.searchEngine !== 'no',
       templates: [
         {
           file: 'app/modules/entities/fixtures/entity-get-all.json',
-          renameTo: generator => `app/shared/fixtures/search-${generator.entityPluralFileName}.json`,
+          // Workaround for entityPluralFileName 'xxxundefined' due to angularSuffix == undefined
+          renameTo: generator => `app/shared/fixtures/search-${generator.entityNamePluralizedAndSpinalCased}.json`,
         },
       ],
     },
