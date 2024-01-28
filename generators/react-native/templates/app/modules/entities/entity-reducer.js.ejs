@@ -11,7 +11,7 @@ const { Types, Creators } = createActions({
   <%= entityInstance %>Request: ['<%= entityInstance %>Id'],
   <%= entityInstance %>AllRequest: ['options'],
   <%= entityInstance %>UpdateRequest: ['<%= entityInstance %>'],
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   <%= entityInstance %>SearchRequest: ['query'],
   <%_ } _%>
   <%= entityInstance %>DeleteRequest: ['<%= entityInstance %>Id'],
@@ -19,7 +19,7 @@ const { Types, Creators } = createActions({
   <%= entityInstance %>Success: ['<%= entityInstance %>'],
   <%= entityInstance %>AllSuccess: ['<%= entityInstance %>List', 'headers'],
   <%= entityInstance %>UpdateSuccess: ['<%= entityInstance %>'],
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   <%= entityInstance %>SearchSuccess: ['<%= entityInstance %>List'],
   <%_ } _%>
   <%= entityInstance %>DeleteSuccess: [],
@@ -27,7 +27,7 @@ const { Types, Creators } = createActions({
   <%= entityInstance %>Failure: ['error'],
   <%= entityInstance %>AllFailure: ['error'],
   <%= entityInstance %>UpdateFailure: ['error'],
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   <%= entityInstance %>SearchFailure: ['error'],
   <%_ } _%>
   <%= entityInstance %>DeleteFailure: ['error'],
@@ -44,7 +44,7 @@ export const INITIAL_STATE = Immutable({
   fetchingOne: false,
   fetchingAll: false,
   updating: false,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   searching: false,
   <%_ } _%>
   deleting: false,
@@ -54,7 +54,7 @@ export const INITIAL_STATE = Immutable({
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   errorSearching: null,
   <%_ } _%>
   errorDeleting: null,
@@ -87,7 +87,7 @@ export const updateRequest = (state) =>
     updateSuccess: false,
     updating: true
   })
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 // request to search from an api
 export const searchRequest = (state) =>
   state.merge({
@@ -137,7 +137,7 @@ export const updateSuccess = (state, action) => {
     <%= entityInstance %>
   })
 }
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 // successful api search
 export const searchSuccess = (state, action) => {
   const { <%= entityInstance %>List } = action
@@ -194,7 +194,7 @@ export const deleteFailure = (state, action) => {
     <%= entityInstance %>: state.<%= entityInstance %>
   })
 }
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 // Something went wrong searching the entities.
 export const searchFailure = (state, action) => {
   const { error } = action
@@ -214,7 +214,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_REQUEST]: request,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_REQUEST]: allRequest,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
@@ -222,7 +222,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SUCCESS]: success,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
@@ -230,7 +230,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_FAILURE]: failure,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_FAILURE]: allFailure,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,

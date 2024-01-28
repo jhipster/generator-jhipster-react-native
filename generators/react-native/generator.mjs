@@ -242,6 +242,7 @@ export default class extends BaseApplicationGenerator {
     return this.asWritingEntitiesTaskGroup({
       async writeEntities({ application, entities }) {
         const { enableTranslation } = application;
+        this.patchInFile = patchInFile.bind(this);
         await Promise.all(
           entities
             .filter(entity => !entity.builtIn)
@@ -252,6 +253,7 @@ export default class extends BaseApplicationGenerator {
                 sections: entityFiles,
                 context: {
                   ...entity,
+                  ...application,
                   enableTranslation,
                   uniqueOwnerSideRelationships,
                   ownerSideRelationships,
@@ -264,16 +266,11 @@ export default class extends BaseApplicationGenerator {
                   useOldDTOCode: jhipsterVersion6 && this.context.dto === 'mapstruct',
                 },
               });
+              patchNavigationForEntity.bind(this)(entity);
+              const entityNameSnakeCase = snakeCase(entity.entityNameCapitalized);
+              patchEntityApi.bind(this)(application, { entityNameSnakeCase, ...entity });
             }),
         );
-      },
-      async patchNavigationForEntity({ entities }) {
-        this.patchInFile = patchInFile.bind(this);
-        for (const entity of entities) {
-          patchNavigationForEntity.bind(this)(entity);
-          const entityNameSnakeCase = snakeCase(entity.entityNameCapitalized);
-          patchEntityApi.bind(this)({ entityNameSnakeCase, ...entity });
-        }
       },
     });
   }

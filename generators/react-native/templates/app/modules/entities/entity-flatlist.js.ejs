@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { useFocusEffect } from '@react-navigation/native';
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 import SearchBar from '../../../shared/components/search-bar/search-bar'
 <%_ } _%>
 import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
@@ -13,7 +13,7 @@ function <%= entityNameCapitalized %>Screen(props) {
   const [page, setPage] = React.useState(0);
   const [sort /*, setSort*/] = React.useState('id,asc');
   const [size /*, setSize*/] = React.useState(20);
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   const [searchTerm, setSearchTerm] = React.useState('');
   <%_ } _%>
 
@@ -40,7 +40,7 @@ function <%= entityNameCapitalized %>Screen(props) {
   }
 
   // Render a header
-    <%_ if (searchEngine) { _%>
+    <%_ if (searchEngineAny) { _%>
   const renderHeader = () =>
     <SearchBar onSearch={performSearch} searchTerm={searchTerm} onCancel={cancelSearch} />
     <%_ } _%>
@@ -54,7 +54,7 @@ function <%= entityNameCapitalized %>Screen(props) {
   // How many items should be kept im memory as we scroll?
   const oneScreensWorth = 20
 
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   const cancelSearch = () => {
     setSearchTerm('')
     fetch<%= entityNamePlural %>()
@@ -95,7 +95,7 @@ function <%= entityNameCapitalized %>Screen(props) {
         initialNumToRender={oneScreensWorth}
         onEndReached={handleLoadMore}
         ListEmptyComponent={renderEmpty}
-        <%_ if (searchEngine) { _%>
+        <%_ if (searchEngineAny) { _%>
         ListHeaderComponent={renderHeader}
         <%_ } _%>
       />
@@ -118,7 +118,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    <%_ if (searchEngine) { _%>
+    <%_ if (searchEngineAny) { _%>
     performSearch: (query) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchRequest(query)),
     <%_ } _%>
     getAll<%= entityNamePlural %>: (options) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllRequest(options))

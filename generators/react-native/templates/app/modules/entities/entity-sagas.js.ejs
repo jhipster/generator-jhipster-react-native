@@ -61,7 +61,7 @@ function * update<%= entityNameCapitalized %> (api, action) {
   }
 }
 
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 function * search<%= entityNamePlural %> (api, action) {
   const { query } = action
   // make the call to the api
@@ -106,7 +106,7 @@ export default {
   getAll<%= entityNamePlural %>,
   get<%= entityNameCapitalized %>,
   delete<%= entityNameCapitalized %>,
-  <%_ if (searchEngine) { _%>
+  <%_ if (searchEngineAny) { _%>
   search<%= entityNamePlural %>,
   <%_ } _%>
   update<%= entityNameCapitalized %>,

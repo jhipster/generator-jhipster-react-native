@@ -19,7 +19,7 @@ test('attempt updating a <%= entityInstance %>', () => {
 
   expect(state.updating).toBe(true)
 })
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 test('attempt searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchRequest(1))
 
@@ -66,7 +66,7 @@ test('success updating a <%= entityInstance %>', () => {
   expect(state.errorUpdating).toBe(null)
   expect(state.<%= entityInstance %>).toEqual({ id: 1 })
 })
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 test('success searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchSuccess({ id: 1 }))
 
@@ -106,7 +106,7 @@ test('failure updating a <%= entityInstance %>', () => {
   expect(state.errorUpdating).toEqual({ error: 'Not found' })
   expect(state.<%= entityInstance %>).toEqual(INITIAL_STATE.<%= entityInstance %>)
 })
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 test('failure searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchFailure({ error: 'Not found' }))
 

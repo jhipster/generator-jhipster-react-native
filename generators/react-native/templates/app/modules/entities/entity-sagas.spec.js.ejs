@@ -61,7 +61,7 @@ test('update failure path', () => {
   expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateFailure()))
 })
 
-<%_ if (searchEngine) { _%>
+<%_ if (searchEngineAny) { _%>
 test('search success path', () => {
   const response = FixtureAPI.search<%= entityNamePlural %>()
   const step = stepper(search<%= entityNamePlural %>(FixtureAPI, '*'))

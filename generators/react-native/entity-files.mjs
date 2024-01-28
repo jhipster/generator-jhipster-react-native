@@ -60,7 +60,7 @@ const files = {
       ],
     },
     {
-      condition: generator => generator.searchEngine && generator.searchEngine !== 'no',
+      condition: generator => generator.searchEngineAny,
       templates: [
         {
           file: 'app/modules/entities/fixtures/entity-get-all.json',
