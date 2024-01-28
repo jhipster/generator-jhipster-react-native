@@ -17,6 +17,8 @@ import {
   patchNavigationForEntity,
   patchEntityApi,
   patchInFile,
+  appendFiles,
+  patchBabel,
 } from '../../lib/index.js';
 
 export default class extends BaseApplicationGenerator {
@@ -144,25 +146,9 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
-      // preparing({ application }) {
-      //   application.myCustomConfigFoo = this.jhipsterConfig.myCustomConfig === 'foo';
-      //   application.myCustomConfigBar = this.jhipsterConfig.myCustomConfig === 'bar';
-      //   application.myCustomConfigNo = !this.jhipsterConfig.myCustomConfig || this.jhipsterConfig.myCustomConfig === 'no';
-      // },
-      // differentRelationshipsWorkaround(foo) {
-      //   // todo: remove this - need to figure out why context.differentRelationships
-      //   // todo: has a value here but is undefined in the templates.
-      //   const alreadyIncludedEntities = [];
-      //   const uniqueEntityRelationships = [];
-      //   this.context.relationships.forEach(relation => {
-      //     if (!alreadyIncludedEntities.includes(relation.otherEntityName)) {
-      //       alreadyIncludedEntities.push(relation.otherEntityName);
-      //       uniqueEntityRelationships.push(relation);
-      //     }
-      //   });
-      //   this.reactNativeContext.uniqueOwnerSideRelationships = uniqueEntityRelationships.filter(relation => relation.ownerSide);
-      //   this.reactNativeContext.ownerSideRelationships = this.context.relationships.filter(relation => relation.ownerSide);
-      // },
+      preparingPatchInFile() {
+        this.patchInFile = patchInFile.bind(this);
+      },
     });
   }
 
@@ -187,6 +173,20 @@ export default class extends BaseApplicationGenerator {
         this.debug('Replacing Package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', join(srcDir, 'templates/package.json'));
         this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', join(srcDir, 'resources/expo/package.json'));
+      },
+      async patchUriScheme({ application }) {
+        const appConfig = this.fs.readJSON('app.json');
+        appConfig.expo.scheme = application.baseName.toLowerCase();
+        appConfig.expo.extra = {};
+        appConfig.expo.web = appConfig.expo.web || {};
+        appConfig.expo.web.bundler = 'metro';
+        this.fs.writeJSON('app.json', appConfig);
+      },
+      async appendFiles() {
+        appendFiles.bind(this)();
+      },
+      async patchBabel() {
+        patchBabel.bind(this)();
       },
     });
   }
@@ -242,7 +242,6 @@ export default class extends BaseApplicationGenerator {
     return this.asWritingEntitiesTaskGroup({
       async writeEntities({ application, entities }) {
         const { enableTranslation } = application;
-        this.patchInFile = patchInFile.bind(this);
         await Promise.all(
           entities
             .filter(entity => !entity.builtIn)
