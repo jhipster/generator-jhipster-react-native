@@ -20,7 +20,7 @@ import ChangePasswordScreen from '../modules/account/password/change-password-sc
 import AccountActions from '../shared/reducers/account.reducer';
 import EntityStackScreen, { getEntityRoutes } from './entity-stack';
 import StorybookScreen from '../../storybook';
-<%_ if (websocket) { _%>
+<%_ if (websocket !== 'no') { _%>
 import ChatScreen from '../modules/chat/chat-screen'
 <%_ } _%>
 import DrawerContent from './drawer/drawer-content';
@@ -80,7 +80,7 @@ export const drawerScreens = [
     },
     auth: true,
   },
-  <%_ if (websocket) { _%>
+  <%_ if (websocket !== 'no') { _%>
   {
     name: 'Chat',
     route: 'chat',
