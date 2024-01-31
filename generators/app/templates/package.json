@@ -16,7 +16,7 @@
     "querystringify": "2.2.0",
     "ramda": "0.29.1",
     "react-dom": "18.2.0",
-    "react-datepicker": "4.25.0",
+    "react-datepicker": "5.1.0",
     "react-native-keyboard-aware-scroll-view": "0.9.5",
     "react-native-modal-datetime-picker": "17.1.0",
     "react-native-picker-select": "9.0.1",
