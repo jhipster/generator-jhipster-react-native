@@ -19,5 +19,9 @@ fi
 # list files
 echo "Listing files in directory: ${JHI_REACT_NATIVE_APP_NAME}"
 ls -al
+
+# build react native client app
+cd ../${JHI_REACT_NATIVE_CLIENT_DIR}
+npm install
 echo "Listing files in directory: ${JHI_REACT_NATIVE_CLIENT_DIR}"
-ls -al ../${JHI_REACT_NATIVE_CLIENT_DIR}
+ls -al
