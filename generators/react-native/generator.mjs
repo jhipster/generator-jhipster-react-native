@@ -298,9 +298,6 @@ export default class extends BaseApplicationGenerator {
               moduleNameMapper: {
                 '^@reactNative/storage$': '<rootDir>/node_modules/@reactNative/storage/dist/reactNative-storage.cjs.js',
               },
-              transformIgnorePatterns: [
-                'node_modules/(?!.*\\.mjs$|@ngrx|@reactNative-native|@reactNative|reactNative-appauth|capacitor-secure-storage-plugin)',
-              ],
             },
           });
         }
