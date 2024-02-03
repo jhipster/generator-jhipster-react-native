@@ -174,17 +174,6 @@ export default class extends BaseApplicationGenerator {
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', join(srcDir, 'templates/package.json'));
         this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', join(srcDir, 'resources/expo/package.json'));
       },
-      async patchUriScheme({ application }) {
-        const appConfig = this.fs.readJSON('app.json');
-        appConfig.expo.scheme = application.baseName.toLowerCase();
-        appConfig.expo.extra = {};
-        appConfig.expo.web = appConfig.expo.web || {};
-        appConfig.expo.web.bundler = 'metro';
-        this.fs.writeJSON('app.json', appConfig);
-      },
-      async appendFiles() {
-        appendFiles.bind(this)();
-      },
       async patchBabel() {
         patchBabel.bind(this)();
       },
@@ -265,9 +254,6 @@ export default class extends BaseApplicationGenerator {
                   useOldDTOCode: jhipsterVersion6 && this.context.dto === 'mapstruct',
                 },
               });
-              patchNavigationForEntity.bind(this)(entity);
-              const entityNameSnakeCase = snakeCase(entity.entityNameCapitalized);
-              patchEntityApi.bind(this)(application, { entityNameSnakeCase, ...entity });
             }),
         );
       },
@@ -276,6 +262,19 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      async patchUriScheme({ application }) {
+        this.editFile('app.json', content => {
+          const appConfig = JSON.parse(content);
+          appConfig.expo.scheme = application.baseName.toLowerCase();
+          appConfig.expo.extra = {};
+          appConfig.expo.web = appConfig.expo.web || {};
+          appConfig.expo.web.bundler = 'metro';
+          return JSON.stringify(appConfig);
+        });
+      },
+      async appendFiles() {
+        appendFiles.bind(this)();
+      },
       customizePackageJson({ application }) {
         const { baseName } = this.jhipsterConfig;
         this.packageJson.merge({
@@ -305,6 +304,22 @@ export default class extends BaseApplicationGenerator {
             },
           });
         }
+      },
+    });
+  }
+
+  get [BaseApplicationGenerator.POST_WRITING_ENTITIES]() {
+    return this.asPostWritingEntitiesTaskGroup({
+      async patchEntity({ application, entities }) {
+        await Promise.all(
+          entities
+            .filter(entity => !entity.builtIn)
+            .map(async entity => {
+              patchNavigationForEntity.bind(this)(entity);
+              const entityNameSnakeCase = snakeCase(entity.entityNameCapitalized);
+              await patchEntityApi.bind(this)(application, { entityNameSnakeCase, ...entity });
+            }),
+        );
       },
     });
   }
