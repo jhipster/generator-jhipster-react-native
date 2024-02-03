@@ -52,6 +52,7 @@ jobs:
             jhipster_version: 7
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
+      JHI_REACT_NATIVE_CLIENT_DIR: client
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
       JHI_DTO: ${{ matrix.dto }}
       JHI_WEBSOCKETS: ${{ matrix.websockets }}

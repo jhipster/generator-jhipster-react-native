@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -exo pipefail
 
-# switch to a directory to generate the react-native client
+# switch to a directory to generate the react-native server
 rm -rf ../${JHI_REACT_NATIVE_APP_NAME} && mkdir ../${JHI_REACT_NATIVE_APP_NAME} && cd ../${JHI_REACT_NATIVE_APP_NAME}
 
 echo "Using JDL for Generation"
@@ -17,4 +17,7 @@ else
 fi
 
 # list files
+echo "Listing files in directory: ${JHI_REACT_NATIVE_APP_NAME}"
 ls -al
+echo "Listing files in directory: ${JHI_REACT_NATIVE_CLIENT_DIR}"
+ls -al ../${JHI_REACT_NATIVE_CLIENT_DIR}
