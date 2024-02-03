@@ -52,7 +52,7 @@ export default class extends BaseApplicationGenerator {
       this.jhipsterConfig.authenticationType = this.options.authenticationType;
     }
     if (this.options.defaults || this.options.force) {
-      this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH });
+      this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null, detox: DEFAULT_ENABLE_DETOX });
     }
 
     if (!this.reactNativeContext) {
