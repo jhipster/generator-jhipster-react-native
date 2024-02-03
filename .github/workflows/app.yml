@@ -45,11 +45,6 @@ jobs:
             dto: false
             entity_jdl: entities-21points.jdl
             jhipster_version: 8
-          - app_type: JwtDtoWebsocketsAppV6
-            auth_type: jwt
-            dto: true
-            websockets: true
-            jhipster_version: 7
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_REACT_NATIVE_CLIENT_DIR: client
