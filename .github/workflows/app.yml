@@ -28,7 +28,6 @@ jobs:
           - JwtDtoWebsocketsApp
           - OauthFlickrApp
           - OauthHealthPointsApp
-          - JwtDtoWebsocketsAppV6
         include:
           - app_type: JwtDtoWebsocketsApp
             auth_type: jwt
