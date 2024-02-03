@@ -23,7 +23,7 @@ entity Tag {
 }
 
 relationship ManyToOne {
-  Album{user(login)} to User
+  Album{user(login)} to User with builtInEntity
   Photo{album(title)} to Album
 }
 
