@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node_version: [16.x]
+        node_version: [20.x]
         app_type:
           - JwtDtoWebsocketsApp
           - OauthFlickrApp
@@ -34,22 +34,22 @@ jobs:
             auth_type: jwt
             dto: true
             websockets: true
-            jhipster_version: 7
+            jhipster_version: 8
           - app_type: OauthFlickrApp
             auth_type: oauth2
             dto: false
             entity_jdl: entities-flickr2.jdl
-            jhipster_version: 7
+            jhipster_version: 8
           - app_type: OauthHealthPointsApp
             auth_type: oauth2
             dto: false
             entity_jdl: entities-21points.jdl
-            jhipster_version: 7
+            jhipster_version: 8
           - app_type: JwtDtoWebsocketsAppV6
             auth_type: jwt
             dto: true
             websockets: true
-            jhipster_version: 6
+            jhipster_version: 7
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
       JHI_AUTH_TYPE: ${{ matrix.auth_type }}
@@ -61,6 +61,10 @@ jobs:
       PLATFORM: ios
     steps:
       - uses: actions/checkout@v4.1.1
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '21.x'
       - run: git --no-pager log -n 10 --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) <%an>%Creset' --abbrev-commit
       - uses: actions/setup-node@v4.0.1
         with:
