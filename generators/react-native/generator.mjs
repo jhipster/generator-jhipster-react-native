@@ -54,10 +54,6 @@ export default class extends BaseApplicationGenerator {
     if (this.options.defaults || this.options.force) {
       this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null, detox: DEFAULT_ENABLE_DETOX });
     }
-
-    if (!this.reactNativeContext) {
-      this.reactNativeContext = {};
-    }
   }
 
   async beforeQueue() {
@@ -237,12 +233,15 @@ export default class extends BaseApplicationGenerator {
             .map(async entity => {
               const { uniqueOwnerSideRelationships, ownerSideRelationships } = this.differentRelationshipsWorkaround(entity);
               const jhipsterVersion6 = this.jhipsterVersion && semver.major(semver.coerce(this.jhipsterVersion)) === '6';
+              const fieldsContainEnum = entity.fields.filter(field => field.fieldIsEnum).length > 0;
               await this.writeFiles({
                 sections: entityFiles,
                 context: {
-                  ...entity,
-                  ...application,
+                  ...entity, // TODO: entity: {...entity}
+                  ...application, // TODO: application: {}...application}
+                  reactNativeConfig: { ...this.reactNativeConfig },
                   enableTranslation,
+                  fieldsContainEnum,
                   uniqueOwnerSideRelationships,
                   ownerSideRelationships,
                   getEntityFormField: getEntityFormField.bind(this),
