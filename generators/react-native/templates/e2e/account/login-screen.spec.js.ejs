@@ -18,9 +18,8 @@ describe('Login Screen Tests', () => {
     await element(by.id('loginScreenUsername')).replaceText('invalid');
     await element(by.id('loginScreenPassword')).replaceText('invalid');
     await waitThenTapButton('loginScreenLoginButton')
-    const expectedLabel = 'Bad credentials';
-    await waitForElementToBeVisibleByLabel(expectedLabel);
-    await expect(element(by.label(expectedLabel))).toBeVisible();
+    await waitForElementToBeVisibleById('loginErrorMessage');
+    await expect(element(by.id('loginErrorMessage'))).toBeVisible();
   });
 
   it('should log in and log out as user successfully', async () => {
