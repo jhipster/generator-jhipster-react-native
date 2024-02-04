@@ -48,7 +48,7 @@ else
 fi
 
 # switch to react-native app directory
-cd ../${JHI_REACT_NATIVE_APP_NAME}
+cd ../client
 
 # start the expo react-native packager
 npm run start:e2e &
