@@ -1,12 +1,23 @@
 {
   "configurations": {
     "ios.sim.release": {
+      "device": "simulator",
+      "app": "myApp.ios",
+    }
+  },
+  "apps": {
+    "myApp.ios": {
+      "type": "ios.app",
       "binaryPath": "e2e/Exponent.app",
+    },
+  },
+  "devices": {
+    "simulator": {
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 12"
-      }
-    }
+        "type": "iPhone 15",
+      },
+    },
   },
   "artifacts": {
     "rootDir": ".artifacts",
@@ -20,6 +31,11 @@
       }
     }
   },
-  "test-runner": "jest",
-  "runner-config": "./e2e/config.json"
+  "testRunner": {
+    "$0": "jest",
+    "args": {
+      "config": "./e2e/config.json"
+    },
+    "_": ["e2e"]
+  }
 }

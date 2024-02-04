@@ -142,7 +142,6 @@ const expectedFiles = {
   ],
   detox: [
     '.detoxrc.json',
-    'e2e/environment.js',
     'e2e/config.json',
     'e2e/home-screen.spec.js',
     'e2e/utils.js',
