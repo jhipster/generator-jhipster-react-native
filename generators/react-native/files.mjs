@@ -168,7 +168,7 @@ const files = {
   ],
   websockets: [
     {
-      condition: context => context.websocket === 'spring-websocket',
+      condition: context => !(context.websocket === 'no'),
       templates: [
         'app/modules/chat/chat-screen.js',
         'app/modules/chat/chat-screen.styles.js',
@@ -225,7 +225,7 @@ const files = {
       templates: ['e2e/account/change-password-screen.spec.js', 'e2e/account/login-screen.spec.js', 'e2e/account/settings-screen.spec.js'],
     },
     {
-      condition: context => context.detox === true && context.websocket,
+      condition: context => context.detox === true && !(context.websocket === 'no'),
       templates: ['e2e/websockets/chat-screen.spec.js'],
     },
   ],

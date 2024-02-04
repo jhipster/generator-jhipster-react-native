@@ -128,6 +128,11 @@ export default class extends BaseApplicationGenerator {
           this.backendBlueprintConfig.reactNativeDir = reactNativeDir;
           this.backendBlueprintConfig.appDir = null;
         }
+
+        // websocket: 'spring-websocket' or 'no';
+        if (this.backendConfig?.websocket) {
+          this.jhipsterConfig.websocket = this.backendConfig.websocket;
+        }
       },
       blueprint() {
         // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
