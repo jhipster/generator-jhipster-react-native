@@ -71,7 +71,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "husky": "8.0.3",
     "jsdoc": "4.0.2",
-    "lint-staged": "15.2.1",
+    "lint-staged": "15.2.2",
     "mem-fs": "2.3.0",
     "mocha": "10.2.0",
     "np": "9.2.0",
