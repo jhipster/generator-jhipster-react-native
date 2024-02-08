@@ -1,0 +1,995 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SubGenerator app of reactNative JHipster blueprint > run > should succeed 1`] = `
+{
+  "../client/.detoxrc.json": {
+    "stateCleared": "modified",
+  },
+  "../client/.editorconfig": {
+    "stateCleared": "modified",
+  },
+  "../client/.eslintrc.js": {
+    "stateCleared": "modified",
+  },
+  "../client/.gitattributes": {
+    "stateCleared": "modified",
+  },
+  "../client/.gitignore": {
+    "stateCleared": "modified",
+  },
+  "../client/.husky/pre-commit": {
+    "stateCleared": "modified",
+  },
+  "../client/.lintstagedrc.cjs": {
+    "stateCleared": "modified",
+  },
+  "../client/.prettierignore": {
+    "stateCleared": "modified",
+  },
+  "../client/.prettierrc.js": {
+    "stateCleared": "modified",
+  },
+  "../client/.prettierrc.yml": {
+    "stateCleared": "modified",
+  },
+  "../client/.yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "../client/App.js": {
+    "stateCleared": "modified",
+  },
+  "../client/README.md": {
+    "stateCleared": "modified",
+  },
+  "../client/app.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/config/app-config.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/config/redux-persist.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password-reset/forgot-password-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password-reset/forgot-password-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password-reset/forgot-password.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password-reset/forgot-password.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password/change-password-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password/change-password-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password/change-password.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/password/change-password.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/register/register-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/register/register-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/register/register.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/register/register.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/settings/settings-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/account/settings/settings-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/entities/entities-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/entities/entities-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/home/home-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/home/home-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/home/learn-more-links.component.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/login/login-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/login/login-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/login/login.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/modules/login/login.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/drawer/drawer-button.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/drawer/drawer-content.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/drawer/touchable-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/entity-stack.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/modal-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/nav-container.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/nav-ref.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/navigation/not-found-screen.tsx": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/alert-message/alert-message.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/alert-message/alert-message.story.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/alert-message/alert-message.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-date-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-date-input.web.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-image-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-list-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-multi-list-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-switch-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/inputs/jhi-text-input.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/jhi-form-button.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/jhi-form-field.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/jhi-form-field.story.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/form/jhi-form.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/rounded-button/rounded-button.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/rounded-button/rounded-button.story.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/rounded-button/rounded-button.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/search-bar/search-bar.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/search-bar/search-bar.story.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/components/search-bar/search-bar.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/README.md": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/get-account.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/get-user.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/get-users.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/login.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/fixtures/update-user.json": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/logo-jhipster@2x.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/logo-jhipster@3x.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/account.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/app-state.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/create-store.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/index.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/startup.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/reducers/user.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/sagas/account.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/sagas/call-api.saga.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/sagas/index.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/sagas/startup.saga.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/sagas/user.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/services/api.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/services/fixture-api.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/services/rehydration.service.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/application.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/colors.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/fonts.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/images.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/index.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/themes/metrics.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/date-transforms.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/immutable-persistence-transform.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/pagination-utils.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/snake-to-camel-case.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/url-utils.js": {
+    "stateCleared": "modified",
+  },
+  "../client/app/shared/util/use-did-update-effect.js": {
+    "stateCleared": "modified",
+  },
+  "../client/assets/adaptive-icon.png": {
+    "stateCleared": "modified",
+  },
+  "../client/assets/favicon.png": {
+    "stateCleared": "modified",
+  },
+  "../client/assets/icon.png": {
+    "stateCleared": "modified",
+  },
+  "../client/assets/splash.png": {
+    "stateCleared": "modified",
+  },
+  "../client/babel.config.js": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/account/change-password-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/account/login-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/account/settings-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/config.json": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/home-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/scripts/download-expo.sh": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/scripts/setup.sh": {
+    "stateCleared": "modified",
+  },
+  "../client/e2e/utils.js": {
+    "stateCleared": "modified",
+  },
+  "../client/metro.config.js": {
+    "stateCleared": "modified",
+  },
+  "../client/package.json": {
+    "stateCleared": "modified",
+  },
+  "../client/patches/react-native-keyboard-aware-scroll-view+0.9.4.patch": {
+    "stateCleared": "modified",
+  },
+  "../client/patches/react-native-sectioned-multi-select+0.8.1.patch": {
+    "stateCleared": "modified",
+  },
+  "../client/storybook/addons.js": {
+    "stateCleared": "modified",
+  },
+  "../client/storybook/index.js": {
+    "stateCleared": "modified",
+  },
+  "../client/storybook/stories.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/setup.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/register/register.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/register/register.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/login/login.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/login/login.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/components/alert-message/alert-message.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/components/rounded-button/rounded-button.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/components/search-bar/search-bar.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/reducers/account.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/reducers/app-state.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/reducers/user.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/sagas/account.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/sagas/call-api.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/sagas/startup.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/sagas/user.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/shared/services/fixture-api.spec.js": {
+    "stateCleared": "modified",
+  },
+  ".editorconfig": {
+    "stateCleared": "modified",
+  },
+  ".gitattributes": {
+    "stateCleared": "modified",
+  },
+  ".gitignore": {
+    "stateCleared": "modified",
+  },
+  ".husky/pre-commit": {
+    "stateCleared": "modified",
+  },
+  ".lintstagedrc.cjs": {
+    "stateCleared": "modified",
+  },
+  ".prettierignore": {
+    "stateCleared": "modified",
+  },
+  ".prettierrc": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "README.md": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "sonar-project.properties": {
+    "stateCleared": "modified",
+  },
+}
+`;
+
+exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactNative path > should succeed 1`] = `
+{
+  "../reactNative-app/.detoxrc.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.editorconfig": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.eslintrc.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.gitattributes": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.gitignore": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.husky/pre-commit": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.lintstagedrc.cjs": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.prettierignore": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.prettierrc.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.prettierrc.yml": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/App.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/README.md": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/config/app-config.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/config/redux-persist.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password-reset/forgot-password-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password-reset/forgot-password-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password-reset/forgot-password.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password-reset/forgot-password.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password/change-password-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password/change-password-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password/change-password.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/password/change-password.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/register/register-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/register/register-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/register/register.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/register/register.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/settings/settings-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/account/settings/settings-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/entities/entities-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/entities/entities-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/home/home-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/home/home-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/home/learn-more-links.component.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/login/login-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/login/login-screen.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/login/login.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/modules/login/login.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/drawer/drawer-button.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/drawer/drawer-content.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/drawer/touchable-item.tsx": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/entity-stack.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/modal-screen.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/nav-container.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/nav-ref.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/navigation/not-found-screen.tsx": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/alert-message/alert-message.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/alert-message/alert-message.story.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/alert-message/alert-message.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-date-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-date-input.web.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-image-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-list-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-multi-list-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-switch-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/inputs/jhi-text-input.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/jhi-form-button.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/jhi-form-field.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/jhi-form-field.story.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/form/jhi-form.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/rounded-button/rounded-button.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/rounded-button/rounded-button.story.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/rounded-button/rounded-button.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/search-bar/search-bar.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/search-bar/search-bar.story.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/components/search-bar/search-bar.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/README.md": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/get-account.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/get-user.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/get-users.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/login.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/fixtures/update-user.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/logo-jhipster.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/logo-jhipster@2x.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/logo-jhipster@3x.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1.5x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@1x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@2x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@3x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.android.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/images/toggle-drawer-icon/toggle-drawer-icon@4x.ios.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/account.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/app-state.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/create-store.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/index.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/startup.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/reducers/user.reducer.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/sagas/account.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/sagas/call-api.saga.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/sagas/index.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/sagas/startup.saga.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/sagas/user.sagas.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/services/api.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/services/fixture-api.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/services/rehydration.service.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/application.styles.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/colors.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/fonts.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/images.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/index.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/themes/metrics.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/date-transforms.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/immutable-persistence-transform.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/pagination-utils.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/snake-to-camel-case.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/url-utils.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/app/shared/util/use-did-update-effect.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/assets/adaptive-icon.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/assets/favicon.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/assets/icon.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/assets/splash.png": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/babel.config.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/account/change-password-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/account/login-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/account/settings-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/config.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/home-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/scripts/download-expo.sh": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/scripts/setup.sh": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/e2e/utils.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/metro.config.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/package.json": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/patches/react-native-keyboard-aware-scroll-view+0.9.4.patch": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/patches/react-native-sectioned-multi-select+0.8.1.patch": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/storybook/addons.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/storybook/index.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/storybook/stories.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/setup.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/register/register.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/register/register.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/login/login.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/login/login.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/components/alert-message/alert-message.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/components/rounded-button/rounded-button.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/components/search-bar/search-bar.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/reducers/account.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/reducers/app-state.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/reducers/user.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/sagas/account.sagas.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/sagas/call-api.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/sagas/startup.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/sagas/user.saga.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/shared/services/fixture-api.spec.js": {
+    "stateCleared": "modified",
+  },
+  ".editorconfig": {
+    "stateCleared": "modified",
+  },
+  ".gitattributes": {
+    "stateCleared": "modified",
+  },
+  ".gitignore": {
+    "stateCleared": "modified",
+  },
+  ".husky/pre-commit": {
+    "stateCleared": "modified",
+  },
+  ".lintstagedrc.cjs": {
+    "stateCleared": "modified",
+  },
+  ".prettierignore": {
+    "stateCleared": "modified",
+  },
+  ".prettierrc": {
+    "stateCleared": "modified",
+  },
+  ".yo-rc.json": {
+    "stateCleared": "modified",
+  },
+  "README.md": {
+    "stateCleared": "modified",
+  },
+  "package.json": {
+    "stateCleared": "modified",
+  },
+  "sonar-project.properties": {
+    "stateCleared": "modified",
+  },
+}
+`;

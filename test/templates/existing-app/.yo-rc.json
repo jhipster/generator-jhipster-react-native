@@ -21,7 +21,7 @@
         "searchEngine": false,
         "skipClient": false,
         "testFrameworks": [],
-        "websocket": false,
+        "websocket": "spring-websocket",
         "applicationType": "monolith",
         "blueprints": [],
         "clientPackageManager": "npm",
@@ -36,9 +36,9 @@
         "reactive": false,
         "skipServer": false,
         "entities": [],
-        "reactNative": {
-            "reactNativeAppName": "Mono",
-            "detox": false,
+        "generator-jhipster-react-native": {
+            "appName": "Mono",
+            "detox": true,
             "version": "0.0.0"
         }
     }

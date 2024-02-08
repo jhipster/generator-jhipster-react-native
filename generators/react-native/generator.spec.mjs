@@ -1,52 +1,28 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { defaultHelpers as helpers, result } from 'generator-jhipster/testing';
+import expectedFiles from '../../test/expected-files.js';
 
-const SUB_GENERATOR = 'reactNative';
-const SUB_GENERATOR_NAMESPACE = `jhipster-reactNative:${SUB_GENERATOR}`;
-
-const expectedJwtFiles = [
-  'src/app/services/auth/auth-jwt.service.ts',
-  'src/app/services/auth/auth-jwt.service.spec.ts',
-  'src/app/interceptors/auth-expired.interceptor.ts',
-];
+const SUB_GENERATOR = 'react-native';
+const SUB_GENERATOR_NAMESPACE = `jhipster-react-native:${SUB_GENERATOR}`;
 
 describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
-  describe('with jwt authentication', () => {
+  describe('WebSocket Disabled, JWT Authentication, No Detox Test', () => {
     beforeAll(async function () {
       await helpers
         .run(SUB_GENERATOR_NAMESPACE)
-        .withJHipsterConfig()
+        .withJHipsterConfig({
+          websocket: 'no',
+        })
         .withOptions({
-          blueprint: 'reactNative',
+          force: false,
+          blueprint: 'react-native',
           appDir: false,
-          baseName: 'jhipster',
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withJHipsterLookup()
-        .withParentBlueprintLookup();
-    });
-
-    it('should succeed', () => {
-      expect(result.getStateSnapshot()).toMatchSnapshot();
-    });
-
-    it('should generate app/services/auth/auth-jwt.service.ts', () => {
-      result.assertFile(expectedJwtFiles);
-    });
-  });
-  describe('with oauth2 authentication', () => {
-    beforeAll(async function () {
-      await helpers
-        .run(SUB_GENERATOR_NAMESPACE)
-        .withJHipsterConfig()
-        .withOptions({
-          blueprint: 'reactNative',
-          appDir: false,
-          baseName: 'jhipster',
-          authenticationType: 'oauth2',
-          ignoreNeedlesError: true,
+        .withAnswers({
+          detox: false,
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
@@ -56,8 +32,200 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
       expect(result.getStateSnapshot()).toMatchSnapshot();
     });
 
-    it('should not generate jwt files', () => {
-      result.assertNoFile(expectedJwtFiles);
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertNoFile(expectedFiles.websockets);
+      result.assertFile(expectedFiles.notOauth);
+      result.assertNoFile(expectedFiles.oauth);
+      result.assertNoFile(expectedFiles.detox);
+      result.assertNoFile(expectedFiles.detoxAndWebsockets);
+      result.assertNoFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
+    });
+  });
+
+  describe('WebSocket Enabled with Spring, JWT Authentication, No Detox Test', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          websocket: 'spring-websocket',
+        })
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'jwt',
+        })
+        .withAnswers({
+          detox: false,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertFile(expectedFiles.websockets);
+      result.assertFile(expectedFiles.notOauth);
+      result.assertNoFile(expectedFiles.oauth);
+      result.assertNoFile(expectedFiles.detox);
+      result.assertNoFile(expectedFiles.detoxAndWebsockets);
+      result.assertNoFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
+    });
+  });
+
+  describe('WebSocket Enabled with Spring, OAuth2 Authentication, No Detox Test', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          websocket: 'spring-websocket',
+        })
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'oauth2',
+        })
+        .withAnswers({
+          detox: false,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertFile(expectedFiles.websockets);
+      result.assertNoFile(expectedFiles.notOauth);
+      result.assertFile(expectedFiles.oauth);
+      result.assertNoFile(expectedFiles.detox);
+      result.assertNoFile(expectedFiles.detoxAndWebsockets);
+      result.assertNoFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
+    });
+  });
+
+  describe('WebSocket Disabled, JWT Authentication, With Detox Test', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          websocket: 'no',
+        })
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'jwt',
+        })
+        .withAnswers({
+          detox: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertNoFile(expectedFiles.websockets);
+      result.assertFile(expectedFiles.notOauth);
+      result.assertNoFile(expectedFiles.oauth);
+      result.assertFile(expectedFiles.detox);
+      result.assertNoFile(expectedFiles.detoxAndWebsockets);
+      result.assertFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
+    });
+  });
+
+  describe('WebSocket Enabled with Spring, JWT Authentication, With Detox Test', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          websocket: 'spring-websocket',
+        })
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'jwt',
+        })
+        .withAnswers({
+          detox: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertFile(expectedFiles.websockets);
+      result.assertFile(expectedFiles.notOauth);
+      result.assertNoFile(expectedFiles.oauth);
+      result.assertFile(expectedFiles.detox);
+      result.assertFile(expectedFiles.detoxAndWebsockets);
+      result.assertFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
+    });
+  });
+
+  describe('WebSocket Enabled with Spring, OAuth2 Authentication, With Detox Test', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig({
+          websocket: 'spring-websocket',
+        })
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'oauth2',
+        })
+        .withAnswers({
+          detox: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates the expected files', () => {
+      result.assertFile(expectedFiles.defaultApp);
+      result.assertFile(expectedFiles.websockets);
+      result.assertNoFile(expectedFiles.notOauth);
+      result.assertFile(expectedFiles.oauth);
+      result.assertFile(expectedFiles.detox);
+      result.assertFile(expectedFiles.detoxAndWebsockets);
+      result.assertNoFile(expectedFiles.detoxAndNotOauth);
+      result.assertNoFile(expectedFiles.notExpected);
     });
   });
 });
