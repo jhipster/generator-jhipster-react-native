@@ -86,6 +86,9 @@
     "yeoman-assert": "3.1.1",
     "yeoman-test": ">=8.0.0-rc.1"
   },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
+  },
   "engines": {
     "node": "^18.13.0 || >= 20.6.1",
     "npm": ">=7"
