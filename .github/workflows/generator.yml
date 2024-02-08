@@ -40,5 +40,5 @@ jobs:
         run: npm run test
       - name: check-dependencies
         run: |
-          cd generators/app/resources/expo
+          cd generators/react-native/resources/expo
           npm run check-dependencies
