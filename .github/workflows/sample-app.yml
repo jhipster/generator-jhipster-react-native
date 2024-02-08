@@ -64,7 +64,7 @@ jobs:
           find . -not -name ".yo-rc.json" -type f -maxdepth 1 -delete
           rm .git/index
           rm -rf app assets e2e patches storybook test
-          jhipster --no-insight --skip-checks --skip-install --force --with-entities
+          jhipster --no-insight --skip-checks --skip-install --force
           # jhipster heroku --no-insight --skip-install --force --skip-deploy
           # sed -i.backup "s~http://localhost:8080/~https://jh-sample-app-react-native-api.herokuapp.com/~g" app/config/app-config.js
           # rm app/config/app-config.js.backup
@@ -76,16 +76,17 @@ jobs:
           git tag "${{ github.ref }}"
       - name: 'BUILD: run expo web build'
         run: |
-          cd sample-app
+          cd client
+          npm install
           npm run build:web
       - name: 'DIFF: show diff for generated app (from latest release)'
         run: |
-          cd sample-app
+          cd client
           git -c color.ui=always diff -R --cached --exit-code -- . ':!package-lock.json'
       - name: 'PUSH: push the updated sample app to Expo'
         if: startsWith(github.ref, 'refs/tags/')
         run: |
-          cd sample-app
+          cd client
           npm install -g sharp-cli
           expo publish
       - name: 'PUSH: push the updated sample app to GitHub'
@@ -94,5 +95,5 @@ jobs:
         with:
           repository: ruddell/jhipster-sample-app-react-native
           github_token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
-          directory: sample-app
+          directory: client
           tags: true
