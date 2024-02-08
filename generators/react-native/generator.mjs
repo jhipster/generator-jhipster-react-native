@@ -232,7 +232,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.WRITING_ENTITIES]() {
     return this.asWritingEntitiesTaskGroup({
       async writeEntities({ application, entities }) {
-        const { enableTranslation } = application;
         await Promise.all(
           entities
             .filter(entity => !entity.builtIn)
@@ -243,10 +242,9 @@ export default class extends BaseApplicationGenerator {
               await this.writeFiles({
                 sections: entityFiles,
                 context: {
-                  ...entity, // TODO: entity: {...entity}
-                  ...application, // TODO: application: {}...application}
+                  entity: { ...entity },
+                  application: { ...application },
                   reactNativeConfig: { ...this.reactNativeConfig },
-                  enableTranslation,
                   fieldsContainEnum,
                   uniqueOwnerSideRelationships,
                   ownerSideRelationships,

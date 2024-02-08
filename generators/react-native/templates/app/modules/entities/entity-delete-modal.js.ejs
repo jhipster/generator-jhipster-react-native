@@ -2,23 +2,23 @@ import React from 'react';
 import { TouchableHighlight, Modal, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer';
+import <%= entity.entityNameCapitalized %>Actions from './<%= entity.entityFileName %>.reducer';
 
-import styles from './<%= entityFileName %>-styles'
+import styles from './<%= entity.entityFileName %>-styles'
 
-function <%= entityNameCapitalized %>DeleteModal(props) {
+function <%= entity.entityNameCapitalized %>DeleteModal(props) {
     const { visible, setVisible, entity, navigation, testID } = props;
 
     const deleteEntity = () => {
-        props.delete<%= entityNameCapitalized %>(entity.id);
-        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= entityNameCapitalized %>');
+        props.delete<%= entity.entityNameCapitalized %>(entity.id);
+        navigation.canGoBack() ? navigation.goBack() : navigation.navigate('<%= entity.entityNameCapitalized %>');
     };
     return (
         <Modal animationType="slide" transparent={true} visible={visible}>
             <View testID={testID} style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <View style={[styles.flex, styles.flexRow]}>
-                        <Text style={styles.modalText}>Delete <%= entityNameCapitalized %> {entity.id}?</Text>
+                        <Text style={styles.modalText}>Delete <%= entity.entityNameCapitalized %> {entity.id}?</Text>
                     </View>
                     <View style={[styles.flexRow]}>
                         <TouchableHighlight
@@ -40,20 +40,20 @@ function <%= entityNameCapitalized %>DeleteModal(props) {
 
 const mapStateToProps = (state) => {
     return {
-        <%= entityInstance %>: state.<%= entityInstancePlural %>.<%= entityInstance %>,
-        fetching: state.<%= entityInstancePlural %>.fetchingOne,
-        deleting: state.<%= entityInstancePlural %>.deleting,
-        errorDeleting: state.<%= entityInstancePlural %>.errorDeleting,
+        <%= entity.entityInstance %>: state.<%= entity.entityInstancePlural %>.<%= entity.entityInstance %>,
+        fetching: state.<%= entity.entityInstancePlural %>.fetchingOne,
+        deleting: state.<%= entity.entityInstancePlural %>.deleting,
+        errorDeleting: state.<%= entity.entityInstancePlural %>.errorDeleting,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        get<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Request(id)),
-        getAll<%= entityNamePlural %>: (options) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllRequest(options)),
-        delete<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteRequest(id)),
-        reset<%= entityNamePlural %>: () => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Reset()),
+        get<%= entity.entityNameCapitalized %>: (id) => dispatch(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Request(id)),
+        getAll<%= entity.entityNamePlural %>: (options) => dispatch(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>AllRequest(options)),
+        delete<%= entity.entityNameCapitalized %>: (id) => dispatch(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>DeleteRequest(id)),
+        reset<%= entity.entityNamePlural %>: () => dispatch(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Reset()),
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(<%= entityNameCapitalized %>DeleteModal);
+export default connect(mapStateToProps, mapDispatchToProps)(<%= entity.entityNameCapitalized %>DeleteModal);

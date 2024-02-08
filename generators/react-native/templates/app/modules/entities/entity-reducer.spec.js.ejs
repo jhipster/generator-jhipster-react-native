@@ -1,129 +1,129 @@
-import Actions, { reducer, INITIAL_STATE } from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.reducer'
+import Actions, { reducer, INITIAL_STATE } from '../../../../../app/modules/entities/<%= entity.entityFileName %>/<%= entity.entityFileName %>.reducer'
 
-test('attempt retrieving a single <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>Request({ id: 1 }))
+test('attempt retrieving a single <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>Request({ id: 1 }))
 
   expect(state.fetchingOne).toBe(true)
-  expect(state.<%= entityInstance %>).toEqual({ id: undefined })
+  expect(state.<%= entity.entityInstance %>).toEqual({ id: undefined })
 })
 
-test('attempt retrieving a list of <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>AllRequest({ id: 1 }))
+test('attempt retrieving a list of <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>AllRequest({ id: 1 }))
 
   expect(state.fetchingAll).toBe(true)
-  expect(state.<%= entityInstance %>List).toEqual([])
+  expect(state.<%= entity.entityInstance %>List).toEqual([])
 })
 
-test('attempt updating a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateRequest({ id: 1 }))
+test('attempt updating a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>UpdateRequest({ id: 1 }))
 
   expect(state.updating).toBe(true)
 })
-<%_ if (searchEngineAny) { _%>
-test('attempt searching a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchRequest(1))
+<%_ if (entity.searchEngineAny) { _%>
+test('attempt searching a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>SearchRequest(1))
 
   expect(state.searching).toBe(true)
 })
 <%_ } _%>
-test('attempt to deleting a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteRequest({ id: 1 }))
+test('attempt to deleting a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>DeleteRequest({ id: 1 }))
 
   expect(state.deleting).toBe(true)
 })
 
-test('success retrieving a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>Success({ id: 1 }))
+test('success retrieving a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>Success({ id: 1 }))
 
   expect(state.fetchingOne).toBe(false)
   expect(state.errorOne).toBe(null)
-  expect(state.<%= entityInstance %>).toEqual({ id: 1 })
+  expect(state.<%= entity.entityInstance %>).toEqual({ id: 1 })
 })
 
-test('success retrieving a list of <%= entityInstance %>', () => {
+test('success retrieving a list of <%= entity.entityInstance %>', () => {
   const state = reducer(
     INITIAL_STATE,
-    <%_ if (pagination === 'no') { _%>
-    Actions.<%= entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }]),
+    <%_ if (entity.pagination === 'no') { _%>
+    Actions.<%= entity.entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }]),
     <%_ } else { _%>
-    Actions.<%= entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }], { link: '</?page=1>; rel="last",</?page=0>; rel="first"', 'x-total-count': 5}),
+    Actions.<%= entity.entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }], { link: '</?page=1>; rel="last",</?page=0>; rel="first"', 'x-total-count': 5}),
     <%_ } _%>
   )
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toBe(null)
-  expect(state.<%= entityInstance %>List).toEqual([{ id: 1 }, { id: 2 }])
-  <%_ if (pagination !== 'no') { _%>
+  expect(state.<%= entity.entityInstance %>List).toEqual([{ id: 1 }, { id: 2 }])
+  <%_ if (entity.pagination !== 'no') { _%>
   expect(state.links).toEqual({ first: 0, last: 1 })
   expect(state.totalItems).toEqual(5)
   <%_ } _%>
 })
 
-test('success updating a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateSuccess({ id: 1 }))
+test('success updating a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>UpdateSuccess({ id: 1 }))
 
   expect(state.updating).toBe(false)
   expect(state.errorUpdating).toBe(null)
-  expect(state.<%= entityInstance %>).toEqual({ id: 1 })
+  expect(state.<%= entity.entityInstance %>).toEqual({ id: 1 })
 })
-<%_ if (searchEngineAny) { _%>
-test('success searching a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchSuccess({ id: 1 }))
+<%_ if (entity.searchEngineAny) { _%>
+test('success searching a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>SearchSuccess({ id: 1 }))
 
   expect(state.searching).toBe(false)
   expect(state.errorSearching).toBe(null)
-  expect(state.<%= entityInstance %>List).toEqual({ id: 1 })
+  expect(state.<%= entity.entityInstance %>List).toEqual({ id: 1 })
 })
 <%_ } _%>
-test('success deleting a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteSuccess())
+test('success deleting a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>DeleteSuccess())
 
   expect(state.deleting).toBe(false)
   expect(state.errorDeleting).toBe(null)
-  expect(state.<%= entityInstance %>).toEqual({ id: undefined })
+  expect(state.<%= entity.entityInstance %>).toEqual({ id: undefined })
 })
 
-test('failure retrieving a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>Failure({ error: 'Not found' }))
+test('failure retrieving a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>Failure({ error: 'Not found' }))
 
   expect(state.fetchingOne).toBe(false)
   expect(state.errorOne).toEqual({ error: 'Not found' })
-  expect(state.<%= entityInstance %>).toEqual({ id: undefined })
+  expect(state.<%= entity.entityInstance %>).toEqual({ id: undefined })
 })
 
-test('failure retrieving a list of <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>AllFailure({ error: 'Not found' }))
+test('failure retrieving a list of <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>AllFailure({ error: 'Not found' }))
 
   expect(state.fetchingAll).toBe(false)
   expect(state.errorAll).toEqual({ error: 'Not found' })
-  expect(state.<%= entityInstance %>List).toEqual([])
+  expect(state.<%= entity.entityInstance %>List).toEqual([])
 })
 
-test('failure updating a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateFailure({ error: 'Not found' }))
+test('failure updating a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>UpdateFailure({ error: 'Not found' }))
 
   expect(state.updating).toBe(false)
   expect(state.errorUpdating).toEqual({ error: 'Not found' })
-  expect(state.<%= entityInstance %>).toEqual(INITIAL_STATE.<%= entityInstance %>)
+  expect(state.<%= entity.entityInstance %>).toEqual(INITIAL_STATE.<%= entity.entityInstance %>)
 })
-<%_ if (searchEngineAny) { _%>
-test('failure searching a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchFailure({ error: 'Not found' }))
+<%_ if (entity.searchEngineAny) { _%>
+test('failure searching a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>SearchFailure({ error: 'Not found' }))
 
   expect(state.searching).toBe(false)
   expect(state.errorSearching).toEqual({ error: 'Not found' })
-  expect(state.<%= entityInstance %>List).toEqual([])
+  expect(state.<%= entity.entityInstance %>List).toEqual([])
 })
 <%_ } _%>
-test('failure deleting a <%= entityInstance %>', () => {
-  const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteFailure({ error: 'Not found' }))
+test('failure deleting a <%= entity.entityInstance %>', () => {
+  const state = reducer(INITIAL_STATE, Actions.<%= entity.entityInstance %>DeleteFailure({ error: 'Not found' }))
 
   expect(state.deleting).toBe(false)
   expect(state.errorDeleting).toEqual({ error: 'Not found' })
-  expect(state.<%= entityInstance %>).toEqual(INITIAL_STATE.<%= entityInstance %>)
+  expect(state.<%= entity.entityInstance %>).toEqual(INITIAL_STATE.<%= entity.entityInstance %>)
 })
 
-test('resetting state for <%= entityInstance %>', () => {
-  const state = reducer({ ...INITIAL_STATE, deleting: true }, Actions.<%= entityInstance %>Reset())
+test('resetting state for <%= entity.entityInstance %>', () => {
+  const state = reducer({ ...INITIAL_STATE, deleting: true }, Actions.<%= entity.entityInstance %>Reset())
   expect(state).toEqual(INITIAL_STATE)
 })
