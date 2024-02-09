@@ -1,4 +1,4 @@
-<%_ if (fieldsContainDate) { _%>
+<%_ if (anyFieldIsDateDerived) { _%>
 const jestExpect = require('expect');
 <%_ } _%>
 const {
@@ -13,7 +13,7 @@ const {
 <%_ if (fieldsContainEnum) { _%>
     setPickerValue,
 <%_ } _%>
-<%_ if (fieldsContainDate) { _%>
+<%_ if (anyFieldIsDateDerived) { _%>
     setDateTimePickerValue,
 <%_ } _%>
     scrollTo,

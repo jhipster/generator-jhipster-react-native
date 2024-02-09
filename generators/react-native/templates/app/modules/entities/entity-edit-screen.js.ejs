@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { connect } from 'react-redux'
-<%_ if (validation) { _%>
+<%_ if (anyPropertyHasValidation) { _%>
 import * as Yup from 'yup';
 <%_ } _%>
 
@@ -21,7 +21,7 @@ import Form from '../../../shared/components/form/jhi-form';
 import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
 import styles from './<%= entityFileName %>-styles'
 
-<%_ if (validation) { // start of validation if statement _%>
+<%_ if (anyPropertyHasValidation) { // start of validation if statement _%>
 // set up validation schema for the form
 const validationSchema = Yup.object().shape({
   <%_ fields.filter(field => !field.id).forEach((field) => { // start of fields loop
@@ -166,7 +166,7 @@ const onSubmit = (data) => update<%= entityNameCapitalized %>(formValueToEntity(
         contentContainerStyle={styles.paddedScrollView}>
         {!!error && <Text style={styles.errorText}>{error}</Text>}
         {formValue && (
-          <Form initialValues={formValue} <%_ if (validation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
+          <Form initialValues={formValue} <%_ if (anyPropertyHasValidation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
           <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
           <%_
             let nextField = null;

@@ -1,12 +1,12 @@
 import { call, put } from 'redux-saga/effects'
 import { callApi } from '../../../shared/sagas/call-api.saga'
 import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
-<%_ if (fieldsContainDate) { _%>
+<%_ if (anyFieldIsDateDerived) { _%>
 import {
-  <%_ if (fieldsContainZonedDateTime || fieldsContainInstant) { _%>
+  <%_ if (anyFieldIsZonedDateTime || anyFieldIsInstant) { _%>
   convertDateTimeFromServer,
   <%_ } _%>
-  <%_ if (fieldsContainLocalDate) { _%>
+  <%_ if (anyFieldIsLocalDate) { _%>
   convertLocalDateFromServer,
   <%_ } _%>
 } from '../../../shared/util/date-transforms'
@@ -20,7 +20,7 @@ function * get<%= entityNameCapitalized %> (api, action) {
 
   // success?
   if (response.ok) {
-    <%_ if (fieldsContainDate) { _%>
+    <%_ if (anyFieldIsDateDerived) { _%>
     response.data = mapDateFields(response.data)
     <%_ } _%>
     yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Success(response.data))
@@ -52,7 +52,7 @@ function * update<%= entityNameCapitalized %> (api, action) {
 
   // success?
   if (response.ok) {
-    <%_ if (fieldsContainDate) { _%>
+    <%_ if (anyFieldIsDateDerived) { _%>
     response.data = mapDateFields(response.data)
     <%_ } _%>
     yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateSuccess(response.data))
@@ -89,7 +89,7 @@ function * delete<%= entityNameCapitalized %> (api, action) {
     yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure(response.data))
   }
 }
-<%_ if (fieldsContainDate) { _%>
+<%_ if (anyFieldIsDateDerived) { _%>
 function mapDateFields (data) {
 <%_ fields.filter(field => !field.id).forEach(function (field) { _%>
 <%_ if (field.fieldType === 'LocalDate') { _%>
