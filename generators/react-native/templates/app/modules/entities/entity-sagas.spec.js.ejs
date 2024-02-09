@@ -1,99 +1,99 @@
 import { put } from 'redux-saga/effects'
 
 import FixtureAPI from '../../../../../app/shared/services/fixture-api'
-import <%= entity.entityNameCapitalized %>Sagas from '../../../../../app/modules/entities/<%= entity.entityFileName %>/<%= entity.entityFileName %>.sagas'
-import <%= entity.entityNameCapitalized %>Actions from '../../../../../app/modules/entities/<%= entity.entityFileName %>/<%= entity.entityFileName %>.reducer'
+import <%= entityNameCapitalized %>Sagas from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.sagas'
+import <%= entityNameCapitalized %>Actions from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.reducer'
 
-const { get<%= entity.entityNameCapitalized %>, getAll<%= entity.entityNamePlural %>, update<%= entity.entityNameCapitalized %>, delete<%= entity.entityNameCapitalized %><%= entity.searchEngine ? `, search${entity.entityNamePlural}` : '' %> } = <%= entity.entityNameCapitalized %>Sagas;
+const { get<%= entityNameCapitalized %>, getAll<%= entityNamePlural %>, update<%= entityNameCapitalized %>, delete<%= entityNameCapitalized %><%= searchEngine ? `, search${entityNamePlural}` : '' %> } = <%= entityNameCapitalized %>Sagas;
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('get success path', () => {
-  const response = FixtureAPI.get<%= entity.entityNameCapitalized %>(1)
-  const step = stepper(get<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>Id: { id: 1 } }))
+  const response = FixtureAPI.get<%= entityNameCapitalized %>(1)
+  const step = stepper(get<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Success(response.data)))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Success(response.data)))
 })
 
 test('get failure path', () => {
   const response = { ok: false }
-  const step = stepper(get<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>Id: { id: 1 } }))
+  const step = stepper(get<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Failure()))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Failure()))
 })
 
 test('getAll success path', () => {
-  const response = FixtureAPI.getAll<%= entity.entityNamePlural %>()
-  const step = stepper(getAll<%= entity.entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
+  const response = FixtureAPI.getAll<%= entityNamePlural %>()
+  const step = stepper(getAll<%= entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }])))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllSuccess([{ id: 1 }, { id: 2 }])))
 })
 
 test('getAll failure path', () => {
   const response = { ok: false }
-  const step = stepper(getAll<%= entity.entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
+  const step = stepper(getAll<%= entityNamePlural %>(FixtureAPI, { options: { page: 0, sort: 'id,asc', size: 20 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>AllFailure()))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllFailure()))
 })
 
 test('update success path', () => {
-  const response = FixtureAPI.update<%= entity.entityNameCapitalized %>({ id: 1 })
-  const step = stepper(update<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>: { id: 1 } }))
+  const response = FixtureAPI.update<%= entityNameCapitalized %>({ id: 1 })
+  const step = stepper(update<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>UpdateSuccess(response.data)))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateSuccess(response.data)))
 })
 
 test('update failure path', () => {
   const response = { ok: false }
-  const step = stepper(update<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>: { id: 1 } }))
+  const step = stepper(update<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>UpdateFailure()))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateFailure()))
 })
 
-<%_ if (entity.searchEngineAny) { _%>
+<%_ if (searchEngineAny) { _%>
 test('search success path', () => {
-  const response = FixtureAPI.search<%= entity.entityNamePlural %>()
-  const step = stepper(search<%= entity.entityNamePlural %>(FixtureAPI, '*'))
+  const response = FixtureAPI.search<%= entityNamePlural %>()
+  const step = stepper(search<%= entityNamePlural %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>SearchSuccess([{ id: 1 }, { id: 2 }])))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchSuccess([{ id: 1 }, { id: 2 }])))
 })
 
 test('search failure path', () => {
   const response = { ok: false }
-  const step = stepper(search<%= entity.entityNamePlural %>(FixtureAPI, '*'))
+  const step = stepper(search<%= entityNamePlural %>(FixtureAPI, '*'))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>SearchFailure()))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchFailure()))
 })
 <%_ } _%>
 test('delete success path', () => {
-  const response = FixtureAPI.delete<%= entity.entityNameCapitalized %>({ id: 1 })
-  const step = stepper(delete<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>Id: { id: 1 } }))
+  const response = FixtureAPI.delete<%= entityNameCapitalized %>({ id: 1 })
+  const step = stepper(delete<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Successful return and data!
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>DeleteSuccess(response.data)))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteSuccess(response.data)))
 })
 
 test('delete failure path', () => {
   const response = { ok: false }
-  const step = stepper(delete<%= entity.entityNameCapitalized %>(FixtureAPI, { <%= entity.entityInstance %>Id: { id: 1 } }))
+  const step = stepper(delete<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>Id: { id: 1 } }))
   // Step 1: Hit the api
   step()
   // Step 2: Failed response.
-  expect(step(response)).toEqual(put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>DeleteFailure()))
+  expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure()))
 })

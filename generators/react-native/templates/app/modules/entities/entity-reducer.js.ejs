@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce'
 import Immutable from 'seamless-immutable'
-<%_ if (entity.pagination !== 'no') { _%>
+<%_ if (pagination !== 'no') { _%>
 import { loadMoreDataWhenScrolled } from '../../../shared/util/pagination-utils'
 import { parseHeaderForLinks } from '../../../shared/util/url-utils'
 <%_ } _%>
@@ -8,34 +8,34 @@ import { parseHeaderForLinks } from '../../../shared/util/url-utils'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-  <%= entity.entityInstance %>Request: ['<%= entity.entityInstance %>Id'],
-  <%= entity.entityInstance %>AllRequest: ['options'],
-  <%= entity.entityInstance %>UpdateRequest: ['<%= entity.entityInstance %>'],
-  <%_ if (entity.searchEngineAny) { _%>
-  <%= entity.entityInstance %>SearchRequest: ['query'],
+  <%= entityInstance %>Request: ['<%= entityInstance %>Id'],
+  <%= entityInstance %>AllRequest: ['options'],
+  <%= entityInstance %>UpdateRequest: ['<%= entityInstance %>'],
+  <%_ if (searchEngineAny) { _%>
+  <%= entityInstance %>SearchRequest: ['query'],
   <%_ } _%>
-  <%= entity.entityInstance %>DeleteRequest: ['<%= entity.entityInstance %>Id'],
+  <%= entityInstance %>DeleteRequest: ['<%= entityInstance %>Id'],
 
-  <%= entity.entityInstance %>Success: ['<%= entity.entityInstance %>'],
-  <%= entity.entityInstance %>AllSuccess: ['<%= entity.entityInstance %>List', 'headers'],
-  <%= entity.entityInstance %>UpdateSuccess: ['<%= entity.entityInstance %>'],
-  <%_ if (entity.searchEngineAny) { _%>
-  <%= entity.entityInstance %>SearchSuccess: ['<%= entity.entityInstance %>List'],
+  <%= entityInstance %>Success: ['<%= entityInstance %>'],
+  <%= entityInstance %>AllSuccess: ['<%= entityInstance %>List', 'headers'],
+  <%= entityInstance %>UpdateSuccess: ['<%= entityInstance %>'],
+  <%_ if (searchEngineAny) { _%>
+  <%= entityInstance %>SearchSuccess: ['<%= entityInstance %>List'],
   <%_ } _%>
-  <%= entity.entityInstance %>DeleteSuccess: [],
+  <%= entityInstance %>DeleteSuccess: [],
 
-  <%= entity.entityInstance %>Failure: ['error'],
-  <%= entity.entityInstance %>AllFailure: ['error'],
-  <%= entity.entityInstance %>UpdateFailure: ['error'],
-  <%_ if (entity.searchEngineAny) { _%>
-  <%= entity.entityInstance %>SearchFailure: ['error'],
+  <%= entityInstance %>Failure: ['error'],
+  <%= entityInstance %>AllFailure: ['error'],
+  <%= entityInstance %>UpdateFailure: ['error'],
+  <%_ if (searchEngineAny) { _%>
+  <%= entityInstance %>SearchFailure: ['error'],
   <%_ } _%>
-  <%= entity.entityInstance %>DeleteFailure: ['error'],
+  <%= entityInstance %>DeleteFailure: ['error'],
 
-  <%= entity.entityInstance %>Reset: []
+  <%= entityInstance %>Reset: []
 })
 
-export const <%= entity.entityNameCapitalized %>Types = Types
+export const <%= entityNameCapitalized %>Types = Types
 export default Creators
 
 /* ------------- Initial State ------------- */
@@ -44,21 +44,21 @@ export const INITIAL_STATE = Immutable({
   fetchingOne: false,
   fetchingAll: false,
   updating: false,
-  <%_ if (entity.searchEngineAny) { _%>
+  <%_ if (searchEngineAny) { _%>
   searching: false,
   <%_ } _%>
   deleting: false,
   updateSuccess: false,
-  <%= entity.entityInstance %>: {id: undefined},
-  <%= entity.entityInstance %>List: [],
+  <%= entityInstance %>: {id: undefined},
+  <%= entityInstance %>List: [],
   errorOne: null,
   errorAll: null,
   errorUpdating: null,
-  <%_ if (entity.searchEngineAny) { _%>
+  <%_ if (searchEngineAny) { _%>
   errorSearching: null,
   <%_ } _%>
   errorDeleting: null,
-  <%_ if (entity.pagination !== 'no') { _%>
+  <%_ if (pagination !== 'no') { _%>
   links: { next: 0 },
   totalItems: 0,
   <%_ } _%>
@@ -71,7 +71,7 @@ export const request = (state) =>
   state.merge({
     fetchingOne: true,
     errorOne: false,
-    <%= entity.entityInstance %>: INITIAL_STATE.<%= entity.entityInstance %>
+    <%= entityInstance %>: INITIAL_STATE.<%= entityInstance %>
   })
 
 // request the data from an api
@@ -87,7 +87,7 @@ export const updateRequest = (state) =>
     updateSuccess: false,
     updating: true
   })
-<%_ if (entity.searchEngineAny) { _%>
+<%_ if (searchEngineAny) { _%>
 // request to search from an api
 export const searchRequest = (state) =>
   state.merge({
@@ -102,49 +102,49 @@ export const deleteRequest = (state) =>
 
 // successful api lookup for single entity
 export const success = (state, action) => {
-  const { <%= entity.entityInstance %> } = action
+  const { <%= entityInstance %> } = action
   return state.merge({
     fetchingOne: false,
     errorOne: null,
-    <%= entity.entityInstance %>
+    <%= entityInstance %>
   })
 }
 // successful api lookup for all entities
 export const allSuccess = (state, action) => {
-  const { <%= entity.entityInstance %>List<%_ if (entity.pagination !== 'no') { _%>, headers<%_ } _%> } = action
-  <%_ if (entity.pagination !== 'no') { _%>
+  const { <%= entityInstance %>List<%_ if (pagination !== 'no') { _%>, headers<%_ } _%> } = action
+  <%_ if (pagination !== 'no') { _%>
   const links = parseHeaderForLinks(headers.link)
   <%_ } _%>
   return state.merge({
     fetchingAll: false,
     errorAll: null,
-    <%_ if (entity.pagination !== 'no') { _%>
+    <%_ if (pagination !== 'no') { _%>
     links,
     totalItems: parseInt(headers['x-total-count'], 10),
-    <%= entity.entityInstance %>List: loadMoreDataWhenScrolled(state.<%= entity.entityInstance %>List, <%= entity.entityInstance %>List, links),
+    <%= entityInstance %>List: loadMoreDataWhenScrolled(state.<%= entityInstance %>List, <%= entityInstance %>List, links),
     <%_ } else { _%>
-    <%= entity.entityInstance %>List
+    <%= entityInstance %>List
     <%_ } _%>
   })
 }
 // successful api update
 export const updateSuccess = (state, action) => {
-  const { <%= entity.entityInstance %> } = action
+  const { <%= entityInstance %> } = action
   return state.merge({
     updateSuccess: true,
     updating: false,
     errorUpdating: null,
-    <%= entity.entityInstance %>
+    <%= entityInstance %>
   })
 }
-<%_ if (entity.searchEngineAny) { _%>
+<%_ if (searchEngineAny) { _%>
 // successful api search
 export const searchSuccess = (state, action) => {
-  const { <%= entity.entityInstance %>List } = action
+  const { <%= entityInstance %>List } = action
   return state.merge({
     searching: false,
     errorSearching: null,
-    <%= entity.entityInstance %>List
+    <%= entityInstance %>List
   })
 }
 <%_ } _%>
@@ -153,7 +153,7 @@ export const deleteSuccess = (state) => {
   return state.merge({
     deleting: false,
     errorDeleting: null,
-    <%= entity.entityInstance %>: INITIAL_STATE.<%= entity.entityInstance %>
+    <%= entityInstance %>: INITIAL_STATE.<%= entityInstance %>
   })
 }
 
@@ -163,7 +163,7 @@ export const failure = (state, action) => {
   return state.merge({
     fetchingOne: false,
     errorOne: error,
-    <%= entity.entityInstance %>: INITIAL_STATE.<%= entity.entityInstance %>
+    <%= entityInstance %>: INITIAL_STATE.<%= entityInstance %>
   })
 }
 // Something went wrong fetching all entities.
@@ -172,7 +172,7 @@ export const allFailure = (state, action) => {
   return state.merge({
     fetchingAll: false,
     errorAll: error,
-    <%= entity.entityInstance %>List: []
+    <%= entityInstance %>List: []
   })
 }
 // Something went wrong updating.
@@ -182,7 +182,7 @@ export const updateFailure = (state, action) => {
     updateSuccess: false,
     updating: false,
     errorUpdating: error,
-    <%= entity.entityInstance %>: state.<%= entity.entityInstance %>
+    <%= entityInstance %>: state.<%= entityInstance %>
   })
 }
 // Something went wrong deleting.
@@ -191,17 +191,17 @@ export const deleteFailure = (state, action) => {
   return state.merge({
     deleting: false,
     errorDeleting: error,
-    <%= entity.entityInstance %>: state.<%= entity.entityInstance %>
+    <%= entityInstance %>: state.<%= entityInstance %>
   })
 }
-<%_ if (entity.searchEngineAny) { _%>
+<%_ if (searchEngineAny) { _%>
 // Something went wrong searching the entities.
 export const searchFailure = (state, action) => {
   const { error } = action
   return state.merge({
     searching: false,
     errorSearching: error,
-    <%= entity.entityInstance %>List: []
+    <%= entityInstance %>List: []
   })
 }
 <%_ } _%>
@@ -214,7 +214,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_REQUEST]: request,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_REQUEST]: allRequest,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_REQUEST]: updateRequest,
-  <%_ if (entity.searchEngineAny) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_REQUEST]: searchRequest,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_REQUEST]: deleteRequest,
@@ -222,7 +222,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SUCCESS]: success,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_SUCCESS]: allSuccess,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_SUCCESS]: updateSuccess,
-  <%_ if (entity.searchEngineAny) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_SUCCESS]: searchSuccess,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_SUCCESS]: deleteSuccess,
@@ -230,7 +230,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_FAILURE]: failure,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_ALL_FAILURE]: allFailure,
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_UPDATE_FAILURE]: updateFailure,
-  <%_ if (entity.searchEngineAny) { _%>
+  <%_ if (searchEngineAny) { _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_SEARCH_FAILURE]: searchFailure,
   <%_ } _%>
   [Types.<%= entityNameSnakeCase.toUpperCase() %>_DELETE_FAILURE]: deleteFailure,

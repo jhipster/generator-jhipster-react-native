@@ -1,9 +1,9 @@
 import { call, put } from 'redux-saga/effects'
 import { callApi } from '../../../shared/sagas/call-api.saga'
-import <%= entity.entityNameCapitalized %>Actions from './<%= entity.entityFileName %>.reducer'
-<%_ if (entity.fieldsContainDate) { _%>
+import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
+<%_ if (fieldsContainDate) { _%>
 import {
-  <%_ if (fieldsContainZonedDateTime || entity.fieldsContainInstant) { _%>
+  <%_ if (fieldsContainZonedDateTime || fieldsContainInstant) { _%>
   convertDateTimeFromServer,
   <%_ } _%>
   <%_ if (fieldsContainLocalDate) { _%>
@@ -12,86 +12,86 @@ import {
 } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
-function * get<%= entity.entityNameCapitalized %> (api, action) {
-  const { <%= entity.entityInstance %>Id } = action
+function * get<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %>Id } = action
   // make the call to the api
-  const apiCall = call(api.get<%= entity.entityNameCapitalized %>, <%= entity.entityInstance %>Id)
+  const apiCall = call(api.get<%= entityNameCapitalized %>, <%= entityInstance %>Id)
   const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
-    <%_ if (entity.fieldsContainDate) { _%>
+    <%_ if (fieldsContainDate) { _%>
     response.data = mapDateFields(response.data)
     <%_ } _%>
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Success(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Success(response.data))
   } else {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>Failure(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Failure(response.data))
   }
 }
 
-function * getAll<%= entity.entityNamePlural %> (api, action) {
+function * getAll<%= entityNamePlural %> (api, action) {
   const { options } = action
   // make the call to the api
-  const apiCall = call(api.getAll<%= entity.entityNamePlural %>, options)
+  const apiCall = call(api.getAll<%= entityNamePlural %>, options)
   const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>AllSuccess(response.data, response.headers))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllSuccess(response.data, response.headers))
   } else {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>AllFailure(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllFailure(response.data))
   }
 }
 
-function * update<%= entity.entityNameCapitalized %> (api, action) {
-  const { <%= entity.entityInstance %> } = action
+function * update<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %> } = action
   // make the call to the api
-  const idIsNotNull = !(<%= entity.entityInstance %>.id === null || <%= entity.entityInstance %>.id === undefined);
-  const apiCall = call(idIsNotNull ? api.update<%= entity.entityNameCapitalized %> : api.create<%= entity.entityNameCapitalized %>, <%= entity.entityInstance %>)
+  const idIsNotNull = !(<%= entityInstance %>.id === null || <%= entityInstance %>.id === undefined);
+  const apiCall = call(idIsNotNull ? api.update<%= entityNameCapitalized %> : api.create<%= entityNameCapitalized %>, <%= entityInstance %>)
   const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
-    <%_ if (entity.fieldsContainDate) { _%>
+    <%_ if (fieldsContainDate) { _%>
     response.data = mapDateFields(response.data)
     <%_ } _%>
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>UpdateSuccess(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateSuccess(response.data))
   } else {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>UpdateFailure(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateFailure(response.data))
   }
 }
 
-<%_ if (entity.searchEngineAny) { _%>
-function * search<%= entity.entityNamePlural %> (api, action) {
+<%_ if (searchEngineAny) { _%>
+function * search<%= entityNamePlural %> (api, action) {
   const { query } = action
   // make the call to the api
-  const apiCall = call(api.search<%= entity.entityNamePlural %>, query)
+  const apiCall = call(api.search<%= entityNamePlural %>, query)
   const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>SearchSuccess(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchSuccess(response.data))
   } else {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>SearchFailure(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchFailure(response.data))
   }
 }
 <%_ } _%>
-function * delete<%= entity.entityNameCapitalized %> (api, action) {
-  const { <%= entity.entityInstance %>Id } = action
+function * delete<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %>Id } = action
   // make the call to the api
-  const apiCall = call(api.delete<%= entity.entityNameCapitalized %>, <%= entity.entityInstance %>Id)
+  const apiCall = call(api.delete<%= entityNameCapitalized %>, <%= entityInstance %>Id)
   const response = yield call(callApi, apiCall)
 
   // success?
   if (response.ok) {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>DeleteSuccess())
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteSuccess())
   } else {
-    yield put(<%= entity.entityNameCapitalized %>Actions.<%= entity.entityInstance %>DeleteFailure(response.data))
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure(response.data))
   }
 }
-<%_ if (entity.fieldsContainDate) { _%>
+<%_ if (fieldsContainDate) { _%>
 function mapDateFields (data) {
-<%_ entity.fields.filter(field => !field.id).forEach(function (field) { _%>
+<%_ fields.filter(field => !field.id).forEach(function (field) { _%>
 <%_ if (field.fieldType === 'LocalDate') { _%>
   data.<%= field.fieldName %> = convertLocalDateFromServer(data.<%= field.fieldName %>)
 <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
@@ -103,12 +103,12 @@ function mapDateFields (data) {
 <%_ } _%>
 
 export default {
-  getAll<%= entity.entityNamePlural %>,
-  get<%= entity.entityNameCapitalized %>,
-  delete<%= entity.entityNameCapitalized %>,
-  <%_ if (entity.searchEngineAny) { _%>
-  search<%= entity.entityNamePlural %>,
+  getAll<%= entityNamePlural %>,
+  get<%= entityNameCapitalized %>,
+  delete<%= entityNameCapitalized %>,
+  <%_ if (searchEngineAny) { _%>
+  search<%= entityNamePlural %>,
   <%_ } _%>
-  update<%= entity.entityNameCapitalized %>,
+  update<%= entityNameCapitalized %>,
 };
 

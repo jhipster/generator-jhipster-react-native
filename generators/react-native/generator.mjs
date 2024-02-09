@@ -244,7 +244,7 @@ export default class extends BaseApplicationGenerator {
               await this.writeFiles({
                 sections: entityFiles,
                 context: {
-                  entity: { ...entity },
+                  ...entity,
                   application: { ...application },
                   reactNativeConfig: { ...this.reactNativeConfig },
                   fieldsContainEnum,
