@@ -34,6 +34,9 @@ updates:
           - '*-redux'
           - 'redux'
           - 'redux-*'
+      storybook:
+        patterns:
+          - '@storybook/*'
   - package-ecosystem: 'npm'
     directory: '/generators/app/resources/expo/'
     schedule:
