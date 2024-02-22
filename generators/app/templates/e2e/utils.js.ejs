@@ -114,7 +114,7 @@ const closeDeveloperMenu = async () => {
 
   await waitFor(element(by.text('Continue')))
     .toBeVisible()
-    .withTimeout(DEFAULT_VISIBLE_TIMEOUT * 2);
+    .withTimeout(DEFAULT_VISIBLE_TIMEOUT);
   await element(by.text('Continue')).tap();
 
   await waitFor(element(by.text('Reload')))
@@ -144,10 +144,12 @@ const reloadApp = async (bailOnFailure) => {
       newInstance: true,
       launchArgs: {
         detoxEnableSynchronization: false,
+        // Don't show developer menu.
         EXKernelDisableNuxDefaultsKey: true,
       },
     });
     // await closeDeveloperMenu();
+    await waitForElementToBeVisibleById('homeScreen');
   } catch (e) {
     console.warn('Reloading app failed, retrying');
     console.warn(e);
