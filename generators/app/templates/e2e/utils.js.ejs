@@ -149,7 +149,7 @@ const reloadApp = async (bailOnFailure) => {
       },
     });
     // await closeDeveloperMenu();
-    await waitForElementToBeVisibleById('homeScreen');
+    await waitForElementToBeVisibleById('homeScreen', DEFAULT_VISIBLE_TIMEOUT * 2);
   } catch (e) {
     console.warn('Reloading app failed, retrying');
     console.warn(e);
