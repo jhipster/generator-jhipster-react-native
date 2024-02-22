@@ -86,7 +86,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-      - uses: nick-invision/retry@v2.9.0
+      - uses: nick-invision/retry@v3.0.0
         name: 'TOOLS: installing Detox and its dependencies'
         with:
           max_attempts: 3
