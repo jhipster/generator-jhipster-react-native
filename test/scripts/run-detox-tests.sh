@@ -23,25 +23,7 @@ if [ "$JHI_AUTH_TYPE" = "jwt" ] ; then
       ./mvnw -ntp &
 
     # wait for the backend to start
-    # see https://github.com/jhipster/generator-jhipster/blob/2a803eca36f21079320c602645e13c177f6c6ea9/test-integration/scripts/24-tests-e2e.sh
-    retryCount=1
-    maxRetry=60
-    httpUrl="http://localhost:8080/management/health"
-    rep=$(curl -fv "$httpUrl")
-    status=$?
-    while [ "$status" -ne 0 ] && [ "$retryCount" -le "$maxRetry" ]; do
-        echo "*** [$(date)] Backend not reachable yet. Sleep and retry - retryCount =" $retryCount "/" $maxRetry
-        retryCount=$((retryCount+1))
-        sleep 5
-        rep=$(curl -fv "$httpUrl")
-        status=$?
-        echo "."
-    done
-
-    if [ "$status" -ne 0 ]; then
-        echo "*** [$(date)] Backend not connected after" $retryCount " retries."
-        exit 1
-    fi
+    npm run ci:server:await
 else
     echo "Skipping starting backend for OAuth2"
     echo "TODO: Mock Auth so that the entity pages can be tested"
