@@ -3,6 +3,9 @@ const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
 const expoPublishedUrl = process.env.E2E_EXPO_URL || 'exp://localhost:8081';
 
+const DEFAULT_VISIBLE_TIMEOUT = 10000;
+const DEFAULT_RELOAD_AWAIT = 3000;
+
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const waitThenTapButton = async (buttonId, ms = 1000) => {
@@ -11,6 +14,7 @@ const waitThenTapButton = async (buttonId, ms = 1000) => {
 };
 
 const openAndTapDrawerMenuItemByLabel = async (label) => {
+  await waitForElementToBeVisibleById('drawerButtonWrapper', DEFAULT_VISIBLE_TIMEOUT * 2);
   await wait(2000);
   // matching the drawer button is flaky, so open it with a swipe from the left
   await element(by.id('drawerButtonWrapper')).atIndex(0).swipe('right', 'fast', 0.7, 0.01);
@@ -97,28 +101,28 @@ const tapFirstElementByLabel = async (label) => {
   }
 };
 
-const waitForElementToBeVisibleByLabel = async (elementLabel, timeout = 5000) => {
+const waitForElementToBeVisibleByLabel = async (elementLabel, timeout = DEFAULT_VISIBLE_TIMEOUT) => {
   await waitFor(element(by.label(elementLabel))).toBeVisible().withTimeout(timeout);
 }
 
-const waitForElementToBeVisibleById = async (elementId, timeout = 5000) => {
+const waitForElementToBeVisibleById = async (elementId, timeout = DEFAULT_VISIBLE_TIMEOUT) => {
   await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
 const closeDeveloperMenu = async () => {
-  await wait(3000);
+  await wait(DEFAULT_RELOAD_AWAIT);
 
   await waitFor(element(by.text('Continue')))
     .toBeVisible()
-    .withTimeout(3000);
+    .withTimeout(DEFAULT_VISIBLE_TIMEOUT);
   await element(by.text('Continue')).tap();
 
   await waitFor(element(by.text('Reload')))
     .toBeVisible()
-    .withTimeout(3000);
+    .withTimeout(DEFAULT_VISIBLE_TIMEOUT);
   await element(by.text('Reload')).tap();
 
-  await wait(3000);
+  await wait(DEFAULT_RELOAD_AWAIT);
 };
 
 const reloadApp = async (bailOnFailure) => {
@@ -138,7 +142,7 @@ const reloadApp = async (bailOnFailure) => {
     await device.launchApp({ url: expoPublishedUrl, newInstance: true, launchArgs: { detoxEnableSynchronization: false } });
     await closeDeveloperMenu();
   } catch (e) {
-    console.warn('Reloading app failed, retrying once');
+    console.warn('Reloading app failed, retrying');
     console.warn(e);
   }
 };
