@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "3.2.0",
-    "@ruddell/detox-expo-helpers": "0.7.0",
     "@storybook/addons": "7.6.13",
     "@storybook/react-native": "6.5.7",
     "@storybook/theming": "7.6.13",
@@ -48,7 +47,6 @@
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "4.2.1",
     "expect": "29.7.0",
-    "expo-detox-hook": "1.0.10",
     "jest": "29.7.0",
     "jest-circus": "29.7.0",
     "lint-staged": "15.2.2",

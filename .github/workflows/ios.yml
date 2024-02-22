@@ -24,9 +24,9 @@ concurrency:
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
-  generate:
+  applications:
     name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
-    runs-on: macos-12
+    runs-on: macos-13
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 90
     strategy:
@@ -84,6 +84,9 @@ jobs:
         name: Config git variables
       - run: $SCRIPT_DIR/install-node-dependencies.sh
         name: 'TOOLS: install node dependencies'
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest
       - uses: nick-invision/retry@v2.9.0
         name: 'TOOLS: installing Detox and its dependencies'
         with:
@@ -113,3 +116,19 @@ jobs:
             ${{ runner.workspace }}/${{ matrix.app_type }}/**/*
             !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
             !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app
+  ios-result:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: [applications]
+    if: always()
+    steps:
+      - run: |
+          echo '${{ toJSON(needs) }}'
+          if ([ 'skipped' == '${{ needs.applications.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
+            exit 0
+          fi
+          if [ 'closed' == '${{ github.event.action }}' ]; then
+            exit 0
+          fi
+          exit 1

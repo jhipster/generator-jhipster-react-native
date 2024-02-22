@@ -13,3 +13,6 @@ jest
   .mock('@storybook/react-native', () => {
     return { getStorybookUI: jest.fn(), configure: jest.fn() }
   })
+  // https://github.com/expo/expo/issues/23591#issuecomment-1652548059
+  .mock('expo-font')
+  .mock('expo-asset')
