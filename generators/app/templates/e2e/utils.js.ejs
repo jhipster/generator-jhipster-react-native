@@ -147,7 +147,7 @@ const reloadApp = async (bailOnFailure) => {
         EXKernelDisableNuxDefaultsKey: true,
       },
     });
-    await closeDeveloperMenu();
+    // await closeDeveloperMenu();
   } catch (e) {
     console.warn('Reloading app failed, retrying');
     console.warn(e);
