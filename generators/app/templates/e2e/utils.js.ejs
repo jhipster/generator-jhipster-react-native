@@ -14,6 +14,7 @@ const waitThenTapButton = async (buttonId, ms = 1000) => {
 
 const openAndTapDrawerMenuItemByLabel = async (label) => {
   await wait(2000);
+  await waitForElementToBeVisibleById('drawerButtonWrapper');
   // matching the drawer button is flaky, so open it with a swipe from the left
   await element(by.id('drawerButtonWrapper')).atIndex(0).swipe('right', 'fast', 0.7, 0.01);
   await waitForElementToBeVisibleById('drawerContentScrollView');
