@@ -51,9 +51,9 @@ const loginAsUser = async () => {
   await element(by.id('loginScreenPassword')).replaceText(password);
   await waitThenTapButton('loginScreenLoginButton');
   try {
-    await waitForElementToBeVisibleById('homeScreen')
+    await waitForElementToBeVisibleById('authDisplayTrue')
   } catch (e) {
-    throw new Error('Logging in failed. Check backend status or credentials.');
+    throw new Error(`Logging in failed. Check backend status or credentials. ${e}`);
   }
 };
 
@@ -139,11 +139,25 @@ const reloadApp = async (bailOnFailure) => {
         `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist`,
       );
     }
-    await device.launchApp({ url: expoPublishedUrl, newInstance: true, launchArgs: { detoxEnableSynchronization: false } });
-    await closeDeveloperMenu();
+    await device.launchApp({
+      url: expoPublishedUrl,
+      newInstance: true,
+      launchArgs: {
+        detoxEnableSynchronization: false,
+        // Don't show developer menu.
+        EXKernelDisableNuxDefaultsKey: true,
+      },
+    });
+    // await closeDeveloperMenu();
+    await waitForElementToBeVisibleById('homeScreen', DEFAULT_VISIBLE_TIMEOUT);
   } catch (e) {
     console.warn('Reloading app failed, retrying');
     console.warn(e);
+
+    // Reopen the application
+    await device.sendToHome();
+    await device.launchApp({ newInstance: false });
+    await wait(DEFAULT_RELOAD_AWAIT);
   }
 };
 
