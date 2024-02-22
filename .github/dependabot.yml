@@ -12,22 +12,6 @@ updates:
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
-      expo-managed:
-        patterns:
-          - '@react-native-async-storage/async-storage'
-          - '@react-native-community/datetimepicker'
-          - '@react-native-masked-view/masked-view'
-          - '@react-native-picker/picker'
-          - 'expo-auth-session'
-          - 'expo-image-picker'
-          - 'expo-linking'
-          - 'expo-random'
-          - 'expo-splash-screen'
-          - 'expo-web-browser'
-          - 'react-native-gesture-handler'
-          - 'react-native-reanimated'
-          - 'react-native-safe-area-context'
-          - 'react-native-screens'
       redux:
         patterns:
           - '@reduxjs/*'
@@ -45,6 +29,23 @@ updates:
       day: 'wednesday'
     open-pull-requests-limit: 30
     versioning-strategy: increase
+    groups:
+      expo-managed:
+        patterns:
+          - '@react-native-async-storage/async-storage'
+          - '@react-native-community/datetimepicker'
+          - '@react-native-masked-view/masked-view'
+          - '@react-native-picker/picker'
+          - 'expo-auth-session'
+          - 'expo-image-picker'
+          - 'expo-linking'
+          - 'expo-random'
+          - 'expo-splash-screen'
+          - 'expo-web-browser'
+          - 'react-native-gesture-handler'
+          - 'react-native-reanimated'
+          - 'react-native-safe-area-context'
+          - 'react-native-screens'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
