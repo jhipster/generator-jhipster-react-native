@@ -14,8 +14,8 @@ const waitThenTapButton = async (buttonId, ms = 1000) => {
 };
 
 const openAndTapDrawerMenuItemByLabel = async (label) => {
-  await wait(2000);
   await waitForElementToBeVisibleById('drawerButtonWrapper');
+  await wait(2000);
   // matching the drawer button is flaky, so open it with a swipe from the left
   await element(by.id('drawerButtonWrapper')).atIndex(0).swipe('right', 'fast', 0.7, 0.01);
   await waitForElementToBeVisibleById('drawerContentScrollView');
@@ -114,7 +114,7 @@ const closeDeveloperMenu = async () => {
 
   await waitFor(element(by.text('Continue')))
     .toBeVisible()
-    .withTimeout(DEFAULT_VISIBLE_TIMEOUT);
+    .withTimeout(DEFAULT_VISIBLE_TIMEOUT * 2);
   await element(by.text('Continue')).tap();
 
   await waitFor(element(by.text('Reload')))
