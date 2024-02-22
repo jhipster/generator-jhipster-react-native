@@ -149,10 +149,15 @@ const reloadApp = async (bailOnFailure) => {
       },
     });
     // await closeDeveloperMenu();
-    await waitForElementToBeVisibleById('homeScreen', DEFAULT_VISIBLE_TIMEOUT * 2);
+    await waitForElementToBeVisibleById('homeScreen', DEFAULT_VISIBLE_TIMEOUT);
   } catch (e) {
     console.warn('Reloading app failed, retrying');
     console.warn(e);
+
+    // Reopen the application
+    await device.sendToHome();
+    await device.launchApp({ newInstance: false });
+    await wait(DEFAULT_RELOAD_AWAIT);
   }
 };
 
