@@ -1,13 +1,6 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-      # Check for npm updates on Wednesday due to Expo updates
-      day: 'wednesday'
-    open-pull-requests-limit: 30
-  - package-ecosystem: 'npm'
     directory: '/generators/app/templates/'
     schedule:
       interval: 'weekly'
@@ -19,6 +12,24 @@ updates:
       typescript-eslint:
         patterns:
           - '@typescript-eslint/*'
+      redux:
+        patterns:
+          - '@reduxjs/*'
+          - '*-redux'
+          - 'redux'
+          - 'redux-*'
+      storybook:
+        patterns:
+          - '@storybook/*'
+  - package-ecosystem: 'npm'
+    directory: '/generators/app/resources/expo/'
+    schedule:
+      interval: 'weekly'
+      # Check for npm updates on Wednesday due to Expo updates
+      day: 'wednesday'
+    open-pull-requests-limit: 30
+    versioning-strategy: increase
+    groups:
       expo-managed:
         patterns:
           - '@react-native-async-storage/async-storage'
@@ -35,20 +46,6 @@ updates:
           - 'react-native-reanimated'
           - 'react-native-safe-area-context'
           - 'react-native-screens'
-      redux:
-        patterns:
-          - '@reduxjs/*'
-          - '*-redux'
-          - 'redux'
-          - 'redux-*'
-  - package-ecosystem: 'npm'
-    directory: '/generators/app/resources/expo/'
-    schedule:
-      interval: 'weekly'
-      # Check for npm updates on Wednesday due to Expo updates
-      day: 'wednesday'
-    open-pull-requests-limit: 30
-    versioning-strategy: increase
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
