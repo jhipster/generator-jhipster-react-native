@@ -14,7 +14,7 @@ concurrency:
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
-  sample-app:
+  sample:
     name: update-sample-app
     runs-on: ${{ matrix.os }}
     timeout-minutes: 20
@@ -96,3 +96,19 @@ jobs:
           github_token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
           directory: sample-app
           tags: true
+  samples-result:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: [sample]
+    if: always()
+    steps:
+      - run: |
+          echo '${{ toJSON(needs) }}'
+          if ([ 'skipped' == '${{ needs.applications.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
+            exit 0
+          fi
+          if [ 'closed' == '${{ github.event.action }}' ]; then
+            exit 0
+          fi
+          exit 1
