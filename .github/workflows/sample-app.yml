@@ -96,7 +96,7 @@ jobs:
           github_token: ${{ secrets.SAMPLE_GITHUB_TOKEN }}
           directory: sample-app
           tags: true
-  samples-result:
+  sample-result:
     permissions:
       contents: none
     runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ jobs:
     steps:
       - run: |
           echo '${{ toJSON(needs) }}'
-          if ([ 'skipped' == '${{ needs.sample.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
+          if ([ 'skipped' == '${{ needs.sample.result }}' ] || [ 'success' == '${{ needs.sample.result }}' ]); then
             exit 0
           fi
           if [ 'closed' == '${{ github.event.action }}' ]; then
