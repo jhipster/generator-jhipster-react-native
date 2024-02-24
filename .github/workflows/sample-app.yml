@@ -105,7 +105,7 @@ jobs:
     steps:
       - run: |
           echo '${{ toJSON(needs) }}'
-          if ([ 'skipped' == '${{ needs.applications.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
+          if ([ 'skipped' == '${{ needs.sample.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
             exit 0
           fi
           if [ 'closed' == '${{ github.event.action }}' ]; then
