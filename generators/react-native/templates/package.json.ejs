@@ -120,8 +120,7 @@
   <%_ if (!skipCommitHook) { _%>
   "lint-staged": {
     "{,app/**/,test/**/}*.{js,json,yml,md,ts,tsx}": [
-      "prettier --write",
-      "eslint --fix --ext .js"
+      "prettier --write"
     ]
   },
   <%_ } _%>
