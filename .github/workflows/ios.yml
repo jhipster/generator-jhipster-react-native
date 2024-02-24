@@ -68,7 +68,7 @@ jobs:
       JHI_WEBSOCKETS: ${{ matrix.websockets }}
       JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
       JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
-      SCRIPT_DIR: ./test/scripts
+      SCRIPT_DIR: ${{ github.workspace }}/generator-jhipster-react-native/test/scripts
       PLATFORM: ios
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
       JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
