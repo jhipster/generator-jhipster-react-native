@@ -119,8 +119,9 @@ jobs:
       - uses: jhipster/actions/compare-sample@v0
         with:
           generator-path: generator-jhipster-react-native
+          application-path: ${{ github.workspace }}/client-base
           current-application-path: ${{ github.workspace }}/client
-          cmd: rnhipster jdl ${{ github.workspace }}/*.jdl --standalone --skip-jhipster-dependencies --force --skip-install
+          cmd: rnhipster jdl ${{ github.workspace }}/*.jdl --skip-jhipster-dependencies --force --skip-install
       - uses: actions/setup-node@v4.0.2
         with:
           node-version: ${{ matrix.node_version }}
