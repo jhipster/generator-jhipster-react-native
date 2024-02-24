@@ -15,7 +15,7 @@ concurrency:
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
-  generate:
+  applications:
     name: app-tests-${{ matrix.app_type }}
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
@@ -77,3 +77,19 @@ jobs:
         name: 'GENERATING: generate react-native app'
       - run: $SCRIPT_DIR/run-react-native-tests.sh
         name: 'TESTING: npm run test'
+  applications-result:
+    permissions:
+      contents: none
+    runs-on: ubuntu-latest
+    needs: [applications]
+    if: always()
+    steps:
+      - run: |
+          echo '${{ toJSON(needs) }}'
+          if ([ 'skipped' == '${{ needs.applications.result }}' ] || [ 'success' == '${{ needs.applications.result }}' ]); then
+            exit 0
+          fi
+          if [ 'closed' == '${{ github.event.action }}' ]; then
+            exit 0
+          fi
+          exit 1
