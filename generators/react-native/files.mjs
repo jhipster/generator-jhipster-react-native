@@ -3,7 +3,7 @@ const files = {
     {
       templates: [
         '.prettierrc.js',
-        '.prettierignore',
+        '.prettierignore.jhi.react-native',
         '.editorconfig',
         '.eslintrc.js',
         '.gitattributes',
