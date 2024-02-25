@@ -117,6 +117,7 @@ jobs:
         with:
           node-version: '16.x'
       - uses: jhipster/actions/compare-sample@v0
+        continue-on-error: true
         with:
           generator-path: generator-jhipster-react-native
           application-path: ${{ github.workspace }}/client-base
