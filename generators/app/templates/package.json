@@ -6,7 +6,7 @@
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-navigation/drawer": "6.6.7",
     "@react-navigation/native": "6.1.10",
-    "@react-navigation/stack": "6.3.21",
+    "@react-navigation/stack": "6.3.25",
     "apisauce": "3.0.1",
     "format-json": "1.0.3",
     "formik": "2.4.5",
