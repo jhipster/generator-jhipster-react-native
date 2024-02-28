@@ -33,8 +33,8 @@
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "3.2.0",
-    "@storybook/addons": "7.6.13",
-    "@storybook/react-native": "6.5.7",
+    "@storybook/addons": "7.6.17",
+    "@storybook/react-native": "7.6.15",
     "@storybook/theming": "7.6.17",
     "@testing-library/jest-native": "5.4.3",
     "@testing-library/react-native": "12.4.3",
