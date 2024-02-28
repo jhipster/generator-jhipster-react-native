@@ -35,7 +35,7 @@
     "@babel/core": "^7.24.0",
     "@react-native-community/cli-server-api": "13.6.1",
     "@types/react": "~18.2.60",
-    "jest-expo": "^49.0.0",
+    "jest-expo": "^50.0.2",
     "typescript": "^5.3.3"
   }
 }
