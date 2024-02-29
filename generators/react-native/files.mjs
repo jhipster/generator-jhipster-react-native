@@ -3,7 +3,6 @@ const files = {
     {
       templates: [
         '.prettierignore.jhi.react-native',
-        '.editorconfig',
         '.eslintrc.js',
         '.gitattributes',
         '.gitignore',
