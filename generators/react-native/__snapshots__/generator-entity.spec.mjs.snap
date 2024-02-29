@@ -29,9 +29,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   ".prettierignore": {
     "stateCleared": "modified",
   },
-  ".prettierrc.js": {
-    "stateCleared": "modified",
-  },
   ".prettierrc.yml": {
     "stateCleared": "modified",
   },
@@ -532,9 +529,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   ".prettierignore": {
     "stateCleared": "modified",
   },
-  ".prettierrc.js": {
-    "stateCleared": "modified",
-  },
   ".prettierrc.yml": {
     "stateCleared": "modified",
   },
@@ -1009,9 +1003,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   ".prettierignore": {
-    "stateCleared": "modified",
-  },
-  ".prettierrc.js": {
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {

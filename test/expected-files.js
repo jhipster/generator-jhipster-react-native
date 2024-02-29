@@ -1,7 +1,7 @@
 const expectedFiles = {
   defaultApp: [
     '.prettierignore',
-    '.prettierrc.js',
+    '.prettierrc.yml',
     '.editorconfig',
     '.eslintrc.js',
     '.gitattributes',

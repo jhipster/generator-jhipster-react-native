@@ -26,9 +26,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/.prettierignore": {
     "stateCleared": "modified",
   },
-  "../client/.prettierrc.js": {
-    "stateCleared": "modified",
-  },
   "../client/.prettierrc.yml": {
     "stateCleared": "modified",
   },
@@ -521,9 +518,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
     "stateCleared": "modified",
   },
   "../reactNative-app/.prettierignore": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/.prettierrc.js": {
     "stateCleared": "modified",
   },
   "../reactNative-app/.prettierrc.yml": {

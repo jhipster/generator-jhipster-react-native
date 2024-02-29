@@ -23,9 +23,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   ".prettierignore": {
     "stateCleared": "modified",
   },
-  ".prettierrc.js": {
-    "stateCleared": "modified",
-  },
   ".prettierrc.yml": {
     "stateCleared": "modified",
   },
@@ -461,9 +458,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".prettierignore": {
-    "stateCleared": "modified",
-  },
-  ".prettierrc.js": {
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
@@ -922,9 +916,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".prettierignore": {
-    "stateCleared": "modified",
-  },
-  ".prettierrc.js": {
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
@@ -1386,9 +1377,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".prettierignore": {
-    "stateCleared": "modified",
-  },
-  ".prettierrc.js": {
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
@@ -1876,9 +1864,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   ".prettierignore": {
     "stateCleared": "modified",
   },
-  ".prettierrc.js": {
-    "stateCleared": "modified",
-  },
   ".prettierrc.yml": {
     "stateCleared": "modified",
   },
@@ -2293,9 +2278,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".prettierignore": {
-    "stateCleared": "modified",
-  },
-  ".prettierrc.js": {
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
