@@ -5,7 +5,7 @@ const files = {
         '.prettierignore.jhi.react-native',
         '.eslintrc.js',
         '.gitattributes.jhi.react-native',
-        '.gitignore',
+        '.gitignore.jhi.react-native',
         'App.js',
         'app.json',
         'README.md',
