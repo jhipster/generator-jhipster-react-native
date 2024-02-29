@@ -12,7 +12,7 @@
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-masked-view/masked-view": "0.2.9",
     "@react-native-picker/picker": "2.4.10",
-    "@react-navigation/devtools": "6.0.20",
+    "@react-navigation/devtools": "6.0.23",
     "expo": "49.0.21",
     "expo-auth-session": "~5.0.2",
     "expo-constants": "~14.4.2",
@@ -32,9 +32,9 @@
     "react-native-web": "~0.19.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@react-native-community/cli-server-api": "13.6.1",
-    "@types/react": "~18.2.57",
+    "@types/react": "~18.2.60",
     "jest-expo": "^49.0.0",
     "typescript": "^5.3.3"
   }
