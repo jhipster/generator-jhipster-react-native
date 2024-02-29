@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
-    directory: '/generators/app/templates/'
+    directory: '/generators/react-native/templates/'
     schedule:
       interval: 'weekly'
       # Check for npm updates on Wednesday due to Expo updates
@@ -16,13 +16,12 @@ updates:
         patterns:
           - '@reduxjs/*'
           - '*-redux'
-          - 'redux'
-          - 'redux-*'
+          - 'redux*'
       storybook:
         patterns:
           - '@storybook/*'
   - package-ecosystem: 'npm'
-    directory: '/generators/app/resources/expo/'
+    directory: '/generators/react-native/resources/expo/'
     schedule:
       interval: 'weekly'
       # Check for npm updates on Wednesday due to Expo updates
@@ -37,11 +36,14 @@ updates:
           - '@react-native-masked-view/masked-view'
           - '@react-native-picker/picker'
           - 'expo-auth-session'
+          - 'expo-constants'
           - 'expo-image-picker'
           - 'expo-linking'
           - 'expo-random'
           - 'expo-splash-screen'
+          - 'expo-status-bar'
           - 'expo-web-browser'
+          - 'jest-expo'
           - 'react-native-gesture-handler'
           - 'react-native-reanimated'
           - 'react-native-safe-area-context'
