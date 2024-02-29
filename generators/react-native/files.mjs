@@ -4,7 +4,7 @@ const files = {
       templates: [
         '.prettierignore.jhi.react-native',
         '.eslintrc.js',
-        '.gitattributes',
+        '.gitattributes.jhi.react-native',
         '.gitignore',
         'App.js',
         'app.json',
