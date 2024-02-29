@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: 'npm'
-    directory: '/generators/app/templates/'
+    directory: '/generators/react-native/templates/'
     schedule:
       interval: 'weekly'
       # Check for npm updates on Wednesday due to Expo updates
@@ -21,7 +21,7 @@ updates:
         patterns:
           - '@storybook/*'
   - package-ecosystem: 'npm'
-    directory: '/generators/app/resources/expo/'
+    directory: '/generators/react-native/resources/expo/'
     schedule:
       interval: 'weekly'
       # Check for npm updates on Wednesday due to Expo updates
