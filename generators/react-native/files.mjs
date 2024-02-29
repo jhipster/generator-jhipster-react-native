@@ -2,7 +2,6 @@ const files = {
   common: [
     {
       templates: [
-        '.prettierrc.js',
         '.prettierignore.jhi.react-native',
         '.editorconfig',
         '.eslintrc.js',
