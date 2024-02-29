@@ -5,8 +5,7 @@
   "keywords": [
     "yeoman-generator",
     "jhipster-blueprint",
-    "jhipster-6",
-    "jhipster-7",
+    "jhipster-8",
     "react-native",
     "expo"
   ],
@@ -24,26 +23,32 @@
     "email": "jonathan.ruddell@gmail.com",
     "url": "https://jruddell.com/"
   },
+  "type": "module",
   "main": "generators/app/index.js",
   "bin": {
-    "rnhipster": "./cli/rnhipster.js"
+    "jhipster-react-native": "./cli/rnhipster.cjs",
+    "rnhipster": "./cli/rnhipster.cjs"
   },
   "files": [
-    "generators",
-    "lib",
-    "cli"
+    "cli",
+    "generators"
   ],
   "scripts": {
+    "ejslint": "ejslint generators/**/*.ejs",
     "jsdoc": "jsdoc --configure jsdoc-conf.json",
     "lint": "eslint .",
-    "lint-fix": "npm run lint -- --fix",
+    "lint-fix": "npm run ejslint && npm run lint -- --fix",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "prettier": "prettier --write \"{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}\"",
+    "prettier-check": "prettier --check \"{,**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java}\"",
+    "prettier-format": "prettier --write \"{,**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java}\"",
     "release": "np",
-    "pretest": "npm run lint",
-    "test": "npm run test:unit -- test/*.spec.js",
-    "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec"
+    "pretest": "npm run prettier-check && npm run lint",
+    "test": "vitest run",
+    "test:unit": "mocha --timeout 120000 --slow 0 --reporter spec",
+    "update-snapshot": "vitest run --update",
+    "vitest": "vitest"
   },
   "lint-staged": {
     "{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}": [
@@ -54,12 +59,12 @@
   "dependencies": {
     "chalk": "4.1.2",
     "fs-extra": "11.2.0",
-    "generator-jhipster": "7.9.4",
-    "lodash": "4.17.21",
+    "generator-jhipster": "8.1.0",
+    "lodash-es": "4.17.21",
     "pluralize": "8.0.0",
     "semver": "7.6.0",
     "shelljs": "0.8.5",
-    "yeoman-environment": "3.19.3"
+    "yeoman-environment": "4.2.1"
   },
   "devDependencies": {
     "chai": "4.3.10",
@@ -68,23 +73,24 @@
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-prettier": "5.1.2",
     "husky": "8.0.3",
     "jsdoc": "4.0.2",
     "lint-staged": "15.2.2",
-    "mem-fs": "2.3.0",
+    "mem-fs": "4.0.0",
     "mocha": "10.3.0",
     "np": "9.2.0",
-    "prettier": "2.8.8",
+    "prettier": "3.1.1",
     "sinon": "17.0.1",
+    "vitest": "1.1.0",
     "yeoman-assert": "3.1.1",
-    "yeoman-test": "6.3.0"
+    "yeoman-test": ">=8.0.0-rc.1"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.9.5"
   },
   "engines": {
-    "node": ">=14",
+    "node": "^18.13.0 || >= 20.6.1",
     "npm": ">=7"
-  },
-  "overrides": {
-    "yeoman-environment": "3.19.3"
   }
 }

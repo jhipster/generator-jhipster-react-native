@@ -1,0 +1,128 @@
+import React from 'react'
+import { ActivityIndicator, ScrollView, Text, <% if (anyFieldHasImageContentType) { %>Image, <% } %>View } from 'react-native';
+import { connect } from 'react-redux'
+import { useFocusEffect } from '@react-navigation/native';
+<%_ if (anyFieldIsLocalDate) { _%>
+import { convertLocalDateToString } from '../../../shared/util/date-transforms'
+<%_ } _%>
+
+import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
+import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
+import <%= entityNameCapitalized %>DeleteModal from './<%= entityFileName %>-delete-modal';
+import styles from './<%= entityFileName %>-styles'
+
+function <%= entityNameCapitalized %>DetailScreen(props) {
+  const { route, get<%= entityNameCapitalized %>, navigation, <%= entityInstance %>, fetching, error } = props;
+  const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  // prevents display of stale reducer data
+  const entityId = <%= entityInstance %>?.id ?? null;
+  const routeEntityId = route.params?.entityId ?? null;
+  const correctEntityLoaded = routeEntityId && entityId && routeEntityId.toString() === entityId.toString();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (!routeEntityId) {
+        navigation.navigate('<%= entityNameCapitalized %>');
+      } else {
+        setDeleteModalVisible(false);
+        get<%= entityNameCapitalized %>(routeEntityId);
+      }
+    }, [routeEntityId, get<%= entityNameCapitalized %>, navigation]),
+  );
+
+  if (!entityId && !fetching && error) {
+    return (
+      <View style={styles.loading}>
+        <Text>Something went wrong fetching the <%= entityNameCapitalized %>.</Text>
+      </View>
+    );
+  }
+  if (!entityId || fetching || !correctEntityLoaded) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+  return (
+    <ScrollView style={styles.container} contentContainerStyle={styles.paddedScrollView} testID="<%= entityInstance %>DetailScrollView">
+      <Text style={styles.label}>Id:</Text>
+      <Text>{<%= entityInstance %>.id}</Text>
+      <%_ fields.filter(field => !field.id).forEach(function (field) { _%>
+      {/* <%= field.fieldNameCapitalized %> Field */}
+      <Text style={styles.label}><%= field.fieldNameCapitalized %>:</Text>
+      <%_ if (field.fieldType === 'LocalDate') { _%>
+        <Text testID='<%= field.fieldName %>'>{convertLocalDateToString(<%= entityInstance %>.<%= field.fieldName %>)}</Text>
+      <%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant' || field.fieldType === 'Boolean') { _%>
+        <Text testID='<%= field.fieldName %>'>{String(<%= entityInstance %>.<%= field.fieldName %>)}</Text>
+      <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'any') { _%>
+        <Text testID='<%= field.fieldName %>'>Open {<%= entityInstance %>.<%= field.fieldName %>ContentType} (not implemented)</Text>
+      <%_ } else if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent === 'image') { _%>
+        <Text testID='<%= field.fieldName %>ContentType'>{<%= entityInstance %>.<%= field.fieldName %>ContentType}</Text>
+        <Image
+          testID="<%= field.fieldName %>"
+          style={styles.imageBlob}
+          source={{ uri: `data:${<%= entityInstance %>.<%= field.fieldName %>ContentType};base64,${<%= entityInstance %>.<%= field.fieldName %>}` }}
+        />
+      <%_ } else { _%>
+        <Text testID='<%= field.fieldName %>'>{<%= entityInstance %>.<%= field.fieldName %>}</Text>
+      <%_ } _%>
+      <%_ }) _%>
+      <%_ relationships.filter(relation => relation.ownerSide).forEach(function (relation) { _%>
+        <Text style={styles.label}><%= relation.relationshipNameHumanized %>:</Text>
+        <%_ if (relation.relationshipType === 'many-to-many') { _%>
+        {<%= entityInstance %>.<%= relation.relationshipNamePlural %> && <%= entityInstance %>.<%= relation.relationshipNamePlural %>.map((entity, index) => (
+          <Text key={index} testID={`<%= relation.relationshipNamePlural %>-${index}`}>{String(entity.<%= relation.otherEntityField %> || '')}</Text>
+        ))}
+        <%_ } else { _%>
+        <Text testID='<%= relation.relationshipName %>'>{String(<%= entityInstance %>.<%= relation.relationshipName %> ? <%= entityInstance %>.<%= relation.relationshipName %>.<%= relation.otherEntityField %> : '')}</Text>
+        <%_ } _%>
+      <%_ }) _%>
+
+      <View style={styles.entityButtons}>
+        <RoundedButton
+          text="Edit"
+          onPress={() => navigation.navigate('<%= entityNameCapitalized %>Edit', { entityId })}
+          accessibilityLabel={'<%= entityNameCapitalized %> Edit Button'}
+          testID="<%= entityInstance %>EditButton"
+        />
+        <RoundedButton
+          text="Delete"
+          onPress={() => setDeleteModalVisible(true)}
+          accessibilityLabel={'<%= entityNameCapitalized %> Delete Button'}
+          testID="<%= entityInstance %>DeleteButton"
+        />
+        {deleteModalVisible && (
+          <<%= entityNameCapitalized %>DeleteModal
+            navigation={navigation}
+            visible={deleteModalVisible}
+            setVisible={setDeleteModalVisible}
+            entity={<%= entityInstance %>}
+            testID="<%= entityInstance %>DeleteModal"
+          />
+        )}
+      </View>
+    </ScrollView>
+  );
+}
+
+const mapStateToProps = (state) => {
+  return {
+    <%= entityInstance %>: state.<%= entityInstancePlural %>.<%= entityInstance %>,
+    error: state.<%= entityInstancePlural %>.errorOne,
+    fetching: state.<%= entityInstancePlural %>.fetchingOne,
+    deleting: state.<%= entityInstancePlural %>.deleting,
+    errorDeleting: state.<%= entityInstancePlural %>.errorDeleting
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Request(id)),
+    getAll<%= entityNamePlural %>: (options) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllRequest(options)),
+    delete<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteRequest(id)),
+    reset<%= entityNamePlural %>: () => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Reset()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= entityNameCapitalized %>DetailScreen)

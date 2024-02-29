@@ -29,12 +29,12 @@ enum Units {
 }
 
 relationship OneToOne {
-  Preferences{user(login)} to User
+  Preferences{user(login)} to User with builtInEntity
 }
 relationship ManyToOne {
-  BloodPressure{user(login)} to User
-  Weight{user(login)} to User
-  Points{user(login)} to User
+  BloodPressure{user(login)} to User with builtInEntity
+  Weight{user(login)} to User with builtInEntity
+  Points{user(login)} to User with builtInEntity
 }
 
 paginate BloodPressure, Weight with infinite-scroll

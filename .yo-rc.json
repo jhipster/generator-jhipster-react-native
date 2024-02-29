@@ -1,0 +1,51 @@
+{
+  "generator-jhipster": {
+    "additionalSubGenerators": "",
+    "baseName": "react-native",
+    "cli": true,
+    "entities": [],
+    "generators": {
+      "app": {
+        "command": false,
+        "priorities": ["initializing", "prompting", "configuring", "loading", "default", "writing", "install", "end"],
+        "sbs": true,
+        "written": true
+      },
+      "entities": {
+        "command": false,
+        "priorities": ["initializing", "composing", "loading", "default", "writing"],
+        "sbs": true,
+        "written": true
+      },
+      "entity": {
+        "command": false,
+        "priorities": [
+          "initializing",
+          "prompting",
+          "configuring",
+          "loading",
+          "preparing",
+          "preparingEachEntityField",
+          "preparingEachEntityRelationship",
+          "default",
+          "writing",
+          "install",
+          "end"
+        ],
+        "sbs": true,
+        "written": true
+      },
+      "heroku": {
+        "command": false,
+        "priorities": ["initializing", "prompting", "configuring", "default", "end"],
+        "sbs": true,
+        "written": true
+      }
+    },
+    "jhipsterVersion": "8.1.0",
+    "localBlueprint": false,
+    "sampleWritten": true,
+    "skipCommitHook": true,
+    "subGenerators": ["app", "entities", "entity", "heroku"]
+  }
+}

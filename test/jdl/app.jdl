@@ -3,6 +3,7 @@ application {
 		authenticationType jwt
 		websocket false
 		skipClient true
+		devDatabaseType	h2Disk
 	}
 	entities *
 }

@@ -11,7 +11,7 @@ echo "Using JDL files: ${APP_JDL} ${ENTITY_JDL}"
 echo "Using Options: ${APP_JDL} ${ENTITY_JDL}"
 
 # combine the app and entity JDL file
-cat ${GITHUB_WORKSPACE}/test/jdl/${APP_JDL} ${GITHUB_WORKSPACE}/test/jdl/${ENTITY_JDL} >> ../${JHI_REACT_NATIVE_APP_NAME}.jdl
+cat test/jdl/${APP_JDL} test/jdl/${ENTITY_JDL} >> ../${JHI_REACT_NATIVE_APP_NAME}.jdl
 
 echo "      Auth Type: ${JHI_AUTH_TYPE}"
 sed -i.back "s~authenticationType jwt~authenticationType ${JHI_AUTH_TYPE}~g" ../${JHI_REACT_NATIVE_APP_NAME}.jdl

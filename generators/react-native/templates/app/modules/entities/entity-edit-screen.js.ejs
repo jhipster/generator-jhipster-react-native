@@ -1,0 +1,285 @@
+import React, { createRef } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { connect } from 'react-redux'
+<%_ if (anyPropertyHasValidation) { _%>
+import * as Yup from 'yup';
+<%_ } _%>
+
+import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
+<%_ /* differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
+<%_ uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== entityInstance).forEach((relation) => { _%>
+<%_ if (relation.otherEntityName === 'user') { _%>
+import UserActions from '../../../shared/reducers/user.reducer'
+<%_ } else { _%>
+import <%= relation.otherEntityNameCapitalized %>Actions from '../<%= relation.otherEntityStateName %>/<%= relation.otherEntityStateName %>.reducer'
+<%_ } _%>
+<%_ }) _%>
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import FormButton from '../../../shared/components/form/jhi-form-button';
+import FormField from '../../../shared/components/form/jhi-form-field';
+import Form from '../../../shared/components/form/jhi-form';
+import { useDidUpdateEffect } from '../../../shared/util/use-did-update-effect';
+import styles from './<%= entityFileName %>-styles'
+
+<%_ if (anyPropertyHasValidation) { // start of validation if statement _%>
+// set up validation schema for the form
+const validationSchema = Yup.object().shape({
+  <%_ fields.filter(field => !field.id).forEach((field) => { // start of fields loop
+  if (field.fieldValidate) {  // start of fieldValidate if statement_%>
+  <%= field.fieldName %>: Yup.<%= getFieldValidateType(field.fieldType) %>()
+    <%_field.fieldValidateRules.forEach((rule, index) => { // start of fieldValidateRules loop _%>
+      <%_ if (rule === 'required') { _%>
+    .required()
+      <%_ } else if (rule === 'pattern') { _%>
+    .matches(/<%= field.fieldValidateRulesPattern %>/)
+      <%_ } else if (rule === 'minlength') { _%>
+    .min(<%= field.fieldValidateRulesMinlength %>)
+      <%_ } else if (rule === 'min') { _%>
+    .min(<%= field.fieldValidateRulesMin %>)
+      <%_ } else if (rule === 'maxlength') { _%>
+    .max(<%= field.fieldValidateRulesMaxlength %>)
+      <%_ } else if (rule === 'max') { _%>
+    .max(<%= field.fieldValidateRulesMax %>)
+      <%_ }_%>
+    <%_ }) // end of fieldValidateRules loop _%>
+    ,
+  <%_ } // end of fieldValidate if statement _%>
+  <%_ }) // end of fields loop _%>
+  <%_ relationships.filter(relation => relation.ownerSide).forEach((relation) => { // start of relationships loop
+  if (relation.relationshipRequired) {  // start of relationshipRequired if statement_%>
+  <%= relation.relationshipName %>: Yup.mixed().required(),
+  <%_ } // end of relationshipValidate if statement _%>
+  <%_ }) // end of relationships loop _%>
+});
+<%_ } // end of validation if statement _%>
+
+<%_ fields.filter(field => !field.id).forEach((field) => {
+  if (field.fieldIsEnum) { _%>
+const <%= field.fieldType %> = [
+<%_
+    const enumValues = field.fieldValues.split(',')
+    enumValues.forEach((enumValue, index) => {
+_%>
+  {
+    label: '<%= enumValue %>',
+    value: '<%= enumValue %>',
+  },
+<%_ }) //end of value loop _%>
+];
+<%_ } // end of if statement
+}) // end of field loop _%>
+
+function <%= entityNameCapitalized %>EditScreen(props) {
+  const {
+    get<%= entityNameCapitalized %>,
+    update<%= entityNameCapitalized %>,
+    route,
+    <%= entityInstance %>,
+    fetching,
+    updating,
+    errorUpdating,
+    updateSuccess,
+    navigation,
+    reset,
+    <%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>,
+    <%= relation.otherEntityName %>List,
+    <%_ }) _%>
+  } = props;
+
+  const [formValue, setFormValue] = React.useState();
+  const [error, setError] = React.useState('');
+
+  const isNewEntity = !(route.params && route.params.entityId);
+
+  React.useEffect(() => {
+    if (!isNewEntity) {
+      get<%= entityNameCapitalized %>(route.params.entityId);
+    } else {
+      reset();
+    }
+  }, [isNewEntity, get<%= entityNameCapitalized %>, route, reset]);
+
+  React.useEffect(() => {
+    if (isNewEntity) {
+      setFormValue(entityToFormValue({}));
+    } else if (!fetching) {
+      setFormValue(entityToFormValue(<%= entityInstance %>));
+    }
+  }, [<%= entityInstance %>, fetching, isNewEntity]);
+
+  // fetch related entities
+  React.useEffect(() => {
+    <%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>();
+    <%_ }) _%>
+  }, [
+    <%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>,
+    <%_ }) _%>
+  ]);
+
+  useDidUpdateEffect(() => {
+    if (updating === false) {
+      if (errorUpdating) {
+        setError(errorUpdating && errorUpdating.detail ? errorUpdating.detail : 'Something went wrong updating the entity');
+      } else if (updateSuccess) {
+        setError('');
+        isNewEntity || !navigation.canGoBack() ? navigation.replace('<%= entityNameCapitalized %>Detail', { entityId: <%= entityInstance %>?.id }) : navigation.pop();
+      }
+    }
+  }, [updateSuccess, errorUpdating, navigation]);
+
+
+const onSubmit = (data) => update<%= entityNameCapitalized %>(formValueToEntity(data));
+
+  if (fetching) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  const formRef = createRef();
+  <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+  const <%= field.fieldName %>Ref = createRef();
+    <%_ if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
+  const <%= field.fieldName %>ContentTypeRef = createRef();
+    <%_ } _%>
+  <%_ }) _%>
+  <%_ relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+    <%_ if (relation.relationshipType === 'many-to-many') { _%>
+  const <%= relation.relationshipNamePlural %>Ref = createRef();
+    <%_ } else { _%>
+  const <%= relation.relationshipName %>Ref = createRef();
+    <%_ } _%>
+  <%_ }) _%>
+
+  return (
+    <View style={styles.container}>
+      <KeyboardAwareScrollView
+        enableResetScrollToCoords={false}
+        testID="<%= entityInstance %>EditScrollView"
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        contentContainerStyle={styles.paddedScrollView}>
+        {!!error && <Text style={styles.errorText}>{error}</Text>}
+        {formValue && (
+          <Form initialValues={formValue} <%_ if (anyPropertyHasValidation) { _%>validationSchema={validationSchema} <%_ } _%>onSubmit={onSubmit} ref={formRef}>
+          <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+          <%_
+            let nextField = null;
+            if (index !== fields.filter(field => !field.id).length - 1) {
+              nextField = fields.filter(field => !field.id)[index + 1];
+            }
+            const formField = getEntityFormField(field, nextField, relationships.filter(relation => relation.ownerSide).length);
+          _%>
+                <%- formField %>
+          <%_ }) _%>
+            <%_ relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+              <%_ const formField = getRelationshipFormField(relation); _%>
+              <%- formField %>
+            <%_ }) _%>
+
+            <FormButton title={'Save'} testID={'submitButton'} />
+          </Form>
+        )}
+      </KeyboardAwareScrollView>
+    </View>
+  );
+}
+
+// convenience methods for customizing the mapping of the entity to/from the form value
+const entityToFormValue = (value) => {
+  if (!value) {
+    return {}
+  }
+  return {
+    id: value.id ?? null,
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> ?? null,
+      <%_  if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
+    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType ?? null,
+      <%_ } _%>
+    <%_ }) _%>
+    <%_ relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+    <%_ if (dto === 'no' || !useOldDTOCode) { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>?.map((i) => i.id),
+      <%_ } else { _%>
+    <%= relation.relationshipName %>: (value.<%= relation.relationshipName %> && value.<%= relation.relationshipName %>.id) ? value.<%= relation.relationshipName %>.id : null,
+      <%_ } _%>
+    <%_ } else if (useOldDTOCode) { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>?.map((i) => i.id),
+      <%_ } else { _%>
+    <%= relation.relationshipName %>Id: value.<%= relation.relationshipName %>Id ?? null,
+      <%_ } _%>
+    <%_ } _%>
+    <%_ }) _%>
+  }
+}
+const formValueToEntity = (value) => {
+  const entity = {
+    id: value.id ?? null,
+    <%_ fields.filter(field => !field.id).forEach((field, index) => { _%>
+      <%_ if (field.fieldType === 'Boolean') { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> === null ? false : Boolean(value.<%= field.fieldName %>),
+      <%_ } else { _%>
+    <%= field.fieldName %>: value.<%= field.fieldName %> ?? null,
+      <%_ } _%>
+      <%_  if (field.fieldType === 'byte[]' && field.fieldTypeBlobContent !== 'text') { _%>
+    <%= field.fieldName %>ContentType: value.<%= field.fieldName %>ContentType ?? null,
+      <%_ } _%>
+    <%_ }) _%>
+    <%_ relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+    <%_  if (useOldDTOCode) { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+    <%= relation.relationshipNamePlural %>: value.<%= relation.relationshipNamePlural %>.map((i) => ({ id: i })),
+      <%_ } else { _%>
+    <%= relation.relationshipName %>Id: value.<%= relation.relationshipName %>Id ?? null,
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  }
+  <%_ relationships.filter(relation => relation.ownerSide).forEach((relation, index) => { _%>
+    <%_ if (dto === 'no' || !useOldDTOCode) { _%>
+      <%_ if (relation.relationshipType === 'many-to-many') { _%>
+  entity.<%= relation.relationshipNamePlural %> = value.<%= relation.relationshipNamePlural %>.map((id) => ({ id }));
+      <%_ } else { _%>
+  entity.<%= relation.relationshipName %> = value.<%= relation.relationshipName %> ? { id: value.<%= relation.relationshipName %> } : null
+      <%_ } _%>
+    <%_ } _%>
+  <%_ }) _%>
+  return entity
+}
+
+const mapStateToProps = (state) => {
+  return {
+    <%_ /* differentRelationships.filter(relation => relation.ownerSide).forEach((relation) => { */ _%>
+    <%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
+    <%= relation.otherEntityName %>List: state.<%= relation.otherEntityNamePlural %>.<%= relation.otherEntityName %>List ?? [],
+    <%_ }) _%>
+    <%= entityInstance %>: state.<%= entityInstancePlural %>.<%= entityInstance %>,
+    fetching: state.<%= entityInstancePlural %>.fetchingOne,
+    updating: state.<%= entityInstancePlural %>.updating,
+    updateSuccess: state.<%= entityInstancePlural %>.updateSuccess,
+    errorUpdating: state.<%= entityInstancePlural %>.errorUpdating
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    <%_ /* differentRelationships.filter(relation => relation.ownerSide).filter(relation => relation.otherEntityName !== camelCaseName).forEach((relation) => { */ _%>
+    <%_ uniqueOwnerSideRelationships.filter(relation => relation.otherEntityName !== entityInstance).forEach((relation) => { _%>
+    getAll<%= relation.otherEntityNameCapitalizedPlural %>: (options) => dispatch(<%= relation.otherEntityNameCapitalized %>Actions.<%= relation.otherEntityName %>AllRequest(options)),
+    <%_ }) _%>
+    get<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Request(id)),
+    getAll<%= entityNamePlural %>: (options) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllRequest(options)),
+    update<%= entityNameCapitalized %>: (<%= entityInstance %>) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateRequest(<%= entityInstance %>)),
+    reset: () => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Reset()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(<%= entityNameCapitalized %>EditScreen)

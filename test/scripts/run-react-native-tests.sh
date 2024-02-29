@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -ex
 
-cd ../${JHI_REACT_NATIVE_APP_NAME}
+cd ../client
 
 npm run lint
 

@@ -1,0 +1,114 @@
+import { call, put } from 'redux-saga/effects'
+import { callApi } from '../../../shared/sagas/call-api.saga'
+import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
+<%_ if (anyFieldIsDateDerived) { _%>
+import {
+  <%_ if (anyFieldIsZonedDateTime || anyFieldIsInstant) { _%>
+  convertDateTimeFromServer,
+  <%_ } _%>
+  <%_ if (anyFieldIsLocalDate) { _%>
+  convertLocalDateFromServer,
+  <%_ } _%>
+} from '../../../shared/util/date-transforms'
+<%_ } _%>
+
+function * get<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %>Id } = action
+  // make the call to the api
+  const apiCall = call(api.get<%= entityNameCapitalized %>, <%= entityInstance %>Id)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    <%_ if (anyFieldIsDateDerived) { _%>
+    response.data = mapDateFields(response.data)
+    <%_ } _%>
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Success(response.data))
+  } else {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Failure(response.data))
+  }
+}
+
+function * getAll<%= entityNamePlural %> (api, action) {
+  const { options } = action
+  // make the call to the api
+  const apiCall = call(api.getAll<%= entityNamePlural %>, options)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllSuccess(response.data, response.headers))
+  } else {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllFailure(response.data))
+  }
+}
+
+function * update<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %> } = action
+  // make the call to the api
+  const idIsNotNull = !(<%= entityInstance %>.id === null || <%= entityInstance %>.id === undefined);
+  const apiCall = call(idIsNotNull ? api.update<%= entityNameCapitalized %> : api.create<%= entityNameCapitalized %>, <%= entityInstance %>)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    <%_ if (anyFieldIsDateDerived) { _%>
+    response.data = mapDateFields(response.data)
+    <%_ } _%>
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateSuccess(response.data))
+  } else {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateFailure(response.data))
+  }
+}
+
+<%_ if (searchEngineAny) { _%>
+function * search<%= entityNamePlural %> (api, action) {
+  const { query } = action
+  // make the call to the api
+  const apiCall = call(api.search<%= entityNamePlural %>, query)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchSuccess(response.data))
+  } else {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchFailure(response.data))
+  }
+}
+<%_ } _%>
+function * delete<%= entityNameCapitalized %> (api, action) {
+  const { <%= entityInstance %>Id } = action
+  // make the call to the api
+  const apiCall = call(api.delete<%= entityNameCapitalized %>, <%= entityInstance %>Id)
+  const response = yield call(callApi, apiCall)
+
+  // success?
+  if (response.ok) {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteSuccess())
+  } else {
+    yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure(response.data))
+  }
+}
+<%_ if (anyFieldIsDateDerived) { _%>
+function mapDateFields (data) {
+<%_ fields.filter(field => !field.id).forEach(function (field) { _%>
+<%_ if (field.fieldType === 'LocalDate') { _%>
+  data.<%= field.fieldName %> = convertLocalDateFromServer(data.<%= field.fieldName %>)
+<%_ } else if (field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
+  data.<%= field.fieldName %> = convertDateTimeFromServer(data.<%= field.fieldName %>)
+<%_ } _%>
+<%_ }) _%>
+  return data
+}
+<%_ } _%>
+
+export default {
+  getAll<%= entityNamePlural %>,
+  get<%= entityNameCapitalized %>,
+  delete<%= entityNameCapitalized %>,
+  <%_ if (searchEngineAny) { _%>
+  search<%= entityNamePlural %>,
+  <%_ } _%>
+  update<%= entityNameCapitalized %>,
+};
+

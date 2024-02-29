@@ -43,32 +43,47 @@
   - [iOS](https://docs.expo.dev/workflow/ios-simulator/)
 - JHipster backend must use `jwt` or `oauth2` for its `authenticationType`
 
-Create a directory for your app:
+### Usage
 
-```sh
-mkdir SampleApp && cd SampleApp
-```
+#### Generate React Native app from JHipster app
 
-To generate an app, run the following command:
+Create a JHipster app using `jhipster`, or a backend-only with `jhipster --skip-client`.
 
-```sh
-# JHipster v6.x+
-rnhipster
+Create a directory alongside your JHipster app (ex. `client`), and run `jhipster-react-native` or `rnhipster` in it.
 
-# JHipster v7+
-jhipster --blueprints react-native
-
-# JHipster v7+ JDL Application
-jhipster --blueprints react-native jdl ./path-to-your-app-config.jdl
-
+```bash
++ rootDir/
+  + backend/ # run `jhipster` in it.
+  + client/  # run `jhipster-react-native` or `rnhipster` in it.
 ```
 
 Answer the prompts:
 
-- Enter the path to your JHipster app
+- Enter the path to your JHipster app (default: `../backend`)
 - Choose whether to enable E2E Detox Tests
 
-After generating, you can import entities with the [entity generator and JDL importer](docs/generators.md).
+#### Generate JHipster app and React Native app at the same time
+
+You can also create a JHipster app and an React Native app at the same time using the following command:
+
+```bash
+jhipster jdl bug-tracker.jh --blueprints react-native
+```
+
+```bash
++ rootDir/
+  + backend/ # run `jhipster` in it.
+```
+
+Answer the prompts:
+
+- Enter the path to your React Native app (default: `../client`)
+
+For available options, you can run:
+
+```bash
+jhipster-react-native app --help
+```
 
 ### Configuration
 

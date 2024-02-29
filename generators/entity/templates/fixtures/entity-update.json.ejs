@@ -1,8 +1,0 @@
-{
-  "id" : 1,
-  <%_ context.fields.filter(field => !field.id).forEach(function (field) { _%>
-    <%_ if (field.fieldType === 'LocalDate' || field.fieldType === 'ZonedDateTime' || field.fieldType === 'Instant') { _%>
-  <%= field.fieldName %>: null,
-    <%_ } _%>
-  <%_ }) _%>
-}

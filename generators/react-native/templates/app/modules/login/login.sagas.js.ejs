@@ -1,0 +1,107 @@
+import { call, put, select } from 'redux-saga/effects'
+
+<%_ if (authenticationType === 'oauth2') { _%>
+import AppConfig from '../../config/app-config'
+<%_ } _%>
+import LoginActions from './login.reducer'
+import AccountActions from '../../shared/reducers/account.reducer'
+<%_ if (websocket !== 'no') { _%>
+import WebsocketService from '../../shared/websockets/websocket.service'
+<%_ } _%>
+<%_ if (authenticationType === 'oauth2') { _%>
+import AuthInfoActions from '../../shared/reducers/auth-info.reducer';
+import { doOauthPkceFlow, logoutFromIdp } from './login.utils';
+<%_ } _%>
+
+<%_ if (authenticationType === 'oauth2') { _%>
+export const selectAuthInfo = (state) => state.authInfo.authInfo;
+export const selectIdToken = (state) => state.login.idToken;
+<%_ } _%>
+export const selectAuthToken = (state) => state.login.authToken
+// attempts to login
+<%_ if (authenticationType === 'oauth2') { _%>
+export function * login (api) {
+  try {
+    const authInfo = yield select(selectAuthInfo);
+    if (authInfo === null) {
+      yield put(AuthInfoActions.authInfoRequest());
+    }
+    const { issuer, clientId } = authInfo;
+    const { accessToken, idToken } = yield call(doOauthPkceFlow, AppConfig.nativeClientId || clientId, issuer);
+    if (accessToken) {
+      yield call(api.setAuthToken, accessToken);
+      yield put(LoginActions.loginSuccess(accessToken, idToken));
+      yield put(AccountActions.accountRequest());
+      yield put({ type: 'RELOGIN_OK' });
+    }
+  } catch (e) {
+    let errorMessage = 'Login failed, please try again'
+    if (e.type === 'cancel' || e.type === 'dismiss') {
+      errorMessage = 'Login dismissed'
+    } else if (e.type === 'error') {
+      errorMessage += ` (code ${e.errorCode})`
+    }
+    yield put(LoginActions.loginFailure(errorMessage));
+    if (AppConfig.debugMode) {
+      console.error(e);
+    }
+  }
+}
+
+<%_ } else if (authenticationType === 'jwt') { _%>
+export function * login (api, { username, password }) {
+  const authObj = {
+    username: username,
+    password: password,
+    rememberMe: true
+  }
+
+  const response = yield call(api.login, authObj)
+
+  // success?
+  if (response.ok) {
+    yield call(api.setAuthToken, response.data.id_token)
+    yield put(LoginActions.loginSuccess(response.data.id_token))
+    yield put(AccountActions.accountRequest())
+    <%_ if (websocket !== 'no') { _%>
+    WebsocketService.setToken(response.data.id_token)
+    <%_ } _%>
+    yield put({ type: 'RELOGIN_OK' })
+  } else {
+    const errorMessage = !response.data
+      ? 'Failed to reach backend API'
+      : response.data && response.data.detail
+      ? response.data.detail
+      : 'Bad credentials';
+    yield put(LoginActions.loginFailure(errorMessage));
+  }
+}
+<%_ } _%>
+// attempts to logout
+export function * logout (api) {
+  yield call(api.removeAuthToken)
+  yield put(AccountActions.accountReset())
+  yield put(AccountActions.accountRequest())
+  <%_ if (authenticationType === 'oauth2') { _%>
+  const { clientId, issuer } = yield select(selectAuthInfo);
+  const idToken = yield select(selectIdToken);
+  if (idToken) {
+    yield call(logoutFromIdp, AppConfig.nativeClientId || clientId, issuer, idToken);
+  }
+  <%_ } _%>
+  yield put(LoginActions.logoutSuccess())
+  yield put({ type: 'RELOGIN_ABORT' })
+}
+
+// loads the login
+export function * loginLoad (api) {
+  const authToken = yield select(selectAuthToken)
+  // only set the token if we have it
+  if (authToken) {
+    yield call(api.setAuthToken, authToken)
+    <%_ if (websocket !== 'no') { _%>
+    WebsocketService.setToken(authToken)
+    <%_ } _%>
+  }
+  yield put(LoginActions.loginLoadSuccess())
+}
