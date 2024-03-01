@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose as composeWithoutDevTools } from 'redux';
 import createSagaMiddleware from 'redux-saga'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 import AppConfig from '../../config/app-config';
 import RehydrationServices from '../services/rehydration.service'
