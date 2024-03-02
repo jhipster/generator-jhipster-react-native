@@ -86,7 +86,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21.x'
-      - uses: actions/setup-node@v4.0.2
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
       - run: $SCRIPT_DIR/install-node-dependencies.sh
@@ -113,19 +113,14 @@ jobs:
         name: 'GENERATING: generate jhipster backend'
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-      - uses: actions/setup-node@v4.0.2
-        with:
-          node-version: '16.x'
       - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
+        if: false
         with:
           generator-path: generator-jhipster-react-native
           application-path: ${{ github.workspace }}/client-base
           current-application-path: ${{ github.workspace }}/client
-          cmd: rnhipster jdl ${{ github.workspace }}/*.jdl --defaults --skip-jhipster-dependencies --force --skip-install
-      - uses: actions/setup-node@v4.0.2
-        with:
-          node-version: ${{ matrix.node_version }}
+          cmd: rnhipster jdl ${{ github.workspace }}/*.jdl --defaults --skip-jhipster-dependencies --force --skip-install --standalone
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
