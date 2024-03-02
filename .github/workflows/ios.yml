@@ -111,7 +111,7 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
         name: 'GENERATING: generate jhipster backend'
-      - run: rnhipster --skip-jhipster-dependencies --force
+      - run: rnhipster --force
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
@@ -119,7 +119,7 @@ jobs:
           generator-path: generator-jhipster-react-native
           application-path: ${{ github.workspace }}/client-base
           current-application-path: ${{ github.workspace }}/client
-          cmd: rnhipster --skip-jhipster-dependencies --force --skip-install
+          cmd: rnhipster --force --skip-install
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
