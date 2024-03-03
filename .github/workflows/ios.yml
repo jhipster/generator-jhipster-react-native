@@ -75,7 +75,7 @@ jobs:
     steps:
       - uses: jhipster/actions/create-app-path@v0
         with:
-          path: ${{ github.workspace }}/client
+          path: client
       - uses: jhipster/actions/setup-git@v0
       - uses: jhipster/actions/restore-cache@v0
         with:
