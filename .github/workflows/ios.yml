@@ -30,7 +30,7 @@ jobs:
     timeout-minutes: 90
     defaults:
       run:
-        working-directory: ${{ github.workspace }}/app
+        working-directory: ${{ github.workspace }}/client
     strategy:
       fail-fast: false
       matrix:
@@ -74,6 +74,8 @@ jobs:
       JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
     steps:
       - uses: jhipster/actions/create-app-path@v0
+        with:
+          path: client
       - uses: jhipster/actions/setup-git@v0
       - uses: jhipster/actions/restore-cache@v0
         with:
@@ -111,16 +113,15 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
         name: 'GENERATING: generate jhipster backend'
-      - run: $SCRIPT_DIR/generate-react-native-app.sh
+      - run: rnhipster --force
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
-        if: false
         with:
           generator-path: generator-jhipster-react-native
           application-path: ${{ github.workspace }}/client-base
           current-application-path: ${{ github.workspace }}/client
-          cmd: rnhipster jdl ${{ github.workspace }}/*.jdl --defaults --skip-jhipster-dependencies --force --skip-install --standalone
+          cmd: rnhipster --force --skip-install
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
