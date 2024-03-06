@@ -51,7 +51,7 @@ Date.prototype.toCustomLocalDate = function() {
 }
 _%>
 
-describe.skip('<%= entityNameCapitalized %> Screen Tests', () => {
+describe<%- authenticationTypeOauth2 ? '.skip' : '' %>('<%= entityNameCapitalized %> Screen Tests', () => {
   beforeEach(async () => {
     await reloadApp();
     await loginAsUser();
