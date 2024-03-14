@@ -38,5 +38,4 @@ jobs:
       - name: check-dependencies
         run: |
           cd generators/react-native/resources/expo
-          nom install
           npm run check-dependencies
