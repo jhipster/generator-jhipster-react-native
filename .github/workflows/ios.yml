@@ -23,10 +23,23 @@ concurrency:
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
 jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - name: check-dependencies
+        run: |
+          cd generators/react-native/resources/expo
+          npm run check-dependencies
   applications:
     name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
     runs-on: macos-13
-    if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
+    needs: [check-dependencies]
     timeout-minutes: 90
     defaults:
       run:
@@ -124,6 +137,7 @@ jobs:
           cmd: rnhipster --force --skip-install
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
+        timeout-minutes: 35
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
       - uses: actions/upload-artifact@v4
