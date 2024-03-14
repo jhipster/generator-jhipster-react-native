@@ -14,7 +14,7 @@
     "@react-native-masked-view/masked-view": "0.3.0",
     "@react-native-picker/picker": "2.6.1",
     "@react-navigation/devtools": "6.0.25",
-    "expo": "50.0.8",
+    "expo": "50.0.13",
     "expo-auth-session": "~5.4.0",
     "expo-constants": "~15.4.5",
     "expo-image-picker": "~14.7.1",
