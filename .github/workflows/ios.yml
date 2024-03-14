@@ -131,9 +131,9 @@ jobs:
         with:
           name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
           path: |
-            ${{ runner.workspace }}/${{ matrix.app_type }}/
-            !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
-            !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app
+            ${{ runner.workspace }}/client/
+            !${{ runner.workspace }}/**/node_modules
+            !${{ runner.workspace }}/**/e2e/Exponent.app
   ios-result:
     permissions:
       contents: none

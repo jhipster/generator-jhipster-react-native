@@ -74,7 +74,7 @@ const files = {
     {
       condition: generator => generator.reactNativeConfig.detox,
       templates: [
-        { file: 'app/modules/entities/entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.entityFileName}.spec.js` },
+        { file: 'e2e/entities/entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.entityFileName}.spec.js` },
       ],
     },
   ],
