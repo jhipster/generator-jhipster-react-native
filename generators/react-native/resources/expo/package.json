@@ -7,13 +7,13 @@
     "update-dependencies": "npm install && npx expo install --fix && rm -rf package-lock.json node_modules"
   },
   "dependencies": {
-    "@expo/vector-icons": "^14.0.0",
     "@expo/metro-runtime": "~3.1.3",
+    "@expo/vector-icons": "^14.0.0",
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-masked-view/masked-view": "0.3.0",
     "@react-native-picker/picker": "2.6.1",
-    "@react-navigation/devtools": "6.0.23",
+    "@react-navigation/devtools": "6.0.25",
     "expo": "50.0.8",
     "expo-auth-session": "~5.4.0",
     "expo-constants": "~15.4.5",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "@react-native-community/cli-server-api": "13.6.1",
-    "@types/react": "~18.2.63",
+    "@types/react": "~18.2.65",
     "jest-expo": "~50.0.2",
     "typescript": "^5.4.2"
   }
