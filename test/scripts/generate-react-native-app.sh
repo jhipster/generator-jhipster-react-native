@@ -10,7 +10,7 @@ if [ -d "../backend" ]; then
 else
   echo "Using JHipster for Generation. Both backend and frontend will be generated."
   mkdir ../backend && cd ../backend
-  jhipster --blueprints react-native jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl \
+  rnhipster --blueprints react-native jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl \
   --defaults --no-insight --skip-git    
   # list backend files
   echo "Listing files in directory: ../backend"
