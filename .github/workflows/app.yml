@@ -65,8 +65,6 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - run: $SCRIPT_DIR/git-config.sh
         name: Config git variables
-      - run: $SCRIPT_DIR/install-node-dependencies.sh
-        name: 'TOOLS: install node dependencies'
       - run: npm i && npm link
         name: 'TOOLS: npm install and link in generator-jhipster-react-native'
       - run: $SCRIPT_DIR/copy-jdl-file.sh
