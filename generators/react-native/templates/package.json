@@ -38,7 +38,7 @@
     "@storybook/react-native": "6.5.7",
     "@storybook/theming": "7.6.17",
     "@testing-library/jest-native": "5.4.3",
-    "@testing-library/react-native": "12.4.5",
+    "@testing-library/react-native": "12.5.0",
     "babel-jest": "29.7.0",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
