@@ -34,9 +34,9 @@
   "devDependencies": {
     "@react-native-community/eslint-config": "3.2.0",
     "@redux-devtools/extension": "3.3.0",
-    "@storybook/addons": "7.6.13",
-    "@storybook/react-native": "6.5.7",
-    "@storybook/theming": "7.6.17",
+    "@storybook/addons": "7.6.17",
+    "@storybook/react-native": "7.6.18",
+    "@storybook/theming": "8.0.9",
     "@testing-library/jest-native": "5.4.3",
     "@testing-library/react-native": "12.5.0",
     "babel-jest": "29.7.0",
