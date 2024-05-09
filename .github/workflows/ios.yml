@@ -129,6 +129,9 @@ jobs:
       - uses: jhipster/actions/compare-sample@b0ecf4d84af9afbc1885d951b109876521412615
         continue-on-error: true
         id: compare
+        if: >-
+          github.event.pull_request &&
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
         with:
           generator-path: generator-jhipster-react-native
           application-base-path: ${{ github.workspace }}/client-base
