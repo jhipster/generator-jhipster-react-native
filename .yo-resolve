@@ -1,0 +1,3 @@
+.github/worflows/** skip
+generators/** skip
+README.md skip
