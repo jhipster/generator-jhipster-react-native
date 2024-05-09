@@ -135,7 +135,7 @@ jobs:
           application-base-path: ${{ github.workspace }}/client-base
           current-application-base-path: ${{ github.workspace }}/client
           application-folder: .
-          compare-folders: .
+          compare-folder: .
           cmd: rnhipster --force --skip-install
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
