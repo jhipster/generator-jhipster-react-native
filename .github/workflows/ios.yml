@@ -86,6 +86,9 @@ jobs:
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
       JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
     steps:
+      - uses: jhipster/actions/create-app-path@v0
+        with:
+          path: client
       - uses: jhipster/actions/setup-runner@v0
         with:
           node-version: 20
