@@ -124,22 +124,33 @@ jobs:
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
-        name: 'GENERATING: generate jhipster backend'
-      - run: rnhipster --force
+      - run: rnhipster --force --skip-install
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
+        id: compare
+        if: >-
+          github.event.pull_request &&
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
         with:
           generator-path: generator-jhipster-react-native
-          application-path: ${{ github.workspace }}/client-base
-          current-application-path: ${{ github.workspace }}/client
+          application-base-path: ${{ github.workspace }}/client-base
+          current-application-base-path: ${{ github.workspace }}/client
+          application-folder: .
+          compare-folder: .
           cmd: rnhipster --force --skip-install
+      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
+        name: 'GENERATING: generate jhipster backend'
+        if: steps.compare.outputs.equals != 'true'
+      - run: npm install
+        if: steps.compare.outputs.equals != 'true'
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
+        if: steps.compare.outputs.equals != 'true'
         timeout-minutes: 35
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
+        if: steps.compare.outputs.equals != 'true'
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
