@@ -124,12 +124,11 @@ jobs:
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
-        name: 'GENERATING: generate jhipster backend'
       - run: rnhipster --force --skip-install
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@b0ecf4d84af9afbc1885d951b109876521412615
         continue-on-error: true
+        id: compare
         with:
           generator-path: generator-jhipster-react-native
           application-base-path: ${{ github.workspace }}/client-base
@@ -137,6 +136,9 @@ jobs:
           application-folder: .
           compare-folder: .
           cmd: rnhipster --force --skip-install
+      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
+        name: 'GENERATING: generate jhipster backend'
+        if: steps.compare.outputs.equals != 'true'
       - run: npm install
         if: steps.compare.outputs.equals != 'true'
       - run: $SCRIPT_DIR/run-detox-tests.sh
