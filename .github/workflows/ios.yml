@@ -126,7 +126,7 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: $SCRIPT_DIR/generate-jhipster-backend.sh
         name: 'GENERATING: generate jhipster backend'
-      - run: rnhipster --force
+      - run: rnhipster --force --skip-install
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@b0ecf4d84af9afbc1885d951b109876521412615
         continue-on-error: true
@@ -137,11 +137,15 @@ jobs:
           application-folder: .
           compare-folder: .
           cmd: rnhipster --force --skip-install
+      - run: npm install
+        if: steps.compare.outputs.equals != 'true'
       - run: $SCRIPT_DIR/run-detox-tests.sh
         name: 'TESTING: run detox tests'
+        if: steps.compare.outputs.equals != 'true'
         timeout-minutes: 35
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
+        if: steps.compare.outputs.equals != 'true'
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
