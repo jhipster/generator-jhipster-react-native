@@ -126,7 +126,7 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: rnhipster --force --skip-install
         name: 'GENERATING: generate react-native app'
-      - uses: jhipster/actions/compare-sample@b0ecf4d84af9afbc1885d951b109876521412615
+      - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
         id: compare
         if: >-
