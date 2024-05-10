@@ -89,23 +89,19 @@ jobs:
       - uses: jhipster/actions/create-app-path@v0
         with:
           path: client
-      - uses: jhipster/actions/setup-git@v0
-      - uses: jhipster/actions/restore-cache@v0
+      - uses: jhipster/actions/create-app-path@v0
         with:
-          npm: true
+          path: backend
+      - uses: jhipster/actions/setup-runner@v0
+        with:
+          node-version: 20
+          java-version: 17
+          maven-cache: true
+          binary-dir: ${{ github.workspace }}/generator-jhipster-react-native/cli
       - uses: actions/checkout@v4
         with:
           path: generator-jhipster-react-native
           fetch-depth: 2
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21.x'
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node_version }}
-      - run: $SCRIPT_DIR/install-node-dependencies.sh
-        name: 'TOOLS: install node dependencies'
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
@@ -118,13 +114,16 @@ jobs:
           retry_wait_seconds: 15
       - run: $SCRIPT_DIR/display-tools.sh
         name: 'TOOLS: display tools'
-      - run: npm i && npm link
-        name: 'TOOLS: npm install and link in generator-jhipster-react-native'
+      - run: npm i
+        name: 'TOOLS: npm install in generator-jhipster-react-native'
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: rnhipster --force --skip-install
+      - run: cli.cjs jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl --force --skip-checks --skip-commit-hook --no-insight --skip-install --disable-blueprints
+        name: 'GENERATING: generate jhipster backend'
+        working-directory: ${{ github.workspace }}/backend
+      - run: cli.cjs --force --skip-install
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
         continue-on-error: true
@@ -138,10 +137,7 @@ jobs:
           current-application-base-path: ${{ github.workspace }}/client
           application-folder: .
           compare-folder: .
-          cmd: rnhipster --force --skip-install
-      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
-        name: 'GENERATING: generate jhipster backend'
-        if: steps.compare.outputs.equals != 'true'
+          cmd: cli.cjs --force --skip-install
       - run: npm install
         if: steps.compare.outputs.equals != 'true'
       - run: $SCRIPT_DIR/run-detox-tests.sh
