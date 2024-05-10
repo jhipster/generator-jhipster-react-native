@@ -94,7 +94,7 @@ jobs:
           node-version: 20
           java-version: 17
           maven-cache: true
-          binary-dir: ${{ github.workspace }}/generator-jhipster-react-native
+          binary-dir: ${{ github.workspace }}/generator-jhipster-react-native/cli
       - uses: actions/checkout@v4
         with:
           path: generator-jhipster-react-native
