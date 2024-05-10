@@ -26,7 +26,6 @@
   "type": "module",
   "main": "generators/app/index.js",
   "bin": {
-    "jhipster-react-native": "cli/cli.cjs",
     "rnhipster": "./cli/cli.cjs"
   },
   "files": [

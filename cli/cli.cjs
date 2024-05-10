@@ -17,7 +17,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
   runJHipster({
     executableName,
     executableVersion: version,
-    defaultCommand: 'app',
+    defaultCommand: 'react-native',
     devBlueprintPath,
     blueprints: {
       [blueprint]: version,
