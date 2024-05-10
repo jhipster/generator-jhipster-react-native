@@ -8,6 +8,7 @@ const { version, bin } = require('../package.json');
 const packagePath = dirname(__dirname);
 const packageFolderName = basename(packagePath);
 const devBlueprintPath = join(packagePath, '.blueprint');
+const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packageFolderName}` : packageFolderName;
 
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
@@ -16,16 +17,16 @@ const devBlueprintPath = join(packagePath, '.blueprint');
   runJHipster({
     executableName,
     executableVersion: version,
-    defaultCommand: 'react-native',
+    defaultCommand: 'app',
     devBlueprintPath,
     blueprints: {
-      [packageFolderName]: version,
+      [blueprint]: version,
     },
     printBlueprintLogo: () => {
       console.log('===================== JHipster react-native =====================');
       console.log('');
     },
-    lookups: [{ packagePaths: [packagePath], lookups: ['generators'] }],
+    lookups: [{ packagePaths: [packagePath] }],
   }).catch(done);
 
   process.on('unhandledRejection', up => {
