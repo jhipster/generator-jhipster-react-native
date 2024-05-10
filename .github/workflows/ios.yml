@@ -89,6 +89,9 @@ jobs:
       - uses: jhipster/actions/create-app-path@v0
         with:
           path: client
+      - uses: jhipster/actions/create-app-path@v0
+        with:
+          path: backend
       - uses: jhipster/actions/setup-runner@v0
         with:
           node-version: 20
@@ -119,8 +122,9 @@ jobs:
       - run: $SCRIPT_DIR/copy-jdl-file.sh
         name: 'SETUP: copy the JDL file for the backend and app'
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: $SCRIPT_DIR/generate-jhipster-backend.sh
+      - run: jhipster jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl --force --skip-checks --skip-commit-hook --no-insight --skip-install
         name: 'GENERATING: generate jhipster backend'
+        working-directory: ${{ github.workspace }}/backend
       - run: cli.cjs --force --skip-install
         name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
