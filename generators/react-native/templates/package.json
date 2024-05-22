@@ -43,7 +43,7 @@
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
     "create-expo-app": "2.3.5",
-    "detox": "20.21.0",
+    "detox": "20.22.2",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.1.3",
