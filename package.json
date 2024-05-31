@@ -26,6 +26,7 @@
   "type": "module",
   "main": "generators/app/index.js",
   "bin": {
+    "jhipster-react-native": "cli/cli.cjs",
     "rnhipster": "./cli/cli.cjs"
   },
   "files": [
@@ -40,8 +41,8 @@
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "prettier": "prettier --write \"{,.github/**/,generators/**/,lib/**/,cli/**/,test/**/}*.{js,json,md,yml}\"",
-    "prettier-check": "prettier --check \"{,**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java}\"",
-    "prettier-format": "prettier --write \"{,**/}*.{md,json,yml,html,js,ts,tsx,css,scss,vue,java}\"",
+    "prettier-check": "prettier --check \"{,**/}*.{md,json,yml,html,cjs,mjs,js,cts,mts,ts,tsx,css,scss,vue,java}\"",
+    "prettier-format": "prettier --write \"{,**/}*.{md,json,yml,html,cjs,mjs,js,cts,mts,ts,tsx,css,scss,vue,java}\"",
     "release": "np",
     "pretest": "npm run prettier-check && npm run lint",
     "test": "vitest run",
@@ -57,7 +58,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "generator-jhipster": "8.4.0",
+    "generator-jhipster": "8.5.0",
     "lodash-es": "^4.17.21",
     "semver": "^7.6.0"
   },
@@ -71,8 +72,8 @@
     "jsdoc": "4.0.2",
     "lint-staged": "15.2.2",
     "prettier": "3.2.5",
-    "vitest": "1.5.2",
-    "yeoman-test": ">=8.0.0-rc.1"
+    "vitest": "1.6.0",
+    "yeoman-test": ">=8.2.0"
   },
   "engines": {
     "node": "^18.13.0 || >= 20.6.1",
