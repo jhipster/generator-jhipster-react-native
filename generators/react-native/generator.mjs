@@ -101,7 +101,7 @@ export default class extends BaseApplicationGenerator {
         if (!this.blueprintConfig.appDir) return;
 
         try {
-          this.copyDestination(this.destinationPath(this.blueprintConfig.appDir, '.jhipster', '**'), '.jhipster/');
+          this.copyDestination('.jhipster/**', '', { fromBasePath: this.destinationPath(this.blueprintConfig.appDir) });
         } catch {
           // No entities.
         }
