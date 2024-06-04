@@ -2,12 +2,13 @@
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
  */
 const command = {
-  options: {
-    skipCommitHook: {
-      desc: 'Skip adding husky commit hooks',
-      type: Boolean,
-      scope: 'storage',
+  configs: {
+    detox: {
+      description: 'Generate Detox tests',
+      scope: 'blueprint',
     },
+  },
+  options: {
     defaults: {
       desc: 'Use default options',
       type: String,
@@ -29,6 +30,7 @@ const command = {
       type: Boolean,
     },
   },
+  import: ['jhipster:git'],
 };
 
 export default command;

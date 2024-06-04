@@ -5,7 +5,6 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/base-applica
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, startCase, snakeCase } from 'lodash-es';
 import semver from 'semver';
-import command from './command.mjs';
 import { DEFAULT_ENABLE_DETOX, DEFAULT_BACKEND_PATH } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
@@ -90,7 +89,7 @@ export default class extends BaseApplicationGenerator {
     return this.asInitializingTaskGroup({
       async initializingTemplateTask() {
         printJHipsterLogo(this);
-        this.parseJHipsterCommand(command);
+        await this.parseCurrentJHipsterCommand();
       },
     });
   }
@@ -152,6 +151,15 @@ export default class extends BaseApplicationGenerator {
     return this.asComposingTaskGroup({
       async compose() {
         await this.composeWithJHipster('git');
+      },
+    });
+  }
+
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      async loadCommand({ application }) {
+        //application.clientRootDir = '';
+        await this.loadCurrentJHipsterCommandConfig(application);
       },
     });
   }
@@ -254,6 +262,7 @@ export default class extends BaseApplicationGenerator {
                 context: {
                   ...entity,
                   application: { ...application },
+                  ...application,
                   reactNativeConfig: { ...this.reactNativeConfig },
                   fieldsContainEnum,
                   uniqueOwnerSideRelationships,
