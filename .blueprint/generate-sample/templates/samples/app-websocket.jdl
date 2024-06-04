@@ -1,0 +1,90 @@
+application {
+	config {
+		authenticationType jwt
+		websocket spring-websocket
+		skipClient true
+		devDatabaseType	h2Disk
+	}
+	entities *
+}
+
+entity Region {
+	regionName String
+}
+
+entity Country {
+	countryName String
+}
+
+entity Location {
+	streetAddress String
+	postalCode String
+	city String
+	stateProvince String
+}
+
+entity Department {
+	departmentName String required
+	departmentPic ImageBlob
+	departmentDescription TextBlob
+	departmentInfoPdf Blob
+}
+
+entity Task {
+	title String
+	description String
+}
+
+entity Employee {
+	firstName String
+	lastName String
+	email String
+	phoneNumber String
+	hireDate Instant
+	salary Long
+	commissionPct Long
+}
+
+entity Job {
+	jobTitle String
+	minSalary Long
+	maxSalary Long
+}
+
+entity JobHistory {
+	startDate Instant
+	endDate Instant
+	language Language
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+relationship ManyToMany {
+	Job{task(title)} to Task{job(jobTitle)}
+}
+
+relationship OneToMany {
+	Employee{job(jobTitle)} to Job{employee(email)}
+	Department{employee(email)} to
+	Employee{department(departmentName)}
+}
+
+relationship ManyToOne {
+  Department{location(streetAddress)} to Location
+  Location{country(countryName)} to Country
+  Country{region(regionName)} to Region
+  Employee{manager} to Employee
+}
+
+relationship OneToOne {
+	JobHistory{job} to Job
+	JobHistory{department} to Department
+	JobHistory{employee} to Employee
+}
+
+paginate JobHistory, Employee with infinite-scroll
+paginate Job with pagination
+
+service all with serviceClass
