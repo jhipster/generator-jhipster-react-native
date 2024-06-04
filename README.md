@@ -86,7 +86,7 @@ jhipster-react-native app --help
 
 #### CORS
 
-- In dev, for the Web build, add `http://localhost:19006` as an allowed origin in the backend CORS config.
+- In dev, for the Web build, add `http://localhost:8081` as an allowed origin in the backend CORS config.
 - In production, you will need to enable CORS for your deployment domain.
 
 #### Notes for Android
