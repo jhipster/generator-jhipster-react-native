@@ -144,6 +144,8 @@ jobs:
         name: 'TESTING: run detox tests'
         if: steps.compare.outputs.equals != 'true'
         timeout-minutes: 35
+        env:
+          DETOX_RECORD_VIDEOS: all
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
         if: steps.compare.outputs.equals != 'true'
@@ -152,9 +154,9 @@ jobs:
         with:
           name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
           path: |
-            ${{ runner.workspace }}/${{ matrix.app_type }}/
-            !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
-            !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app
+            ${{ github.workspace }}/client/
+            !${{ github.workspace }}/client/node_modules
+            !${{ github.workspace }}/client/e2e/Exponent.app
   ios-result:
     permissions:
       contents: none
