@@ -337,9 +337,10 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.INSTALL]() {
     return this.asInstallTaskGroup({
       async install() {
+        if (this.options.skipInstall) return;
         try {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
-            await this.spawnCommand('npm', ['install']);
+            await this.spawn('npm', ['install']);
           }
         } catch (error) {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
