@@ -437,16 +437,16 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "test/setup.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
-    "stateCleared": "modified",
-  },
   "test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+  "test/spec/modules/account/password-reset/forgot-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "test/spec/modules/account/password/change-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/register/register.reducer.spec.js": {
@@ -910,16 +910,16 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "test/setup.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
-    "stateCleared": "modified",
-  },
   "test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+  "test/spec/modules/account/password-reset/forgot-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "test/spec/modules/account/password/change-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/register/register.reducer.spec.js": {
@@ -1416,16 +1416,16 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "test/setup.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
-    "stateCleared": "modified",
-  },
   "test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
     "stateCleared": "modified",
   },
-  "test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+  "test/spec/modules/account/password-reset/forgot-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "test/spec/modules/account/password/change-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "test/spec/modules/account/register/register.reducer.spec.js": {

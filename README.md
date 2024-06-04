@@ -49,12 +49,12 @@
 
 Create a JHipster app using `jhipster`, or a backend-only with `jhipster --skip-client`.
 
-Create a directory alongside your JHipster app (ex. `client`), and run `jhipster-react-native` or `rnhipster` in it.
+Create a directory alongside your JHipster app (ex. `client`), and run `rnhipster` in it.
 
 ```bash
 + rootDir/
   + backend/ # run `jhipster` in it.
-  + client/  # run `jhipster-react-native` or `rnhipster` in it.
+  + client/  # run `rnhipster` in it.
 ```
 
 Answer the prompts:
@@ -64,15 +64,10 @@ Answer the prompts:
 
 #### Generate JHipster app and React Native app at the same time
 
-You can also create a JHipster app and an React Native app at the same time using the following command:
+You can also create a JHipster app and a React Native app at the same time using the following command:
 
 ```bash
 jhipster jdl bug-tracker.jdl --blueprints react-native
-```
-
-```bash
-+ rootDir/
-  + backend/ # run `jhipster` in it.
 ```
 
 Answer the prompts:
@@ -91,7 +86,7 @@ jhipster-react-native app --help
 
 #### CORS
 
-- In dev, for the Web build, add `http://localhost:19006` as an allowed origin in the backend CORS config.
+- In dev, for the Web build, add `http://localhost:8081` as an allowed origin in the backend CORS config.
 - In production, you will need to enable CORS for your deployment domain.
 
 #### Notes for Android

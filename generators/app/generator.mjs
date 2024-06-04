@@ -30,13 +30,13 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PROMPTING]() {
     return this.asPromptingTaskGroup({
-      async promptyForReactNativeDir() {
+      async promptForReactNativeDir() {
         await this.prompt(
           [
             {
               type: 'input',
               name: 'reactNativeDir',
-              message: 'Where do you want to generate an ReactNative application?',
+              message: 'Where do you want to generate a React Native application?',
               default: DEFAULT_REACT_NATIVE_PATH,
             },
           ],
