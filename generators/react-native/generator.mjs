@@ -158,7 +158,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
       async loadCommand({ application }) {
-        //application.clientRootDir = '';
         await this.loadCurrentJHipsterCommandConfig(application);
       },
     });
