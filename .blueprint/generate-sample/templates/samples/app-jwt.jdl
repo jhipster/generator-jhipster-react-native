@@ -16,9 +16,9 @@ entity Country {
 }
 
 entity Location {
-	streetAddress String,
-	postalCode String,
-	city String,
+	streetAddress String
+	postalCode String
+	city String
 	stateProvince String
 }
 
@@ -30,29 +30,29 @@ entity Department {
 }
 
 entity Task {
-	title String,
+	title String
 	description String
 }
 
 entity Employee {
-	firstName String,
-	lastName String,
-	email String,
-	phoneNumber String,
-	hireDate Instant,
-	salary Long,
+	firstName String
+	lastName String
+	email String
+	phoneNumber String
+	hireDate Instant
+	salary Long
 	commissionPct Long
 }
 
 entity Job {
-	jobTitle String,
-	minSalary Long,
+	jobTitle String
+	minSalary Long
 	maxSalary Long
 }
 
 entity JobHistory {
-	startDate Instant,
-	endDate Instant,
+	startDate Instant
+	endDate Instant
 	language Language
 }
 
@@ -65,7 +65,7 @@ relationship ManyToMany {
 }
 
 relationship OneToMany {
-	Employee{job(jobTitle)} to Job{employee(email)},
+	Employee{job(jobTitle)} to Job{employee(email)}
 	Department{employee(email)} to
 	Employee{department(departmentName)}
 }
@@ -78,8 +78,8 @@ relationship ManyToOne {
 }
 
 relationship OneToOne {
-	JobHistory{job} to Job,
-	JobHistory{department} to Department,
+	JobHistory{job} to Job
+	JobHistory{department} to Department
 	JobHistory{employee} to Employee
 }
 
