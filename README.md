@@ -33,7 +33,7 @@
 
 ### Requirements
 
-- Node LTS v16+
+- Node LTS v20+
   - Verify version with `node -v`
 - [generator-jhipster-react-native](https://github.com/jhipster/generator-jhipster-react-native) installed
   - Install with `npm install -g generator-jhipster-react-native`
@@ -67,7 +67,7 @@ Answer the prompts:
 You can also create a JHipster app and an React Native app at the same time using the following command:
 
 ```bash
-jhipster jdl bug-tracker.jh --blueprints react-native
+jhipster jdl bug-tracker.jdl --blueprints react-native
 ```
 
 ```bash
