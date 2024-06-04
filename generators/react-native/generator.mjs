@@ -359,7 +359,6 @@ ${chalk.green(`    cd ${this.backendBlueprintConfig.reactNativeDir}`)}`
 React Native for JHipster App created successfully! 🎉
 ${chalk.yellowBright("\nYou will need to update your JHipster app's CORS settings: ⚠️\n")}
 ${chalk('    Web: ')}${chalk.yellowBright('http://localhost:8081')}
-${chalk('    iOS: ')}${chalk.yellowBright('capacitor://localhost')}
 ${chalk('    Android: ')}${chalk.yellowBright('http://localhost')}
 
 Run the following commands (in a separate terminal window) to see everything working:${changeDirMessage}
