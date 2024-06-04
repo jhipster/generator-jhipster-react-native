@@ -182,7 +182,7 @@ export default class extends BaseApplicationGenerator {
       },
       async replacePackageJsonVersionsInGeneratedApp() {
         const srcDir = dirname(this.resolved);
-        this.debug('Replacing package.json Versions');
+        this.debug('Replacing package.json versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', join(srcDir, 'templates/package.json'));
         this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', join(srcDir, 'resources/expo/package.json'));
       },
