@@ -1,0 +1,44 @@
+/*
+ * This is the application and entity model for the Flickr app (https://github.com/mraible/mobile-jhipster/) application from Matt Raible
+ */
+
+application {
+	config {
+		authenticationType jwt
+		skipClient true
+		devDatabaseType	h2Disk
+	}
+	entities *
+}
+
+entity Album {
+  title String required
+  description TextBlob
+  created Instant
+}
+
+entity Photo {
+  title String required
+  description TextBlob
+  image ImageBlob required
+  height Integer
+  width Integer
+  taken Instant
+  uploaded Instant
+}
+
+entity Tag {
+  name String required minlength(2)
+}
+
+relationship ManyToOne {
+  Album{user(login)} to User with builtInEntity
+  Photo{album(title)} to Album
+}
+
+relationship ManyToMany {
+  Photo{tag(name)} to Tag{photo}
+}
+
+paginate Album with pagination
+paginate Photo, Tag with infinite-scroll

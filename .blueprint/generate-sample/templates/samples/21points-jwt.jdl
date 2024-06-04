@@ -1,0 +1,50 @@
+/*
+ * This is the application and entity model for the 21-Points (https://github.com/mraible/21-points) application from Matt Raible
+ */
+
+application {
+	config {
+		authenticationType jwt
+		skipClient true
+		devDatabaseType	h2Disk
+	}
+	entities *
+}
+
+entity BloodPressure {
+  timestamp ZonedDateTime required
+  systolic Integer required
+  diastolic Integer required
+}
+entity Weight {
+  timestamp ZonedDateTime required
+  weight Double required
+}
+entity Points {
+  date LocalDate required
+  exercise Integer
+  meals Integer
+  alcohol Integer
+  notes String maxlength(140)
+}
+entity Preferences {
+  weeklyGoal Integer required min(10) max(21)
+  weightUnits Units required
+}
+
+enum Units {
+  KG,
+  LB
+}
+
+relationship OneToOne {
+  Preferences{user(login)} to User with builtInEntity
+}
+relationship ManyToOne {
+  BloodPressure{user(login)} to User with builtInEntity
+  Weight{user(login)} to User with builtInEntity
+  Points{user(login)} to User with builtInEntity
+}
+
+paginate BloodPressure, Weight with infinite-scroll
+paginate Points with pagination
