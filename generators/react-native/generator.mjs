@@ -30,7 +30,7 @@ export default class extends BaseApplicationGenerator {
 
     if (this.blueprintConfig.reactNativeDir) {
       throw new Error(
-        'React Native generator must run in React Native application directory, to regenerate backend execute `jhipster-reactNative app`',
+        'React Native generator must run in React Native application directory, to regenerate backend execute `rnhipster app`',
       );
     }
 
@@ -182,7 +182,7 @@ export default class extends BaseApplicationGenerator {
       },
       async replacePackageJsonVersionsInGeneratedApp() {
         const srcDir = dirname(this.resolved);
-        this.debug('Replacing Package.json Versions');
+        this.debug('Replacing package.json Versions');
         this.replacePackageJsonVersions('REPLACE_WITH_VERSION', join(srcDir, 'templates/package.json'));
         this.replacePackageJsonVersions('EXPO_REPLACE_WITH_VERSION', join(srcDir, 'resources/expo/package.json'));
       },
@@ -300,9 +300,9 @@ export default class extends BaseApplicationGenerator {
           this.debug('Removing oauth2 dependencies');
           this.packageJson.set('dependencies', {
             ...this.packageJson.get('dependencies'),
-            '@reactNative/storage': undefined,
-            '@reactNative/storage-angular': undefined,
-            'reactNative-appauth': undefined,
+            'expo-auth-session': undefined,
+            'expo-random': undefined,
+            'expo-web-browser': undefined,
           });
         }
         if (application.authenticationTypeOauth2) {
@@ -338,7 +338,7 @@ export default class extends BaseApplicationGenerator {
     return this.asInstallTaskGroup({
       async install() {
         try {
-          if (this.env.sharedFs.get(this.destinationPath('package.json'))?.commited) {
+          if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
             await this.spawnCommand('npm', ['install']);
           }
         } catch (error) {
@@ -357,11 +357,12 @@ ${chalk.green(`    cd ${this.backendBlueprintConfig.reactNativeDir}`)}`
           : '';
         this.log(`
 React Native for JHipster App created successfully! 🎉
-${chalk.yellowBright("You will need to update your JHipster app's CORS settings when running this app on an emulator or device. ⚠️\n")}
-${chalk.yellowBright('    iOS: capacitor://localhost')}
-${chalk.yellowBright('    Android: http://localhost')}
+${chalk.yellowBright("\nYou will need to update your JHipster app's CORS settings: ⚠️\n")}
+${chalk('    Web: ')}${chalk.yellowBright('http://localhost:8081')}
+${chalk('    iOS: ')}${chalk.yellowBright('capacitor://localhost')}
+${chalk('    Android: ')}${chalk.yellowBright('http://localhost')}
 
-Run the following commands (in separate terminal window) to see everything working:${changeDirMessage}
+Run the following commands (in a separate terminal window) to see everything working:${changeDirMessage}
 ${chalk.green(`    npm run backend:start`)}
 ${chalk.green(`    npm start`)}
 `);

@@ -401,16 +401,16 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/test/setup.js": {
     "stateCleared": "modified",
   },
-  "../client/test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
-    "stateCleared": "modified",
-  },
   "../client/test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
     "stateCleared": "modified",
   },
-  "../client/test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+  "../client/test/spec/modules/account/password-reset/forgot-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "../client/test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../client/test/spec/modules/account/password/change-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "../client/test/spec/modules/account/register/register.reducer.spec.js": {
@@ -895,16 +895,16 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
   "../reactNative-app/test/setup.js": {
     "stateCleared": "modified",
   },
-  "../reactNative-app/test/spec/modules/account/password-reset/forgot-passsword.sagas.spec.js": {
-    "stateCleared": "modified",
-  },
   "../reactNative-app/test/spec/modules/account/password-reset/forgot-password.reducer.spec.js": {
     "stateCleared": "modified",
   },
-  "../reactNative-app/test/spec/modules/account/password/change-passsword.sagas.spec.js": {
+  "../reactNative-app/test/spec/modules/account/password-reset/forgot-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "../reactNative-app/test/spec/modules/account/password/change-password.reducer.spec.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/test/spec/modules/account/password/change-password.sagas.spec.js": {
     "stateCleared": "modified",
   },
   "../reactNative-app/test/spec/modules/account/register/register.reducer.spec.js": {
