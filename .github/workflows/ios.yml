@@ -73,7 +73,7 @@ jobs:
             entity_jdl: entities-flickr2.jdl
           - app_type: OauthApp
             auth_type: oauth2
-            backend: false
+            backend: 'false'
             dto: false
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
