@@ -127,6 +127,16 @@ const closeDeveloperMenu = async () => {
 
 const reloadApp = async (bailOnFailure) => {
   try {
+    await device.launchApp({
+      url: expoPublishedUrl,
+      newInstance: true,
+      launchArgs: {
+        // detoxEnableSynchronization: false,
+        // Don't show developer menu.
+        EXKernelDisableNuxDefaultsKey: true,
+      },
+    });
+    // await closeDeveloperMenu();
     if (device.getPlatform() === 'ios') {
       // disable password autofill
       execSync(
@@ -139,16 +149,6 @@ const reloadApp = async (bailOnFailure) => {
         `plutil -replace restrictedBool.allowPasswordAutoFill.value -bool NO ~/Library/Developer/CoreSimulator/Devices/${device.id}/data/Library/UserConfigurationProfiles/PublicInfo/PublicEffectiveUserSettings.plist`,
       );
     }
-    await device.launchApp({
-      url: expoPublishedUrl,
-      newInstance: true,
-      launchArgs: {
-        detoxEnableSynchronization: false,
-        // Don't show developer menu.
-        EXKernelDisableNuxDefaultsKey: true,
-      },
-    });
-    // await closeDeveloperMenu();
     await waitForElementToBeVisibleById('homeScreen', DEFAULT_VISIBLE_TIMEOUT);
   } catch (e) {
     console.warn('Reloading app failed, retrying');
