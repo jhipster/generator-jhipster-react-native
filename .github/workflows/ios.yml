@@ -149,6 +149,7 @@ jobs:
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         name: 'TESTING: rename detox screenshots to a valid filename'
         if: steps.compare.outputs.equals != 'true'
+      - run: mv .artifacts artifacts
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
