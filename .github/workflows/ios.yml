@@ -150,6 +150,7 @@ jobs:
         name: 'TESTING: rename detox screenshots to a valid filename'
         if: steps.compare.outputs.equals != 'true'
       - run: mv .artifacts artifacts
+        if: ${{ always() }}
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
