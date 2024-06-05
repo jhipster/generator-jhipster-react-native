@@ -13,13 +13,13 @@
     "build:ios": "expo build:ios",
     "build:android": "expo build:android",
     "build:web": "expo export",
-    <%_ if (!skipCommitHook) { _%>
+<%_ if (!skipCommitHook) { _%>
     "precommit": "lint-staged",
-    <%_ } _%>
-    <%_ if (detox) { _%>
+<%_ } _%>
+<%_ if (detox) { _%>
     "start:e2e": "expo start --no-dev --minify",
     "test:e2e": "./e2e/scripts/setup.sh && detox test --configuration ios.sim.release --retries 3",
-    <%_ } _%>
+<%_ } _%>
     "postinstall": "patch-package",
     "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\"",
     "start": "expo start",
@@ -81,6 +81,8 @@
   },
   "devDependencies": {
     "@babel/core": "EXPO_REPLACE_WITH_VERSION",
+    "@babel/runtime": "REPLACE_WITH_VERSION",
+    "@config-plugins/detox": "REPLACE_WITH_VERSION",
     "@react-native-community/eslint-config": "REPLACE_WITH_VERSION",
     "@react-native-community/cli-server-api": "EXPO_REPLACE_WITH_VERSION",
     "@redux-devtools/extension": "REPLACE_WITH_VERSION",
@@ -89,6 +91,7 @@
     "@storybook/theming": "REPLACE_WITH_VERSION",
     "@testing-library/jest-native": "REPLACE_WITH_VERSION",
     "@testing-library/react-native": "REPLACE_WITH_VERSION",
+    "@types/jest": "REPLACE_WITH_VERSION",
     "@types/react": "EXPO_REPLACE_WITH_VERSION",
     "babel-jest": "REPLACE_WITH_VERSION",
     "babel-preset-env": "REPLACE_WITH_VERSION",
@@ -115,6 +118,7 @@
     "resolve": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION",
     "tapable": "REPLACE_WITH_VERSION",
+    "ts-jest": "REPLACE_WITH_VERSION",
     "typescript": "EXPO_REPLACE_WITH_VERSION"
   },
   <%_ if (!skipCommitHook) { _%>

@@ -2,7 +2,7 @@
 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Test: Search Engine Disabled, Detox Enabled > should succeed 1`] = `
 {
-  ".detoxrc.json": {
+  ".detoxrc.cjs": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -395,13 +395,13 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/config.json": {
-    "stateCleared": "modified",
-  },
   "e2e/entities/foo.spec.js": {
     "stateCleared": "modified",
   },
   "e2e/home-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "e2e/scripts/download-expo.sh": {
@@ -978,7 +978,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Test: Search Engine and Detox Enabled > should succeed 1`] = `
 {
-  ".detoxrc.json": {
+  ".detoxrc.cjs": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -1374,13 +1374,13 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/config.json": {
-    "stateCleared": "modified",
-  },
   "e2e/entities/foo.spec.js": {
     "stateCleared": "modified",
   },
   "e2e/home-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "e2e/scripts/download-expo.sh": {

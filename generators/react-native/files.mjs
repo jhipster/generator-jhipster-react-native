@@ -210,8 +210,8 @@ const files = {
     {
       condition: context => context.detox === true,
       templates: [
-        '.detoxrc.json',
-        'e2e/config.json',
+        '.detoxrc.cjs',
+        'e2e/jest.config.cjs',
         'e2e/home-screen.spec.js',
         'e2e/utils.js',
         'e2e/scripts/download-expo.sh',
