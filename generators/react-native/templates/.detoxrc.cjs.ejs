@@ -13,12 +13,12 @@ module.exports = {
     'ios.debug': {
       type: 'ios.app',
       binaryPath: 'e2e/Exponent.app',
-      build: 'xcodebuild -workspace ios/RnApp.xcworkspace -scheme RnApp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build'
+      build: 'xcodebuild -workspace ios/<%- baseName %>.xcworkspace -scheme <%- baseName %> -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build'
     },
     'ios.release': {
       type: 'ios.app',
-      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/RnApp.app',
-      build: 'xcodebuild -workspace ios/RnApp.xcworkspace -scheme RnApp -configuration Release -sdk iphonesimulator -derivedDataPath ios/build'
+      binaryPath: 'ios/build/Build/Products/Release-iphonesimulator/<%- baseName %>.app',
+      build: 'xcodebuild -workspace ios/<%- baseName %>.xcworkspace -scheme <%- baseName %> -configuration Release -sdk iphonesimulator -derivedDataPath ios/build'
     },
     'android.debug': {
       type: 'android.apk',

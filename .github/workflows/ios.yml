@@ -144,15 +144,14 @@ jobs:
         if: steps.compare.outputs.equals != 'true'
       - run: npx expo prebuild -p ios
       - run: git add . && git diff
-      - run: npx detox build -c ios.sim.release
-      - run: npm run app:start &
-        if: matrix.backend != 'false'
-        working-directory: ${{ github.workspace }}/backend
+      - run: npm run e2e:build:ios
       - run: |
+          npm run app:start &
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
         if: matrix.backend != 'false'
-      - run: npx detox test -c ios.sim.release
+        working-directory: ${{ github.workspace }}/backend
+      - run: npm run e2e:test:ios
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
