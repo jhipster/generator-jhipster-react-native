@@ -73,6 +73,7 @@ jobs:
             entity_jdl: entities-flickr2.jdl
           - app_type: OauthApp
             auth_type: oauth2
+            backend: false
             dto: false
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
@@ -141,14 +142,16 @@ jobs:
           cmd: cli.cjs --force --skip-install
       - run: npm install
         if: steps.compare.outputs.equals != 'true'
+      - run: npx expo prebuild -p ios
+      - run: git add . && git diff
+      - run: npx detox build -c ios.sim.release
       - run: npm run app:start &
+        if: matrix.backend != 'false'
         working-directory: ${{ github.workspace }}/backend
       - run: |
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
-      - run: npx expo prebuild -p ios
-      - run: git add . && git diff
-      - run: npx detox build -c ios.sim.release
+        if: matrix.backend != 'false'
       - run: npx detox test -c ios.sim.release
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
