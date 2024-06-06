@@ -5,6 +5,7 @@ import BaseGenerator from 'generator-jhipster/generators/base';
 export default class extends BaseGenerator {
   sampleName;
   all;
+  samplesFolder;
 
   constructor(args, opts, features) {
     super(args, opts, { ...features, jhipsterBootstrap: false });
@@ -31,13 +32,21 @@ export default class extends BaseGenerator {
     });
   }
 
+  get [BaseGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      async loadCommand() {
+        await this.loadCurrentJHipsterCommandConfig(undefined);
+      },
+    });
+  }
+
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async copySample() {
         if (this.all) {
-          this.copyTemplate('samples/*.jdl', '');
+          this.copyTemplate(`${this.samplesFolder}/*.jdl`, '');
         } else {
-          this.copyTemplate(`samples/${this.sampleName}`, this.sampleName, { noGlob: true });
+          this.copyTemplate(`${this.samplesFolder}/${this.sampleName}`, this.sampleName, { noGlob: true });
         }
       },
     });

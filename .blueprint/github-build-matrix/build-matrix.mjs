@@ -3,10 +3,10 @@ import { RECOMMENDED_JAVA_VERSION, RECOMMENDED_NODE_VERSION } from 'generator-jh
 import { fromMatrix } from 'generator-jhipster/testing';
 
 const defaultMatrix = {
-  os: ['ubuntu-latest'],
+  os: ['macos-13'],
   'node-version': [RECOMMENDED_NODE_VERSION],
   'java-version': [RECOMMENDED_JAVA_VERSION],
-  'default-environment': ['prod'],
+  'default-environment': ['dev'],
 };
 
 export const buildMatrix = async samplesFolder => {
