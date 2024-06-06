@@ -37,6 +37,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: 'npm'
       - id: build
         run: |
           npm ci --ignore-scripts --omit=dev
@@ -72,13 +73,6 @@ jobs:
         with:
           path: generator-jhipster-react-native
           fetch-depth: 2
-      - uses: nick-invision/retry@v3.0.0
-        name: 'TOOLS: installing applesimutils'
-        with:
-          max_attempts: 3
-          timeout_minutes: 60
-          command: brew tap wix/brew && brew install applesimutils && applesimutils --list
-          retry_wait_seconds: 15
       - run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-commit-hook
@@ -105,12 +99,7 @@ jobs:
           compare-folder: client
           generator-path: generator-jhipster-react-native
           cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
-      - run: npm install
-        if: steps.compare.outputs.equals != 'true'
-      - run: npx expo prebuild -p ios
-        if: steps.compare.outputs.equals != 'true'
-      - run: npm run e2e:build:ios
-        if: steps.compare.outputs.equals != 'true'
+
       - name: 'SETUP MacOS: install docker'
         run: |
           brew install docker colima docker-compose
@@ -120,9 +109,24 @@ jobs:
           ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
         if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
         timeout-minutes: 10
+      - uses: nick-invision/retry@v3.0.0
+        name: 'TOOLS: installing applesimutils'
+        if: steps.compare.outputs.equals != 'true'
+        with:
+          max_attempts: 3
+          timeout_minutes: 60
+          command: brew tap wix/brew && brew install applesimutils && applesimutils --list
+          retry_wait_seconds: 15
       - run: npm run services:up
         if: steps.compare.outputs.equals != 'true'
         working-directory: ${{ github.workspace }}/backend
+
+      - run: npm install
+        if: steps.compare.outputs.equals != 'true'
+      - run: npx expo prebuild -p ios
+        if: steps.compare.outputs.equals != 'true'
+      - run: npm run e2e:build:ios
+        if: steps.compare.outputs.equals != 'true'
       - run: |
           npm run app:start &
           npm install -g wait-on
