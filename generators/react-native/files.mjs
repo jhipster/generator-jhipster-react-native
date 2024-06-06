@@ -208,7 +208,7 @@ const files = {
   ],
   detox: [
     {
-      condition: context => context.detox === true,
+      condition: context => context.detox,
       templates: [
         '.detoxrc.cjs',
         'e2e/jest.config.cjs',
@@ -216,14 +216,15 @@ const files = {
         'e2e/utils.js',
         'e2e/scripts/download-expo.sh',
         'e2e/scripts/setup.sh',
+        'e2e/account/login-screen.spec.js',
       ],
     },
     {
-      condition: context => context.detox === true && !context.skipUserManagement,
-      templates: ['e2e/account/change-password-screen.spec.js', 'e2e/account/login-screen.spec.js', 'e2e/account/settings-screen.spec.js'],
+      condition: context => context.detox && !context.skipUserManagement,
+      templates: ['e2e/account/change-password-screen.spec.js', 'e2e/account/settings-screen.spec.js'],
     },
     {
-      condition: context => context.detox === true && !(context.websocket === 'no'),
+      condition: context => context.detox && context.websocket && context.websocket !== 'no',
       templates: ['e2e/websockets/chat-screen.spec.js'],
     },
   ],

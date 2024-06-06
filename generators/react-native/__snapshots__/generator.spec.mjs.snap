@@ -2595,6 +2595,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "babel.config.js": {
     "stateCleared": "modified",
   },
+  "e2e/account/login-screen.spec.js": {
+    "stateCleared": "modified",
+  },
   "e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
