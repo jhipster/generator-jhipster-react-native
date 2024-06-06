@@ -35,7 +35,7 @@ export default class extends BaseGenerator {
   get [BaseGenerator.LOADING]() {
     return this.asLoadingTaskGroup({
       async loadCommand() {
-        await this.loadCurrentJHipsterCommandConfig(undefined);
+        await this.loadCurrentJHipsterCommandConfig(this);
       },
     });
   }
