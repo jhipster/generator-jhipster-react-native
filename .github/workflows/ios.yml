@@ -38,7 +38,7 @@ jobs:
           npm run check-dependencies
   applications:
     name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
-    runs-on: macos-13
+    runs-on: macos-14
     needs: [check-dependencies]
     timeout-minutes: 90
     defaults:
@@ -73,6 +73,7 @@ jobs:
             entity_jdl: entities-flickr2.jdl
           - app_type: OauthApp
             auth_type: oauth2
+            backend: 'false'
             dto: false
     env:
       JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
@@ -85,6 +86,7 @@ jobs:
       PLATFORM: ios
       JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
       JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
+      FORCE_COLOR: true
     steps:
       - uses: jhipster/actions/create-app-path@v0
         with:
@@ -140,21 +142,25 @@ jobs:
           cmd: cli.cjs --force --skip-install
       - run: npm install
         if: steps.compare.outputs.equals != 'true'
-      - run: $SCRIPT_DIR/run-detox-tests.sh
-        name: 'TESTING: run detox tests'
-        if: steps.compare.outputs.equals != 'true'
-        timeout-minutes: 35
-      - run: $SCRIPT_DIR/rename-detox-screenshots.sh
-        name: 'TESTING: rename detox screenshots to a valid filename'
-        if: steps.compare.outputs.equals != 'true'
+      - run: npx expo prebuild -p ios
+      - run: git add . && git diff
+      - run: npm run e2e:build:ios
+      - run: |
+          npm run app:start &
+          npm install -g wait-on
+          wait-on -t 60000 http-get://127.0.0.1:8080/management/health
+        if: matrix.backend != 'false'
+        working-directory: ${{ github.workspace }}/backend
+      - run: npm run e2e:test:ios
       - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
           path: |
-            ${{ runner.workspace }}/${{ matrix.app_type }}/
-            !${{ runner.workspace }}/${{ matrix.app_type }}/node_modules
-            !${{ runner.workspace }}/${{ matrix.app_type }}/e2e/Exponent.app
+            ${{ github.workspace }}/client/
+            !${{ github.workspace }}/**/android
+            !${{ github.workspace }}/**/ios
+            !${{ github.workspace }}/**/node_modules
   ios-result:
     permissions:
       contents: none

@@ -2,7 +2,7 @@
 
 exports[`SubGenerator app of reactNative JHipster blueprint > run > should succeed 1`] = `
 {
-  "../client/.detoxrc.json": {
+  "../client/.detoxrc.cjs": {
     "stateCleared": "modified",
   },
   "../client/.editorconfig": {
@@ -362,10 +362,10 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "../client/e2e/config.json": {
+  "../client/e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "../client/e2e/home-screen.spec.js": {
+  "../client/e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "../client/e2e/scripts/download-expo.sh": {
@@ -496,7 +496,7 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
 
 exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactNative path > should succeed 1`] = `
 {
-  "../reactNative-app/.detoxrc.json": {
+  "../reactNative-app/.detoxrc.cjs": {
     "stateCleared": "modified",
   },
   "../reactNative-app/.editorconfig": {
@@ -856,10 +856,10 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
   "../reactNative-app/e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "../reactNative-app/e2e/config.json": {
+  "../reactNative-app/e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "../reactNative-app/e2e/home-screen.spec.js": {
+  "../reactNative-app/e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "../reactNative-app/e2e/scripts/download-expo.sh": {
