@@ -1,82 +1,49 @@
+import { clientRootTemplatesBlock } from 'generator-jhipster/generators/client/support';
+
 const files = {
   common: [
-    {
+    clientRootTemplatesBlock({
       templates: [
-        {
-          file: 'app/modules/entities/entity-delete-modal.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-delete-modal.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-detail-screen.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-detail-screen.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-edit-screen.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-edit-screen.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-flatlist.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-screen.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-styles.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}-styles.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-reducer.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}.reducer.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-reducer.spec.js',
-          renameTo: generator => `test/spec/modules/entities/${generator.entityFileName}/${generator.entityFileName}.reducer.spec.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-sagas.js',
-          renameTo: generator => `app/modules/entities/${generator.entityFileName}/${generator.entityFileName}.sagas.js`,
-        },
-        {
-          file: 'app/modules/entities/entity-sagas.spec.js',
-          renameTo: generator => `test/spec/modules/entities/${generator.entityFileName}/${generator.entityFileName}.sagas.spec.js`,
-        },
+        'app/modules/entities/_entityFolder_/_entityFile_-delete-modal.js',
+        'app/modules/entities/_entityFolder_/_entityFile_-detail-screen.js',
+        'app/modules/entities/_entityFolder_/_entityFile_-edit-screen.js',
+        'app/modules/entities/_entityFolder_/_entityFile_-screen.js',
+        'app/modules/entities/_entityFolder_/_entityFile_-styles.js',
+        'app/modules/entities/_entityFolder_/_entityFile_.reducer.js',
+        'test/spec/modules/entities/_entityFolder_/_entityFile_.reducer.spec.js',
+        'app/modules/entities/_entityFolder_/_entityFile_.sagas.js',
+        'test/spec/modules/entities/_entityFolder_/_entityFile_.sagas.spec.js',
       ],
-    },
+    }),
   ],
   fixtures: [
-    {
+    clientRootTemplatesBlock({
       templates: [
+        'app/shared/fixtures/get-_entityFile_.json',
         {
-          file: 'app/modules/entities/fixtures/entity-get.json',
-          renameTo: generator => `app/shared/fixtures/get-${generator.entityFileName}.json`,
-        },
-        {
-          file: 'app/modules/entities/fixtures/entity-get-all.json',
+          file: 'app/shared/fixtures/entity-get-all.json',
           // Workaround for entityPluralFileName 'xxxundefined' due to angularSuffix == undefined
           renameTo: generator => `app/shared/fixtures/get-all-${generator.entityNamePluralizedAndSpinalCased}.json`,
         },
-        {
-          file: 'app/modules/entities/fixtures/entity-update.json',
-          renameTo: generator => `app/shared/fixtures/update-${generator.entityFileName}.json`,
-        },
+        'app/shared/fixtures/update-_entityFile_.json',
       ],
-    },
-    {
+    }),
+    clientRootTemplatesBlock({
       condition: generator => generator.searchEngineAny,
       templates: [
         {
-          file: 'app/modules/entities/fixtures/entity-get-all.json',
+          file: 'app/shared/fixtures/entity-get-all.json',
           // Workaround for entityPluralFileName 'xxxundefined' due to angularSuffix == undefined
           renameTo: generator => `app/shared/fixtures/search-${generator.entityNamePluralizedAndSpinalCased}.json`,
         },
       ],
-    },
+    }),
   ],
   detox: [
-    {
-      condition: generator => generator.reactNativeConfig.detox,
-      templates: [
-        { file: 'app/modules/entities/entity-e2e-test.js', renameTo: generator => `e2e/entities/${generator.entityFileName}.spec.js` },
-      ],
-    },
+    clientRootTemplatesBlock({
+      condition: ctx => ctx.detox,
+      templates: ['e2e/entities/_entityFile_.spec.js'],
+    }),
   ],
 };
 

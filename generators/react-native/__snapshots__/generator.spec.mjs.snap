@@ -436,7 +436,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket Disabled, JWT Authentication, With Detox Test > should succeed 1`] = `
 {
-  ".detoxrc.json": {
+  ".detoxrc.cjs": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -796,10 +796,10 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/config.json": {
+  "e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/home-screen.spec.js": {
+  "e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "e2e/scripts/download-expo.sh": {
@@ -1355,7 +1355,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket Enabled with Spring, JWT Authentication, With Detox Test > should succeed 1`] = `
 {
-  ".detoxrc.json": {
+  ".detoxrc.cjs": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -1730,10 +1730,10 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "e2e/account/settings-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/config.json": {
+  "e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/home-screen.spec.js": {
+  "e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "e2e/scripts/download-expo.sh": {
@@ -2256,7 +2256,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket Enabled with Spring, OAuth2 Authentication, With Detox Test > should succeed 1`] = `
 {
-  ".detoxrc.json": {
+  ".detoxrc.cjs": {
     "stateCleared": "modified",
   },
   ".editorconfig": {
@@ -2595,10 +2595,10 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "babel.config.js": {
     "stateCleared": "modified",
   },
-  "e2e/config.json": {
+  "e2e/home-screen.spec.js": {
     "stateCleared": "modified",
   },
-  "e2e/home-screen.spec.js": {
+  "e2e/jest.config.cjs": {
     "stateCleared": "modified",
   },
   "e2e/scripts/download-expo.sh": {
