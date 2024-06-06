@@ -9,17 +9,17 @@ application {
   entities *
 }
 
-@ChangelogDate(20240101000000)
+@ChangelogDate("20240101000000")
 entity Region {
   regionName String
 }
 
-@ChangelogDate(20240102000000)
+@ChangelogDate("20240102000000")
 entity Country {
   countryName String
 }
 
-@ChangelogDate(20240103000000)
+@ChangelogDate("20240103000000")
 entity Location {
   streetAddress String
   postalCode String
@@ -27,7 +27,7 @@ entity Location {
   stateProvince String
 }
 
-@ChangelogDate(20240104000000)
+@ChangelogDate("20240104000000")
 entity Department {
   departmentName String required
   departmentPic ImageBlob
@@ -35,13 +35,13 @@ entity Department {
   departmentInfoPdf Blob
 }
 
-@ChangelogDate(20240105000000)
+@ChangelogDate("20240105000000")
 entity Task {
   title String
   description String
 }
 
-@ChangelogDate(20240106000000)
+@ChangelogDate("20240106000000")
 entity Employee {
   firstName String
   lastName String
@@ -52,14 +52,14 @@ entity Employee {
   commissionPct Long
 }
 
-@ChangelogDate(20240107000000)
+@ChangelogDate("20240107000000")
 entity Job {
   jobTitle String
   minSalary Long
   maxSalary Long
 }
 
-@ChangelogDate(20240108000000)
+@ChangelogDate("20240108000000")
 entity JobHistory {
   startDate Instant
   endDate Instant

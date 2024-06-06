@@ -13,18 +13,18 @@ application {
   entities *
 }
 
-@ChangelogDate(20240101000000)
+@ChangelogDate("20240101000000")
 entity BloodPressure {
   timestamp ZonedDateTime required
   systolic Integer required
   diastolic Integer required
 }
-@ChangelogDate(20240102000000)
+@ChangelogDate("20240102000000")
 entity Weight {
   timestamp ZonedDateTime required
   weight Double required
 }
-@ChangelogDate(20240103000000)
+@ChangelogDate("20240103000000")
 entity Points {
   date LocalDate required
   exercise Integer
@@ -32,7 +32,7 @@ entity Points {
   alcohol Integer
   notes String maxlength(140)
 }
-@ChangelogDate(20240105000000)
+@ChangelogDate("20240105000000")
 entity Preferences {
   weeklyGoal Integer required min(10) max(21)
   weightUnits Units required
