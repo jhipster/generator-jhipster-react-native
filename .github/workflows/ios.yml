@@ -100,6 +100,14 @@ jobs:
           generator-path: generator-jhipster-react-native
           cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
 
+      - uses: nick-invision/retry@v3.0.0
+        name: 'TOOLS: installing applesimutils'
+        if: steps.compare.outputs.equals != 'true'
+        with:
+          max_attempts: 3
+          timeout_minutes: 60
+          command: brew tap wix/brew && brew install applesimutils && applesimutils --list
+          retry_wait_seconds: 15
       - name: 'SETUP MacOS: install docker'
         run: |
           brew install docker colima docker-compose
@@ -109,16 +117,8 @@ jobs:
           ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
         if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
         timeout-minutes: 10
-      - uses: nick-invision/retry@v3.0.0
-        name: 'TOOLS: installing applesimutils'
-        if: steps.compare.outputs.equals != 'true'
-        with:
-          max_attempts: 3
-          timeout_minutes: 60
-          command: brew tap wix/brew && brew install applesimutils && applesimutils --list
-          retry_wait_seconds: 15
       - run: npm run services:up
-        if: steps.compare.outputs.equals != 'true'
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
         working-directory: ${{ github.workspace }}/backend
 
       - run: npm install
