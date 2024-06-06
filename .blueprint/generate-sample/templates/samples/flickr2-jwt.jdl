@@ -13,14 +13,14 @@ application {
   entities *
 }
 
-@ChangelogDate("20240101000000")
+@ChangelogDate(20240101000000)
 entity Album {
   title String required
   description TextBlob
   created Instant
 }
 
-@ChangelogDate("20240102000000")
+@ChangelogDate(20240102000000)
 entity Photo {
   title String required
   description TextBlob
@@ -31,7 +31,7 @@ entity Photo {
   uploaded Instant
 }
 
-@ChangelogDate("20240103000000")
+@ChangelogDate(20240103000000)
 entity Tag {
   name String required minlength(2)
 }
