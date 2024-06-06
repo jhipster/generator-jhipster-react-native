@@ -165,6 +165,9 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
+      dependencies({ application }) {
+        this.loadNodeDependenciesFromPackageJson(application.nodeDependencies, this.templatePath('../resources/expo/package.json'));
+      },
       preparingPatchInFile() {
         this.patchInFile = patchInFile.bind(this);
       },
