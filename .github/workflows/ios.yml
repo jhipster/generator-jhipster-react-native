@@ -111,11 +111,23 @@ jobs:
         if: steps.compare.outputs.equals != 'true'
       - run: npm run e2e:build:ios
         if: steps.compare.outputs.equals != 'true'
+      - name: 'SETUP MacOS: install docker'
+        run: |
+          brew install docker colima docker-compose
+          colima start
+          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+          mkdir -p ~/.docker/cli-plugins
+          ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
+        timeout-minutes: 10
+      - run: npm run services:up
+        if: steps.compare.outputs.equals != 'true'
+        working-directory: ${{ github.workspace }}/backend
       - run: |
           npm run app:start &
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
-        if: matrix.default-environment != 'prod' && steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true'
         working-directory: ${{ github.workspace }}/backend
       - run: npm run e2e:test:ios
         if: steps.compare.outputs.equals != 'true'
