@@ -10,7 +10,7 @@ const defaultMatrix = {
 };
 
 const oauth2Sample = {
-  os: 'macos-14',
+  os: 'macos-13',
   'default-environment': 'prod',
 };
 
