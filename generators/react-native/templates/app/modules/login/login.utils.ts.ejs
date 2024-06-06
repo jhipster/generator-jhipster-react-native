@@ -73,10 +73,21 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // fetch oauth issuer information from discovery endpoint
   const discovery = await getDiscovery(issuer);
   // set up the IDP url, prepare codeVerifier and state
-  const { authUrl, codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
+  const { codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
   // redirect to the IDP
   const returnUri = Platform.OS === 'android' && !AppConfig.useExpoAuthProxy ? redirectUri : Linking.createURL('/');
-  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: returnUri });
+  // Get Authorization code
+  const authRequestOptions: AuthSession.AuthRequestConfig = {
+    responseType: AuthSession.ResponseType.Code,
+    clientId,
+    redirectUri: returnUri,
+    prompt: AuthSession.Prompt.Login,
+    scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'],
+    state,
+    usePKCE: true,
+  };
+  const authRequest = new AuthSession.AuthRequest(authRequestOptions);
+  const authResult = await authRequest.promptAsync(discovery);
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
