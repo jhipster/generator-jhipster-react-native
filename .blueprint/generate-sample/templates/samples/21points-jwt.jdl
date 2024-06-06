@@ -3,23 +3,28 @@
  */
 
 application {
-	config {
-		authenticationType jwt
-		skipClient true
-		devDatabaseType	h2Disk
-	}
-	entities *
+  config {
+    authenticationType jwt
+    skipClient true
+    devDatabaseType  h2Disk
+    creationTimestamp 1617901618886
+    jwtSecretKey "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ="
+  }
+  entities *
 }
 
+@ChangelogDate(20240101000000)
 entity BloodPressure {
   timestamp ZonedDateTime required
   systolic Integer required
   diastolic Integer required
 }
+@ChangelogDate(20240102000000)
 entity Weight {
   timestamp ZonedDateTime required
   weight Double required
 }
+@ChangelogDate(20240103000000)
 entity Points {
   date LocalDate required
   exercise Integer
@@ -27,6 +32,7 @@ entity Points {
   alcohol Integer
   notes String maxlength(140)
 }
+@ChangelogDate(20240105000000)
 entity Preferences {
   weeklyGoal Integer required min(10) max(21)
   weightUnits Units required

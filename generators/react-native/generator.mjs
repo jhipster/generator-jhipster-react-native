@@ -18,7 +18,6 @@ import {
   patchInFile,
   appendFiles,
   patchBabel,
-  printJHipsterLogo,
 } from '../../lib/index.js';
 
 export default class extends BaseApplicationGenerator {
@@ -88,7 +87,6 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.INITIALIZING]() {
     return this.asInitializingTaskGroup({
       async initializingTemplateTask() {
-        printJHipsterLogo(this);
         await this.parseCurrentJHipsterCommand();
       },
     });
