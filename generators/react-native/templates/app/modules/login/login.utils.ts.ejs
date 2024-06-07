@@ -18,7 +18,7 @@ export async function exchangeCodeForToken(
     {
       code,
       clientId,
-      redirectUri: redirectUri + '/',
+      redirectUri,
       extraParams: {
         code_verifier: codeVerifier,
       },
@@ -67,7 +67,7 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
-  return exchangeCodeForToken(clientId, redirectUri, discovery, code, authRequest.codeVerifier || '');
+  return exchangeCodeForToken(clientId, returnUri, discovery, code, authRequest.codeVerifier || '');
 }
 
 export async function logoutFromIdp(clientId: string, issuer: string, idToken: string) {
