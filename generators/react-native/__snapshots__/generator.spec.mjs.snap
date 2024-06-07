@@ -371,7 +371,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -835,7 +835,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -1287,7 +1287,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -1778,7 +1778,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -2212,7 +2212,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -2649,7 +2649,7 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
-  "storybook/storybook.requires.js": {
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
