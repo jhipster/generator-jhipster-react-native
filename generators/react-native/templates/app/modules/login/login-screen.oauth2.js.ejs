@@ -8,7 +8,7 @@ import { useDidUpdateEffect } from '../../shared/util/use-did-update-effect';
 import styles from './login-screen.styles';
 
 function LoginScreen(props) {
-  const { navigation, account, fetching, error, attemptLogin, fetchingAccount, fetchingAuthInfo, authInfoError } = props;
+  const { account, navigation, fetching, error, attemptLogin, fetchingAccount, fetchingAuthInfo, authInfoError } = props;
   // setup error state for displaying error messages
   const [loginError, setLoginError] = React.useState('');
 

@@ -1,15 +1,5 @@
 name: iOS-E2E
 on:
-  workflow_dispatch:
-    inputs:
-      recordVideo:
-        description: 'Record failing E2E Tests'
-        required: false
-        default: 'false'
-      screenshots:
-        description: 'Screenshot failing E2E Tests'
-        required: false
-        default: 'false'
   push:
     branches:
       - 'main'
@@ -31,61 +21,40 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20.x
+          node-version: 20
       - name: check-dependencies
         run: |
           cd generators/react-native/resources/expo
           npm run check-dependencies
-  applications:
-    name: e2e-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
-    runs-on: macos-14
+
+  build-matrix:
+    runs-on: ubuntu-latest
     needs: [check-dependencies]
+    outputs:
+      matrix: ${{ steps.build.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - id: build
+        run: |
+          npm ci --ignore-scripts --omit=dev
+          cli/cli.cjs github-build-matrix
+
+  applications:
+    name: ${{ matrix.sample-name }}
+    runs-on: ${{ matrix.os }}
+    needs: build-matrix
     timeout-minutes: 90
     defaults:
       run:
         working-directory: ${{ github.workspace }}/client
     strategy:
       fail-fast: false
-      matrix:
-        jhipster_version: [8]
-        node_version: [20.x]
-        app_type:
-          - JwtDtoApp
-          - JwtWebsocketsApp
-          - JwtHealthPointsApp
-          - JwtFlickrApp
-          - OauthApp
-        include:
-          - app_type: JwtDtoApp
-            auth_type: jwt
-            dto: true
-          - app_type: JwtWebsocketsApp
-            auth_type: jwt
-            dto: false
-            websockets: true
-          - app_type: JwtHealthPointsApp
-            auth_type: jwt
-            dto: false
-            entity_jdl: entities-21points.jdl
-          - app_type: JwtFlickrApp
-            auth_type: jwt
-            dto: false
-            entity_jdl: entities-flickr2.jdl
-          - app_type: OauthApp
-            auth_type: oauth2
-            backend: 'false'
-            dto: false
+      matrix: ${{fromJson(needs.build-matrix.outputs.matrix)}}
     env:
-      JHI_REACT_NATIVE_APP_NAME: ${{ matrix.app_type }}
-      JHI_AUTH_TYPE: ${{ matrix.auth_type }}
-      JHI_DTO: ${{ matrix.dto }}
-      JHI_WEBSOCKETS: ${{ matrix.websockets }}
-      JHI_ENTITY_JDL: ${{ matrix.entity_jdl }}
-      JHIPSTER_VERSION: ${{ matrix.jhipster_version }}
-      SCRIPT_DIR: ${{ github.workspace }}/generator-jhipster-react-native/test/scripts
-      PLATFORM: ios
-      JHI_RECORD_VIDEO: ${{ github.event.inputs.recordVideo || 'false' }}
-      JHI_SCREENSHOTS: ${{ github.event.inputs.screenshots || 'false' }}
       FORCE_COLOR: true
     steps:
       - uses: jhipster/actions/create-app-path@v0
@@ -96,71 +65,89 @@ jobs:
           path: backend
       - uses: jhipster/actions/setup-runner@v0
         with:
-          node-version: 20
-          java-version: 17
+          node-version: ${{ matrix.node-version }}
+          java-version: ${{ matrix.java-version }}
           maven-cache: true
           binary-dir: ${{ github.workspace }}/generator-jhipster-react-native/cli
       - uses: actions/checkout@v4
         with:
           path: generator-jhipster-react-native
           fetch-depth: 2
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest
-      - uses: nick-invision/retry@v3.0.0
-        name: 'TOOLS: installing Detox and its dependencies'
-        with:
-          max_attempts: 3
-          timeout_minutes: 60
-          command: $SCRIPT_DIR/install-detox.sh
-          retry_wait_seconds: 15
-      - run: $SCRIPT_DIR/display-tools.sh
-        name: 'TOOLS: display tools'
-      - run: npm i
-        name: 'TOOLS: npm install in generator-jhipster-react-native'
+      - run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: $SCRIPT_DIR/copy-jdl-file.sh
-        name: 'SETUP: copy the JDL file for the backend and app'
-        working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: cli.cjs jdl ../${JHI_REACT_NATIVE_APP_NAME}.jdl --force --skip-checks --skip-commit-hook --no-insight --skip-install --disable-blueprints
-        name: 'GENERATING: generate jhipster backend'
+      - run: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-commit-hook
         working-directory: ${{ github.workspace }}/backend
-      - run: cli.cjs --force --skip-install
-        name: 'GENERATING: generate react-native app'
       - uses: jhipster/actions/compare-sample@v0
-        continue-on-error: true
+        id: compare-backend
+        if: >-
+          github.event.pull_request &&
+          contains(github.event.pull_request.labels.*.name, 'pr: compare-backend')
+        with:
+          application-base-path: ${{ github.workspace }}/backend-base
+          application-folder: backend
+          compare-folder: backend
+          generator-path: generator-jhipster-react-native
+          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+      - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
           github.event.pull_request &&
-          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare')
+          !contains(github.event.pull_request.labels.*.name, 'pr: disable-compare') &&
+          steps.compare-backend.outputs.has-changes != 'true'
         with:
+          application-folder: backend
+          compare-folder: client
           generator-path: generator-jhipster-react-native
-          application-base-path: ${{ github.workspace }}/client-base
-          current-application-base-path: ${{ github.workspace }}/client
-          application-folder: .
-          compare-folder: .
-          cmd: cli.cjs --force --skip-install
+          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+
+      - uses: nick-invision/retry@v3.0.0
+        name: 'TOOLS: installing applesimutils'
+        if: steps.compare.outputs.equals != 'true'
+        with:
+          max_attempts: 3
+          timeout_minutes: 60
+          command: brew tap wix/brew && brew install applesimutils && applesimutils --list
+          retry_wait_seconds: 15
+      - name: 'SETUP MacOS: install docker'
+        run: |
+          brew install docker colima docker-compose
+          colima start
+          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
+          mkdir -p ~/.docker/cli-plugins
+          ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
+        timeout-minutes: 10
+      - run: npm run services:up
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
+        working-directory: ${{ github.workspace }}/backend
+
       - run: npm install
         if: steps.compare.outputs.equals != 'true'
       - run: npx expo prebuild -p ios
-      - run: git add . && git diff
+        if: steps.compare.outputs.equals != 'true'
       - run: npm run e2e:build:ios
+        if: steps.compare.outputs.equals != 'true'
       - run: |
           npm run app:start &
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
-        if: matrix.backend != 'false'
+        if: steps.compare.outputs.equals != 'true'
         working-directory: ${{ github.workspace }}/backend
       - run: npm run e2e:test:ios
+        timeout-minutes: 15
+        env:
+          DETOX_RECORD_VIDEOS: "${{ contains(github.event.pull_request.labels.*.name, 'pr: record-videos') && 'all' || 'none' }}"
+        if: steps.compare.outputs.equals != 'true'
       - uses: actions/upload-artifact@v4
-        if: ${{ always() }}
+        if: steps.compare.outputs.equals != 'true' && always()
         with:
-          name: expo-app-${{ matrix.app_type }}-${{ matrix.jhipster_version }}
+          name: expo-app-${{ matrix.sample-name }}
           path: |
             ${{ github.workspace }}/client/
             !${{ github.workspace }}/**/android
             !${{ github.workspace }}/**/ios
             !${{ github.workspace }}/**/node_modules
+
   ios-result:
     permissions:
       contents: none

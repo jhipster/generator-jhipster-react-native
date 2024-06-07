@@ -1,59 +1,69 @@
 application {
-	config {
-		authenticationType jwt
-		skipClient true
-		devDatabaseType	h2Disk
-	}
-	entities *
+  config {
+    authenticationType jwt
+    creationTimestamp 1617901618886
+    jwtSecretKey "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ="
+    skipClient true
+    devDatabaseType  h2Disk
+  }
+  entities *
 }
 
+@ChangelogDate(20240101000000)
 entity Region {
-	regionName String
+  regionName String
 }
 
+@ChangelogDate(20240102000000)
 entity Country {
-	countryName String
+  countryName String
 }
 
+@ChangelogDate(20240103000000)
 entity Location {
-	streetAddress String
-	postalCode String
-	city String
-	stateProvince String
+  streetAddress String
+  postalCode String
+  city String
+  stateProvince String
 }
 
+@ChangelogDate(20240104000000)
 entity Department {
-	departmentName String required
-	departmentPic ImageBlob
-	departmentDescription TextBlob
-	departmentInfoPdf Blob
+  departmentName String required
+  departmentPic ImageBlob
+  departmentDescription TextBlob
+  departmentInfoPdf Blob
 }
 
+@ChangelogDate(20240105000000)
 entity Task {
-	title String
-	description String
+  title String
+  description String
 }
 
+@ChangelogDate(20240106000000)
 entity Employee {
-	firstName String
-	lastName String
-	email String
-	phoneNumber String
-	hireDate Instant
-	salary Long
-	commissionPct Long
+  firstName String
+  lastName String
+  email String
+  phoneNumber String
+  hireDate Instant
+  salary Long
+  commissionPct Long
 }
 
+@ChangelogDate(20240107000000)
 entity Job {
-	jobTitle String
-	minSalary Long
-	maxSalary Long
+  jobTitle String
+  minSalary Long
+  maxSalary Long
 }
 
+@ChangelogDate(20240108000000)
 entity JobHistory {
-	startDate Instant
-	endDate Instant
-	language Language
+  startDate Instant
+  endDate Instant
+  language Language
 }
 
 enum Language {
@@ -61,13 +71,13 @@ enum Language {
 }
 
 relationship ManyToMany {
-	Job{task(title)} to Task{job(jobTitle)}
+  Job{task(title)} to Task{job(jobTitle)}
 }
 
 relationship OneToMany {
-	Employee{job(jobTitle)} to Job{employee(email)}
-	Department{employee(email)} to
-	Employee{department(departmentName)}
+  Employee{job(jobTitle)} to Job{employee(email)}
+  Department{employee(email)} to
+  Employee{department(departmentName)}
 }
 
 relationship ManyToOne {
@@ -78,9 +88,9 @@ relationship ManyToOne {
 }
 
 relationship OneToOne {
-	JobHistory{job} to Job
-	JobHistory{department} to Department
-	JobHistory{employee} to Employee
+  JobHistory{job} to Job
+  JobHistory{department} to Department
+  JobHistory{employee} to Employee
 }
 
 paginate JobHistory, Employee with infinite-scroll

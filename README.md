@@ -77,7 +77,7 @@ Answer the prompts:
 For available options, you can run:
 
 ```bash
-jhipster-react-native app --help
+rnhipster app --help
 ```
 
 ### Configuration
