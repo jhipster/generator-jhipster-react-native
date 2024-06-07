@@ -1,40 +1,11 @@
 import { Platform } from 'react-native';
-import { DiscoveryDocument, makeRedirectUri } from 'expo-auth-session';
+import { AuthRequest, AuthSessionResult, DiscoveryDocument, makeRedirectUri } from 'expo-auth-session';
 import * as AuthSession from 'expo-auth-session';
-import { generateHexStringAsync, buildCodeAsync } from 'expo-auth-session/src/PKCE';
-import { buildQueryString } from 'expo-auth-session/src/QueryParams';
 import * as WebBrowser from 'expo-web-browser';
 import * as Linking from 'expo-linking';
 import AppConfig from '../../config/app-config';
 
 WebBrowser.maybeCompleteAuthSession();
-
-interface AuthParams {
-  state: string;
-  codeVerifier: string;
-  authUrl: string;
-}
-
-export async function getAuthParams(clientId: string, redirectUri: string, discovery: DiscoveryDocument): Promise<AuthParams> {
-  const state = await generateHexStringAsync(16);
-  const { codeVerifier, codeChallenge } = await buildCodeAsync();
-  const authenticationOptions = {
-    response_type: 'code',
-    code_challenge: codeChallenge,
-    code_challenge_method: 'S256',
-    scope: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'].join(' '),
-    state,
-    client_id: clientId,
-    redirect_uri: redirectUri,
-    audience: 'api://default',
-  };
-  const authUrl = `${discovery.discoveryDocument?.authorization_endpoint}?${buildQueryString(authenticationOptions)}`;
-  return {
-    state,
-    codeVerifier,
-    authUrl,
-  };
-}
 
 export async function exchangeCodeForToken(
   clientId: string,
@@ -63,8 +34,13 @@ export function extractCodeOrThrow(result: AuthSession.AuthSessionResult, state:
     throw result;
   }
 }
+
 export async function getDiscovery(issuer: string): Promise<DiscoveryDocument> {
   return AuthSession.fetchDiscoveryAsync(issuer);
+}
+
+export function generateShortUUID() {
+  return Math.random().toString(36).substring(2, 15);
 }
 
 export async function doOauthPkceFlow(clientId: string, issuer: string): Promise<AuthSession.TokenResponse> {
@@ -73,14 +49,25 @@ export async function doOauthPkceFlow(clientId: string, issuer: string): Promise
   // fetch oauth issuer information from discovery endpoint
   const discovery = await getDiscovery(issuer);
   // set up the IDP url, prepare codeVerifier and state
-  const { authUrl, codeVerifier, state } = await getAuthParams(clientId, redirectUri, discovery);
   // redirect to the IDP
   const returnUri = Platform.OS === 'android' && !AppConfig.useExpoAuthProxy ? redirectUri : Linking.createURL('/');
-  const authResult = await AuthSession.startAsync({ authUrl, returnUrl: returnUri });
+  const state = generateShortUUID();
+  // Get Authorization code
+  const authRequestOptions: AuthSession.AuthRequestConfig = {
+    responseType: AuthSession.ResponseType.Code,
+    clientId,
+    redirectUri: returnUri,
+    prompt: AuthSession.Prompt.Login,
+    scopes: ['openid', 'profile', 'email', 'address', 'phone', 'offline_access'],
+    state,
+    usePKCE: true,
+  };
+  const authRequest: AuthRequest = new AuthSession.AuthRequest(authRequestOptions);
+  const authResult: AuthSessionResult = await authRequest.promptAsync(discovery, { useProxy: AppConfig.useExpoAuthProxy });
   // check the response for success/failure
   const code = extractCodeOrThrow(authResult, state);
   // exchange the received code for an access token
-  return exchangeCodeForToken(clientId, redirectUri, discovery, code, codeVerifier);
+  return exchangeCodeForToken(clientId, returnUri, discovery, code, authRequest.codeVerifier || '');
 }
 
 export async function logoutFromIdp(clientId: string, issuer: string, idToken: string) {
@@ -91,7 +78,10 @@ export async function logoutFromIdp(clientId: string, issuer: string, idToken: s
     if (endSessionEndpoint) {
       // set up redirect uri
       const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
-      await WebBrowser.openAuthSessionAsync(`${endSessionEndpoint}?id_token_hint=${idToken}&client_id=${clientId}&post_logout_redirect_uri=${redirectUri}`, redirectUri);
+      await WebBrowser.openAuthSessionAsync(
+        `${endSessionEndpoint}?id_token_hint=${idToken}&client_id=${clientId}&post_logout_redirect_uri=${redirectUri}`,
+        redirectUri,
+      );
     } else if (issuer.includes('auth0.com')) {
       // Auth0 need special handling since end_session_endpoint is not in oidc-configuration
       const redirectUri = makeRedirectUri({ useProxy: AppConfig.useExpoAuthProxy });
