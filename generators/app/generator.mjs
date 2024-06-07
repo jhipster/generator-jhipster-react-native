@@ -62,4 +62,15 @@ export default class extends BaseApplicationGenerator {
       },
     });
   }
+
+  get [BaseApplicationGenerator.POST_WRITING]() {
+    return this.asPostWritingTaskGroup({
+      keycloak({ application }) {
+        if (!application.authenticationTypeOauth2) return;
+
+        // Increase wait for macOS. Keyclock container start can take over 3 min. 4 min is not enough to download/start containers/start server.
+        this.editFile('src/main/docker/keycloak.yml', { assertModified: true }, content => content.replace('retries: 20', 'retries: 40'));
+      },
+    });
+  }
 }
