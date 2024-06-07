@@ -154,7 +154,7 @@ jobs:
       - run: npm run e2e:test:ios
         timeout-minutes: 15
         env:
-          DETOX_RECORD_VIDEOS: all
+          DETOX_RECORD_VIDEOS: "${{ contains(github.event.pull_request.labels.*.name, 'pr: record-videos') && 'all' || 'none' }}"
       - run: $SCRIPT_DIR/rename-detox-screenshots.sh
         if: steps.compare.outputs.equals != 'true'
       - uses: actions/upload-artifact@v4
