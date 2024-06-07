@@ -28,7 +28,7 @@ function LoginScreen(props) {
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-      <Button title={'Login'} onPress={attemptLogin} disabled={fetchingAuthInfo || fetchingAccount} />
+      <Button testID="loginScreenLoginButton" title={'Login'} onPress={attemptLogin} disabled={fetchingAuthInfo || fetchingAccount} />
       {authInfoError ? <Text style={styles.errorText}>Error fetching auth info from backend.</Text> : null}
       {loginError ? <Text style={styles.errorText}>{loginError}</Text> : null}
       {(fetchingAuthInfo || fetchingAccount) && (
