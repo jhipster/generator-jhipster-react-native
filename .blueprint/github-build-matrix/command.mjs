@@ -17,36 +17,14 @@
  * limitations under the License.
  */
 import { readdir } from 'node:fs/promises';
-import { GENERATOR_APP } from 'generator-jhipster/generators';
 
 /**
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
  */
 const command = {
-  arguments: {
-    sampleName: {
-      type: String,
-    },
-  },
   configs: {
-    sampleName: {
-      prompt: gen => ({
-        when: !gen.all,
-        type: 'list',
-        message: 'which sample do you want to generate?',
-        choices: async () => readdir(gen.templatePath('samples')),
-      }),
-      scope: 'generator',
-    },
-    all: {
-      description: 'Generate every sample in a workspace',
-      cli: {
-        type: Boolean,
-      },
-      scope: 'generator',
-    },
     samplesFolder: {
-      description: 'Path to the samples folder',
+      description: 'Samples folder',
       cli: {
         type: String,
       },
@@ -55,7 +33,6 @@ const command = {
     },
   },
   options: {},
-  import: [GENERATOR_APP],
 };
 
 export default command;

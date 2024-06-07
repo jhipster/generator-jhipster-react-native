@@ -3,20 +3,24 @@
  */
 
 application {
-	config {
-		authenticationType jwt
-		skipClient true
-		devDatabaseType	h2Disk
-	}
-	entities *
+  config {
+    authenticationType jwt
+    skipClient true
+    devDatabaseType  h2Disk
+    creationTimestamp 1617901618886
+    jwtSecretKey "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ="
+  }
+  entities *
 }
 
+@ChangelogDate(20240101000000)
 entity Album {
   title String required
   description TextBlob
   created Instant
 }
 
+@ChangelogDate(20240102000000)
 entity Photo {
   title String required
   description TextBlob
@@ -27,6 +31,7 @@ entity Photo {
   uploaded Instant
 }
 
+@ChangelogDate(20240103000000)
 entity Tag {
   name String required minlength(2)
 }
