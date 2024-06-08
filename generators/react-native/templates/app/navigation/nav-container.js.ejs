@@ -108,7 +108,7 @@ export const getDrawerRoutes = () => {
 };
 
 const linking = {
-  prefixes: ['rnapp://', Linking.makeUrl('/')],
+  prefixes: ['rnapp://', Linking.createURL('/')],
   config: {
     initialRouteName: 'Home',
     screens: {
