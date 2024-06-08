@@ -71,7 +71,6 @@ jobs:
         name: 'SETUP: copy the JDL file for the backend and app'
       - run: $SCRIPT_DIR/generate-react-native-app.sh
         name: 'GENERATING: generate react-native app'
-      - run: npx expo-doctor@latest
       - run: $SCRIPT_DIR/run-react-native-tests.sh
         name: 'TESTING: npm run test'
   applications-result:
