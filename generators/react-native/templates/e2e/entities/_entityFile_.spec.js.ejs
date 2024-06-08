@@ -137,10 +137,10 @@ describe<%- authenticationTypeOauth2 ? '.skip' : '' %>('<%= entityNameCapitalize
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'date') { _%>
     const <%= field.fieldName %>CreateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
-    jestExpect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toCustomLocalDate() %>'));
+    expect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toCustomLocalDate() %>'));
       <%_ } else if (formFieldType === 'datetime') { _%>
     const <%= field.fieldName %>CreateAttributes = await element(by.id('<%= field.fieldName %>')).getAttributes();
-    jestExpect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toFullISOString() %>'));
+    expect(Date.parse(<%= field.fieldName %>CreateAttributes.label)).toEqual(Date.parse('<%= new Date(createFakeData[field.fieldName]).toFullISOString() %>'));
       <%_ } else if (formFieldType === 'boolean') { _%>
     await expect(element(by.id('<%= field.fieldName %>'))).toHaveLabel('<%= createFakeData[field.fieldName] %>')
       <%_ } else if (formFieldType === 'select-one') { _%>
