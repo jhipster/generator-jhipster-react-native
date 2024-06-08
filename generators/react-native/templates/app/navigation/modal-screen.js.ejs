@@ -18,9 +18,9 @@ export function ModalScreen({ route, navigation, isError = false }) {
           <View style={styles.flex}>
             <Text style={styles.titleFont}>
               {isError ? (
-                <Ionicons name="md-close-circle-outline" style={styles.errorIcon} size={32} />
+                <Ionicons name="close-circle-outline" style={styles.errorIcon} size={32} />
               ) : (
-                <Ionicons name="md-checkmark-circle-outline" style={styles.successIcon} size={32} />
+                <Ionicons name="checkmark-circle-outline" style={styles.successIcon} size={32} />
               )}{' '}
               {route.params.title || ''}
             </Text>

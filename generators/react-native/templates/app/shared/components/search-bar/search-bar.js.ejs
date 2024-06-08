@@ -15,7 +15,7 @@ export default function SearchBar(props) {
   const dimensions = useWindowDimensions();
   return (
     <View style={[styles.container, { width: dimensions.width - Metrics.baseMargin }]}>
-      <Ionicons name="md-search" size={Metrics.icons.tiny} style={styles.searchIcon} />
+      <Ionicons name="search" size={Metrics.icons.tiny} style={styles.searchIcon} />
       <TextInput
         placeholder="Search"
         placeholderTextColor={Colors.white}
