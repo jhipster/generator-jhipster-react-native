@@ -144,7 +144,7 @@ const reloadApp = async (bailOnFailure) => {
       newInstance: true,
       launchArgs: {
         detoxEnableSynchronization: false,
-        permissions: { camera: 'YES' },
+        permissions: { camera: 'YES', photo: 'YES' },
         // Don't show developer menu.
         EXKernelDisableNuxDefaultsKey: true,
       },
