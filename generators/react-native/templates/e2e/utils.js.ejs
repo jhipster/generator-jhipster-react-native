@@ -81,7 +81,7 @@ const toggleSwitchToValue = async (switchId, targetValue) => {
 const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 'slow') => {
   await waitFor(element(by.id(fieldId)))
     .toBeVisible()
-    .whileElement(by.type('ABI<%- nodeDependencies.expo.split('.')[0] %>_0_0RCTScrollView').withAncestor(by.id(listId)))
+    .whileElement(by.id(listId))
     .scroll(500, 'down');
 };
 
@@ -143,7 +143,8 @@ const reloadApp = async (bailOnFailure) => {
       url: expoPublishedUrl,
       newInstance: true,
       launchArgs: {
-        // detoxEnableSynchronization: false,
+        detoxEnableSynchronization: false,
+        permissions: { camera: 'YES', photo: 'YES' },
         // Don't show developer menu.
         EXKernelDisableNuxDefaultsKey: true,
       },
