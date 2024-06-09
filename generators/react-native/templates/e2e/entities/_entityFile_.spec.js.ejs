@@ -51,7 +51,7 @@ Date.prototype.toCustomLocalDate = function() {
 }
 _%>
 
-describe<%- authenticationTypeOauth2 || anyFieldIsBlobDerived || anyFieldIsDateDerived ? '.skip' : '' %>('<%= entityNameCapitalized %> Screen Tests', () => {
+describe<%- authenticationTypeOauth2 || anyFieldIsBlobDerived ? '.skip' : '' %>('<%= entityNameCapitalized %> Screen Tests', () => {
   beforeEach(async () => {
     await reloadApp();
     await loginAsUser();
