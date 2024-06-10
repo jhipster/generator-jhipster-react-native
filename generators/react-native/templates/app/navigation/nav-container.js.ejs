@@ -108,7 +108,7 @@ export const getDrawerRoutes = () => {
 };
 
 const linking = {
-  prefixes: ['rnapp://', Linking.makeUrl('/')],
+  prefixes: ['rnapp://', Linking.createURL('/')],
   config: {
     initialRouteName: 'Home',
     screens: {
@@ -169,8 +169,8 @@ function NavContainer(props) {
         getAccount();
       }
     };
-    AppState.addEventListener('change', handleChange);
-    return () => AppState.removeEventListener('change', handleChange);
+    const sub = AppState.addEventListener('change', handleChange);
+    return () => sub.remove();
   }, [getAccount]);
 
   useReduxDevToolsExtension(navigationRef);
