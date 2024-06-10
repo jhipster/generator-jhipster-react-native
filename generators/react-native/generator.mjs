@@ -166,6 +166,10 @@ export default class extends BaseApplicationGenerator {
       preparingPatchInFile() {
         this.patchInFile = patchInFile.bind(this);
       },
+      husky({ application }) {
+        application.nodeDependencies.husky = '9.0.11';
+        application.nodeDependencies['lint-staged'] = '15.2.5';
+      },
     });
   }
 

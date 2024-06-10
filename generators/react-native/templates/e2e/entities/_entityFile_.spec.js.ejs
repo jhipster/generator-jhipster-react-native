@@ -1,5 +1,5 @@
 <%_ if (anyFieldIsDateDerived) { _%>
-const jestExpect = require('expect');
+const { expect: jestExpect } = require('expect');
 <%_ } _%>
 const {
     reloadApp,
@@ -51,7 +51,7 @@ Date.prototype.toCustomLocalDate = function() {
 }
 _%>
 
-describe.skip('<%= entityNameCapitalized %> Screen Tests', () => {
+describe<%- authenticationTypeOauth2 || anyFieldIsBlobDerived ? '.skip' : '' %>('<%= entityNameCapitalized %> Screen Tests', () => {
   beforeEach(async () => {
     await reloadApp();
     await loginAsUser();

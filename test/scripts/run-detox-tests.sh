@@ -89,7 +89,7 @@ fi
 
 # run the detox tests
 if [ "$PLATFORM" = "ios" ]; then
-  npm run test:e2e -- --record-videos $DETOX_RECORD_VIDEO
+  npm run test:e2e
 else
   bash ${GITHUB_WORKSPACE}/${SCRIPT_DIR}/start-android-emulator.sh
   detox test --configuration android.emu.release
