@@ -18,6 +18,9 @@ function <%= entityNameCapitalized %>Screen(props) {
   <%_ } _%>
 
   const { <%= entityInstance %>, <%= entityInstance %>List, getAll<%= entityNamePlural %>, fetching } = props;
+  const fetch<%= entityNamePlural %> = React.useCallback(() => {
+    getAll<%= entityNamePlural %>({ page: page - 1, sort, size });
+  }, [getAll<%= entityNamePlural %>, page, sort, size]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -69,10 +72,6 @@ function <%= entityNameCapitalized %>Screen(props) {
     props.performSearch(query)
   }
   <%_ } _%>
-  const fetch<%= entityNamePlural %> = React.useCallback(() => {
-    getAll<%= entityNamePlural %>({ page: page - 1, sort, size });
-  }, [getAll<%= entityNamePlural %>, page, sort, size]);
-
 
   const handleLoadMore = () => {
     <%_ if (pagination === 'no') { _%>
