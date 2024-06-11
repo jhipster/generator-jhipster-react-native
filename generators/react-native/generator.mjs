@@ -217,7 +217,7 @@ export default class extends BaseApplicationGenerator {
     const replace = section => {
       if (packageJsonTarget[section]) {
         Object.entries(packageJsonTarget[section]).forEach(([dependency, dependencyReference]) => {
-          if (dependencyReference.startsWith(keyToReplace)) {
+          if (dependencyReference?.startsWith(keyToReplace)) {
             const [keyToReplaceAtSource, sectionAtSource = section, dependencyAtSource = dependency] = dependencyReference.split('#');
             if (keyToReplaceAtSource !== keyToReplace) return;
             if (!packageJsonSource[sectionAtSource] || !packageJsonSource[sectionAtSource][dependencyAtSource]) {
