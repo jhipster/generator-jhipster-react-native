@@ -434,6 +434,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "storybook/stories.js": {
     "stateCleared": "modified",
   },
+  "storybook/storybook.requires.ts": {
+    "stateCleared": "modified",
+  },
   "test/setup.js": {
     "stateCleared": "modified",
   },
@@ -905,6 +908,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   "storybook/stories.js": {
+    "stateCleared": "modified",
+  },
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
@@ -1411,6 +1417,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   "storybook/stories.js": {
+    "stateCleared": "modified",
+  },
+  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
