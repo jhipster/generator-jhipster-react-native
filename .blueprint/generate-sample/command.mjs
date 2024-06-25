@@ -16,8 +16,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { readdir } from 'node:fs/promises';
 import { GENERATOR_APP } from 'generator-jhipster/generators';
+import { getSamples } from './get-samples.mjs';
 
 /**
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
@@ -34,7 +34,7 @@ const command = {
         when: !gen.all,
         type: 'list',
         message: 'which sample do you want to generate?',
-        choices: async () => readdir(gen.templatePath('samples')),
+        choices: async () => getSamples(gen.templatePath(gen.samplesFolder)),
       }),
       scope: 'generator',
     },

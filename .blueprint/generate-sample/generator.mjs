@@ -16,11 +16,6 @@ export default class extends BaseGenerator {
       async parseCommand() {
         await this.parseCurrentJHipsterCommand();
       },
-      async initializeOptions() {
-        if (this.sampleName && !this.sampleName.endsWith('.jdl')) {
-          this.sampleName += '.jdl';
-        }
-      },
     });
   }
 
