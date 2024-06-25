@@ -6,8 +6,6 @@ import { generateTestEntity } from 'generator-jhipster/generators/client/support
 import { camelCase, kebabCase, startCase, snakeCase } from 'lodash-es';
 import semver from 'semver';
 import { DEFAULT_ENABLE_DETOX, DEFAULT_BACKEND_PATH } from '../constants.mjs';
-import files from './files.mjs';
-import entityFiles from './entity-files.mjs';
 import {
   getEntityFormField,
   getRelationshipFormField,
@@ -19,6 +17,8 @@ import {
   appendFiles,
   patchBabel,
 } from '../../lib/index.js';
+import files from './files.mjs';
+import entityFiles from './entity-files.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -233,7 +233,6 @@ export default class extends BaseApplicationGenerator {
     this.fs.writeJSON(packageJsonTargetFile, packageJsonTarget);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   differentRelationshipsWorkaround(entity) {
     // todo: remove this - need to figure out why context.differentRelationships
     // todo: has a value here but is undefined in the templates.
@@ -402,7 +401,7 @@ ${chalk.green(`    npm start`)}
    * @param {any} references - references to other entities.
    * @param {any} additionalFields - additional fields to add to the entity or with default values that overrides generated values.
    */
-  // eslint-disable-next-line class-methods-use-this
+
   generateTestEntity(references, additionalFields) {
     return generateTestEntity(references, additionalFields);
   }
@@ -416,7 +415,7 @@ ${chalk.green(`    npm start`)}
    * @param {string} dto - dto
    * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
    */
-  // eslint-disable-next-line class-methods-use-this
+
   generateEntityQueries(relationships, entityInstance, dto) {
     // workaround method being called on initialization
     if (!relationships) {
@@ -464,7 +463,7 @@ ${chalk.green(`    npm start`)}
         variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
       }
     });
-    // eslint-disable-next-line consistent-return
+
     return {
       queries,
       variables,

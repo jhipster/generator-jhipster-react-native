@@ -1,6 +1,6 @@
 import ProjectNameGenerator from 'generator-jhipster/generators/project-name';
-import command from './command.mjs';
 import { DEFAULT_REACT_NATIVE_APP_NAME } from '../constants.mjs';
+import command from './command.mjs';
 
 export default class extends ProjectNameGenerator {
   constructor(args, opts, features) {
