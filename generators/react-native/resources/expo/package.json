@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
-    "@react-native-community/cli-server-api": "13.6.9",
+    "@react-native-community/cli-server-api": "14.0.0",
     "@types/react": "~18.2.79",
     "jest-expo": "~51.0.2",
     "typescript": "~5.3.3"
