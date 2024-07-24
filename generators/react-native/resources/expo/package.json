@@ -37,6 +37,6 @@
     "@react-native-community/cli-server-api": "13.6.9",
     "@types/react": "~18.2.79",
     "jest-expo": "~51.0.2",
-    "typescript": "~5.3.3"
+    "typescript": "~5.5.4"
   }
 }
