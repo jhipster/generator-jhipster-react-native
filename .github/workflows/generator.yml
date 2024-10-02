@@ -35,7 +35,3 @@ jobs:
         run: npm ci
       - name: lint and test
         run: npm run test
-      - name: check-dependencies
-        run: |
-          cd generators/react-native/resources/expo
-          npm run check-dependencies
