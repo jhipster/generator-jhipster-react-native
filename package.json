@@ -30,7 +30,8 @@
   },
   "files": [
     "cli",
-    "generators"
+    "generators",
+    "lib"
   ],
   "scripts": {
     "ejslint": "ejslint generators/**/*.ejs",
