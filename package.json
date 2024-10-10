@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "chalk": "^4.1.2",
-    "generator-jhipster": "8.5.0",
+    "generator-jhipster": "8.7.1",
     "lodash-es": "^4.17.21",
     "semver": "^7.6.0"
   },
