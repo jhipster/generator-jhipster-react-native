@@ -139,7 +139,7 @@ export default class extends BaseApplicationGenerator {
         const reactNativeBlueprints = this.jhipsterConfig.blueprints;
         if (!reactNativeBlueprints || !reactNativeBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-react-native')) {
           // eslint-disable-next-line no-undef
-          this.jhipsterConfig.blueprints = [...(localBlueprints || []), { name: 'generator-jhipster-react-native' }];
+          this.jhipsterConfig.blueprints = [...(this.jhipsterConfig.blueprints || []), { name: 'generator-jhipster-react-native' }];
         }
       },
     });

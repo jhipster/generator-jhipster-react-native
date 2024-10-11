@@ -18,13 +18,14 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
   runJHipster({
     executableName,
     executableVersion: version,
-    defaultCommand: 'react-native',
+    defaultCommand: 'app',
     devBlueprintPath,
     blueprints: {
       [blueprint]: version,
     },
     printLogo: printJHipsterLogo,
     lookups: [{ packagePaths: [packagePath] }],
+    ...require('./cli-customizations.cjs'),
   }).catch(done);
 
   process.on('unhandledRejection', up => {
