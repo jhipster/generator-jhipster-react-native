@@ -361,7 +361,7 @@ export default class extends BaseApplicationGenerator {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
             await this.spawn('npm', ['install']);
           }
-        } catch (error) {
+        } catch {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },

@@ -55,7 +55,7 @@ function patchInFile(file, opts) {
 
       // Insert before/after a particular string
       return insertInData(file, data, opts.before || opts.after, newString, !!opts.after);
-    } catch (e) {
+    } catch {
       // eslint-disable-next-line no-console
       console.warn(`Could not find insertion point in ${file}:\n${opts.before}`);
       return data;
