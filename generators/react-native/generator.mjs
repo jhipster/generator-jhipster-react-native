@@ -288,6 +288,12 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      ignoreEslint9ConfigFile({ application }) {
+        const eslintConfigFile = this.env.sharedFs.get(this.destinationPath(application.eslintConfigFile));
+        if (eslintConfigFile) {
+          delete eslintConfigFile.state;
+        }
+      },
       async patchUriScheme({ application }) {
         this.editFile('app.json', content => {
           const appConfig = JSON.parse(content);
