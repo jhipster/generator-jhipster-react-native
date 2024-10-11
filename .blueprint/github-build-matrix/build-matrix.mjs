@@ -19,7 +19,7 @@ export const buildMatrix = async samplesFolder => {
   return {
     include: Object.values(
       fromMatrix({
-        ...(samplesFolder === 'oauth2' ? oauth2Matrix : defaultMatrix),
+        ...defaultMatrix,
         'sample-name': samples.filter(sample => !sample.includes('disabled') && !sample.includes('oauth2')),
       }),
     ).map(sample => (sample['sample-name'].includes('oauth2') ? { ...sample, ...oauth2Sample } : sample)),
