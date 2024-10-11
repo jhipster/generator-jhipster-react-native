@@ -12,6 +12,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ startsWith(github.ref, 'refs/pull/') || github.run_number }}
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+env:
+  SPRING_DOCKER_COMPOSE_ENABLED: false
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest

@@ -17,7 +17,7 @@ describe('SubGenerator app of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
@@ -40,7 +40,7 @@ describe('SubGenerator app of reactNative JHipster blueprint', () => {
         .withOptions({
           skipChecks: true,
           ignoreNeedlesError: true,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           reactNativeDir: '../reactNative-app',
         })
         .withJHipsterLookup()

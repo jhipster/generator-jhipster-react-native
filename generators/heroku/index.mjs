@@ -14,7 +14,6 @@ export default class extends HerokuGenerator {
     this.jhipsterContext = jhContext;
 
     if (!jhContext) {
-      // eslint-disable-next-line no-console
       console.log('No jhContext found after initializing blueprint (heroku generator)');
       // this.error(`This is a JHipster blueprint and should be used only like ${chalk.yellow('jhipster --blueprints react-native')}`);
     }
@@ -26,11 +25,9 @@ export default class extends HerokuGenerator {
   }
 
   get [HerokuGenerator.INITIALIZING]() {
-    // eslint-disable-next-line no-underscore-dangle
     return super._initializing();
   }
 
-  // eslint-disable-next-line class-methods-use-this
   get prompting() {
     // todo replace with main generator prompt once PR to fix existing app is in
     // const { askForApp } = super._prompting();
@@ -89,7 +86,6 @@ export default class extends HerokuGenerator {
   }
 
   get configuring() {
-    // eslint-disable-next-line no-underscore-dangle
     const { checkInstallation } = super._configuring();
     return {
       checkInstallation,
@@ -116,7 +112,6 @@ export default class extends HerokuGenerator {
       },
     };
 
-    // eslint-disable-next-line no-underscore-dangle
     const { gitInit, installHerokuDeployPlugin, herokuCreate } = super._default();
     const { copyHerokuFiles, addHerokuDependencies } = defaultSteps;
     return {
@@ -128,7 +123,6 @@ export default class extends HerokuGenerator {
     };
   }
 
-  // eslint-disable-next-line class-methods-use-this
   get end() {
     return {
       npmInstall() {

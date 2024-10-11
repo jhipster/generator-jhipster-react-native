@@ -1,23 +1,23 @@
 import fs from 'fs';
-import { relative, join, dirname } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
-import { camelCase, kebabCase, startCase, snakeCase } from 'lodash-es';
+import { camelCase, kebabCase, snakeCase, startCase } from 'lodash-es';
 import semver from 'semver';
-import { DEFAULT_ENABLE_DETOX, DEFAULT_BACKEND_PATH } from '../constants.mjs';
+import { DEFAULT_BACKEND_PATH, DEFAULT_ENABLE_DETOX } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
 import {
+  appendFiles,
   getEntityFormField,
-  getRelationshipFormField,
-  getFieldValidateType,
   getEntityFormFieldType,
-  patchNavigationForEntity,
+  getFieldValidateType,
+  getRelationshipFormField,
+  patchBabel,
   patchEntityApi,
   patchInFile,
-  appendFiles,
-  patchBabel,
+  patchNavigationForEntity,
 } from './support/index.js';
 
 export default class extends BaseApplicationGenerator {
@@ -138,7 +138,6 @@ export default class extends BaseApplicationGenerator {
         // Add blueprint config to generator-jhipster namespace, so we can omit blueprint parameter when executing jhipster command
         const reactNativeBlueprints = this.jhipsterConfig.blueprints;
         if (!reactNativeBlueprints || !reactNativeBlueprints.find(blueprint => blueprint.name === 'generator-jhipster-react-native')) {
-          // eslint-disable-next-line no-undef
           this.jhipsterConfig.blueprints = [...(this.jhipsterConfig.blueprints || []), { name: 'generator-jhipster-react-native' }];
         }
       },
@@ -233,7 +232,6 @@ export default class extends BaseApplicationGenerator {
     this.fs.writeJSON(packageJsonTargetFile, packageJsonTarget);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   differentRelationshipsWorkaround(entity) {
     // todo: remove this - need to figure out why context.differentRelationships
     // todo: has a value here but is undefined in the templates.
@@ -288,6 +286,12 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
+      ignoreEslint9ConfigFile({ application }) {
+        const eslintConfigFile = this.env.sharedFs.get(this.destinationPath(application.eslintConfigFile));
+        if (eslintConfigFile) {
+          delete eslintConfigFile.state;
+        }
+      },
       async patchUriScheme({ application }) {
         this.editFile('app.json', content => {
           const appConfig = JSON.parse(content);
@@ -355,7 +359,7 @@ export default class extends BaseApplicationGenerator {
           if (this.env.sharedFs.get(this.destinationPath('package.json'))?.committed) {
             await this.spawn('npm', ['install']);
           }
-        } catch (error) {
+        } catch {
           this.log.error(`Error executing 'npm install', execute by yourself.`);
         }
       },
@@ -402,7 +406,7 @@ ${chalk.green(`    npm start`)}
    * @param {any} references - references to other entities.
    * @param {any} additionalFields - additional fields to add to the entity or with default values that overrides generated values.
    */
-  // eslint-disable-next-line class-methods-use-this
+
   generateTestEntity(references, additionalFields) {
     return generateTestEntity(references, additionalFields);
   }
@@ -416,7 +420,7 @@ ${chalk.green(`    npm start`)}
    * @param {string} dto - dto
    * @returns {{queries: Array, variables: Array, hasManyToMany: boolean}}
    */
-  // eslint-disable-next-line class-methods-use-this
+
   generateEntityQueries(relationships, entityInstance, dto) {
     // workaround method being called on initialization
     if (!relationships) {
@@ -464,7 +468,7 @@ ${chalk.green(`    npm start`)}
         variables.push(`${variableName}: ${relationship.otherEntityAngularName}[];`);
       }
     });
-    // eslint-disable-next-line consistent-return
+
     return {
       queries,
       variables,

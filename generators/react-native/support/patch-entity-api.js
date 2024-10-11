@@ -49,7 +49,6 @@ function patchEntityApi(application, entity) {
     get${entity.entityNameCapitalized},
     delete${entity.entityNameCapitalized},`;
 
-  /* eslint-disable indent */
   let sagaConnections = `
     takeLatest(${entity.entityNameCapitalized}Types.${entity.entityNameSnakeCase.toUpperCase()}_REQUEST, ${
       entity.entityNameCapitalized
@@ -66,7 +65,6 @@ function patchEntityApi(application, entity) {
 
   // add searchEngine methods
   if (application.searchEngineAny) {
-    // eslint-disable-next-line no-console
     console.log(`SearchEngine: ${application.searchEngineAny}`);
     apiMethods += `
   const search${entity.entityNamePlural} = (query) => api.get('${microservicePath}api/_search/${entity.entityApiUrl}', { query: query })`;

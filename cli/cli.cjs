@@ -14,7 +14,6 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
   const executableName = Object.keys(bin)[0];
   const { printJHipsterLogo } = await import('./print-jhipster-logo.js');
-
   runJHipster({
     executableName,
     executableVersion: version,
@@ -23,8 +22,12 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
     blueprints: {
       [blueprint]: version,
     },
-    printLogo: printJHipsterLogo,
+    printBlueprintLogo: () => {
+      console.log('===================== JHipster React Native =====================');
+      console.log('');
+    },
     lookups: [{ packagePaths: [packagePath] }],
+    printLogo: printJHipsterLogo,
     ...require('./cli-customizations.cjs'),
   }).catch(done);
 
