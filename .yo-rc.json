@@ -2,6 +2,7 @@
   "generator-jhipster": {
     "additionalSubGenerators": "",
     "baseName": "react-native",
+    "caret": true,
     "cli": true,
     "entities": [],
     "generators": {

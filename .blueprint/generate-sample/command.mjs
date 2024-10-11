@@ -49,8 +49,8 @@ const command = {
       description: 'Path to the samples folder',
       cli: {
         type: String,
+        default: 'samples',
       },
-      default: 'samples',
       scope: 'generator',
     },
   },
