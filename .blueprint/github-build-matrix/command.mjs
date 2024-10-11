@@ -27,8 +27,8 @@ const command = {
       description: 'Samples folder',
       cli: {
         type: String,
+        default: 'samples',
       },
-      default: 'samples',
       scope: 'generator',
     },
   },
