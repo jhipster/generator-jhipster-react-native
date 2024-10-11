@@ -1,4 +1,3 @@
-export { printJHipsterLogo } from './print-jhipster-logo.js';
 export { appendFiles } from './append-files.js';
 export { patchBabel } from './patch-babel.js';
 export { patchNavigationForEntity } from './patch-navigation.js';

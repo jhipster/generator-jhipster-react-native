@@ -13,7 +13,7 @@ const blueprint = packageFolderName.startsWith('jhipster-') ? `generator-${packa
 (async () => {
   const { runJHipster, done, logger } = await import('generator-jhipster/cli');
   const executableName = Object.keys(bin)[0];
-  const { printJHipsterLogo } = await import('../lib/print-jhipster-logo.js');
+  const { printJHipsterLogo } = await import('./print-jhipster-logo.js');
 
   runJHipster({
     executableName,

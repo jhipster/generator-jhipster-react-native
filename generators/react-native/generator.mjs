@@ -18,7 +18,7 @@ import {
   patchInFile,
   appendFiles,
   patchBabel,
-} from '../../lib/index.js';
+} from './support/index.js';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
