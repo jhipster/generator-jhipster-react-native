@@ -4,6 +4,7 @@
     "baseName": "react-native",
     "caret": true,
     "cli": true,
+    "cliName": "rnhipster",
     "entities": [],
     "generators": {
       "app": {
