@@ -1,7 +1,7 @@
 import { relative } from 'node:path';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import command from './command.mjs';
 import { DEFAULT_REACT_NATIVE_PATH, REACT_NATIVE_NAMESPACE } from '../constants.mjs';
+import command from './command.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {

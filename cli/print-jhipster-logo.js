@@ -1,5 +1,5 @@
-import chalk from 'chalk';
 import { readFileSync } from 'fs';
+import chalk from 'chalk';
 
 const fileUrl = new URL('../package.json', import.meta.url);
 const packagejs = JSON.parse(readFileSync(fileUrl));

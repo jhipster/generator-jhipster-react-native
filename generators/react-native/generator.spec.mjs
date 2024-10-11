@@ -16,7 +16,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
@@ -53,7 +53,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
@@ -90,7 +90,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'oauth2',
@@ -127,7 +127,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
@@ -164,7 +164,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
@@ -201,7 +201,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
         })
         .withOptions({
           force: false,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
           appDir: false,
           ignoreNeedlesError: true,
           authenticationType: 'oauth2',
