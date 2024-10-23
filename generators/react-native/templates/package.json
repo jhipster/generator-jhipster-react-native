@@ -42,7 +42,7 @@
     "@storybook/theming": "8.1.6",
     "@testing-library/jest-native": "5.4.3",
     "@testing-library/react-native": "12.7.2",
-    "@types/jest": "29.5.13",
+    "@types/jest": "29.5.14",
     "babel-jest": "29.7.0",
     "babel-preset-env": "1.7.0",
     "buffer": "6.0.3",
