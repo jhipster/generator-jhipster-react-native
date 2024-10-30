@@ -33,7 +33,7 @@
     "yup": "1.4.0"
   },
   "devDependencies": {
-    "@babel/runtime": "7.25.9",
+    "@babel/runtime": "7.26.0",
     "@config-plugins/detox": "8.0.0",
     "@react-native-community/eslint-config": "3.2.0",
     "@redux-devtools/extension": "3.3.0",
