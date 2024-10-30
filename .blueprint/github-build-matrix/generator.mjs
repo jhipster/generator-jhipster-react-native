@@ -1,40 +1,27 @@
-import { appendFileSync, existsSync } from 'node:fs';
-import os from 'node:os';
 import BaseGenerator from 'generator-jhipster/generators/base';
-import { buildMatrix } from './build-matrix.mjs';
+import { convertToGitHubMatrix, getGithubOutputFile, getGithubSamplesGroup, setGithubTaskOutput } from 'generator-jhipster/testing';
 
 export default class extends BaseGenerator {
+  /** @type {string} */
   samplesFolder;
 
   constructor(args, opts, features) {
-    super(args, opts, { ...features, jhipsterBootstrap: false });
-  }
-
-  get [BaseGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async parseCommand() {
-        await this.parseCurrentJHipsterCommand();
-      },
-    });
-  }
-
-  get [BaseGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      async loadCommand() {
-        await this.loadCurrentJHipsterCommandConfig(this);
-      },
-    });
+    super(args, opts, { ...features, queueCommandTasks: true, jhipsterBootstrap: false });
   }
 
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async buildMatrix() {
-        const matrix = await buildMatrix(this.templatePath(`../../generate-sample/templates/${this.samplesFolder}`));
-        const matrixoutput = `matrix<<EOF${os.EOL}${JSON.stringify(matrix)}${os.EOL}EOF${os.EOL}`;
-        const filePath = process.env.GITHUB_OUTPUT;
-        console.log(matrixoutput);
-        if (filePath && existsSync(filePath)) {
-          appendFileSync(filePath, matrixoutput, { encoding: 'utf8' });
+        const { samplesFolder } = this;
+        const { samples, warnings } = await getGithubSamplesGroup(this.templatePath('../../generate-sample/templates/'), samplesFolder);
+        if (warnings.length > 0) {
+          this.info(warnings.join('\n'));
+        }
+        const matrix = JSON.stringify(convertToGitHubMatrix(samples));
+        const githubOutputFile = getGithubOutputFile(matrix);
+        this.log.info('matrix', matrix);
+        if (githubOutputFile) {
+          setGithubTaskOutput('matrix', matrix);
         }
       },
     });
