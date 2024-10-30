@@ -1,6 +1,8 @@
 import { readdir } from 'node:fs/promises';
 import { readFileSync } from 'node:fs';
+import { extname, join } from 'node:path';
 import BaseGenerator from 'generator-jhipster/generators/base';
+import { getGithubSamplesGroup } from 'generator-jhipster/testing';
 
 export default class extends BaseGenerator {
   sampleName;
@@ -8,45 +10,28 @@ export default class extends BaseGenerator {
   samplesFolder;
 
   constructor(args, opts, features) {
-    super(args, opts, { ...features, jhipsterBootstrap: false });
-  }
-
-  get [BaseGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async parseCommand() {
-        await this.parseCurrentJHipsterCommand();
-      },
-      async initializeOptions() {
-        if (this.sampleName && !this.sampleName.endsWith('.jdl')) {
-          this.sampleName += '.jdl';
-        }
-      },
-    });
-  }
-
-  get [BaseGenerator.PROMPTING]() {
-    return this.asPromptingTaskGroup({
-      async askForSample() {
-        await this.promptCurrentJHipsterCommand();
-      },
-    });
-  }
-
-  get [BaseGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      async loadCommand() {
-        await this.loadCurrentJHipsterCommandConfig(this);
-      },
-    });
+    super(args, opts, { ...features, queueCommandTasks: true, jhipsterBootstrap: false });
   }
 
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async copySample() {
-        if (this.all) {
-          this.copyTemplate(`${this.samplesFolder}/*.jdl`, '');
+        const { samplesFolder, all, sampleName } = this;
+        if (all) {
+          this.copyTemplate(`${samplesFolder}/*.jdl`, '');
+        } else if (extname(sampleName) === '.jdl') {
+          this.copyTemplate(join(samplesFolder, sampleName), sampleName, { noGlob: true });
         } else {
-          this.copyTemplate(`${this.samplesFolder}/${this.sampleName}`, this.sampleName, { noGlob: true });
+          const { samples } = await getGithubSamplesGroup(this.templatePath(), samplesFolder);
+          const { 'sample-type': sampleType } = samples[sampleName];
+          if (sampleType === 'jdl') {
+            const jdlFile = `${sampleName}.jdl`;
+            this.copyTemplate(join(samplesFolder, jdlFile), jdlFile, { noGlob: true });
+          } else if (sampleType === 'yo-rc') {
+            this.copyTemplate(join(samplesFolder, sampleName, '**'), '', {
+              fromBasePath: this.templatesPath(samplesFolder, sampleName),
+            });
+          }
         }
       },
     });

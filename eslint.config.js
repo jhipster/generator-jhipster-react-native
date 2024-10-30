@@ -1,9 +1,6 @@
 import globals from 'globals';
 import prettier from 'eslint-plugin-prettier/recommended';
-import jhipster from 'generator-jhipster/eslint/recommended';
-
-// Workaround for jhipster export issue.
-delete jhipster.recommended.recommended;
+import jhipster from 'generator-jhipster/eslint';
 // jhipster-needle-eslint-add-import - JHipster will add additional import here
 
 export default [

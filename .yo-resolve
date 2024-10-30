@@ -1,3 +1,2 @@
-.blueprint/** skip
 .github/workflows/** skip
 README.md skip
