@@ -46,7 +46,7 @@ jobs:
           cli/cli.cjs github-build-matrix
 
   applications:
-    name: ${{ matrix.sample-name }}
+    name: ${{ matrix.sample }}
     runs-on: ${{ matrix.os }}
     needs: build-matrix
     timeout-minutes: 90
@@ -77,7 +77,7 @@ jobs:
           fetch-depth: 2
       - run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-commit-hook
+      - run: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-commit-hook
         working-directory: ${{ github.workspace }}/backend
       - uses: jhipster/actions/compare-sample@v0
         id: compare-backend
@@ -89,7 +89,7 @@ jobs:
           application-folder: backend
           compare-folder: backend
           generator-path: generator-jhipster-react-native
-          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+          cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
@@ -100,7 +100,7 @@ jobs:
           application-folder: backend
           compare-folder: client
           generator-path: generator-jhipster-react-native
-          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+          cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
 
       - uses: nick-invision/retry@v3.0.0
         name: 'TOOLS: installing applesimutils'
@@ -137,7 +137,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: steps.compare.outputs.equals != 'true' && always()
         with:
-          name: expo-app-${{ matrix.sample-name }}
+          name: expo-app-${{ matrix.sample }}
           path: |
             ${{ github.workspace }}/client/
             !${{ github.workspace }}/**/android
