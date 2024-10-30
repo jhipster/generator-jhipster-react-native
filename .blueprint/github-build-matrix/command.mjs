@@ -8,6 +8,13 @@ const command = {
       cli: {
         type: String,
       },
+      scope: 'generator',
+    },
+    samplesGroup: {
+      description: 'Samples Group',
+      argument: {
+        type: String,
+      },
       default: 'samples',
       scope: 'generator',
     },

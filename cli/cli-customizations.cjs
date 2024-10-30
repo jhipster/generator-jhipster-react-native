@@ -5,5 +5,5 @@ module.exports = {
   printLogo: async () => {
     const { printJHipsterLogo } = await import('./print-jhipster-logo.js');
     await printJHipsterLogo();
-  }
+  },
 };

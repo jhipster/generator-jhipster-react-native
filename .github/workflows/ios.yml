@@ -43,7 +43,7 @@ jobs:
       - id: build
         run: |
           npm ci --ignore-scripts --omit=dev
-          cli/cli.cjs github-build-matrix
+          cli/cli.cjs github-build-matrix ios
 
   applications:
     name: ${{ matrix.sample }}
@@ -127,13 +127,13 @@ jobs:
           npm run app:start &
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
-        if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true' && matrix.skip-e2e != 'true'
         working-directory: ${{ github.workspace }}/backend
       - run: npm run e2e:test:ios
         timeout-minutes: 15
         env:
           DETOX_RECORD_VIDEOS: "${{ contains(github.event.pull_request.labels.*.name, 'pr: record-videos') && 'all' || 'none' }}"
-        if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true' && matrix.skip-e2e != 'true'
       - uses: actions/upload-artifact@v4
         if: steps.compare.outputs.equals != 'true' && always()
         with:

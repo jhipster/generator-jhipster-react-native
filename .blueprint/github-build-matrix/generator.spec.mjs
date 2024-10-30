@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 const generator = basename(__dirname);
 
 describe(`generator - ${generator}`, () => {
-  for (const workflow of ['']) {
+  for (const workflow of ['samples', 'ios']) {
     describe(`with ${workflow}`, () => {
       beforeAll(async () => {
         await helpers.runJHipster(join(__dirname, 'index.mjs'), { useEnvironmentBuilder: true }).withArguments(workflow);
