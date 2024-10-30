@@ -4,6 +4,8 @@ import { convertToGitHubMatrix, getGithubOutputFile, getGithubSamplesGroup, setG
 export default class extends BaseGenerator {
   /** @type {string} */
   samplesFolder;
+  /** @type {string} */
+  matrix;
 
   constructor(args, opts, features) {
     super(args, opts, { ...features, queueCommandTasks: true, jhipsterBootstrap: false });
@@ -17,11 +19,19 @@ export default class extends BaseGenerator {
         if (warnings.length > 0) {
           this.info(warnings.join('\n'));
         }
-        const matrix = JSON.stringify(convertToGitHubMatrix(samples));
-        const githubOutputFile = getGithubOutputFile(matrix);
-        this.log.info('matrix', matrix);
+        const { include } = convertToGitHubMatrix(samples);
+        this.matrix = JSON.stringify({
+          include: include.map(i => ({
+            ...i,
+            ...(i.sample.includes('oauth2')
+              ? { os: 'macos-13', 'default-environment': 'prod' }
+              : { os: 'macos-15', 'default-environment': 'dev' }),
+          })),
+        });
+        const githubOutputFile = getGithubOutputFile(this.matrix);
+        this.log.info('matrix', this.matrix);
         if (githubOutputFile) {
-          setGithubTaskOutput('matrix', matrix);
+          setGithubTaskOutput('matrix', this.matrix);
         }
       },
     });
