@@ -129,11 +129,7 @@ const expectedFiles = {
     'e2e/scripts/setup.sh',
   ],
   detoxAndWebsockets: ['e2e/websockets/chat-screen.spec.js'],
-  detoxAndNotOauth: [
-    'e2e/account/change-password-screen.spec.js',
-    'e2e/account/login-screen.spec.js',
-    'e2e/account/settings-screen.spec.js',
-  ],
+  detoxAndNotOauth: ['e2e/account/change-password-screen.spec.js', 'e2e/account/settings-screen.spec.js'],
   oauth: [
     'app/shared/fixtures/get-oauth-info.json',
     'app/shared/sagas/auth-info.saga.js',

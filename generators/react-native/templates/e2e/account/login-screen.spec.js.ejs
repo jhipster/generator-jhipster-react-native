@@ -15,9 +15,16 @@ describe('Login Screen Tests', () => {
 
   it('should show an alert on log in failure', async () => {
     await navigateToLoginScreen();
+<%_ if (authenticationTypeOauth2) { _%>
+    await waitThenTapButton('loginScreenLoginButton');
+    await web.element(by.id('loginScreenUsername')).replaceText('invalid');
+    await web.element(by.id('loginScreenPassword')).replaceText('invalid');
+    await web.element(by.id('loginScreenPassword')).tap();
+<%_ } else { _%>
     await element(by.id('loginScreenUsername')).replaceText('invalid');
     await element(by.id('loginScreenPassword')).replaceText('invalid');
-    await waitThenTapButton('loginScreenLoginButton')
+    await waitThenTapButton('loginScreenLoginButton');
+<%_ } _%>
     await waitForElementToBeVisibleById('loginErrorMessage');
     await expect(element(by.id('loginErrorMessage'))).toBeVisible();
   });
