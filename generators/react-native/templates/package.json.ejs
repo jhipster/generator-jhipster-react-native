@@ -21,12 +21,12 @@
     "precommit": "lint-staged",
 <%_ } _%>
     "postinstall": "patch-package",
-    "prettier": "prettier --write \"{,.,**/,.jhipster/**/}*.{md,json,yml,js,ts,tsx}\"",
     "start": "expo start",
     "web": "expo start --web"
   },
   "dependencies": {
     "@expo/vector-icons": "EXPO_REPLACE_WITH_VERSION",
+    "@expo/metro-runtime": "EXPO_REPLACE_WITH_VERSION",
     "@react-native-async-storage/async-storage": "EXPO_REPLACE_WITH_VERSION",
     "@react-native-community/datetimepicker": "EXPO_REPLACE_WITH_VERSION",
     "@react-native-masked-view/masked-view": "EXPO_REPLACE_WITH_VERSION",
@@ -113,7 +113,7 @@
     "mockery": "REPLACE_WITH_VERSION",
     "patch-package": "REPLACE_WITH_VERSION",
     "path-exists": "REPLACE_WITH_VERSION",
-    "prettier": "REPLACE_WITH_VERSION",
+    "prettier": null,
     "react-test-renderer": "REPLACE_WITH_VERSION",
     "resolve": "REPLACE_WITH_VERSION",
     "rimraf": "REPLACE_WITH_VERSION",

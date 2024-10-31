@@ -122,6 +122,7 @@ const files = {
         'patches/react-native-sectioned-multi-select+0.8.1.patch',
         'storybook/addons.js',
         'storybook/index.js',
+        'storybook/storybook.requires.ts',
         'storybook/stories.js',
         'test/spec/shared/components/alert-message/alert-message.spec.js',
         'test/spec/shared/components/rounded-button/rounded-button.spec.js',

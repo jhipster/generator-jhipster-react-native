@@ -12,6 +12,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ startsWith(github.ref, 'refs/pull/') || github.run_number }}
   # Cancel intermediate pull request builds
   cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+env:
+  SPRING_DOCKER_COMPOSE_ENABLED: false
 jobs:
   check-dependencies:
     runs-on: ubuntu-latest
@@ -41,10 +43,10 @@ jobs:
       - id: build
         run: |
           npm ci --ignore-scripts --omit=dev
-          cli/cli.cjs github-build-matrix
+          cli/cli.cjs github-build-matrix ios
 
   applications:
-    name: ${{ matrix.sample-name }}
+    name: ${{ matrix.sample }}
     runs-on: ${{ matrix.os }}
     needs: build-matrix
     timeout-minutes: 90
@@ -75,7 +77,7 @@ jobs:
           fetch-depth: 2
       - run: npm install
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
-      - run: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-commit-hook
+      - run: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-commit-hook
         working-directory: ${{ github.workspace }}/backend
       - uses: jhipster/actions/compare-sample@v0
         id: compare-backend
@@ -87,7 +89,7 @@ jobs:
           application-folder: backend
           compare-folder: backend
           generator-path: generator-jhipster-react-native
-          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+          cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
       - uses: jhipster/actions/compare-sample@v0
         id: compare
         if: >-
@@ -98,7 +100,7 @@ jobs:
           application-folder: backend
           compare-folder: client
           generator-path: generator-jhipster-react-native
-          cmd: cli.cjs generate-sample ${{ matrix.sample-name }} --force --skip-git --skip-commit-hook
+          cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
 
       - uses: nick-invision/retry@v3.0.0
         name: 'TOOLS: installing applesimutils'
@@ -108,13 +110,7 @@ jobs:
           timeout_minutes: 60
           command: brew tap wix/brew && brew install applesimutils && applesimutils --list
           retry_wait_seconds: 15
-      - name: 'SETUP MacOS: install docker'
-        run: |
-          brew install docker colima docker-compose
-          colima start
-          sudo ln -sf $HOME/.colima/default/docker.sock /var/run/docker.sock
-          mkdir -p ~/.docker/cli-plugins
-          ln -sfn $HOMEBREW_PREFIX/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
+      - uses: douglascamata/setup-docker-macos-action@8d5fa43892aed7eee4effcdea113fd53e4d4bf83
         if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
         timeout-minutes: 10
       - run: npm run services:up
@@ -131,17 +127,17 @@ jobs:
           npm run app:start &
           npm install -g wait-on
           wait-on -t 60000 http-get://127.0.0.1:8080/management/health
-        if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true' && matrix.skip-e2e != 'true'
         working-directory: ${{ github.workspace }}/backend
       - run: npm run e2e:test:ios
         timeout-minutes: 15
         env:
           DETOX_RECORD_VIDEOS: "${{ contains(github.event.pull_request.labels.*.name, 'pr: record-videos') && 'all' || 'none' }}"
-        if: steps.compare.outputs.equals != 'true'
+        if: steps.compare.outputs.equals != 'true' && matrix.skip-e2e != 'true'
       - uses: actions/upload-artifact@v4
         if: steps.compare.outputs.equals != 'true' && always()
         with:
-          name: expo-app-${{ matrix.sample-name }}
+          name: expo-app-${{ matrix.sample }}
           path: |
             ${{ github.workspace }}/client/
             !${{ github.workspace }}/**/android

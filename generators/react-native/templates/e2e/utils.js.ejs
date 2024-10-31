@@ -81,14 +81,14 @@ const toggleSwitchToValue = async (switchId, targetValue) => {
 const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 'slow') => {
   await waitFor(element(by.id(fieldId)))
     .toBeVisible()
-    .whileElement(by.type('ABI49_0_0RCTScrollView').withAncestor(by.id(listId)))
+    .whileElement(by.id(listId))
     .scroll(500, 'down');
 };
 
 const tapFirstElementById = async (id) => {
   try {
     await element(by.id(id)).atIndex(0).tap();
-  } catch (e) {
+  } catch {
     console.warn(`Could not tap on element with ID: ${id}`);
   }
 };
@@ -96,7 +96,7 @@ const tapFirstElementById = async (id) => {
 const tapFirstElementByLabel = async (label) => {
   try {
     await element(by.label(label)).atIndex(0).tap();
-  } catch (e) {
+  } catch {
     console.warn(`Could not tap on element with label: ${label}`);
   }
 };
@@ -144,6 +144,7 @@ const reloadApp = async (bailOnFailure) => {
       newInstance: true,
       launchArgs: {
         detoxEnableSynchronization: false,
+        permissions: { camera: 'YES', photo: 'YES' },
         // Don't show developer menu.
         EXKernelDisableNuxDefaultsKey: true,
       },

@@ -13,7 +13,7 @@ describe('SubGenerator spring-boot of react-native JHipster blueprint', () => {
         .withJHipsterConfig()
         .withOptions({
           ignoreNeedlesError: true,
-          blueprint: 'react-native',
+          blueprint: ['react-native'],
         })
         .withJHipsterLookup()
         .withParentBlueprintLookup();
