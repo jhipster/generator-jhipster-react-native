@@ -1,7 +1,7 @@
 import { relative } from 'node:path';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
-import command from './command.mjs';
 import { DEFAULT_REACT_NATIVE_PATH, REACT_NATIVE_NAMESPACE } from '../constants.mjs';
+import command from './command.mjs';
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
@@ -59,17 +59,6 @@ export default class extends BaseApplicationGenerator {
             appDir,
           },
         });
-      },
-    });
-  }
-
-  get [BaseApplicationGenerator.POST_WRITING]() {
-    return this.asPostWritingTaskGroup({
-      keycloak({ application }) {
-        if (!application.authenticationTypeOauth2) return;
-
-        // Increase wait for macOS. Keyclock container start can take over 3 min. 4 min is not enough to download/start containers/start server.
-        this.editFile('src/main/docker/keycloak.yml', { assertModified: true }, content => content.replace('retries: 20', 'retries: 40'));
       },
     });
   }

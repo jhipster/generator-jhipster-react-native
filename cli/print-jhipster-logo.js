@@ -1,10 +1,10 @@
-import chalk from 'chalk';
 import { readFileSync } from 'fs';
+import chalk from 'chalk';
 
 const fileUrl = new URL('../package.json', import.meta.url);
 const packagejs = JSON.parse(readFileSync(fileUrl));
 
-const printJHipsterLogo = () => {
+export const printJHipsterLogo = () => {
   console.log('\n');
   console.log(`${chalk.cyan('                         ██╗ ██╗  ██╗')}${chalk.green('        ')}${chalk.red('██████╗  ███╗   ██╗  ')}`);
   console.log(`${chalk.cyan('                         ██║ ██║  ██║')}${chalk.green('        ')}${chalk.red('██╔══██╗ ████╗  ██║  ')}`);
@@ -36,5 +36,3 @@ const printJHipsterLogo = () => {
     chalk.green(' _______________________________________________________________________________________________________________\n'),
   );
 };
-
-export { printJHipsterLogo };

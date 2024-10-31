@@ -1,7 +1,6 @@
-/**
- * @type {import('generator-jhipster').JHipsterCommandDefinition}
- */
-const command = {
+import { asCommand } from 'generator-jhipster';
+
+export default asCommand({
   options: {
     reactNativeDir: {
       desc: 'Directory of JHipster application',
@@ -9,6 +8,4 @@ const command = {
       scope: 'blueprint',
     },
   },
-};
-
-export default command;
+});

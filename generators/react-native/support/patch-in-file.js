@@ -48,15 +48,14 @@ function patchInFile(file, opts) {
           const newContents = data.replace(replaceString, `${newString}`);
           return newContents;
         }
-        // eslint-disable-next-line no-console
+
         console.warn(`${replaceString} not found`);
         return data;
       }
 
       // Insert before/after a particular string
       return insertInData(file, data, opts.before || opts.after, newString, !!opts.after);
-    } catch (e) {
-      // eslint-disable-next-line no-console
+    } catch {
       console.warn(`Could not find insertion point in ${file}:\n${opts.before}`);
       return data;
     }

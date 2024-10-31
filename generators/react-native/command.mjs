@@ -1,7 +1,6 @@
-/**
- * @type {import('generator-jhipster').JHipsterCommandDefinition}
- */
-const command = {
+import { asCommand } from 'generator-jhipster';
+
+export default asCommand({
   configs: {
     detox: {
       description: 'Generate Detox tests',
@@ -31,6 +30,4 @@ const command = {
     },
   },
   import: ['jhipster:git'],
-};
-
-export default command;
+});

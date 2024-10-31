@@ -88,7 +88,7 @@ const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 
 const tapFirstElementById = async (id) => {
   try {
     await element(by.id(id)).atIndex(0).tap();
-  } catch (e) {
+  } catch {
     console.warn(`Could not tap on element with ID: ${id}`);
   }
 };
@@ -96,7 +96,7 @@ const tapFirstElementById = async (id) => {
 const tapFirstElementByLabel = async (label) => {
   try {
     await element(by.label(label)).atIndex(0).tap();
-  } catch (e) {
+  } catch {
     console.warn(`Could not tap on element with label: ${label}`);
   }
 };

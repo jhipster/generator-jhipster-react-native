@@ -7,14 +7,14 @@
     "update-dependencies": "npm install && npx expo install --fix && rm -rf package-lock.json node_modules"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~3.2.1",
+    "@expo/metro-runtime": "~3.2.3",
     "@expo/vector-icons": "^14.0.4",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-masked-view/masked-view": "0.3.1",
     "@react-native-picker/picker": "2.7.5",
-    "@react-navigation/devtools": "6.0.26",
-    "expo": "51.0.37",
+    "@react-navigation/devtools": "6.0.27",
+    "expo": "51.0.38",
     "expo-auth-session": "~5.5.2",
     "expo-constants": "~16.0.2",
     "expo-image-picker": "~15.0.5",
@@ -30,11 +30,11 @@
     "react-native-reanimated": "~3.10.1",
     "react-native-safe-area-context": "4.10.5",
     "react-native-screens": "3.31.1",
-    "react-native-web": "~0.19.12"
+    "react-native-web": "~0.19.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.7",
-    "@react-native-community/cli-server-api": "13.6.9",
+    "@babel/core": "^7.25.9",
+    "@react-native-community/cli-server-api": "15.0.0",
     "@types/react": "~18.2.79",
     "jest-expo": "~51.0.2",
     "typescript": "~5.3.3"

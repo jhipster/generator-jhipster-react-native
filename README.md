@@ -1,9 +1,9 @@
 # JHipster React Native
 
 [![NPM version](https://badge.fury.io/js/generator-jhipster-react-native.svg)](https://npmjs.org/package/generator-jhipster-react-native)
-[![iOS-E2E](https://github.com/jhipster/generator-jhipster-react-native/workflows/iOS-E2E/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AiOS-E2E)
-[![Generator](https://github.com/jhipster/generator-jhipster-react-native/workflows/Generator/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AGenerator)
-[![App](https://github.com/jhipster/generator-jhipster-react-native/workflows/App/badge.svg?branch=main)](https://github.com/jhipster/generator-jhipster-react-native/actions?query=workflow%3AApp)
+[![iOS-E2E](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/ios.yml/badge.svg)](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/ios.yml)
+[![Generator](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/generator.yml/badge.svg)](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/generator.yml)
+[![App](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/app.yml/badge.svg)](https://github.com/jhipster/generator-jhipster-react-native/actions/workflows/app.yml)
 
 > A React Native blueprint for [JHipster](http://www.jhipster.tech) apps, complete with authentication, an entity generator, JDL support, E2E tests, and more.
 
