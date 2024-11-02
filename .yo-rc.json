@@ -13,12 +13,6 @@
         "sbs": true,
         "written": true
       },
-      "project-name": {
-        "command": false,
-        "priorities": ["initializing", "prompting", "configuring", "default", "end"],
-        "sbs": true,
-        "written": true
-      },
       "react-native": {
         "command": false,
         "priorities": ["initializing", "prompting", "configuring", "default", "end"],
@@ -39,6 +33,6 @@
     "packageJsonType": "module",
     "sampleWritten": true,
     "skipCommitHook": true,
-    "subGenerators": ["app", "project-name", "react-native", "spring-boot"]
+    "subGenerators": ["app", "react-native", "spring-boot"]
   }
 }
