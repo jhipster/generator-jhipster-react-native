@@ -4,7 +4,7 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/base-applica
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, snakeCase, startCase } from 'lodash-es';
 import semver from 'semver';
-import { DEFAULT_BACKEND_PATH, DEFAULT_ENABLE_DETOX } from '../constants.mjs';
+import { DEFAULT_BACKEND_PATH, DEFAULT_ENABLE_DETOX, DEFAULT_REACT_NATIVE_APP_NAME } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
 import {
@@ -79,7 +79,11 @@ export default class extends BaseApplicationGenerator {
       this.addBackendStorages();
     }
 
-    await this.dependsOnJHipster('bootstrap-application');
+    await this.dependsOnJHipster('bootstrap-application', {
+      generatorOptions: {
+        defaultBaseName: () => DEFAULT_REACT_NATIVE_APP_NAME,
+      },
+    });
     await this.dependsOnJHipster('init');
   }
 
