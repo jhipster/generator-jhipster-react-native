@@ -21,7 +21,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: false,
         })
         .withJHipsterLookup()
@@ -58,7 +58,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: false,
         })
         .withJHipsterLookup()
@@ -95,7 +95,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'oauth2',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: false,
         })
         .withJHipsterLookup()
@@ -132,7 +132,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: true,
         })
         .withJHipsterLookup()
@@ -169,7 +169,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'jwt',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: true,
         })
         .withJHipsterLookup()
@@ -206,7 +206,7 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
           ignoreNeedlesError: true,
           authenticationType: 'oauth2',
         })
-        .withAnswers({
+        .withYoRcConfig('generator-jhipster-react-native', {
           detox: true,
         })
         .withJHipsterLookup()
