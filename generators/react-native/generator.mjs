@@ -4,7 +4,7 @@ import BaseApplicationGenerator from 'generator-jhipster/generators/base-applica
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
 import { camelCase, kebabCase, snakeCase, startCase } from 'lodash-es';
 import semver from 'semver';
-import { DEFAULT_BACKEND_PATH, DEFAULT_ENABLE_DETOX, DEFAULT_REACT_NATIVE_APP_NAME } from '../constants.mjs';
+import { DEFAULT_BACKEND_PATH, DEFAULT_REACT_NATIVE_APP_NAME } from '../constants.mjs';
 import files from './files.mjs';
 import entityFiles from './entity-files.mjs';
 import {
@@ -21,7 +21,7 @@ import {
 
 export default class extends BaseApplicationGenerator {
   constructor(args, opts, features) {
-    super(args, opts, { ...features, sbsBlueprint: true, jhipster7Migration: true });
+    super(args, opts, { ...features, queueCommandTasks: true, sbsBlueprint: true, jhipster7Migration: true });
 
     if (this.options.help) return;
 
@@ -49,7 +49,7 @@ export default class extends BaseApplicationGenerator {
     if (this.options.authenticationType !== undefined) {
       this.jhipsterConfig.authenticationType = this.options.authenticationType;
     }
-    if (this.options.defaults || this.options.force) {
+    if (this.options.defaults) {
       // using defaults options, detox is enabled by default
       this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null, detox: true });
     }
@@ -64,16 +64,10 @@ export default class extends BaseApplicationGenerator {
           message: 'Enter the directory where your JHipster app is located:',
           default: DEFAULT_BACKEND_PATH,
         },
-        {
-          name: 'detox',
-          type: 'confirm',
-          message: 'Do you want to enable end-to-end tests with Detox?',
-          default: DEFAULT_ENABLE_DETOX,
-        },
       ],
       this.reactNativeStorage,
     );
-    this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null, detox: DEFAULT_ENABLE_DETOX });
+    this.reactNativeStorage.defaults({ appDir: DEFAULT_BACKEND_PATH, reactNativeDir: null });
 
     if (this.reactNativeConfig.appDir) {
       this.addBackendStorages();
@@ -85,14 +79,6 @@ export default class extends BaseApplicationGenerator {
       },
     });
     await this.dependsOnJHipster('init');
-  }
-
-  get [BaseApplicationGenerator.INITIALIZING]() {
-    return this.asInitializingTaskGroup({
-      async initializingTemplateTask() {
-        await this.parseCurrentJHipsterCommand();
-      },
-    });
   }
 
   get [BaseApplicationGenerator.CONFIGURING]() {
@@ -155,16 +141,12 @@ export default class extends BaseApplicationGenerator {
     });
   }
 
-  get [BaseApplicationGenerator.LOADING]() {
-    return this.asLoadingTaskGroup({
-      async loadCommand({ application }) {
-        await this.loadCurrentJHipsterCommandConfig(application);
-      },
-    });
-  }
-
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
+      fixes({ application }) {
+        application.blueprintPackageVersion = application.blueprints.find(bp => bp.name === 'generator-jhipster-react-native').version;
+        application.reactNativeAppNameKebabCase = kebabCase(application.baseName);
+      },
       dependencies({ application }) {
         this.loadNodeDependenciesFromPackageJson(application.nodeDependencies, this.templatePath('package.json'));
         this.loadNodeDependenciesFromPackageJson(application.nodeDependencies, this.templatePath('../resources/expo/package.json'));
@@ -178,17 +160,9 @@ export default class extends BaseApplicationGenerator {
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async writingTemplateTask({ application }) {
-        const blueprintPackageVersion = application.blueprints.find(bp => bp.name === 'generator-jhipster-react-native').version;
-        const reactNativeAppNameKebabCase = kebabCase(application.baseName);
-        const { detox } = this.reactNativeConfig;
         await this.writeFiles({
           sections: files,
-          context: {
-            ...application,
-            blueprintPackageVersion,
-            reactNativeAppNameKebabCase,
-            detox,
-          },
+          context: application,
         });
       },
       async patchBabel() {
