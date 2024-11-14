@@ -81,11 +81,13 @@ function <%= entityNameCapitalized %>EditScreen(props) {
     updateSuccess,
     navigation,
     reset,
-    <%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
-    getAll<%= relation.otherEntityNameCapitalizedPlural %>,
-    <%= relation.otherEntityName %>List,
-    <%_ }) _%>
-  } = props;
+<%_ uniqueOwnerSideRelationships.forEach((relation) => { _%>
+  getAll<%= relation.otherEntityNameCapitalizedPlural %>,
+<%_ }) _%>
+<%_ for (const otherEntity of [...new Set(relationships.filter(relation => relation.ownerSide).map(rel => rel.otherEntity))]) { _%>
+  <%= otherEntity.entityInstance %>List,
+<%_ } _%>
+} = props;
 
   const [formValue, setFormValue] = React.useState();
   const [error, setError] = React.useState('');

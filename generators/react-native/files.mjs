@@ -1,11 +1,16 @@
+const eslintConfigTemplate = sourceFile => ({
+  sourceFile,
+  destinationFile: ctx => sourceFile.replace('eslint.config.js', ctx.eslintConfigFile),
+});
+
 const files = {
   common: [
     {
       templates: [
         '.prettierignore.jhi.react-native',
-        '.eslintrc.js',
         '.gitattributes.jhi.react-native',
         '.gitignore.jhi.react-native',
+        eslintConfigTemplate('eslint.config.js.jhi.react-native'),
         'App.js',
         'app.json',
         'README.md',

@@ -151,3 +151,6 @@ Desktop.ini
 ######################
 /coverage/
 /.nyc_output/
+
+# added by generate-blueprint:
+generators/**/package-lock.json

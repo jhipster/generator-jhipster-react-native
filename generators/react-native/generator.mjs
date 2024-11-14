@@ -1,4 +1,5 @@
 import { relative } from 'node:path';
+import { readFile } from 'node:fs/promises';
 import chalk from 'chalk';
 import BaseApplicationGenerator from 'generator-jhipster/generators/base-application';
 import { generateTestEntity } from 'generator-jhipster/generators/client/support';
@@ -20,6 +21,11 @@ import {
 } from './support/index.js';
 
 export default class extends BaseApplicationGenerator {
+  /** @type {string | undefined} */
+  oldReactNativeBlueprintVersion;
+  /** @type { any } */
+  reactNativeBlueprintPackageJson;
+
   constructor(args, opts, features) {
     super(args, opts, { ...features, queueCommandTasks: true, sbsBlueprint: true, jhipster7Migration: true });
 
@@ -81,6 +87,17 @@ export default class extends BaseApplicationGenerator {
     await this.dependsOnJHipster('init');
   }
 
+  get [BaseApplicationGenerator.INITIALIZING]() {
+    return this.asInitializingTaskGroup({
+      async initializing({ control }) {
+        this.oldReactNativeBlueprintVersion =
+          (this.blueprintConfig.reactNativeBlueprintVersion ?? control.existingProject) ? '5.1.0' : undefined;
+        this.reactNativeBlueprintPackageJson = JSON.parse((await readFile(this.templatePath('../../../package.json'), 'utf-8')).toString());
+        this.blueprintConfig.reactNativeBlueprintVersion = this.reactNativeBlueprintPackageJson.version;
+      },
+    });
+  }
+
   get [BaseApplicationGenerator.CONFIGURING]() {
     return this.asConfiguringTaskGroup({
       loadConfigFromBackend() {
@@ -140,6 +157,13 @@ export default class extends BaseApplicationGenerator {
       },
     });
   }
+  get [BaseApplicationGenerator.LOADING]() {
+    return this.asLoadingTaskGroup({
+      loading({ application }) {
+        application.typescriptEslint = true;
+      },
+    });
+  }
 
   get [BaseApplicationGenerator.PREPARING]() {
     return this.asPreparingTaskGroup({
@@ -159,6 +183,18 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.WRITING]() {
     return this.asWritingTaskGroup({
+      async cleanup({ control }) {
+        if (control.existingProject) {
+          if (this.isVersionLessThan(this.oldReactNativeBlueprintVersion, '5.1.1')) {
+            this.removeFile('.eslintrc.js');
+          }
+        }
+        /*
+        control.cleanupFiles(this.oldReactNativeBlueprintVersion, {
+          '5.1.1': ['.eslintrc.js'],
+        })
+        */
+      },
       async writingTemplateTask({ application }) {
         await this.writeFiles({
           sections: files,
@@ -225,12 +261,6 @@ export default class extends BaseApplicationGenerator {
 
   get [BaseApplicationGenerator.POST_WRITING]() {
     return this.asPostWritingTaskGroup({
-      ignoreEslint9ConfigFile({ application }) {
-        const eslintConfigFile = this.env.sharedFs.get(this.destinationPath(application.eslintConfigFile));
-        if (eslintConfigFile) {
-          delete eslintConfigFile.state;
-        }
-      },
       async patchUriScheme({ application }) {
         this.editFile('app.json', content => {
           const appConfig = JSON.parse(content);

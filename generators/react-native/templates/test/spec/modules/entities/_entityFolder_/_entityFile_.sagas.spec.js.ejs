@@ -4,7 +4,7 @@ import FixtureAPI from '../../../../../app/shared/services/fixture-api'
 import <%= entityNameCapitalized %>Sagas from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.sagas'
 import <%= entityNameCapitalized %>Actions from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.reducer'
 
-const { get<%= entityNameCapitalized %>, getAll<%= entityNamePlural %>, update<%= entityNameCapitalized %>, delete<%= entityNameCapitalized %><%= searchEngine ? `, search${entityNamePlural}` : '' %> } = <%= entityNameCapitalized %>Sagas;
+const { get<%= entityNameCapitalized %>, getAll<%= entityNamePlural %>, update<%= entityNameCapitalized %>, delete<%= entityNameCapitalized %><%= searchEngineAny ? `, search${entityNamePlural}` : '' %> } = <%= entityNameCapitalized %>Sagas;
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('get success path', () => {

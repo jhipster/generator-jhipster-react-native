@@ -22,7 +22,7 @@ export default React.forwardRef((props, ref) => {
     inputType = 'text';
   }
   if (!['text', 'boolean', 'number', 'date', 'datetime', 'select-one', 'select-multiple', 'image', 'image-base64'].includes(inputType)) {
-    return <Text style={styles.errorText}>INVALID INPUT TYPE '{inputType}'</Text>;
+    return <Text style={styles.errorText}>INVALID INPUT TYPE &apos;{inputType}&apos;</Text>;
   }
 
   // ensure fields are the correct format

@@ -18,7 +18,7 @@ function patchEntityApi(application, entity) {
   ${updateMethod}
   const delete${entity.entityNameCapitalized} = (${entity.entityInstance}Id) => api.delete('${microservicePath}api/${entity.entityApiUrl}/' + ${entity.entityInstance}Id);`;
 
-  let fixtureApiMethods = `  update${entity.entityNameCapitalized}: (${entity.entityInstance}) => {
+  let fixtureApiMethods = `  update${entity.entityNameCapitalized}: (_${entity.entityInstance}) => {
     return {
       ok: true,
       data: require('../../shared/fixtures/update-${entity.entityFileName}.json'),
@@ -30,13 +30,13 @@ function patchEntityApi(application, entity) {
       data: require('../../shared/fixtures/get-all-${entity.entityNamePluralizedAndSpinalCased}.json'),
     };
   },
-  get${entity.entityNameCapitalized}: (${entity.entityInstance}Id) => {
+  get${entity.entityNameCapitalized}: (_${entity.entityInstance}Id) => {
     return {
       ok: true,
       data: require('../../shared/fixtures/get-${entity.entityFileName}.json'),
     };
   },
-  delete${entity.entityNameCapitalized}: (${entity.entityInstance}Id) => {
+  delete${entity.entityNameCapitalized}: (_${entity.entityInstance}Id) => {
     return {
       ok: true,
     };

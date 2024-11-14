@@ -11,7 +11,7 @@ import styles from './rounded-button.styles';
 // }
 
 export default function RoundedButton(props) {
-  const { onPress, text, children, navigator, ...otherProps } = props;
+  const { onPress, text, children, ...otherProps } = props;
 
   const getText = () => {
     const buttonText = text || children || '';

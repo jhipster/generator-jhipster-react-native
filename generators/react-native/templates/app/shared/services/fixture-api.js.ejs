@@ -5,7 +5,7 @@ export default {
   // jhipster-react-native-api-fixture-needle
 
   // user fixtures
-  updateUser: (user) => {
+  updateUser: (_user) => {
     return {
       ok: true,
       data: require('../fixtures/update-user.json')
@@ -17,13 +17,13 @@ export default {
       data: require('../fixtures/get-users.json')
     }
   },
-  getUser: (userId) => {
+  getUser: (_userId) => {
     return {
       ok: true,
       data: require('../fixtures/get-user.json')
     }
   },
-  deleteUser: (userId) => {
+  deleteUser: (_userId) => {
     return {
       ok: true
     }
