@@ -34,7 +34,6 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.26.0",
-    "@config-plugins/detox": "8.0.0",
     "@react-native-community/eslint-config": "3.2.0",
     "@redux-devtools/extension": "3.3.0",
     "@storybook/addons": "7.6.17",
