@@ -26,7 +26,7 @@ updates:
     open-pull-requests-limit: 30
     versioning-strategy: increase
     groups:
-      # Packages managed by expo, must be updated using expo cli, keep for reference only.
+      # Packages managed by expo, must be updated using expo cli, keep for reference and check only.
       expo-managed:
         patterns:
           - '@react-native-async-storage/async-storage'
