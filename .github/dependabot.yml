@@ -17,6 +17,9 @@ updates:
       storybook:
         patterns:
           - '@storybook/*'
+      react-navigation:
+        patterns:
+          - '@react-navigation/*'
   - package-ecosystem: 'npm'
     directory: '/generators/react-native/resources/expo/'
     schedule:
