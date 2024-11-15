@@ -39,3 +39,5 @@ jobs:
         run: |
           cd generators/react-native/resources/expo
           npm run check-dependencies
+        env:
+          EXPO_OFFLINE: 1
