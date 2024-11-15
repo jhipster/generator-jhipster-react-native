@@ -151,3 +151,5 @@ Desktop.ini
 ######################
 /coverage/
 /.nyc_output/
+
+generators/**/package-lock.json
