@@ -9,9 +9,6 @@ updates:
     open-pull-requests-limit: 30
     versioning-strategy: increase
     groups:
-      typescript-eslint:
-        patterns:
-          - '@typescript-eslint/*'
       redux:
         patterns:
           - '@reduxjs/*'

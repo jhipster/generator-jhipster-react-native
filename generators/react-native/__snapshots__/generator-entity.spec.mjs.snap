@@ -8,9 +8,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   ".editorconfig": {
     "stateCleared": "modified",
   },
-  ".eslintrc.js": {
-    "stateCleared": "modified",
-  },
   ".gitattributes": {
     "stateCleared": "modified",
   },
@@ -413,6 +410,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "e2e/utils.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -509,9 +509,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Test: Search Engine Disabled, No Detox > should succeed 1`] = `
 {
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -889,6 +886,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "babel.config.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -988,9 +988,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -1396,6 +1393,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   "e2e/utils.js": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "metro.config.js": {

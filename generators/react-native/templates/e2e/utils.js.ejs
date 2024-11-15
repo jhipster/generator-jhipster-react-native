@@ -78,7 +78,7 @@ const toggleSwitchToValue = async (switchId, targetValue) => {
   }
 };
 
-const scrollTo = async (fieldId, listId, size = 0.15, direction = 'up', speed = 'slow') => {
+const scrollTo = async (fieldId, listId) => {
   await waitFor(element(by.id(fieldId)))
     .toBeVisible()
     .whileElement(by.id(listId))
@@ -109,7 +109,8 @@ const waitForElementToBeVisibleById = async (elementId, timeout = DEFAULT_VISIBL
   await waitFor(element(by.id(elementId))).toBeVisible().withTimeout(timeout);
 }
 
-const closeDeveloperMenu = async () => {
+/*
+const _closeDeveloperMenu = async () => {
   await wait(DEFAULT_RELOAD_AWAIT);
 
   await waitFor(element(by.text('Continue')))
@@ -124,8 +125,9 @@ const closeDeveloperMenu = async () => {
 
   await wait(DEFAULT_RELOAD_AWAIT);
 };
+*/
 
-const reloadApp = async (bailOnFailure) => {
+const reloadApp = async () => {
   try {
     if (device.getPlatform() === 'ios') {
       // disable password autofill

@@ -11,7 +11,8 @@
     "test:watch": "jest --watch",
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
-    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "lint": "eslint",
+    "pretest": "npm run lint",
     "test": "jest",
     "publish": "expo publish",
     "build:ios": "expo build:ios",
@@ -82,7 +83,7 @@
   "devDependencies": {
     "@babel/core": null,
     "@babel/runtime": null,
-    "@react-native-community/eslint-config": null,
+    "@eslint/js": null,
     "@react-native-community/cli-server-api": null,
     "@redux-devtools/extension": null,
     "@storybook/addons": null,
@@ -95,20 +96,24 @@
     "babel-jest": null,
     "babel-preset-env": null,
     "buffer": null,
-    <%_ if (detox) { _%>
+<%_ if (detox) { _%>
     "detox": null,
     "jest-circus": null,
-    <%_ } _%>
+<%_ } _%>
     "eslint": null,
     "eslint-config-prettier": null,
+    "eslint-plugin-jest": null,
     "eslint-plugin-prettier": null,
+    "eslint-plugin-react": null,
+    "eslint-plugin-react-hooks": null,
     "expect": null,
+    "globals": null,
     "generator-jhipster-react-native": "<%= blueprintPackageVersion %>",
     "jest": null,
     "jest-expo": null,
-    <%_ if (!skipCommitHook) { _%>
+<%_ if (!skipCommitHook) { _%>
     "lint-staged": null,
-    <%_ } _%>
+<%_ } _%>
     "mockery": null,
     "patch-package": null,
     "path-exists": null,
@@ -118,7 +123,8 @@
     "rimraf": null,
     "tapable": null,
     "ts-jest": null,
-    "typescript": null
+    "typescript": null,
+    "typescript-eslint": null
   },
   <%_ if (!skipCommitHook) { _%>
   "lint-staged": {

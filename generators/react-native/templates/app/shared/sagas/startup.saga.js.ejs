@@ -7,7 +7,7 @@ import AuthInfoActions from '../reducers/auth-info.reducer';
 <%_ } _%>
 
 // process STARTUP actions
-export function * startup (action) {
+export function * startup (_action) {
   yield put(LoginActions.loginLoad())
   yield put(AccountActions.accountRequest())
   yield put(AppStateActions.setRehydrationComplete())

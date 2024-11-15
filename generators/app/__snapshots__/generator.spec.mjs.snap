@@ -8,9 +8,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/.editorconfig": {
     "stateCleared": "modified",
   },
-  "../client/.eslintrc.js": {
-    "stateCleared": "modified",
-  },
   "../client/.gitattributes": {
     "stateCleared": "modified",
   },
@@ -377,6 +374,9 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/e2e/utils.js": {
     "stateCleared": "modified",
   },
+  "../client/eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "../client/metro.config.js": {
     "stateCleared": "modified",
   },
@@ -503,9 +503,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
     "stateCleared": "modified",
   },
   "../reactNative-app/.editorconfig": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/.eslintrc.js": {
     "stateCleared": "modified",
   },
   "../reactNative-app/.gitattributes": {
@@ -872,6 +869,9 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
     "stateCleared": "modified",
   },
   "../reactNative-app/e2e/utils.js": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "../reactNative-app/metro.config.js": {

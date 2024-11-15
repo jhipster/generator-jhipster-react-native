@@ -5,9 +5,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   ".editorconfig": {
     "stateCleared": "modified",
   },
-  ".eslintrc.js": {
-    "stateCleared": "modified",
-  },
   ".gitattributes": {
     "stateCleared": "modified",
   },
@@ -350,6 +347,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "babel.config.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -443,9 +443,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -814,6 +811,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "e2e/utils.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -904,9 +904,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket Enabled with Spring, JWT Authentication, No Detox Test > should succeed 1`] = `
 {
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -1264,6 +1261,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   "babel.config.js": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "metro.config.js": {
@@ -1370,9 +1370,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   ".editorconfig": {
     "stateCleared": "modified",
   },
-  ".eslintrc.js": {
-    "stateCleared": "modified",
-  },
   ".gitattributes": {
     "stateCleared": "modified",
   },
@@ -1757,6 +1754,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "e2e/websockets/chat-screen.spec.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -1856,9 +1856,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
 exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket Enabled with Spring, OAuth2 Authentication, No Detox Test > should succeed 1`] = `
 {
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -2191,6 +2188,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
   "babel.config.js": {
     "stateCleared": "modified",
   },
+  "eslint.config.mjs": {
+    "stateCleared": "modified",
+  },
   "metro.config.js": {
     "stateCleared": "modified",
   },
@@ -2275,9 +2275,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   ".editorconfig": {
-    "stateCleared": "modified",
-  },
-  ".eslintrc.js": {
     "stateCleared": "modified",
   },
   ".gitattributes": {
@@ -2626,6 +2623,9 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > WebSocket 
     "stateCleared": "modified",
   },
   "e2e/websockets/chat-screen.spec.js": {
+    "stateCleared": "modified",
+  },
+  "eslint.config.mjs": {
     "stateCleared": "modified",
   },
   "metro.config.js": {

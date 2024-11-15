@@ -3,7 +3,6 @@ const expectedFiles = {
     '.prettierignore',
     '.prettierrc.yml',
     '.editorconfig',
-    '.eslintrc.js',
     '.gitattributes',
     'App.js',
     'README.md',

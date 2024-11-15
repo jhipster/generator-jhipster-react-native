@@ -8,12 +8,13 @@ export const selectState = (state, key, subKey) => state[key][subKey]
 export function * processWebsocketMessage ({ subscription, msg }) {
   console.log(`WS-Saga: ${subscription}`)
   switch (subscription) {
-    case 'chat':
+    case 'chat': {
       const state = yield select(selectState, 'chat', 'chat')
       const chat = [].concat(state)
       chat.push(msg)
       yield put(ChatActions.chatSuccess(chat))
       break
+    }
     default:
       console.log(`Uncaught subscription: ${subscription}`)
       console.log(`Uncaught message: ${msg}`)

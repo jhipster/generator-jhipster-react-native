@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
 export default React.forwardRef((props, ref) => {
-  const { value, label, labelStyle, error, listItems = [], placeholder, listItemLabelField, testID, ...otherProps } = props;
+  const { value, label, labelStyle, error, listItems = [], placeholder, listItemLabelField, ...otherProps } = props;
   const actualPlaceholder = placeholder ? placeholder : 'Select an item...';
 
   const memoizedItems = React.useMemo(() => {
