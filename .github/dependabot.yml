@@ -20,6 +20,10 @@ updates:
       react-navigation:
         patterns:
           - '@react-navigation/*'
+      eslint:
+        patterns:
+          - '@eslint/js'
+          - 'eslint'
   - package-ecosystem: 'npm'
     directory: '/generators/react-native/resources/expo/'
     schedule:
