@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.26.0",
-    "@eslint/js": "9.14.0",
+    "@eslint/js": "9.15.0",
     "@redux-devtools/extension": "3.3.0",
     "@storybook/addons": "7.6.17",
     "@storybook/react-native": "7.6.19",
