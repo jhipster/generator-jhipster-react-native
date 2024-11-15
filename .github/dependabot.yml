@@ -26,6 +26,7 @@ updates:
     open-pull-requests-limit: 30
     versioning-strategy: increase
     groups:
+      # Packages managed by expo, must be updated using expo cli, keep for reference and check only.
       expo-managed:
         patterns:
           - '@react-native-async-storage/async-storage'
@@ -45,6 +46,9 @@ updates:
           - 'react-native-reanimated'
           - 'react-native-safe-area-context'
           - 'react-native-screens'
+        update-types:
+          - 'minor'
+          - 'major'
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
