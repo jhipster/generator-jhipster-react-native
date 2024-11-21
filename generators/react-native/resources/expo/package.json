@@ -4,7 +4,7 @@
   "description": "Dependencies managed by Expo - need a specific version",
   "scripts": {
     "check-dependencies": "npm install && npx expo install --check",
-    "update-dependencies": "npm install && npx expo install --fix && rm -rf package-lock.json node_modules"
+    "update-dependencies": "npm install --force && npx expo install --fix && rm -rf package-lock.json node_modules"
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.0",
