@@ -27,6 +27,6 @@ jobs:
       - run: |
           cd generators/react-native/resources/expo
           npm run update-dependencies
-          git commit -m "update expo managed dependencies"
+          git commit -a -m "update expo managed dependencies"
           git push -u origin
         if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
