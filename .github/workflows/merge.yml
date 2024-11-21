@@ -21,6 +21,8 @@ jobs:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
         if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
       - uses: jhipster/actions/setup-git@v0
         if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
