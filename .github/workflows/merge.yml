@@ -20,3 +20,13 @@ jobs:
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - uses: actions/checkout@v4
+        if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
+      - uses: jhipster/actions/setup-git@v0
+        if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
+      - run: |
+          cd generators/react-native/resources/expo
+          npm run update-dependencies
+          git commit -m "update expo managed dependencies"
+          git push -u origin
+        if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
