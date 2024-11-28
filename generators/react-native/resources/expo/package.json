@@ -37,7 +37,7 @@
     "@react-native-community/cli-server-api": "15.1.2",
     "@types/react": "~18.3.12",
     "jest-expo": "~52.0.0",
-    "typescript": "~5.3.3"
+    "typescript": "~5.7.2"
   },
   "expo": {
     "install": {
