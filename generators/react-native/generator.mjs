@@ -175,6 +175,9 @@ export default class extends BaseApplicationGenerator {
         this.loadNodeDependenciesFromPackageJson(application.nodeDependencies, this.templatePath('package.json'));
         this.loadNodeDependenciesFromPackageJson(application.nodeDependencies, this.templatePath('../resources/expo/package.json'));
       },
+      expoSdk({ application }) {
+        application.expoSdk = application.nodeDependencies.expo.split('.')[0];
+      },
       preparingPatchInFile() {
         this.patchInFile = patchInFile.bind(this);
       },
