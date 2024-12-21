@@ -8,6 +8,7 @@ export default Object.fromEntries(
     sample,
     {
       ...spec,
+      'docker-services': !sample.includes('oauth2'),
       ...(sample.includes('oauth2')
         ? { os: 'macos-13', 'default-environment': 'prod', 'skip-e2e': 'true' }
         : { os: 'macos-15', 'default-environment': 'dev' }),
