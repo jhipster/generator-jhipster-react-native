@@ -5,6 +5,7 @@ exports[`generator - github-build-matrix > with ios > should match matrix value 
   "include": [
     {
       "default-environment": "dev",
+      "docker-services": true,
       "java-version": "17",
       "job-name": "21points-jwt",
       "jwt-secret-key": "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ=",
@@ -17,6 +18,7 @@ exports[`generator - github-build-matrix > with ios > should match matrix value 
     },
     {
       "default-environment": "dev",
+      "docker-services": true,
       "java-version": "17",
       "job-name": "app-jwt",
       "jwt-secret-key": "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ=",
@@ -29,6 +31,7 @@ exports[`generator - github-build-matrix > with ios > should match matrix value 
     },
     {
       "default-environment": "prod",
+      "docker-services": false,
       "java-version": "17",
       "job-name": "app-oauth2",
       "jwt-secret-key": "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ=",
@@ -42,6 +45,7 @@ exports[`generator - github-build-matrix > with ios > should match matrix value 
     },
     {
       "default-environment": "dev",
+      "docker-services": true,
       "java-version": "17",
       "job-name": "app-websocket",
       "jwt-secret-key": "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ=",
@@ -54,6 +58,7 @@ exports[`generator - github-build-matrix > with ios > should match matrix value 
     },
     {
       "default-environment": "dev",
+      "docker-services": true,
       "java-version": "17",
       "job-name": "flickr2-jwt",
       "jwt-secret-key": "ZjY4MTM4YjI5YzMwZjhjYjI2OTNkNTRjMWQ5Y2Q0Y2YwOWNmZTE2NzRmYzU3NTMwM2NjOTE3MTllOTM3MWRkMzcyYTljMjVmNmQ0Y2MxOTUzODc0MDhhMTlkMDIxMzI2YzQzZDM2ZDE3MmQ3NjVkODk3OTVmYzljYTQyZDNmMTQ=",

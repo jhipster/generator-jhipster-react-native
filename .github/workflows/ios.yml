@@ -112,11 +112,11 @@ jobs:
           timeout_minutes: 60
           command: brew tap wix/brew && brew install applesimutils && applesimutils --list
           retry_wait_seconds: 15
-      - uses: douglascamata/setup-docker-macos-action@8d5fa43892aed7eee4effcdea113fd53e4d4bf83
-        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
-        timeout-minutes: 10
+      #- uses: douglascamata/setup-docker-macos-action@8d5fa43892aed7eee4effcdea113fd53e4d4bf83
+      #  if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
+      #  timeout-minutes: 10
       - run: npm run services:up
-        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true' && matrix.docker-services != 'no'
         working-directory: ${{ github.workspace }}/backend
 
       - run: npm install
