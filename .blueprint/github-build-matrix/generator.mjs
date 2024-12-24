@@ -17,7 +17,7 @@ export default class extends BaseGenerator {
   get [BaseGenerator.WRITING]() {
     return this.asWritingTaskGroup({
       async buildMatrix() {
-        const { samplesGroup } = this;
+        const { samplesGroup = 'samples' } = this;
         const templatePath = this.templatePath('../../generate-sample/templates/');
         const samplesFolder = this.samplesFolder ? join(templatePath, this.samplesFolder) : templatePath;
         const { samples, warnings } = await getGithubSamplesGroup(samplesFolder, samplesGroup);

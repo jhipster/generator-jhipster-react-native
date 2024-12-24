@@ -17,7 +17,9 @@
  * limitations under the License.
  */
 import { GENERATOR_APP } from 'generator-jhipster/generators';
-import { getGithubSamplesGroup } from 'generator-jhipster/testing';
+import { getGithubSamplesGroup, getGithubSamplesGroups } from 'generator-jhipster/testing';
+
+const DEFAULT_SAMPLES_GROUP = 'samples';
 
 /**
  * @type {import('generator-jhipster').JHipsterCommandDefinition}
@@ -34,7 +36,23 @@ const command = {
       cli: {
         type: String,
       },
-      default: 'samples',
+      scope: 'generator',
+    },
+    samplesGroup: {
+      description: 'Samples group to lookup',
+      cli: {
+        type: String,
+      },
+      prompt: gen => ({
+        when: !gen.all && !gen.sampleName,
+        type: 'list',
+        message: 'which sample group do you want to lookup?',
+        choices: async () => getGithubSamplesGroups(gen.templatePath(gen.samplesFolder ?? '')),
+        default: DEFAULT_SAMPLES_GROUP,
+      }),
+      configure: gen => {
+        gen.samplesGroup = DEFAULT_SAMPLES_GROUP;
+      },
       scope: 'generator',
     },
     sampleName: {
@@ -42,7 +60,10 @@ const command = {
         when: !gen.all,
         type: 'list',
         message: 'which sample do you want to generate?',
-        choices: async () => getGithubSamplesGroup(gen.templatePath(gen.samplesFolder)),
+        choices: async answers => {
+          const samples = await getGithubSamplesGroup(gen.templatePath(), answers.samplesFolder ?? gen.samplesFolder);
+          return Object.keys(samples.samples);
+        },
       }),
       scope: 'generator',
     },

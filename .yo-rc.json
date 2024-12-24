@@ -27,7 +27,7 @@
       }
     },
     "githubWorkflows": true,
-    "jhipsterVersion": "8.7.3",
+    "jhipsterVersion": "8.8.0",
     "js": false,
     "localBlueprint": false,
     "packageJsonType": "module",
