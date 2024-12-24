@@ -116,7 +116,7 @@ jobs:
       #  if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true'
       #  timeout-minutes: 10
       - run: npm run services:up
-        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true' && matrix.docker-services != 'no'
+        if: matrix.default-environment == 'prod' && steps.compare.outputs.equals != 'true' && matrix.docker-services != 'false'
         working-directory: ${{ github.workspace }}/backend
 
       - run: npm install
