@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Dependencies managed by Blueprint - use latest versions",
   "dependencies": {
-    "@react-navigation/drawer": "6.7.2",
-    "@react-navigation/native": "6.1.18",
-    "@react-navigation/stack": "6.4.1",
+    "@react-navigation/drawer": "7.1.1",
+    "@react-navigation/native": "7.0.14",
+    "@react-navigation/stack": "7.1.1",
     "apisauce": "3.1.0",
     "format-json": "1.0.3",
     "formik": "2.4.6",
