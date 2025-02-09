@@ -51,7 +51,7 @@ const command = {
         default: DEFAULT_SAMPLES_GROUP,
       }),
       configure: gen => {
-        gen.samplesGroup = DEFAULT_SAMPLES_GROUP;
+        gen.samplesGroup ??= DEFAULT_SAMPLES_GROUP;
       },
       scope: 'generator',
     },
