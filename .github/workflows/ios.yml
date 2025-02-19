@@ -104,7 +104,7 @@ jobs:
           generator-path: generator-jhipster-react-native
           cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
 
-      - uses: nick-invision/retry@v3.0.0
+      - uses: nick-invision/retry@v3.0.1
         name: 'TOOLS: installing applesimutils'
         if: steps.compare.outputs.equals != 'true'
         with:
