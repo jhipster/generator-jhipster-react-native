@@ -48,7 +48,7 @@
     "detox": "20.34.4",
     "eslint": "9.21.0",
     "eslint-config-prettier": "10.0.2",
-    "eslint-plugin-jest": "28.10.0",
+    "eslint-plugin-jest": "28.11.0",
     "eslint-plugin-prettier": "5.2.3",
     "eslint-plugin-react": "7.37.4",
     "eslint-plugin-react-hooks": "5.2.0",
