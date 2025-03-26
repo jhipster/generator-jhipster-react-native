@@ -64,7 +64,7 @@
     "resolve": "1.22.10",
     "rimraf": "5.0.7",
     "tapable": "2.2.1",
-    "ts-jest": "29.2.6",
+    "ts-jest": "29.3.0",
     "typescript-eslint": "8.28.0"
   }
 }
