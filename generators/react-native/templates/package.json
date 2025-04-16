@@ -60,7 +60,7 @@
     "mockery": "2.1.0",
     "patch-package": "8.0.0",
     "path-exists": "5.0.0",
-    "react-test-renderer": "18.2.0",
+    "react-test-renderer": "19.1.0",
     "resolve": "1.22.10",
     "rimraf": "5.0.7",
     "tapable": "2.2.1",
