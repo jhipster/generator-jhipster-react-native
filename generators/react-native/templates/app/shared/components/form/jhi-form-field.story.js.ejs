@@ -1,6 +1,5 @@
 import React, { createRef } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Meta } from '@storybook/react-native';
 import FormButton from './jhi-form-button';
 import FormField from './jhi-form-field';
 import Form from './jhi-form';
@@ -80,31 +79,31 @@ function DemoForm() {
           placeholder="Enter num field"
           autoCapitalize="none"
         />
-        <FormField 
-          inputType="boolean" 
-          name="booleanField" 
-          ref={booleanFieldRef} 
-          label="Boolean Field" 
-          placeholder="Enter boolean field" 
+        <FormField
+          inputType="boolean"
+          name="booleanField"
+          ref={booleanFieldRef}
+          label="Boolean Field"
+          placeholder="Enter boolean field"
         />
-        <FormField 
-          inputType="select-one" 
-          name="listField" 
-          ref={listFieldRef} 
-          label="List Field" 
-          listItems={sports} 
+        <FormField
+          inputType="select-one"
+          name="listField"
+          ref={listFieldRef}
+          label="List Field"
+          listItems={sports}
         />
-        <FormField 
-          inputType="date" 
-          name="dateField" 
-          ref={dateFieldRef} 
-          label="Date Field" 
+        <FormField
+          inputType="date"
+          name="dateField"
+          ref={dateFieldRef}
+          label="Date Field"
         />
-        <FormField 
-          inputType="datetime" 
-          name="dateTimeField" 
-          ref={dateTimeFieldRef} 
-          label="Date Time Field" 
+        <FormField
+          inputType="datetime"
+          name="dateTimeField"
+          ref={dateTimeFieldRef}
+          label="Date Time Field"
         />
         <FormButton title={'Save'} />
         {data && (
