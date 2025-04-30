@@ -29,6 +29,18 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   ".prettierrc.yml": {
     "stateCleared": "modified",
   },
+  ".storybook/index.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/main.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/preview.tsx": {
+    "stateCleared": "modified",
+  },
+  ".storybook/storybook.requires.ts": {
+    "stateCleared": "modified",
+  },
   ".yo-rc.json": {
     "stateCleared": "modified",
   },
@@ -425,18 +437,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "patches/react-native-sectioned-multi-select+0.8.1.patch": {
     "stateCleared": "modified",
   },
-  "storybook/addons.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/index.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/stories.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/storybook.requires.ts": {
-    "stateCleared": "modified",
-  },
   "test/setup.js": {
     "stateCleared": "modified",
   },
@@ -530,6 +530,18 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
+    "stateCleared": "modified",
+  },
+  ".storybook/index.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/main.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/preview.tsx": {
+    "stateCleared": "modified",
+  },
+  ".storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   ".yo-rc.json": {
@@ -901,18 +913,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
   "patches/react-native-sectioned-multi-select+0.8.1.patch": {
     "stateCleared": "modified",
   },
-  "storybook/addons.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/index.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/stories.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/storybook.requires.ts": {
-    "stateCleared": "modified",
-  },
   "test/setup.js": {
     "stateCleared": "modified",
   },
@@ -1009,6 +1009,18 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   ".prettierrc.yml": {
+    "stateCleared": "modified",
+  },
+  ".storybook/index.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/main.ts": {
+    "stateCleared": "modified",
+  },
+  ".storybook/preview.tsx": {
+    "stateCleared": "modified",
+  },
+  ".storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   ".yo-rc.json": {
@@ -1408,18 +1420,6 @@ exports[`SubGenerator reactNative of reactNative JHipster blueprint > Entity Tes
     "stateCleared": "modified",
   },
   "patches/react-native-sectioned-multi-select+0.8.1.patch": {
-    "stateCleared": "modified",
-  },
-  "storybook/addons.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/index.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/stories.js": {
-    "stateCleared": "modified",
-  },
-  "storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "test/setup.js": {
