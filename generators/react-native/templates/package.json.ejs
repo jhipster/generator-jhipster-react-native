@@ -6,8 +6,8 @@
     "e2e:build:ios": "detox build --configuration ios.sim.release",
     "e2e:test:ios": "detox test --configuration ios.sim.release --retries 3",
 <%_ } _%>
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --android",
+    "ios": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --ios",
     "test:watch": "jest --watch",
     "updateSnapshot": "jest --updateSnapshot",
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
@@ -22,8 +22,13 @@
     "precommit": "lint-staged",
 <%_ } _%>
     "postinstall": "patch-package",
-    "start": "expo start",
-    "web": "expo start --web"
+    "start": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start",
+    "web": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start --web",
+    "storybook-generate": "sb-rn-get-stories",
+    "storybook": "EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start -c",
+    "storybook:test": "EXPO_PUBLIC_SCREENSHOT_TESTING=true EXPO_PUBLIC_STORYBOOK_ENABLED=true expo start -c",
+    "storybook:web": "storybook dev -p 6006",
+    "build-web-storybook": "storybook build"
   },
   "dependencies": {
     "@expo/vector-icons": null,
@@ -84,16 +89,20 @@
     "@babel/core": null,
     "@babel/runtime": null,
     "@eslint/js": null,
+    "@gorhom/bottom-sheet": null,
+    "@react-native-community/slider": null,
     "@react-native-community/cli-server-api": null,
     "@redux-devtools/extension": null,
-    "@storybook/addons": null,
+    "@storybook/addon-ondevice-actions": null,
+    "@storybook/addon-ondevice-controls": null,
+    "@storybook/react": null,
     "@storybook/react-native": null,
-    "@storybook/theming": null,
     "@testing-library/jest-native": null,
     "@testing-library/react-native": null,
     "@types/jest": null,
     "@types/react": null,
     "babel-jest": null,
+    "babel-loader": null,
     "babel-preset-env": null,
     "buffer": null,
 <%_ if (detox) { _%>
@@ -118,6 +127,7 @@
     "patch-package": null,
     "path-exists": null,
     "prettier": null,
+    "react-native-svg": null,
     "react-test-renderer": null,
     "resolve": null,
     "rimraf": null,
@@ -158,7 +168,7 @@
     "coveragePathIgnorePatterns": [
       "app/shared/services/api.js",
       "app/shared/themes/",
-      "/storybook/",
+      "/.storybook/",
       "/*\\.story\\.js"
     ],
     "preset": "jest-expo"

@@ -1,16 +1,23 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react-native/V6'
+import RoundedButton from './rounded-button';
 
-import RoundedButton from './rounded-button'
+const meta = {
+  title: 'RoundedButton',
+  component: RoundedButton,
+  parameters: {
+    componentSubtitle: 'A simple rounded button component',
+  },
+};
 
-storiesOf('RoundedButton', module)
-  .add('Default', () => (
-    <RoundedButton
-      text='A simple rounded button'
-    />
-  ))
-  .add('Text as children', () => (
-    <RoundedButton>
-        Hello from the children!
-    </RoundedButton>
-  ))
+export default meta;
+
+export const Default = {
+  args: {
+    text: 'A simple rounded button',
+  },
+};
+
+export const TextAsChildren = {
+  args: {
+    children: 'Hello from the children!',
+  },
+};

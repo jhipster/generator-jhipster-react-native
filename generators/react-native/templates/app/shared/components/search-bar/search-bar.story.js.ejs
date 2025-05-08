@@ -1,21 +1,40 @@
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { storiesOf } from '@storybook/react-native/V6'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import SearchBar from './search-bar'
+import SearchBar from './search-bar';
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'black', height: 50 },
-})
+});
 
-storiesOf('SearchBar', module)
-  .add('Default', () => (
-    <View style={styles.container}>
-      <SearchBar onSearch={() => {}} onCancel={() => {}} />
-    </View>
-  ))
-  .add('With Search Term', () => (
-    <View style={styles.container}>
-      <SearchBar onSearch={() => {}} onCancel={() => {}} searchTerm="HELLO!!" />
-    </View>
-  ))
+const meta = {
+  title: 'SearchBar',
+  component: SearchBar,
+  parameters: {
+    componentSubtitle: 'A search bar component with cancel functionality',
+  },
+  decorators: [
+    Story => (
+      <View style={styles.container}>
+        <Story />
+      </View>
+    ),
+  ],
+};
+
+export default meta;
+
+export const Default = {
+  args: {
+    onSearch: () => {},
+    onCancel: () => {},
+  },
+};
+
+export const WithSearchTerm = {
+  args: {
+    onSearch: () => {},
+    onCancel: () => {},
+    searchTerm: 'HELLO!!',
+  },
+};
