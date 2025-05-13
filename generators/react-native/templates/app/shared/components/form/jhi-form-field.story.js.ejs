@@ -1,5 +1,4 @@
 import React, { createRef } from 'react';
-import { storiesOf } from '@storybook/react-native/V6';
 import { View, StyleSheet, Text } from 'react-native';
 import FormButton from './jhi-form-button';
 import FormField from './jhi-form-field';
@@ -23,10 +22,11 @@ function DemoForm() {
     // email: Yup.string().required().email().label('Email'),
   });
 
-  const onSubmit = (values) => {
+  const onSubmit = values => {
     console.log(values);
     setData(values);
   };
+
   const sports = [
     {
       label: 'Football',
@@ -79,10 +79,32 @@ function DemoForm() {
           placeholder="Enter num field"
           autoCapitalize="none"
         />
-        <FormField inputType="boolean" name="booleanField" ref={booleanFieldRef} label="Boolean Field" placeholder="Enter boolean field" />
-        <FormField inputType="select-one" name="listField" ref={listFieldRef} label="List Field" listItems={sports} />
-        <FormField inputType="date" name="dateField" ref={dateFieldRef} label="Date Field" />
-        <FormField inputType="datetime" name="dateTimeField" ref={dateTimeFieldRef} label="Date Time Field" />
+        <FormField
+          inputType="boolean"
+          name="booleanField"
+          ref={booleanFieldRef}
+          label="Boolean Field"
+          placeholder="Enter boolean field"
+        />
+        <FormField
+          inputType="select-one"
+          name="listField"
+          ref={listFieldRef}
+          label="List Field"
+          listItems={sports}
+        />
+        <FormField
+          inputType="date"
+          name="dateField"
+          ref={dateFieldRef}
+          label="Date Field"
+        />
+        <FormField
+          inputType="datetime"
+          name="dateTimeField"
+          ref={dateTimeFieldRef}
+          label="Date Time Field"
+        />
         <FormButton title={'Save'} />
         {data && (
           <View>
@@ -101,4 +123,16 @@ function DemoForm() {
   );
 }
 
-storiesOf('FormField', module).add('All Options', () => <DemoForm />);
+const meta = {
+  title: 'FormField',
+  component: FormField,
+  parameters: {
+    componentSubtitle: 'A form field component with various input types',
+  },
+};
+
+export default meta;
+
+export const AllOptions = {
+  render: () => <DemoForm />,
+};

@@ -8,7 +8,7 @@ import NavContainer from './app/navigation/nav-container';
 
 const store = createStore();
 
-export default function App() {
+function App() {
   // prevent the splashscreen from disappearing until the redux store is completely ready (hidden in nav-container.js)
   const [displayApp, setDisplayApp] = React.useState(false);
   React.useEffect(() => {
@@ -25,3 +25,11 @@ export default function App() {
     </Provider>
   ) : null;
 }
+
+let AppEntryPoint = App;
+
+if (process.env.EXPO_PUBLIC_STORYBOOK_ENABLED === 'true') {
+AppEntryPoint = require('./.storybook').default;
+}
+
+export default AppEntryPoint;

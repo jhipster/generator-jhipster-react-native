@@ -26,6 +26,18 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/.prettierrc.yml": {
     "stateCleared": "modified",
   },
+  "../client/.storybook/index.ts": {
+    "stateCleared": "modified",
+  },
+  "../client/.storybook/main.ts": {
+    "stateCleared": "modified",
+  },
+  "../client/.storybook/preview.tsx": {
+    "stateCleared": "modified",
+  },
+  "../client/.storybook/storybook.requires.ts": {
+    "stateCleared": "modified",
+  },
   "../client/.yo-rc.json": {
     "stateCleared": "modified",
   },
@@ -389,18 +401,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > run > should succe
   "../client/patches/react-native-sectioned-multi-select+0.8.1.patch": {
     "stateCleared": "modified",
   },
-  "../client/storybook/addons.js": {
-    "stateCleared": "modified",
-  },
-  "../client/storybook/index.js": {
-    "stateCleared": "modified",
-  },
-  "../client/storybook/stories.js": {
-    "stateCleared": "modified",
-  },
-  "../client/storybook/storybook.requires.ts": {
-    "stateCleared": "modified",
-  },
   "../client/test/setup.js": {
     "stateCleared": "modified",
   },
@@ -521,6 +521,18 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
     "stateCleared": "modified",
   },
   "../reactNative-app/.prettierrc.yml": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.storybook/index.ts": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.storybook/main.ts": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.storybook/preview.tsx": {
+    "stateCleared": "modified",
+  },
+  "../reactNative-app/.storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "../reactNative-app/.yo-rc.json": {
@@ -884,18 +896,6 @@ exports[`SubGenerator app of reactNative JHipster blueprint > with custom reactN
     "stateCleared": "modified",
   },
   "../reactNative-app/patches/react-native-sectioned-multi-select+0.8.1.patch": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/storybook/addons.js": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/storybook/index.js": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/storybook/stories.js": {
-    "stateCleared": "modified",
-  },
-  "../reactNative-app/storybook/storybook.requires.ts": {
     "stateCleared": "modified",
   },
   "../reactNative-app/test/setup.js": {

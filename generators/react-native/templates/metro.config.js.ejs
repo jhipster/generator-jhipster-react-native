@@ -1,5 +1,7 @@
 // Learn more https://docs.expo.io/guides/customizing-metro
 const { getDefaultConfig } = require('expo/metro-config');
+const path = require('path');
+const withStorybook = require('@storybook/react-native/metro/withStorybook');
 
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname, {
@@ -14,4 +16,10 @@ config.resolver.sourceExts = process.env.RN_SRC_EXT
   ? [...process.env.RN_SRC_EXT.split(',').concat(config.resolver.sourceExts), 'mjs']
   : [...config.resolver.sourceExts, 'mjs'];
 
-module.exports = config;
+module.exports = withStorybook(config, {
+// set to false to disable storybook specific settings
+// you can use a env variable to toggle this
+enabled: true,
+// path to your storybook config folder
+configPath: path.resolve(__dirname, './.storybook'),
+});
