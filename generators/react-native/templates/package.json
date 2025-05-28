@@ -35,7 +35,7 @@
     "@babel/runtime": "7.27.0",
     "@eslint/js": "9.25.1",
     "@gorhom/bottom-sheet": "^5.1.2",
-    "@react-native-community/slider": "^4.5.6",
+    "@react-native-community/slider": "^4.5.7",
     "@redux-devtools/extension": "3.3.0",
     "@storybook/addon-ondevice-actions": "^8.6.2",
     "@storybook/addon-ondevice-controls": "^8.6.2",
