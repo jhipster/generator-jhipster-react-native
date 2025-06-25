@@ -13,7 +13,7 @@
     "@react-native-community/datetimepicker": "8.2.0",
     "@react-native-masked-view/masked-view": "0.3.2",
     "@react-native-picker/picker": "2.9.0",
-    "@react-navigation/devtools": "7.0.26",
+    "@react-navigation/devtools": "7.0.34",
     "expo": "52.0.46",
     "expo-auth-session": "~6.0.0",
     "expo-constants": "~17.0.2",
