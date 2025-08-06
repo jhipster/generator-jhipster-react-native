@@ -29,7 +29,7 @@
     "sockjs-client": "1.6.1",
     "webstomp-client": "1.2.6",
     "setimmediate": "1.0.5",
-    "yup": "1.6.1"
+    "yup": "1.7.0"
   },
   "devDependencies": {
     "@babel/runtime": "7.27.0",
