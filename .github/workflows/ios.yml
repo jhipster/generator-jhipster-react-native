@@ -61,13 +61,13 @@ jobs:
     env:
       FORCE_COLOR: true
     steps:
-      - uses: jhipster/actions/create-app-path@v0
+      - uses: jhipster/actions/create-app-path@v1
         with:
           path: client
-      - uses: jhipster/actions/create-app-path@v0
+      - uses: jhipster/actions/create-app-path@v1
         with:
           path: backend
-      - uses: jhipster/actions/setup-runner@v0
+      - uses: jhipster/actions/setup-runner@v1
         with:
           node-version: ${{ matrix.node-version }}
           java-version: ${{ matrix.java-version }}
@@ -81,7 +81,7 @@ jobs:
         working-directory: ${{ github.workspace }}/generator-jhipster-react-native
       - run: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-commit-hook
         working-directory: ${{ github.workspace }}/backend
-      - uses: jhipster/actions/compare-sample@v0
+      - uses: jhipster/actions/compare-sample@v1
         id: compare-backend
         if: >-
           github.event.pull_request &&
@@ -92,7 +92,7 @@ jobs:
           compare-folder: backend
           generator-path: generator-jhipster-react-native
           cmd: cli.cjs generate-sample ${{ matrix.sample }} --force --skip-git --skip-commit-hook
-      - uses: jhipster/actions/compare-sample@v0
+      - uses: jhipster/actions/compare-sample@v1
         id: compare
         if: >-
           github.event.pull_request &&
