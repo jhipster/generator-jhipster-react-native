@@ -24,7 +24,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
         if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
-      - uses: jhipster/actions/setup-git@v0
+      - uses: jhipster/actions/setup-git@v1
         if: steps.dependabot-metadata.outputs.dependency-names == 'expo'
       - run: |
           cd generators/react-native/resources/expo
