@@ -55,7 +55,7 @@
     "eslint-plugin-jest": "28.11.0",
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react": "7.37.5",
-    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-hooks": "6.1.1",
     "expect": "29.7.0",
     "globals": "16.0.0",
     "jest": "29.7.0",
