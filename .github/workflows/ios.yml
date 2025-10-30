@@ -136,7 +136,7 @@ jobs:
         env:
           DETOX_RECORD_VIDEOS: "${{ contains(github.event.pull_request.labels.*.name, 'pr: record-videos') && 'all' || 'none' }}"
         if: steps.compare.outputs.equals != 'true' && matrix.skip-e2e != 'true'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: steps.compare.outputs.equals != 'true' && always()
         with:
           name: expo-app-${{ matrix.sample }}
