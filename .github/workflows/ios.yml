@@ -20,7 +20,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[ci skip]') && !contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.pull_request.title, '[skip ci]') && !contains(github.event.pull_request.title, '[ci skip]') && !contains(github.event.ref_type, '[tag]')"
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -37,7 +37,7 @@ jobs:
     outputs:
       matrix: ${{ steps.build.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
           node-version: 20
@@ -73,7 +73,7 @@ jobs:
           java-version: ${{ matrix.java-version }}
           maven-cache: true
           binary-dir: ${{ github.workspace }}/generator-jhipster-react-native/cli
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           path: generator-jhipster-react-native
           fetch-depth: 2
