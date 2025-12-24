@@ -6,7 +6,7 @@
     "@react-navigation/drawer": "6.7.2",
     "@react-navigation/native": "6.1.18",
     "@react-navigation/stack": "6.4.1",
-    "apisauce": "3.1.0",
+    "apisauce": "3.2.1",
     "format-json": "1.0.3",
     "formik": "2.4.6",
     "identity-obj-proxy": "3.0.0",
