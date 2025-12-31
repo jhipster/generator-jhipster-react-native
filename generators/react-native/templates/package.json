@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@babel/runtime": "7.27.0",
-    "@eslint/js": "9.25.1",
+    "@eslint/js": "9.39.2",
     "@gorhom/bottom-sheet": "^5.1.2",
     "@react-native-community/slider": "^4.5.6",
     "@redux-devtools/extension": "3.3.0",
@@ -50,7 +50,7 @@
     "buffer": "6.0.3",
     "create-expo-app": "3.4.1",
     "detox": "20.42.0",
-    "eslint": "9.25.1",
+    "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.2",
     "eslint-plugin-jest": "28.11.0",
     "eslint-plugin-prettier": "5.2.6",
