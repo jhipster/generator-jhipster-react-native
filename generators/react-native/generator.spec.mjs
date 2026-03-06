@@ -227,5 +227,10 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
       result.assertNoFile(expectedFiles.detoxAndNotOauth);
       result.assertNoFile(expectedFiles.notExpected);
     });
+
+    it('it wires fixtures-based oauth detox support', () => {
+      result.assertFileContent('app/config/app-config.js', "process.env.EXPO_PUBLIC_USE_FIXTURES === 'true'");
+      result.assertFileContent('e2e/utils.js', "await waitForElementToBeVisibleById('authDisplayTrue');");
+    });
   });
 });

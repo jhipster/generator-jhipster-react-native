@@ -16,7 +16,7 @@ export default {
   useExpoAuthProxy: Platform.select({ web: false, default: true }),
   <%_ } _%>
   // use fixtures instead of real API requests
-  useFixtures: false,
+  useFixtures: process.env.EXPO_PUBLIC_USE_FIXTURES === 'true' || extra.useFixtures === true,
   // debug mode
   debugMode: __DEV__,
   extra,

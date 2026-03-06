@@ -103,6 +103,55 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
     });
   });
 
+  describe('Entity Test: Search Engine Disabled, Detox Enabled, OAuth2', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig(
+          {
+            websocket: 'no',
+            searchEngine: 'no',
+          },
+          [
+            {
+              name: 'Foo',
+              changelogDate: '20201110205443',
+              fields: [
+                {
+                  fieldName: 'name',
+                  fieldType: 'String',
+                },
+              ],
+            },
+          ],
+        )
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'oauth2',
+        })
+        .withYoRcConfig('generator-jhipster-react-native', {
+          detox: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('should succeed', () => {
+      expect(result.getStateSnapshot()).toMatchSnapshot();
+    });
+
+    it('it generates non-skipped entity detox tests', () => {
+      result.assertFile(expectedFiles.entity);
+      result.assertFile(expectedFiles.entityDetox);
+      result.assertNoFile(expectedFiles.entitySearchEngine);
+      result.assertNoFile(expectedFiles.notExpected);
+      result.assertNoFileContent('e2e/entities/foo.spec.js', 'describe.skip(');
+    });
+  });
+
   describe('Entity Test: Search Engine and Detox Enabled', () => {
     beforeAll(async function () {
       await helpers

@@ -44,11 +44,15 @@ if [ "$JHI_AUTH_TYPE" = "jwt" ] ; then
     fi
 else
     echo "Skipping starting backend for OAuth2"
-    echo "TODO: Mock Auth so that the entity pages can be tested"
+    echo "Using fixtures for OAuth2 Detox tests"
 fi
 
 # switch to react-native app directory
 cd ../client
+
+if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
+    export EXPO_PUBLIC_USE_FIXTURES=true
+fi
 
 # start the expo react-native packager
 npm run start:e2e &
@@ -70,11 +74,6 @@ done
 if [ "$status" -ne 0 ]; then
     echo "*** [$(date)] Expo Packager not connected after" $retryCount " retries."
     exit 1
-fi
-
-# if oauth, only run the launch screen since you need to authenticate for entities
-if [ "$JHI_AUTH_TYPE" = "oauth2" ] ; then
-  rm -rf e2e/entities
 fi
 
 DETOX_RECORD_VIDEO="none"
