@@ -1,6 +1,8 @@
 const execSync = require('child_process').execSync;
+<%_ if (authenticationType !== 'oauth2') { _%>
 const username = process.env.E2E_USERNAME || 'user';
 const password = process.env.E2E_PASSWORD || 'user';
+<%_ } _%>
 const expoPublishedUrl = process.env.E2E_EXPO_URL || 'exp://localhost:8081';
 
 const DEFAULT_VISIBLE_TIMEOUT = 10000;
@@ -46,10 +48,14 @@ const navigateToLoginScreen = async () => {
 };
 
 const loginAsUser = async () => {
+<%_ if (authenticationType === 'oauth2') { _%>
+  await waitForElementToBeVisibleById('authDisplayTrue');
+<%_ } else { _%>
   await navigateToLoginScreen();
   await element(by.id('loginScreenUsername')).replaceText(username);
   await element(by.id('loginScreenPassword')).replaceText(password);
   await waitThenTapButton('loginScreenLoginButton');
+<%_ } _%>
   try {
     await waitForElementToBeVisibleById('authDisplayTrue')
   } catch (e) {
