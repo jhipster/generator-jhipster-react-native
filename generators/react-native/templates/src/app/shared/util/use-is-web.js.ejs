@@ -1,0 +1,9 @@
+import { Platform } from 'react-native';
+
+/**
+ * Hook to detect if running in web mode
+ * @returns {boolean} true if running on web platform
+ */
+export const useIsWeb = () => Platform.OS === 'web';
+
+export default useIsWeb;
