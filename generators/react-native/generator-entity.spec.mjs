@@ -150,4 +150,59 @@ describe('SubGenerator reactNative of reactNative JHipster blueprint', () => {
       result.assertNoFile(expectedFiles.notExpected);
     });
   });
+
+  describe('Entity Test: Read-Only Entity', () => {
+    beforeAll(async function () {
+      await helpers
+        .run(SUB_GENERATOR_NAMESPACE)
+        .withJHipsterConfig(
+          {
+            websocket: 'no',
+            searchEngine: 'no',
+          },
+          [
+            {
+              name: 'Foo',
+              changelogDate: '20201110205443',
+              readOnly: true,
+              fields: [
+                {
+                  fieldName: 'name',
+                  fieldType: 'String',
+                },
+              ],
+            },
+          ],
+        )
+        .withOptions({
+          force: false,
+          blueprint: 'react-native',
+          appDir: false,
+          ignoreNeedlesError: true,
+          authenticationType: 'jwt',
+        })
+        .withYoRcConfig('generator-jhipster-react-native', {
+          detox: true,
+        })
+        .withJHipsterLookup()
+        .withParentBlueprintLookup();
+    });
+
+    it('it generates only read-only entity files and omits edit/delete code', () => {
+      result.assertFile(expectedFiles.entityReadOnly);
+      result.assertFile(expectedFiles.entityDetox);
+      result.assertNoFile(expectedFiles.entityNotReadOnly);
+      result.assertNoFile(expectedFiles.entitySearchEngine);
+      result.assertNoFile(expectedFiles.notExpected);
+      result.assertNoFileContent('app/modules/entities/foo/foo-detail-screen.js', 'fooEditButton');
+      result.assertNoFileContent('app/modules/entities/foo/foo-detail-screen.js', 'fooDeleteButton');
+      result.assertNoFileContent('app/modules/entities/foo/foo.reducer.js', 'fooUpdateRequest');
+      result.assertNoFileContent('app/modules/entities/foo/foo.reducer.js', 'fooDeleteRequest');
+      result.assertNoFileContent('app/modules/entities/foo/foo.sagas.js', 'updateFoo');
+      result.assertNoFileContent('app/modules/entities/foo/foo.sagas.js', 'deleteFoo');
+      result.assertNoFileContent('app/navigation/entity-stack.js', 'FooEditScreen');
+      result.assertNoFileContent('app/shared/services/api.js', 'updateFoo');
+      result.assertNoFileContent('app/shared/services/api.js', 'deleteFoo');
+    });
+  });
 });

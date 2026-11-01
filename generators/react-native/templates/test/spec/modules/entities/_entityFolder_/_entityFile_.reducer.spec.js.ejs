@@ -14,11 +14,13 @@ test('attempt retrieving a list of <%= entityInstance %>', () => {
   expect(state.<%= entityInstance %>List).toEqual([])
 })
 
+<%_ if (!readOnly) { _%>
 test('attempt updating a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateRequest({ id: 1 }))
 
   expect(state.updating).toBe(true)
 })
+<%_ } _%>
 <%_ if (searchEngineAny) { _%>
 test('attempt searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchRequest(1))
@@ -26,11 +28,13 @@ test('attempt searching a <%= entityInstance %>', () => {
   expect(state.searching).toBe(true)
 })
 <%_ } _%>
+<%_ if (!readOnly) { _%>
 test('attempt to deleting a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteRequest({ id: 1 }))
 
   expect(state.deleting).toBe(true)
 })
+<%_ } _%>
 
 test('success retrieving a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>Success({ id: 1 }))
@@ -59,6 +63,7 @@ test('success retrieving a list of <%= entityInstance %>', () => {
   <%_ } _%>
 })
 
+<%_ if (!readOnly) { _%>
 test('success updating a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateSuccess({ id: 1 }))
 
@@ -66,6 +71,7 @@ test('success updating a <%= entityInstance %>', () => {
   expect(state.errorUpdating).toBe(null)
   expect(state.<%= entityInstance %>).toEqual({ id: 1 })
 })
+<%_ } _%>
 <%_ if (searchEngineAny) { _%>
 test('success searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchSuccess({ id: 1 }))
@@ -75,6 +81,7 @@ test('success searching a <%= entityInstance %>', () => {
   expect(state.<%= entityInstance %>List).toEqual({ id: 1 })
 })
 <%_ } _%>
+<%_ if (!readOnly) { _%>
 test('success deleting a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteSuccess())
 
@@ -82,6 +89,7 @@ test('success deleting a <%= entityInstance %>', () => {
   expect(state.errorDeleting).toBe(null)
   expect(state.<%= entityInstance %>).toEqual({ id: undefined })
 })
+<%_ } _%>
 
 test('failure retrieving a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>Failure({ error: 'Not found' }))
@@ -99,6 +107,7 @@ test('failure retrieving a list of <%= entityInstance %>', () => {
   expect(state.<%= entityInstance %>List).toEqual([])
 })
 
+<%_ if (!readOnly) { _%>
 test('failure updating a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>UpdateFailure({ error: 'Not found' }))
 
@@ -106,6 +115,7 @@ test('failure updating a <%= entityInstance %>', () => {
   expect(state.errorUpdating).toEqual({ error: 'Not found' })
   expect(state.<%= entityInstance %>).toEqual(INITIAL_STATE.<%= entityInstance %>)
 })
+<%_ } _%>
 <%_ if (searchEngineAny) { _%>
 test('failure searching a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>SearchFailure({ error: 'Not found' }))
@@ -115,6 +125,7 @@ test('failure searching a <%= entityInstance %>', () => {
   expect(state.<%= entityInstance %>List).toEqual([])
 })
 <%_ } _%>
+<%_ if (!readOnly) { _%>
 test('failure deleting a <%= entityInstance %>', () => {
   const state = reducer(INITIAL_STATE, Actions.<%= entityInstance %>DeleteFailure({ error: 'Not found' }))
 
@@ -122,8 +133,9 @@ test('failure deleting a <%= entityInstance %>', () => {
   expect(state.errorDeleting).toEqual({ error: 'Not found' })
   expect(state.<%= entityInstance %>).toEqual(INITIAL_STATE.<%= entityInstance %>)
 })
+<%_ } _%>
 
 test('resetting state for <%= entityInstance %>', () => {
-  const state = reducer({ ...INITIAL_STATE, deleting: true }, Actions.<%= entityInstance %>Reset())
+  const state = reducer({ ...INITIAL_STATE, <%= readOnly ? 'fetchingOne' : 'deleting' %>: true }, Actions.<%= entityInstance %>Reset())
   expect(state).toEqual(INITIAL_STATE)
 })

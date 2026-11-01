@@ -7,13 +7,17 @@ import { convertLocalDateToString } from '../../../shared/util/date-transforms'
 <%_ } _%>
 
 import <%= entityNameCapitalized %>Actions from './<%= entityFileName %>.reducer'
+<%_ if (!readOnly) { _%>
 import RoundedButton from '../../../shared/components/rounded-button/rounded-button'
 import <%= entityNameCapitalized %>DeleteModal from './<%= entityFileName %>-delete-modal';
+<%_ } _%>
 import styles from './<%= entityFileName %>-styles'
 
 function <%= entityNameCapitalized %>DetailScreen(props) {
   const { route, get<%= entityNameCapitalized %>, navigation, <%= entityInstance %>, fetching, error } = props;
+  <%_ if (!readOnly) { _%>
   const [deleteModalVisible, setDeleteModalVisible] = React.useState(false);
+  <%_ } _%>
   // prevents display of stale reducer data
   const entityId = <%= entityInstance %>?.id ?? null;
   const routeEntityId = route.params?.entityId ?? null;
@@ -24,7 +28,9 @@ function <%= entityNameCapitalized %>DetailScreen(props) {
       if (!routeEntityId) {
         navigation.navigate('<%= entityNameCapitalized %>');
       } else {
+        <%_ if (!readOnly) { _%>
         setDeleteModalVisible(false);
+        <%_ } _%>
         get<%= entityNameCapitalized %>(routeEntityId);
       }
     }, [routeEntityId, get<%= entityNameCapitalized %>, navigation]),
@@ -79,6 +85,7 @@ function <%= entityNameCapitalized %>DetailScreen(props) {
         <%_ } _%>
       <%_ }) _%>
 
+      <%_ if (!readOnly) { _%>
       <View style={styles.entityButtons}>
         <RoundedButton
           text="Edit"
@@ -102,6 +109,7 @@ function <%= entityNameCapitalized %>DetailScreen(props) {
           />
         )}
       </View>
+      <%_ } _%>
     </ScrollView>
   );
 }
@@ -111,8 +119,10 @@ const mapStateToProps = (state) => {
     <%= entityInstance %>: state.<%= entityInstancePlural %>.<%= entityInstance %>,
     error: state.<%= entityInstancePlural %>.errorOne,
     fetching: state.<%= entityInstancePlural %>.fetchingOne,
+    <%_ if (!readOnly) { _%>
     deleting: state.<%= entityInstancePlural %>.deleting,
     errorDeleting: state.<%= entityInstancePlural %>.errorDeleting
+    <%_ } _%>
   }
 }
 
@@ -120,7 +130,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     get<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Request(id)),
     getAll<%= entityNamePlural %>: (options) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllRequest(options)),
+    <%_ if (!readOnly) { _%>
     delete<%= entityNameCapitalized %>: (id) => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteRequest(id)),
+    <%_ } _%>
     reset<%= entityNamePlural %>: () => dispatch(<%= entityNameCapitalized %>Actions.<%= entityInstance %>Reset()),
   }
 }
