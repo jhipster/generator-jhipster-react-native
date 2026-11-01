@@ -13,18 +13,25 @@ function patchEntityApi(application, entity) {
   // REDUX AND SAGA SECTION
   let apiMethods = `
   const get${entity.entityNameCapitalized} = (${entity.entityInstance}Id) => api.get('${microservicePath}api/${entity.entityApiUrl}/' + ${entity.entityInstance}Id);
-  const getAll${entity.entityNamePlural} = (options) => api.get('${microservicePath}api/${entity.entityApiUrl}', options);
+  const getAll${entity.entityNamePlural} = (options) => api.get('${microservicePath}api/${entity.entityApiUrl}', options);`;
+  if (!entity.readOnly) {
+    apiMethods += `
   const create${entity.entityNameCapitalized} = (${entity.entityInstance}) => api.post('${microservicePath}api/${entity.entityApiUrl}', ${entity.entityInstance});
   ${updateMethod}
   const delete${entity.entityNameCapitalized} = (${entity.entityInstance}Id) => api.delete('${microservicePath}api/${entity.entityApiUrl}/' + ${entity.entityInstance}Id);`;
+  }
 
-  let fixtureApiMethods = `  update${entity.entityNameCapitalized}: (_${entity.entityInstance}) => {
+  let fixtureApiMethods = '';
+  if (!entity.readOnly) {
+    fixtureApiMethods += `  update${entity.entityNameCapitalized}: (_${entity.entityInstance}) => {
     return {
       ok: true,
       data: require('../../shared/fixtures/update-${entity.entityFileName}.json'),
     };
   },
-  getAll${entity.entityNamePlural}: () => {
+`;
+  }
+  fixtureApiMethods += `  getAll${entity.entityNamePlural}: () => {
     return {
       ok: true,
       data: require('../../shared/fixtures/get-all-${entity.entityNamePluralizedAndSpinalCased}.json'),
@@ -35,19 +42,29 @@ function patchEntityApi(application, entity) {
       ok: true,
       data: require('../../shared/fixtures/get-${entity.entityFileName}.json'),
     };
-  },
+  },`;
+  if (!entity.readOnly) {
+    fixtureApiMethods += `
   delete${entity.entityNameCapitalized}: (_${entity.entityInstance}Id) => {
     return {
       ok: true,
     };
   },`;
+  }
 
-  let apiMethodsExport = `
+  let apiMethodsExport = '';
+  if (!entity.readOnly) {
+    apiMethodsExport += `
     create${entity.entityNameCapitalized},
-    update${entity.entityNameCapitalized},
+    update${entity.entityNameCapitalized},`;
+  }
+  apiMethodsExport += `
     getAll${entity.entityNamePlural},
-    get${entity.entityNameCapitalized},
+    get${entity.entityNameCapitalized},`;
+  if (!entity.readOnly) {
+    apiMethodsExport += `
     delete${entity.entityNameCapitalized},`;
+  }
 
   let sagaConnections = `
     takeLatest(${entity.entityNameCapitalized}Types.${entity.entityNameSnakeCase.toUpperCase()}_REQUEST, ${
@@ -55,13 +72,16 @@ function patchEntityApi(application, entity) {
     }Sagas.get${entity.entityNameCapitalized}, api),
     takeLatest(${entity.entityNameCapitalized}Types.${entity.entityNameSnakeCase.toUpperCase()}_ALL_REQUEST, ${
       entity.entityNameCapitalized
-    }Sagas.getAll${entity.entityNamePlural}, api),
+    }Sagas.getAll${entity.entityNamePlural}, api),`;
+  if (!entity.readOnly) {
+    sagaConnections += `
     takeLatest(${entity.entityNameCapitalized}Types.${entity.entityNameSnakeCase.toUpperCase()}_UPDATE_REQUEST, ${
       entity.entityNameCapitalized
     }Sagas.update${entity.entityNameCapitalized}, api),
     takeLatest(${entity.entityNameCapitalized}Types.${entity.entityNameSnakeCase.toUpperCase()}_DELETE_REQUEST, ${
       entity.entityNameCapitalized
     }Sagas.delete${entity.entityNameCapitalized}, api),`;
+  }
 
   // add searchEngine methods
   if (application.searchEngineAny) {

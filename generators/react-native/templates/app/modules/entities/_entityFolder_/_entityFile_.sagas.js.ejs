@@ -43,6 +43,7 @@ function * getAll<%= entityNamePlural %> (api, action) {
   }
 }
 
+<%_ if (!readOnly) { _%>
 function * update<%= entityNameCapitalized %> (api, action) {
   const { <%= entityInstance %> } = action
   // make the call to the api
@@ -61,6 +62,7 @@ function * update<%= entityNameCapitalized %> (api, action) {
   }
 }
 
+<%_ } _%>
 <%_ if (searchEngineAny) { _%>
 function * search<%= entityNamePlural %> (api, action) {
   const { query } = action
@@ -76,6 +78,7 @@ function * search<%= entityNamePlural %> (api, action) {
   }
 }
 <%_ } _%>
+<%_ if (!readOnly) { _%>
 function * delete<%= entityNameCapitalized %> (api, action) {
   const { <%= entityInstance %>Id } = action
   // make the call to the api
@@ -89,6 +92,7 @@ function * delete<%= entityNameCapitalized %> (api, action) {
     yield put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure(response.data))
   }
 }
+<%_ } _%>
 <%_ if (anyFieldIsDateDerived) { _%>
 function mapDateFields (data) {
 <%_ fields.filter(field => !field.id).forEach(function (field) { _%>
@@ -105,10 +109,14 @@ function mapDateFields (data) {
 export default {
   getAll<%= entityNamePlural %>,
   get<%= entityNameCapitalized %>,
+  <%_ if (!readOnly) { _%>
   delete<%= entityNameCapitalized %>,
+  <%_ } _%>
   <%_ if (searchEngineAny) { _%>
   search<%= entityNamePlural %>,
   <%_ } _%>
+  <%_ if (!readOnly) { _%>
   update<%= entityNameCapitalized %>,
+  <%_ } _%>
 };
 

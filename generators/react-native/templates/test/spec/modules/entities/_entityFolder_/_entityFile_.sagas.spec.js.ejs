@@ -4,7 +4,7 @@ import FixtureAPI from '../../../../../app/shared/services/fixture-api'
 import <%= entityNameCapitalized %>Sagas from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.sagas'
 import <%= entityNameCapitalized %>Actions from '../../../../../app/modules/entities/<%= entityFileName %>/<%= entityFileName %>.reducer'
 
-const { get<%= entityNameCapitalized %>, getAll<%= entityNamePlural %>, update<%= entityNameCapitalized %>, delete<%= entityNameCapitalized %><%= searchEngineAny ? `, search${entityNamePlural}` : '' %> } = <%= entityNameCapitalized %>Sagas;
+const { get<%= entityNameCapitalized %>, getAll<%= entityNamePlural %><%= !readOnly ? `, update${entityNameCapitalized}, delete${entityNameCapitalized}` : '' %><%= searchEngineAny ? `, search${entityNamePlural}` : '' %> } = <%= entityNameCapitalized %>Sagas;
 const stepper = (fn) => (mock) => fn.next(mock).value
 
 test('get success path', () => {
@@ -43,6 +43,7 @@ test('getAll failure path', () => {
   expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>AllFailure()))
 })
 
+<%_ if (!readOnly) { _%>
 test('update success path', () => {
   const response = FixtureAPI.update<%= entityNameCapitalized %>({ id: 1 })
   const step = stepper(update<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>: { id: 1 } }))
@@ -61,6 +62,7 @@ test('update failure path', () => {
   expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>UpdateFailure()))
 })
 
+<%_ } _%>
 <%_ if (searchEngineAny) { _%>
 test('search success path', () => {
   const response = FixtureAPI.search<%= entityNamePlural %>()
@@ -80,6 +82,7 @@ test('search failure path', () => {
   expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>SearchFailure()))
 })
 <%_ } _%>
+<%_ if (!readOnly) { _%>
 test('delete success path', () => {
   const response = FixtureAPI.delete<%= entityNameCapitalized %>({ id: 1 })
   const step = stepper(delete<%= entityNameCapitalized %>(FixtureAPI, { <%= entityInstance %>Id: { id: 1 } }))
@@ -97,3 +100,4 @@ test('delete failure path', () => {
   // Step 2: Failed response.
   expect(step(response)).toEqual(put(<%= entityNameCapitalized %>Actions.<%= entityInstance %>DeleteFailure()))
 })
+<%_ } _%>

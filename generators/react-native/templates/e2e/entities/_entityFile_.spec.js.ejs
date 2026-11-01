@@ -1,4 +1,4 @@
-<%_ if (anyFieldIsDateDerived) { _%>
+<%_ if (!readOnly && anyFieldIsDateDerived) { _%>
 const { expect: jestExpect } = require('expect');
 <%_ } _%>
 const {
@@ -6,22 +6,30 @@ const {
     loginAsUser,
     logout,
     goBack,
+<%_ if (!readOnly) { _%>
     tapFirstElementByLabel,
+<%_ } _%>
     openAndTapDrawerMenuItemByLabel,
+<%_ if (!readOnly) { _%>
     waitThenTapButton,
+<%_ } _%>
     waitForElementToBeVisibleById,
-<%_ if (fieldsContainEnum) { _%>
+<%_ if (!readOnly && fieldsContainEnum) { _%>
     setPickerValue,
 <%_ } _%>
-<%_ if (anyFieldIsDateDerived) { _%>
+<%_ if (!readOnly && anyFieldIsDateDerived) { _%>
     setDateTimePickerValue,
 <%_ } _%>
     scrollTo,
 } = require('../utils');
 <%_
-resetFakerSeed(`entity-cypress-${entityNameCapitalized}`);
-const createFakeData = generateFakeData('cypress');
-const updateFakeData = generateFakeData('cypress');
+let createFakeData;
+let updateFakeData;
+if (!readOnly) {
+  resetFakerSeed(`entity-cypress-${entityNameCapitalized}`);
+  createFakeData = generateFakeData('cypress');
+  updateFakeData = generateFakeData('cypress');
+}
 
 // used for setting the datepicker date in the expected full ISO format (JS gives a compact version)
 Date.prototype.toFullISOString = function() {
@@ -66,6 +74,18 @@ describe<%- authenticationTypeOauth2 || anyFieldIsBlobDerived ? '.skip' : '' %>(
     await waitForElementToBeVisibleById('<%= entityInstance %>Screen');
   }
 
+  <%_ if (readOnly) { _%>
+  it('should allow you to view the <%= entityNameCapitalized %> entity', async () => {
+    await expect(element(by.id('<%= entityInstance %>Screen'))).toBeVisible()
+
+    /*
+    * Logout
+    */
+    await goBack()
+    await waitForElementToBeVisibleById('entityScreenScrollList');
+    await logout()
+  })
+  <%_ } else { _%>
   it('should allow you to create, update, and delete the <%= entityNameCapitalized %> entity', async () => {
     await expect(element(by.id('<%= entityInstance %>Screen'))).toBeVisible()
 
@@ -244,4 +264,5 @@ describe<%- authenticationTypeOauth2 || anyFieldIsBlobDerived ? '.skip' : '' %>(
     await waitForElementToBeVisibleById('entityScreenScrollList');
     await logout()
   })
+  <%_ } _%>
 })

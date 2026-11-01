@@ -13,14 +13,19 @@ function patchNavigationForEntity(entity) {
     before: 'jhipster-react-native-navigation-import-needle',
     insert: navigationImportDetail,
   });
-  const navigationImportEdit = `import ${entity.entityNameCapitalized}EditScreen from '../modules/entities/${entity.entityFileName}/${entity.entityFileName}-edit-screen'`;
-  this.patchInFile(entityStackPath, {
-    before: 'jhipster-react-native-navigation-import-needle',
-    insert: navigationImportEdit,
-  });
+  if (!entity.readOnly) {
+    const navigationImportEdit = `import ${entity.entityNameCapitalized}EditScreen from '../modules/entities/${entity.entityFileName}/${entity.entityFileName}-edit-screen'`;
+    this.patchInFile(entityStackPath, {
+      before: 'jhipster-react-native-navigation-import-needle',
+      insert: navigationImportEdit,
+    });
+  }
 
   // import entity screens to navigation
-  const navigationDeclaration = `{ name: '${entity.entityNameCapitalized}', route: '${entity.entityFileName}', component: ${entity.entityNameCapitalized}Screen, options: { title: '${entity.entityNamePlural}', headerLeft: () => <HeaderBackButton onPress={() => navigate('Entities')} />, headerRight: () => <HeaderBackButton label=" New " onPress={() => navigate('${entity.entityNameCapitalized}Edit', { id: undefined })} backImage={(props) => <Ionicons name="add-circle-outline" size={32} color={props.tintColor} />} /> },},`;
+  const navigationHeaderRight = entity.readOnly
+    ? ''
+    : `, headerRight: () => <HeaderBackButton label=" New " onPress={() => navigate('${entity.entityNameCapitalized}Edit', { id: undefined })} backImage={(props) => <Ionicons name="add-circle-outline" size={32} color={props.tintColor} />} />`;
+  const navigationDeclaration = `{ name: '${entity.entityNameCapitalized}', route: '${entity.entityFileName}', component: ${entity.entityNameCapitalized}Screen, options: { title: '${entity.entityNamePlural}', headerLeft: () => <HeaderBackButton onPress={() => navigate('Entities')} />${navigationHeaderRight} },},`;
   this.patchInFile(entityStackPath, {
     before: 'jhipster-react-native-navigation-declaration-needle',
     insert: navigationDeclaration,
@@ -32,12 +37,14 @@ function patchNavigationForEntity(entity) {
     insert: navigationDeclarationDetail,
     ignoreIfContains: `{ name: '${entity.entityNameCapitalized}Detail', route: '${entity.entityFileName}/detail'`,
   });
-  const navigationDeclarationEdit = `{ name: '${entity.entityNameCapitalized}Edit', route: '${entity.entityFileName}/edit', component: ${entity.entityNameCapitalized}EditScreen, options: { title: 'Edit ${entity.entityNameCapitalized}', headerLeft: () => <HeaderBackButton onPress={() => goBackOrIfParamsOrDefault('${entity.entityNameCapitalized}Detail', '${entity.entityNameCapitalized}')} /> },},`;
-  this.patchInFile(entityStackPath, {
-    before: 'jhipster-react-native-navigation-declaration-needle',
-    insert: navigationDeclarationEdit,
-    ignoreIfContains: `{ name: '${entity.entityNameCapitalized}Edit', route: '${entity.entityFileName}/edit'`,
-  });
+  if (!entity.readOnly) {
+    const navigationDeclarationEdit = `{ name: '${entity.entityNameCapitalized}Edit', route: '${entity.entityFileName}/edit', component: ${entity.entityNameCapitalized}EditScreen, options: { title: 'Edit ${entity.entityNameCapitalized}', headerLeft: () => <HeaderBackButton onPress={() => goBackOrIfParamsOrDefault('${entity.entityNameCapitalized}Detail', '${entity.entityNameCapitalized}')} /> },},`;
+    this.patchInFile(entityStackPath, {
+      before: 'jhipster-react-native-navigation-declaration-needle',
+      insert: navigationDeclarationEdit,
+      ignoreIfContains: `{ name: '${entity.entityNameCapitalized}Edit', route: '${entity.entityFileName}/edit'`,
+    });
+  }
 
   // add entity to entities screen
   const entityScreenButton = `        <RoundedButton text="${entity.entityNameCapitalized}" onPress={() => navigation.navigate('${entity.entityNameCapitalized}')} testID="${entity.entityInstance}EntityScreenButton" />`;
